@@ -1,1 +1,1 @@
-# bar-application
+# Bar Application
