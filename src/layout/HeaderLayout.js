@@ -1,17 +1,24 @@
 import React from "react";
 import { StatusBar } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
-import { Header } from "react-native-elements";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { colors, mock } from "../theme/variables.js";
+import { useIsDrawerOpen } from "@react-navigation/drawer";
 
-export default function HeaderLayout() {
+export default function HeaderLayout({ navigation }) {
+  const openDrawer = () => {
+    navigation.openDrawer();
+  };
+
   return (
     <View style={styles.header}>
       <View style={styles.header__left}>
-        <Image
-          style={styles.header__menuIcon}
-          source={require("../assets/menu/menu-icon.png")}
-        ></Image>
+        <TouchableOpacity onPress={openDrawer}>
+          <Image
+            style={styles.header__menuIcon}
+            source={require("../assets/menu/menu-icon.png")}
+          ></Image>
+        </TouchableOpacity>
       </View>
       <View style={styles.header__center}>
         <Text style={styles.header__title}>{mock.ORGANISATION_NAME}</Text>
@@ -27,7 +34,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     flex: 1,
-    height: 50,
+    maxHeight: 50,
     alignSelf: "flex-start",
     alignItems: "center",
     width: "100%",
