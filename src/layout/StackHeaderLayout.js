@@ -5,23 +5,23 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { colors, mock } from "../theme/variables.js";
 import { useIsDrawerOpen } from "@react-navigation/drawer";
 
-export default function HeaderLayout({ navigation }) {
-  const openDrawer = () => {
-    navigation.openDrawer();
+export default function StackHeaderLayout({ navigation, title }) {
+  const navigateBack = () => {
+    navigation.goBack();
   };
 
   return (
     <View style={styles.header}>
       <View style={styles.header__left}>
-        <TouchableOpacity onPress={openDrawer}>
+        <TouchableOpacity onPress={navigateBack}>
           <Image
             style={styles.header__menuIcon}
-            source={require("../assets/menu/menu-icon.png")}
+            source={require("../assets/menu/back-icon.png")}
           ></Image>
         </TouchableOpacity>
       </View>
       <View style={styles.header__center}>
-        <Text style={styles.header__title}>{mock.ORGANISATION_NAME}</Text>
+        <Text style={styles.header__title}>{title}</Text>
       </View>
       <View style={styles.header__right}></View>
     </View>
