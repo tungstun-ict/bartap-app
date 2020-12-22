@@ -20,27 +20,27 @@ export const mock = {
   //TODO: Convert ID to key for every customer
   CUSTOMERS: [
     {
-      key: 1,
+      id: 1,
       name: "Jort Willemsen",
     },
     {
-      key: 2,
+      id: 2,
       name: "Mees Franchimont",
     },
     {
-      key: 3,
+      id: 3,
       name: "Jona Leeflang",
     },
     {
-      key: 4,
+      id: 4,
       name: "Sep de Geus",
     },
     {
-      key: 5,
+      id: 5,
       name: "Fee Sanders",
     },
     {
-      key: 6,
+      id: 6,
       name: "Dante Bloemendaal",
     },
   ],

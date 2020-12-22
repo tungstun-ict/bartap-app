@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import variables, { colors, mock, sizes } from "../theme/variables.js";
 import HeaderLayout from "../layout/HeaderLayout";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { ceil } from "react-native-reanimated";
 
 export default function HomeScreen({ navigation }) {
   return (
@@ -21,21 +23,31 @@ export default function HomeScreen({ navigation }) {
           keyExtractor={(item) => item.id}
           style={styles.list}
           data={mock.CUSTOMERS}
-          renderItem={({ item }) => renderItem(item)}
+          renderItem={({ item }) => listItem(item)}
+          ListFooterComponent={listFooterItem}
         />
       </View>
     </SafeAreaView>
   );
 }
 
-function renderItem(customer) {
-  console.log(customer);
+function listItem(customer) {
   return (
     <View style={styles.listItem}>
       <Text style={styles.listItem__name}>{customer.name}</Text>
     </View>
   );
 }
+
+const listFooterItem = () => {
+  return (
+    <TouchableOpacity>
+      <View style={styles.listItem__footer}>
+        <Text style={styles.listItem__footer__text}>Add a new customer</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -76,5 +88,21 @@ const styles = StyleSheet.create({
   listItem__name: {
     fontSize: 20,
     color: colors.TEXT_SECONDARY,
+  },
+  listItem__footer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    height: 40,
+    width: "95%",
+    backgroundColor: colors.ELEMENT_BACKGROUND,
+    borderRadius: 5,
+    marginTop: 10,
+    alignSelf: "center",
+  },
+  listItem__footer__text: {
+    color: colors.TEXT_TERTIARY,
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
