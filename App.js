@@ -1,18 +1,37 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 import HomeScreen from "./src/screen/HomeScreen";
 import CustomersScreen from "./src/screen/CustomersScreen";
+import AddCustomerScreen from "./src/screen/AddCustomerScreen";
 import DrawerLayout from "./src/layout/DrawerLayout";
 import { colors, mock } from "./src/theme/variables";
 import { StyleSheet } from "react-native";
 
-const Drawer = createDrawerNavigator();
+const DrawerNavigator = createDrawerNavigator();
+const CustomersNavigator = createStackNavigator();
+
+export function CustomersStack() {
+  return (
+    <CustomersNavigator.Navigator
+      headerMode="none"
+      initialRouteName="Customers"
+    >
+      <CustomersNavigator.Screen name="Customers" component={CustomersScreen} />
+      <CustomersNavigator.Screen
+        name="Add new customer"
+        component={AddCustomerScreen}
+      />
+    </CustomersNavigator.Navigator>
+  );
+}
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator
+      <DrawerNavigator.Navigator
+        sceneContainerStyle={{ backgroundColor: "black" }}
         initialRouteName="Session"
         drawerStyle={styles.drawer}
         drawerContentOptions={{
@@ -25,9 +44,9 @@ export default function App() {
           },
         }}
       >
-        <Drawer.Screen name="Session" component={HomeScreen} />
-        <Drawer.Screen name="Customers" component={CustomersScreen} />
-      </Drawer.Navigator>
+        <DrawerNavigator.Screen name="Session" component={HomeScreen} />
+        <DrawerNavigator.Screen name="Customers" component={CustomersStack} />
+      </DrawerNavigator.Navigator>
     </NavigationContainer>
   );
 }

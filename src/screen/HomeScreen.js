@@ -8,7 +8,7 @@ import HeaderLayout from "../layout/HeaderLayout";
 export default function HomeScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderLayout navigation={navigation}></HeaderLayout>
+      <HeaderLayout navigation={navigation} />
       <View style={styles.content}>
         <Text style={styles.text}>Sessions</Text>
       </View>

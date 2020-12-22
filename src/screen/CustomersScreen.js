@@ -13,10 +13,10 @@ import HeaderLayout from "../layout/HeaderLayout";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 
-export default function HomeScreen({ navigation }) {
+export default function CustomersScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderLayout navigation={navigation}></HeaderLayout>
+      <HeaderLayout navigation={navigation} />
       <Text style={styles.title}>Customers</Text>
       <View style={styles.content}>
         <FlatList
@@ -24,7 +24,7 @@ export default function HomeScreen({ navigation }) {
           style={styles.list}
           data={mock.CUSTOMERS}
           renderItem={({ item }) => listItem(item)}
-          ListFooterComponent={listFooterItem}
+          ListFooterComponent={listFooterItem(navigation)}
         />
       </View>
     </SafeAreaView>
@@ -39,9 +39,9 @@ function listItem(customer) {
   );
 }
 
-const listFooterItem = () => {
+const listFooterItem = (navigation) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("Add new customer")}>
       <View style={styles.listItem__footer}>
         <Text style={styles.listItem__footer__text}>Add a new customer</Text>
       </View>
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   listItem__name: {
     fontSize: 20,
-    color: colors.TEXT_SECONDARY,
+    color: colors.TEXT_PRIMARY,
   },
   listItem__footer: {
     flex: 1,
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   listItem__footer__text: {
-    color: colors.TEXT_TERTIARY,
+    color: colors.TEXT_SECONDARY,
     fontSize: 20,
     fontWeight: "bold",
   },
