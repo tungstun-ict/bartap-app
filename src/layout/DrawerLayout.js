@@ -31,8 +31,4 @@ const styles = StyleSheet.create({
     marginTop: StatusBar.currentHeight + 50,
     backgroundColor: colors.ELEMENT_BACKGROUND,
   },
-  drawerItem: {
-    color: colors.TEXT_PRIMARY,
-    fontSize: 50,
-  },
 });
