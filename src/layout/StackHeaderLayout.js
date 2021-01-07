@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
 
   header__left: {
-    flex: 1,
+    flex: 0.5,
     justifyContent: "center",
   },
 
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
 
   header__right: {
-    flex: 1,
+    flex: 0.5,
     justifyContent: "center",
   },
 });

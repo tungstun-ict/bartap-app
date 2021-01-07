@@ -23,7 +23,7 @@ export default function CustomersScreen({ navigation }) {
           keyExtractor={(item) => item.id}
           style={styles.list}
           data={mock.CUSTOMERS}
-          renderItem={({ item }) => listItem(item)}
+          renderItem={({ item }) => listItem(navigation, item)}
           ListFooterComponent={listFooterItem(navigation)}
         />
       </View>
@@ -31,17 +31,19 @@ export default function CustomersScreen({ navigation }) {
   );
 }
 
-function listItem(customer) {
+function listItem(navigation, customer) {
   return (
-    <View style={styles.listItem}>
-      <Text style={styles.listItem__name}>{customer.name}</Text>
-    </View>
+    <TouchableOpacity onPress={() => navigation.navigate("Customer overview", customer)}>
+      <View style={styles.listItem}>
+        <Text style={styles.listItem__name}>{customer.name}</Text>
+      </View>
+    </TouchableOpacity>
   );
 }
 
 const listFooterItem = (navigation) => {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Add new customer")}>
+    <TouchableOpacity onPress={() => navigation.navigate("Add new customer", )}>
       <View style={styles.listItem__footer}>
         <Text style={styles.listItem__footer__text}>Add a new customer</Text>
       </View>
