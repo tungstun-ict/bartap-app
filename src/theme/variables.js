@@ -48,14 +48,6 @@ export const mock = {
         total: 2.10,
       }
     },
-
-    {
-      id: 6,
-      name: "Dante",
-      currentBill: {
-        total: 2.10,
-      }
-    },
   ],
 
   //TODO: Convert ID to key for every customer
