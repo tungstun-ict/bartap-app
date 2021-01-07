@@ -2,7 +2,7 @@ import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import HomeScreen from "./src/screen/HomeScreen";
+import CurrentSessionScreen from "./src/screen/CurrentSessionScreen";
 import CustomersScreen from "./src/screen/CustomersScreen";
 import AddCustomerScreen from "./src/screen/AddCustomerScreen";
 import DrawerLayout from "./src/layout/DrawerLayout";
@@ -46,7 +46,7 @@ export default function App() {
           },
         }}
       >
-        <DrawerNavigator.Screen name="Session" component={HomeScreen} />
+        <DrawerNavigator.Screen name="Session" component={CurrentSessionScreen} />
         <DrawerNavigator.Screen name="Customers" component={CustomersStack} />
       </DrawerNavigator.Navigator>
     </NavigationContainer>
