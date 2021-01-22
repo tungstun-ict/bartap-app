@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import variables, { colors, mock } from "../theme/variables.js";
 import { Button } from "react-native";
 import HeaderLayout from "../layout/HeaderLayout";
+import BottomBarLayout from "../layout/CurrentSessionBottomBarLayout";
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
 
@@ -24,16 +25,21 @@ export default function CurrentSessionScreen({ navigation }) {
           />
         </View>
       </View>
+      <BottomBarLayout></BottomBarLayout>
     </SafeAreaView>
   );
 }
 
 function customerListItem(navigation, customer) {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Add a drink", customer)}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Add a drink", customer)}
+    >
       <View style={styles.customer}>
         <Text style={styles.customer__name}>{customer.name}</Text>
-        <Text style={styles.customer__total}>€{customer.currentBill.total}</Text>
+        <Text style={styles.customer__total}>
+          €{customer.currentBill.total}
+        </Text>
       </View>
     </TouchableOpacity>
   );
