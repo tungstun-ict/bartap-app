@@ -33,12 +33,12 @@ export default function CurrentSessionScreen({ navigation }) {
 function customerListItem(navigation, customer) {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Add a drink", customer)}
+      onPress={() => navigation.navigate("Drink Categories", customer)}
     >
       <View style={styles.customer}>
         <Text style={styles.customer__name}>{customer.name}</Text>
         <Text style={styles.customer__total}>
-          €{customer.currentBill.total}
+          €{customer.currentBill.total.toFixed(2)}
         </Text>
       </View>
     </TouchableOpacity>
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
     marginVertical: 10,
     height: 100,
-    width: 170,
+    width: 150,
     borderRadius: 5,
   },
   customer__name: {

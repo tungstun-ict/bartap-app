@@ -9,9 +9,11 @@ import DrawerLayout from "./src/layout/DrawerLayout";
 import { colors, mock } from "./src/theme/variables";
 import { StyleSheet } from "react-native";
 import CustomerOverviewScreen from "./src/screen/CustomerOverviewScreen";
+import DrinkCategoriesScreen from "./src/screen/DrinkCategoriesScreen";
 
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
+const SessionNavigator = createStackNavigator();
 
 export function CustomersStack() {
   return (
@@ -24,8 +26,26 @@ export function CustomersStack() {
         name="Add new customer"
         component={AddCustomerScreen}
       />
-      <CustomersNavigator.Screen name="Customer overview" component={CustomerOverviewScreen} />
+      <CustomersNavigator.Screen
+        name="Customer overview"
+        component={CustomerOverviewScreen}
+      />
     </CustomersNavigator.Navigator>
+  );
+}
+
+export function SessionStack() {
+  return (
+    <SessionNavigator.Navigator headerMode="none" intialRouteName="Current Session">
+      <SessionNavigator.Screen
+        name="Current Session"
+        component={CurrentSessionScreen}
+      />
+      <SessionNavigator.Screen
+        name="Drink Categories"
+        component={DrinkCategoriesScreen}
+      />
+    </SessionNavigator.Navigator>
   );
 }
 
@@ -46,7 +66,7 @@ export default function App() {
           },
         }}
       >
-        <DrawerNavigator.Screen name="Session" component={CurrentSessionScreen} />
+        <DrawerNavigator.Screen name="Session" component={SessionStack} />
         <DrawerNavigator.Screen name="Customers" component={CustomersStack} />
       </DrawerNavigator.Navigator>
     </NavigationContainer>
