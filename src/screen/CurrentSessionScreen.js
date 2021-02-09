@@ -1,6 +1,7 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
+import * as api from "../service/BarApiService.js";
 import variables, { colors, mock } from "../theme/variables.js";
 import { Button } from "react-native";
 import HeaderLayout from "../layout/HeaderLayout";
@@ -9,15 +10,16 @@ import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
 
 export default function CurrentSessionScreen({ navigation }) {
+  const session = api.getCurrentSession();
   return (
     <SafeAreaView style={styles.container}>
       <HeaderLayout navigation={navigation} />
       <View style={styles.session}>
-        <Text style={styles.session__title}>{mock.CURRENT_SESSION_NAME}</Text>
+        <Text style={styles.session__title}>{session.name}</Text>
         <View style={styles.session__customers}>
           <FlatList
             //Connect to API
-            data={mock.CURRENT_SESSION_CUSTOMERS}
+            data={session.customers}
             renderItem={({ item }) => customerListItem(navigation, item)}
             keyExtractor={(item) => item.id}
             numColumns={2}

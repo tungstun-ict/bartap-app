@@ -16,15 +16,17 @@ import { ceil } from "react-native-reanimated";
 
 export default function AddDrinksScreen({ route, navigation }) {
   const { customer, category } = route.params;
+  const categoryDrinks = api.getDrinksByCategory(category);
+
   return (
     <SafeAreaView style={styles.container}>
       <StackHeaderLayout navigation={navigation} />
-      <Text style={styles.title}>{mock.DRINKS_BEER.title}</Text>
+      <Text style={styles.title}>{categoryDrinks.title}</Text>
       <View style={styles.content}>
         <FlatList
           keyExtractor={(item) => item.id}
           style={styles.list}
-          data={mock.DRINKS_BEER.drinks}
+          data={categoryDrinks.drinks}
           renderItem={({ item }) => listItem(navigation, item, customer)}
         />
       </View>

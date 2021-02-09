@@ -33,7 +33,7 @@ export default function CustomersScreen({ navigation }) {
 
 function listItem(navigation, customer) {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Customer overview", customer)}>
+    <TouchableOpacity onPress={() => navigation.navigate("Customer overview", customer.id)}>
       <View style={styles.listItem}>
         <Text style={styles.listItem__name}>{customer.name}</Text>
       </View>
