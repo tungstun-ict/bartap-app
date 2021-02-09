@@ -50,6 +50,23 @@ export const mock = {
     },
   ],
 
+  DRINKS_CATEGORIES: [
+    { id: 1, name: "Soft drinks"},
+    { id: 2, name: "Beer"},
+    { id: 3, name: "Wines"},
+    { id: 4, name: "Mixes"},
+  ],
+
+  DRINKS_BEER: {
+    title: "Beers",
+    drinks: [
+      { id: 1, name: "Heiniken vaasje", price: 1.25},
+      { id: 2, name: "Heiniken fluitje", price: 1.00},
+      { id: 3, name: "la Chouffe", price: 2.50},
+      { id: 4, name: "Hertog Jan flesje", price: 1.20},
+    ]
+  },
+  
   //TODO: Convert ID to key for every customer
   CUSTOMERS: [
     {

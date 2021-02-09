@@ -33,7 +33,7 @@ export default function CurrentSessionScreen({ navigation }) {
 function customerListItem(navigation, customer) {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Drink Categories", customer)}
+      onPress={() => navigation.navigate("Drink Categories", { customer })}
     >
       <View style={styles.customer}>
         <Text style={styles.customer__name}>{customer.name}</Text>

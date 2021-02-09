@@ -10,6 +10,7 @@ import { colors, mock } from "./src/theme/variables";
 import { StyleSheet } from "react-native";
 import CustomerOverviewScreen from "./src/screen/CustomerOverviewScreen";
 import DrinkCategoriesScreen from "./src/screen/DrinkCategoriesScreen";
+import AddDrinksScreen from "./src/screen/AddDrinkScreen";
 
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
@@ -44,6 +45,10 @@ export function SessionStack() {
       <SessionNavigator.Screen
         name="Drink Categories"
         component={DrinkCategoriesScreen}
+      />
+      <SessionNavigator.Screen
+        name="Add Drink"
+        component={AddDrinksScreen}
       />
     </SessionNavigator.Navigator>
   );
