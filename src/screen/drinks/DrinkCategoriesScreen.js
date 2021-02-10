@@ -1,9 +1,9 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
-import { colors, mock } from "../theme/variables.js";
+import { colors, mock } from "../../theme/variables.js";
 
-import StackHeaderLayout from "../layout/StackHeaderLayout";
+import StackHeaderLayout from "../../layout/StackHeaderLayout";
 
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";

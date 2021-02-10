@@ -1,5 +1,4 @@
 import React from "react";
-import * as api from "../service/BarApiService.js";
 import {
   SafeAreaView,
   StyleSheet,
@@ -9,49 +8,48 @@ import {
   Button,
   FlatList,
 } from "react-native";
-import variables, { colors, mock, sizes } from "../theme/variables.js";
-import StackHeaderLayout from "../layout/StackHeaderLayout";
+import variables, { colors, mock, sizes } from "../../theme/variables.js";
+import HeaderLayout from "../../layout/HeaderLayout";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 
-export default function AddDrinksScreen({ route, navigation }) {
-  const { customer, category } = route.params;
-  const categoryDrinks = api.getDrinksByCategory(category);
-
+export default function CustomersScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} />
-      <Text style={styles.title}>{categoryDrinks.title}</Text>
+      <HeaderLayout navigation={navigation} />
+      <Text style={styles.title}>Customers</Text>
       <View style={styles.content}>
         <FlatList
           keyExtractor={(item) => item.id}
           style={styles.list}
-          data={categoryDrinks.drinks}
-          renderItem={({ item }) => listItem(navigation, item, customer)}
+          data={mock.CUSTOMERS}
+          renderItem={({ item }) => listItem(navigation, item)}
+          ListFooterComponent={listFooterItem(navigation)}
         />
       </View>
     </SafeAreaView>
   );
 }
 
-function listItem(navigation, drink, customer) {
+function listItem(navigation, customer) {
   return (
-    <TouchableOpacity
-      onPress={() => handlePress(navigation, drink, customer)}
-    >
+    <TouchableOpacity onPress={() => navigation.navigate("Customer overview", customer.id)}>
       <View style={styles.listItem}>
-        <Text style={styles.listItem__name}>{drink.name}</Text>
-        <Text style={styles.listItem__price}>€{drink.price.toFixed(2)}</Text>
+        <Text style={styles.listItem__name}>{customer.name}</Text>
       </View>
     </TouchableOpacity>
   );
 }
 
-function handlePress(navigation, drink, customer) {
-  api.addDrink(customer, drink);
-  
-  navigation.navigate("Current Session");
-}
+const listFooterItem = (navigation) => {
+  return (
+    <TouchableOpacity onPress={() => navigation.navigate("Add new customer", )}>
+      <View style={styles.listItem__footer}>
+        <Text style={styles.listItem__footer__text}>Add a new customer</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -83,7 +81,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start",
     height: 50,
     backgroundColor: colors.BACKGROUND,
     borderBottomColor: colors.ELEMENT_BACKGROUND,
@@ -93,12 +90,6 @@ const styles = StyleSheet.create({
   listItem__name: {
     fontSize: 20,
     color: colors.TEXT_PRIMARY,
-  },
-  listItem__price: {
-    fontSize: 20,
-    color: colors.TEXT_PRIMARY,
-    fontWeight: "bold",
-    marginLeft: "auto",
   },
   listItem__footer: {
     flex: 1,

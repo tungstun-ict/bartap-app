@@ -16,6 +16,7 @@ export function getDrinksByCategory(category) {
 
 export function getCurrentSession() {
   return {
+    id: 1,
     name: "Oudjaarsavond",
     customers: [
       {
@@ -51,8 +52,80 @@ export function getCurrentSession() {
 }
 
 export function getCustomerById(id) {
-    return {
-        name: "customer " + id,
-        id: id
-    }
+  return {
+    name: "customer " + id,
+    id: id,
+  };
+}
+
+export function getBillBySessionIdAndCustomerId(sessionId, customerId) {
+  return {
+    customerId: customerId,
+    sessionId: sessionId,
+    totalPrice: 31.88,
+    orders: [
+      {
+        id: 1,
+        timestamp: "2021-02-10T22:29:45.846+00:00",
+        totalPrice: 19.38,
+        orderlines: [
+          {
+            product: {
+              id: 1,
+              name: "Heiniken vaasje",
+              price: 1.25,
+            },
+            amount: 4,
+          },
+          {
+            product: {
+              id: 3,
+              name: "la Chouffe",
+              price: 2.5,
+            },
+            amount: 1,
+          },
+          {
+            product: {
+              id: 4,
+              name: "Hertog Jan Flesje",
+              price: 1.25,
+            },
+            amount: 8,
+          },
+        ],
+      },
+      {
+        id: 2,
+        timestamp: "2021-02-10T23:33:11.846+00:00",
+        totalPrice: 12.50,
+        orderlines: [
+          {
+            product: {
+              id: 1,
+              name: "Heiniken vaasje",
+              price: 1.25,
+            },
+            amount: 5,
+          },
+          {
+            product: {
+              id: 3,
+              name: "la Chouffe",
+              price: 2.5,
+            },
+            amount: 2,
+          },
+          {
+            product: {
+              id: 4,
+              name: "Hertog Jan Flesje",
+              price: 1.25,
+            },
+            amount: 1,
+          },
+        ],
+      },
+    ],
+  };
 }

@@ -2,15 +2,16 @@ import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import CurrentSessionScreen from "./src/screen/CurrentSessionScreen";
-import CustomersScreen from "./src/screen/CustomersScreen";
-import AddCustomerScreen from "./src/screen/AddCustomerScreen";
+import CurrentSessionScreen from "./src/screen/session/CurrentSessionScreen";
+import CustomersScreen from "./src/screen/customer/CustomersScreen";
+import AddCustomerScreen from "./src/screen/customer/AddCustomerScreen";
 import DrawerLayout from "./src/layout/DrawerLayout";
 import { colors, mock } from "./src/theme/variables";
 import { StyleSheet } from "react-native";
-import CustomerOverviewScreen from "./src/screen/CustomerOverviewScreen";
-import DrinkCategoriesScreen from "./src/screen/DrinkCategoriesScreen";
-import AddDrinksScreen from "./src/screen/AddDrinkScreen";
+import CustomerOverviewScreen from "./src/screen/customer/CustomerOverviewScreen";
+import DrinkCategoriesScreen from "./src/screen/drinks/DrinkCategoriesScreen";
+import AddDrinksScreen from "./src/screen/drinks/AddDrinkScreen";
+import SessionBillScreen from "./src/screen/session/SessionBillScreen";
 
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
@@ -49,6 +50,10 @@ export function SessionStack() {
       <SessionNavigator.Screen
         name="Add Drink"
         component={AddDrinksScreen}
+      />
+      <SessionNavigator.Screen
+        name="Session Bill"
+        component={SessionBillScreen}
       />
     </SessionNavigator.Navigator>
   );

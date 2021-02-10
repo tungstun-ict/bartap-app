@@ -1,18 +1,17 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
-import * as api from "../service/BarApiService.js";
 import { StyleSheet, Text, View, Image } from "react-native";
-import variables, { colors, mock } from "../theme/variables.js";
+import variables, { colors, mock } from "../../theme/variables.js";
 import { Button } from "react-native";
-import StackHeaderLayout from "../layout/StackHeaderLayout.js";
+import HeaderLayout from "../../layout/HeaderLayout";
+import StackHeaderLayout from "../../layout/StackHeaderLayout.js";
 
-export default function CustomerOverviewScreen({ route, navigation }) {
-  const customer = api.getCustomerById(route.params);
+export default function AddCustomerScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} title={customer.name} />
+      <StackHeaderLayout navigation={navigation} title="Add Customer" />
       <View style={styles.content}>
-        <Text style={styles.text}>{customer.id}</Text>
+        <Text style={styles.text}>Add customer</Text>
       </View>
     </SafeAreaView>
   );

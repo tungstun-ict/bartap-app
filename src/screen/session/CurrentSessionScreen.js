@@ -1,11 +1,11 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
-import * as api from "../service/BarApiService.js";
-import variables, { colors, mock } from "../theme/variables.js";
+import * as api from "../../service/BarApiService.js";
+import variables, { colors, mock } from "../../theme/variables.js";
 import { Button } from "react-native";
-import HeaderLayout from "../layout/HeaderLayout";
-import BottomBarLayout from "../layout/CurrentSessionBottomBarLayout";
+import HeaderLayout from "../../layout/HeaderLayout";
+import BottomBarLayout from "../../layout/CurrentSessionBottomBarLayout";
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
 
@@ -20,7 +20,7 @@ export default function CurrentSessionScreen({ navigation }) {
           <FlatList
             //Connect to API
             data={session.customers}
-            renderItem={({ item }) => customerListItem(navigation, item)}
+            renderItem={({ item }) => customerListItem(navigation, item, session.id)}
             keyExtractor={(item) => item.id}
             numColumns={2}
             columnWrapperStyle={styles.customers__row}
@@ -32,10 +32,11 @@ export default function CurrentSessionScreen({ navigation }) {
   );
 }
 
-function customerListItem(navigation, customer) {
+function customerListItem(navigation, customer, sessionId) {
   return (
     <TouchableOpacity
       onPress={() => navigation.navigate("Drink Categories", { customer })}
+      onLongPress={() => navigation.navigate("Session Bill", { customer, sessionId })}
     >
       <View style={styles.customer}>
         <Text style={styles.customer__name}>{customer.name}</Text>
