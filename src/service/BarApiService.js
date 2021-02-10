@@ -66,7 +66,7 @@ export function getBillBySessionIdAndCustomerId(sessionId, customerId) {
     orders: [
       {
         id: 1,
-        timestamp: "2021-02-10T22:29:45.846+00:00",
+        timestamp: "2021-02-10T21:29:45.846+00:00",
         totalPrice: 19.38,
         orderlines: [
           {
@@ -93,11 +93,19 @@ export function getBillBySessionIdAndCustomerId(sessionId, customerId) {
             },
             amount: 8,
           },
+          {
+            product: {
+              id: 5,
+              name: "Heiniken fluitje",
+              price: 1.00,
+            },
+            amount: 6,
+          },
         ],
       },
       {
         id: 2,
-        timestamp: "2021-02-10T23:33:11.846+00:00",
+        timestamp: "2021-02-10T21:33:11.846+00:00",
         totalPrice: 12.50,
         orderlines: [
           {
@@ -128,4 +136,30 @@ export function getBillBySessionIdAndCustomerId(sessionId, customerId) {
       },
     ],
   };
+}
+
+export function getAllSessions() {
+  return [
+    {
+      id: 2,
+      name: "Avond met Sep",
+      timestamp: "2020-12-21T21:29:45.846+00:00",
+    },
+    {
+      id: 1,
+      name: "Eerste kerstdag",
+      timestamp: "2020-12-25T21:29:45.846+00:00",
+    },
+    
+    {
+      id: 3,
+      name: "Avond met Feestcommisie",
+      timestamp: "2020-11-12T21:29:45.846+00:00",
+    },
+    {
+      id: 4,
+      name: "Avond met Sep",
+      timestamp: "2020-10-26T21:29:45.846+00:00",
+    },
+  ];
 }

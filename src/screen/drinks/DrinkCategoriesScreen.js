@@ -2,12 +2,9 @@ import React from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
 import { colors, mock } from "../../theme/variables.js";
-
 import StackHeaderLayout from "../../layout/StackHeaderLayout";
-
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
-import { color, greaterOrEq } from "react-native-reanimated";
 
 export default function DrinkCategoriesScreen({ route, navigation }) {
   const { customer } = route.params;
@@ -25,8 +22,6 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
             columnWrapperStyle={styles.categories__row}
           />
         </View>
-        {/* Debug line */}
-        <Text style={{color: "#fff"}}>{customer.name}</Text>
       </View>
     </SafeAreaView>
   );

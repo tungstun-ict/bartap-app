@@ -12,9 +12,11 @@ import CustomerOverviewScreen from "./src/screen/customer/CustomerOverviewScreen
 import DrinkCategoriesScreen from "./src/screen/drinks/DrinkCategoriesScreen";
 import AddDrinksScreen from "./src/screen/drinks/AddDrinkScreen";
 import SessionBillScreen from "./src/screen/session/SessionBillScreen";
+import PastSessionsScreen from "./src/screen/session/PastSessionsScreen";
 
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
+const PastNavigator = createStackNavigator();
 const SessionNavigator = createStackNavigator();
 
 export function CustomersStack() {
@@ -34,6 +36,17 @@ export function CustomersStack() {
       />
     </CustomersNavigator.Navigator>
   );
+}
+
+export function PastStack() {
+  return(
+    <PastNavigator.Navigator headerMode="none" initialRouteName="Sessions Overview">
+      <PastNavigator.Screen
+        name="Sessions Overview"
+        component={PastSessionsScreen}>
+      </PastNavigator.Screen>
+    </PastNavigator.Navigator>
+  )
 }
 
 export function SessionStack() {
@@ -77,6 +90,7 @@ export default function App() {
         }}
       >
         <DrawerNavigator.Screen name="Session" component={SessionStack} />
+        <DrawerNavigator.Screen name="Past" component={PastStack} />
         <DrawerNavigator.Screen name="Customers" component={CustomersStack} />
       </DrawerNavigator.Navigator>
     </NavigationContainer>
