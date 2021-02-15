@@ -27,7 +27,7 @@ export default function CurrentSessionScreen({ navigation }) {
           />
         </View>
       </View>
-      <BottomBarLayout></BottomBarLayout>
+      <BottomBarLayout sessionId={session.id}></BottomBarLayout>
     </SafeAreaView>
   );
 }

@@ -67,74 +67,37 @@ export function getBillBySessionIdAndCustomerId(sessionId, customerId) {
       {
         id: 1,
         timestamp: "2021-02-10T21:29:45.846+00:00",
-        totalPrice: 19.38,
-        orderlines: [
-          {
-            product: {
-              id: 1,
-              name: "Heiniken vaasje",
-              price: 1.25,
-            },
-            amount: 4,
-          },
-          {
-            product: {
-              id: 3,
-              name: "la Chouffe",
-              price: 2.5,
-            },
-            amount: 1,
-          },
-          {
-            product: {
-              id: 4,
-              name: "Hertog Jan Flesje",
-              price: 1.25,
-            },
-            amount: 8,
-          },
-          {
-            product: {
-              id: 5,
-              name: "Heiniken fluitje",
-              price: 1.00,
-            },
-            amount: 6,
-          },
-        ],
+        totalPrice: 5.00,
+        product: {
+          id: 1,
+          name: "Heiniken vaasje",
+          price: 1.25,
+        },
+        amount: 4,
       },
       {
         id: 2,
-        timestamp: "2021-02-10T21:33:11.846+00:00",
-        totalPrice: 12.50,
-        orderlines: [
-          {
-            product: {
-              id: 1,
-              name: "Heiniken vaasje",
-              price: 1.25,
-            },
-            amount: 5,
-          },
-          {
-            product: {
-              id: 3,
-              name: "la Chouffe",
-              price: 2.5,
-            },
-            amount: 2,
-          },
-          {
-            product: {
-              id: 4,
-              name: "Hertog Jan Flesje",
-              price: 1.25,
-            },
-            amount: 1,
-          },
-        ],
+        timestamp: "2021-02-10T22:21:45.846+00:00",
+        totalPrice: 2.00,
+        product: {
+          id: 1,
+          name: "Hertog Jan Flesje",
+          price: 1.00,
+        },
+        amount: 2,
       },
-    ],
+      {
+        id: 3,
+        timestamp: "2021-02-10T19:18:45.846+00:00",
+        totalPrice: 2.50,
+        product: {
+          id: 1,
+          name: "Heiniken vaasje",
+          price: 1.25,
+        },
+        amount: 2,
+      }
+    ]
   };
 }
 
@@ -162,4 +125,8 @@ export function getAllSessions() {
       timestamp: "2020-10-26T21:29:45.846+00:00",
     },
   ];
+}
+
+export function lockSession(sessionId) {
+  console.log("locked session " + sessionId);
 }

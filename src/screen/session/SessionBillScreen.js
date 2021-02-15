@@ -39,23 +39,9 @@ function listItem(order) {
   return (
     <View style={styles.listItemOrder}>
       <Text style={styles.listItem__timestamp}>{timestamp.getHours()}:{timestamp.getMinutes()}</Text>
-      <FlatList 
-        keyExtractor={(item) => item.product.id}
-        style={styles.list}
-        data={order.orderlines}
-        renderItem={({ item }) => orderLineListItem(item)}
-        />
-      
-    </View>
-  );
-}
-
-function orderLineListItem(orderLine) {
-  return(
-    <View style={styles.listItemOrderLine}>
-      <Text style={styles.listItemOrderLine__name}>{orderLine.product.name}</Text>
-      <Text style={styles.listItemOrderLine__amount}>{orderLine.amount} x</Text>
-      <Text style={styles.listItemOrderLine__price}>€{orderLine.product.price.toFixed(2)}</Text>
+      <Text style={styles.listItemOrderLine__name}>{order.product.name}</Text>
+      <Text style={styles.listItemOrderLine__amount}>{order.amount} x</Text>
+      <Text style={styles.listItemOrderLine__price}>€{order.totalPrice.toFixed(2)}</Text>
     </View>
   );
 }
@@ -118,19 +104,18 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    height: "auto",
     backgroundColor: colors.BACKGROUND,
     borderBottomColor: colors.ELEMENT_BACKGROUND,
     borderBottomWidth: 2,
     width: "95%",
+    height: 50,
   },
   listItemOrderLine: {
     alignSelf: "center",
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start",
-    height: 30,
+    height: 50,
     backgroundColor: colors.BACKGROUND,
     borderBottomWidth: 2,
     width: "95%",
@@ -138,28 +123,32 @@ const styles = StyleSheet.create({
   listItem__name: {
     fontSize: 20,
     color: colors.TEXT_PRIMARY,
+    alignSelf: "center",
     marginRight: 10,
   },
-
   listItem__timestamp: {
     fontSize: 20,
     color: colors.TEXT_SECONDARY,
+    alignSelf: "center",
     marginRight: 10,
   },
   listItemOrderLine__name: {
     fontSize: 15,
     color: colors.TEXT_PRIMARY,
+    alignSelf: "center",
     marginRight: 10,
   },
   listItemOrderLine__amount: {
     fontSize: 15,
     color: colors.TEXT_SECONDARY,
+    alignSelf: "center",
     marginLeft: "auto",
   },
   listItemOrderLine__price: {
     fontSize: 15,
     color: colors.TEXT_SECONDARY,
     fontWeight: "bold",
+    alignSelf: "center",
     marginLeft: 10,
   },
   listItem__price: {
