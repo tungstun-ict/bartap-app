@@ -24,7 +24,7 @@ export default function AddDrinksScreen({ route, navigation }) {
       <Text style={styles.title}>{categoryDrinks.title}</Text>
       <View style={styles.content}>
         <FlatList
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           style={styles.list}
           data={categoryDrinks.drinks}
           renderItem={({ item }) => listItem(navigation, item, customer)}
@@ -50,7 +50,7 @@ function listItem(navigation, drink, customer) {
 function handlePress(navigation, drink, customer) {
   api.addDrink(customer, drink);
   
-  navigation.navigate("Current Session");
+  navigation.navigate("Session");
 }
 
 const styles = StyleSheet.create({

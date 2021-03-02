@@ -17,7 +17,7 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
             //Connect to API
             data={mock.DRINKS_CATEGORIES}
             renderItem={({ item }) => categoryListItem(navigation, customer, item)}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id.toString()}
             numColumns={2}
             columnWrapperStyle={styles.categories__row}
           />

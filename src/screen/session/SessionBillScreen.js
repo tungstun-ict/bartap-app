@@ -23,7 +23,7 @@ export default function SessionBillScreen({ route, navigation }) {
       <Text style={styles.title}>Bill {customer.name}</Text>
       <View style={styles.content}>
         <FlatList
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           style={styles.list}
           data={bill.orders}
           renderItem={({ item }) => listItem(item)}

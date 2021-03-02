@@ -51,6 +51,50 @@ export function getCurrentSession() {
   };
 }
 
+export function getSessionById(sessionId) {
+  return {
+    id: sessionId,
+    name: "Een vorige sessie",
+    customers: [
+      {
+        id: 1,
+        name: "Jort",
+        currentBill: {
+          total: 21.5,
+        },
+      },
+      {
+        id: 3,
+        name: "Jona",
+        currentBill: {
+          total: 26.5,
+        },
+      },
+      {
+        id: 5,
+        name: "Fee",
+        currentBill: {
+          total: 7.49,
+        },
+      },
+      {
+        id: 6,
+        name: "Dante",
+        currentBill: {
+          total: 2.1,
+        },
+      },
+      {
+        id: 7,
+        name: "Sep",
+        currentBill: {
+          total: 2.1,
+        },
+      },
+    ],
+  };
+}
+
 export function getCustomerById(id) {
   return {
     name: "customer " + id,

@@ -16,9 +16,9 @@ import HeaderLayout from "../../layout/HeaderLayout.js";
 
 export default function PastSessionsScreen({ route, navigation }) {
   const sessions = api.getAllSessions();
-  sessions.sort(function(x, y){
+  sessions.sort(function (x, y) {
     return new Date(y.timestamp) - new Date(x.timestamp);
-})
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,7 +26,7 @@ export default function PastSessionsScreen({ route, navigation }) {
       <Text style={styles.title}>Past sessions</Text>
       <View style={styles.content}>
         <FlatList
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           style={styles.list}
           data={sessions}
           renderItem={({ item }) => listItem(navigation, item)}
@@ -39,21 +39,24 @@ export default function PastSessionsScreen({ route, navigation }) {
 function listItem(navigation, session) {
   const timestamp = new Date(session.timestamp);
   return (
-    <TouchableOpacity
-      onPress={() => handlePress(navigation)}
-    >
+    <TouchableOpacity onPress={() => handlePress(navigation, session.id)}>
       <View style={styles.listItem}>
-        <Text numberOfLines = { 1 } style={styles.listItem__name}>{session.name}</Text>
-        <Text style={styles.listItem__price}>{timestamp.getDate()}-{timestamp.getMonth()+1}-{timestamp.getFullYear()}</Text>
+        <Text numberOfLines={1} style={styles.listItem__name}>
+          {session.name}
+        </Text>
+        <Text style={styles.listItem__price}>
+          {timestamp.getDate()}-{timestamp.getMonth() + 1}-
+          {timestamp.getFullYear()}
+        </Text>
       </View>
     </TouchableOpacity>
   );
 }
 
-function handlePress(navigation, drink, customer) {
-  api.addDrink(customer, drink);
-  
-  navigation.navigate("Current Session");
+function handlePress(navigation, sessionId) {
+  navigation.navigate(
+    "Past session", {sessionId: sessionId}
+  );
 }
 
 const styles = StyleSheet.create({

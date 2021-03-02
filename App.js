@@ -2,7 +2,7 @@ import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import CurrentSessionScreen from "./src/screen/session/CurrentSessionScreen";
+import SessionScreen from "./src/screen/session/SessionScreen";
 import CustomersScreen from "./src/screen/customer/CustomersScreen";
 import AddCustomerScreen from "./src/screen/customer/AddCustomerScreen";
 import DrawerLayout from "./src/layout/DrawerLayout";
@@ -45,6 +45,9 @@ export function PastStack() {
         name="Sessions Overview"
         component={PastSessionsScreen}>
       </PastNavigator.Screen>
+      <PastNavigator.Screen
+        name="Past session"
+        component={SessionScreen}/>
     </PastNavigator.Navigator>
   )
 }
@@ -53,8 +56,8 @@ export function SessionStack() {
   return (
     <SessionNavigator.Navigator headerMode="none" intialRouteName="Current Session">
       <SessionNavigator.Screen
-        name="Current Session"
-        component={CurrentSessionScreen}
+        name="Session"
+        component={SessionScreen}
       />
       <SessionNavigator.Screen
         name="Drink Categories"

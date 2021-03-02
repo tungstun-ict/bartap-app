@@ -20,7 +20,7 @@ export default function CustomersScreen({ navigation }) {
       <Text style={styles.title}>Customers</Text>
       <View style={styles.content}>
         <FlatList
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.id.toString()}
           style={styles.list}
           data={mock.CUSTOMERS}
           renderItem={({ item }) => listItem(navigation, item)}

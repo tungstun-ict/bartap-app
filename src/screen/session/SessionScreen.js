@@ -5,12 +5,16 @@ import * as api from "../../service/BarApiService.js";
 import variables, { colors, mock } from "../../theme/variables.js";
 import { Button } from "react-native";
 import HeaderLayout from "../../layout/HeaderLayout";
-import BottomBarLayout from "../../layout/CurrentSessionBottomBarLayout";
+import BottomBarLayout from "../../layout/SessionBottomBarLayout";
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
 
-export default function CurrentSessionScreen({ navigation }) {
-  const session = api.getCurrentSession();
+export default function SessionScreen({ route, navigation }) {
+  
+  
+  
+  let session = getSession(route);
+  
   return (
     <SafeAreaView style={styles.container}>
       <HeaderLayout navigation={navigation} />
@@ -21,7 +25,7 @@ export default function CurrentSessionScreen({ navigation }) {
             //Connect to API
             data={session.customers}
             renderItem={({ item }) => customerListItem(navigation, item, session.id)}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.id.toString()}
             numColumns={2}
             columnWrapperStyle={styles.customers__row}
           />
@@ -46,6 +50,16 @@ function customerListItem(navigation, customer, sessionId) {
       </View>
     </TouchableOpacity>
   );
+}
+
+function getSession(route) {
+  console.log(route)
+  if(route.params === undefined) {
+    console.log("Loading current session")
+    return api.getCurrentSession();
+  }
+  console.log("loading session: " + route.params.sessionId + route.params)
+  return api.getSessionById(route.params.sessionId);
 }
 
 const styles = StyleSheet.create({
