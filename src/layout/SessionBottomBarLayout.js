@@ -10,10 +10,13 @@ import { Alert } from "react-native";
 export default function BottomBarLayout({ sessionId }) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.button__text}>1</Text>
+      <TouchableOpacity style={styles.buttonDisabled}>
+      <Image
+          style={styles.button__image}
+          source={require("../assets/clock.png")}
+        />
       </TouchableOpacity>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.buttonDisabled}>
         <Image
           style={styles.button__image}
           source={require("../assets/stats.png")}
@@ -70,6 +73,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
+  },
+  buttonDisabled: {
+    marginHorizontal: 20,
+    flex: 1,
+    height: 70,
+    width: 70,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.ELEMENT_BACKGROUND_SELECTED,
   },
   button__image: {
     height: 40,

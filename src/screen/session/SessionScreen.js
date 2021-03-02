@@ -123,4 +123,17 @@ const styles = StyleSheet.create({
     textAlign: "right",
     paddingRight: 10,
   },
+  addCustomer: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: colors.ELEMENT_BACKGROUND_SELECTED,
+    alignItems: "center",
+    justifyContent: "center",
+    marginVertical: 10,
+    height: 50,
+    borderRadius: 5,
+  },
+  addCustomer__text: {
+      fontSize: 30,
+  }
 });
