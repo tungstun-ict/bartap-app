@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
 import { colors, mock } from "../../theme/variables.js";
 import StackHeaderLayout from "../../layout/StackHeaderLayout";
-import { FlatList } from "react-native";
+import { FlatList, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native";
 
 export default function DrinkCategoriesScreen({ route, navigation }) {
@@ -69,8 +69,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,
-    height: 100,
-    width: 150,
+    height: Dimensions.get('window').height / 7 ,
+    width: Dimensions.get('window').width / 2 -30,
     borderRadius: 5,
   },
   categories__row: {

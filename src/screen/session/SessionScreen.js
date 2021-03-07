@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import variables, { colors, mock } from "../../theme/variables.js";
-import { Button } from "react-native";
+import { Button, Dimensions } from "react-native";
 import HeaderLayout from "../../layout/HeaderLayout";
 import BottomBarLayout from "../../layout/SessionBottomBarLayout";
 import { FlatList } from "react-native";
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: colors.BACKGROUND,
     alignItems: "center",
-    justifyContent: "flex-start",
+    justifyContent: "flex-start",   
   },
   content: {
     flex: 1,
@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
     marginVertical: 10,
-    height: 100,
-    width: 150,
+    height: Dimensions.get('window').height / 7 ,
+    width: Dimensions.get('window').width / 2 -30,
     borderRadius: 5,
   },
   customer__name: {

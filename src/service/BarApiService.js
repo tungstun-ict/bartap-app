@@ -47,6 +47,13 @@ export function getCurrentSession() {
           total: 2.1,
         },
       },
+      {
+        id: 7,
+        name: "Sep",
+        currentBill: {
+          total: 2.1,
+        },
+      },
     ],
   };
 }
