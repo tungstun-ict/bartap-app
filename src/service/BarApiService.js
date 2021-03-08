@@ -1,26 +1,43 @@
 import { Alert } from "react-native";
 
-const api_url = "https://tungstun-bar-api.herokuapp.com/api/";
+const api_url = "https://tungstun-bar-api.herokuapp.com/api";
+let token;
 
 function throwError(message) {
   Alert.alert(
-    'Error',
+    "Error",
     message,
     [
       {
-        text: 'Yes',
-        style: 'cancel'
-      }
+        text: "Yes",
+        style: "cancel",
+      },
     ],
-    { cancelable: false }
+    { cancelable: false },
   );
 }
 
 export function login(email, password) {
-  console.log("logging in: " + email + password);
-  return( {
-    bars: [0, 1]
+  let data = { "username": email, "password": password };
+  fetch(api_url + "/login", {
+    method: "POST",
+    headers: {
+      Accept: 'application/json',
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
   })
+    .then((response) => {
+      if (response.ok) return response.headers;
+      else throw "d gebruikersnaam/wachtwoord";
+    })
+    .then((headers) => {
+      token = headers.get("authorization");
+      console.log(token);
+    })
+    .catch((error) => {
+      throwError();
+    });
 }
 
 export function addDrink(customer, drink) {
@@ -45,6 +62,28 @@ export function createCustomer(name, phone) {
 }
 
 export function getCurrentSession() {
+  console.log("Getting the current session...")
+
+  fetch(api_url + "/bars/" + 2 + "/sessions/" + 6, {
+    method: "GET",
+    headers: {
+      "authorization": token,
+      Accept: 'application/json',
+      "Content-Type": "application/json",
+    }
+  })
+    .then((response) => {
+      console.log("Session status: " + response.status)
+      if (response.ok) return response.json();
+      else throw "d gebruikersnaam/wachtwoord";
+    })
+    .then((json) => {
+      console.log(json);
+    })
+    .catch((error) => {
+      throwError();
+    });
+
   return {
     id: 1,
     name: "Oudjaarsavond",
@@ -148,7 +187,7 @@ export function getBillBySessionIdAndCustomerId(sessionId, customerId) {
       {
         id: 1,
         timestamp: "2021-02-10T21:29:45.846+00:00",
-        totalPrice: 5.00,
+        totalPrice: 5.0,
         product: {
           id: 1,
           name: "Heiniken vaasje",
@@ -159,26 +198,26 @@ export function getBillBySessionIdAndCustomerId(sessionId, customerId) {
       {
         id: 2,
         timestamp: "2021-02-10T22:21:45.846+00:00",
-        totalPrice: 2.00,
+        totalPrice: 2.0,
         product: {
           id: 1,
           name: "Hertog Jan Flesje",
-          price: 1.00,
+          price: 1.0,
         },
         amount: 2,
       },
       {
         id: 3,
         timestamp: "2021-02-10T19:18:45.846+00:00",
-        totalPrice: 2.50,
+        totalPrice: 2.5,
         product: {
           id: 1,
           name: "Heiniken vaasje",
           price: 1.25,
         },
         amount: 2,
-      }
-    ]
+      },
+    ],
   };
 }
 
@@ -194,7 +233,7 @@ export function getAllSessions() {
       name: "Eerste kerstdag",
       timestamp: "2020-12-25T21:29:45.846+00:00",
     },
-    
+
     {
       id: 3,
       name: "Avond met Feestcommisie",

@@ -47,9 +47,9 @@ export default function LoginScreen({ navigation }) {
 
 function login(email, password, navigation) {
   let credentials = api.login(email, password)
-  if(credentials.bars in credentials) {
-    navigation.navigate("Session", credentials.bars[0]);
-  }
+  // if(credentials.bars in credentials) {
+  //   navigation.navigate("Session", credentials.bars[0]);
+  // }
 
 }
 
