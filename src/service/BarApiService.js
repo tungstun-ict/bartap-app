@@ -14,6 +14,11 @@ export function getDrinksByCategory(category) {
   };
 }
 
+export function createCustomer(name) {
+  console.log("Creating customer: " + name);
+  return 200;
+}
+
 export function getCurrentSession() {
   return {
     id: 1,
