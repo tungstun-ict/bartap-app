@@ -1,43 +1,40 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
-import variables, { colors, mock } from "../../theme/variables.js";
-import { Button } from "react-native";
+import variables, { colors, mock, sizes } from "../../theme/variables.js";
+import { Button, TextInput, TouchableOpacity } from "react-native";
 import HeaderLayout from "../../layout/HeaderLayout";
-import StackHeaderLayout from "../../layout/StackHeaderLayout.js";
-import { TextInput } from "react-native";
-import { Dimensions } from "react-native";
 import * as api from "../../service/BarApiService.js";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { ceil } from "react-native-reanimated";
-import { apisAreAvailable } from "expo";
 
-export default function AddCustomerScreen({ navigation }) {
-  
-  let name = "";
-  let phone = "";
-  
+export default function LoginScreen({ navigation }) {
+
+  let email = "";
+  let password = "";
+
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} title="Add Customer" />
+      <HeaderLayout navigation={navigation} />
+      <Text style={styles.title}>Log in</Text>
       <View style={styles.content}>
-        <Text style={styles.input__label}>Name</Text>
+        <Text style={styles.input__label}>Email</Text>
         <TextInput
-          autoCompleteType={"name"}
-          onChangeText={given => name = given}
+          autoCompleteType={"email"}
+          onChangeText={(given) => (email = given)}
+          keyboardType={"email-address"}
           multiline={false}
           style={styles.input}
         />
-        <Text style={styles.input__label}>Phone number</Text>
+        <Text style={styles.input__label}>Password</Text>
         <TextInput
-          autoCompleteType={"tel"}
-          onChangeText={given => phone = given}
-          keyboardType={"phone-pad"}
+          autoCompleteType={"password"}
+          onChangeText={(given) => (password = given)}
+          keyboardType={"default"}
           multiline={false}
           style={styles.input}
+          secureTextEntry={true}
         />
         <TouchableOpacity 
-          onPress={() => createCustomer(name, phone, navigation)}
+          onPress={() => login(email, password, navigation)}
         style={styles.button__wrapper}>
           <View style={styles.button__submit}>
             <Text style={styles.button__text}>Submit</Text>
@@ -46,23 +43,22 @@ export default function AddCustomerScreen({ navigation }) {
       </View>
     </SafeAreaView>
   );
-  
-  
-}
-function createCustomer(name, phone, navigation) {
-  if(name !== "") {
-    let id = api.createCustomer(name, phone);
-    navigation.navigate("Customer overview", id)
-  }
 }
 
+function login(email, password, navigation) {
+  let credentials = api.login(email, password)
+  if(credentials.bars in credentials) {
+    navigation.navigate("Session", credentials.bars[0]);
+  }
+
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
     backgroundColor: colors.BACKGROUND,
-    alignItems: "center",
+    alignItems: "flex-start",
     justifyContent: "flex-start",
   },
   content: {
@@ -71,6 +67,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     paddingHorizontal: 10,
+  },
+  title: {
+    height: 40,
+    margin: 10,
+    color: colors.TEXT_PRIMARY,
+    fontSize: sizes.TITLE,
+    fontWeight: "bold",
   },
   text: {
     color: colors.TEXT_TERTIARY,
@@ -96,7 +99,6 @@ const styles = StyleSheet.create({
   },
   button__submit: {
     height: 50,
-    backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
     width: "100%",
     marginVertical: 10,
     justifyContent: "center",
@@ -105,7 +107,8 @@ const styles = StyleSheet.create({
   },
   button__wrapper: {
     minWidth: "100%",
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
+    borderRadius: 5,
     height: 50,
     alignItems: "center",
     justifyContent: "center",

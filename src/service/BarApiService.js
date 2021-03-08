@@ -1,3 +1,28 @@
+import { Alert } from "react-native";
+
+const api_url = "https://tungstun-bar-api.herokuapp.com/api/";
+
+function throwError(message) {
+  Alert.alert(
+    'Error',
+    message,
+    [
+      {
+        text: 'Yes',
+        style: 'cancel'
+      }
+    ],
+    { cancelable: false }
+  );
+}
+
+export function login(email, password) {
+  console.log("logging in: " + email + password);
+  return( {
+    bars: [0, 1]
+  })
+}
+
 export function addDrink(customer, drink) {
   console.log("Adding drink: " + drink.name + " to " + customer.name);
 }

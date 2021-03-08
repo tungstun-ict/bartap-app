@@ -13,11 +13,15 @@ import DrinkCategoriesScreen from "./src/screen/drinks/DrinkCategoriesScreen";
 import AddDrinksScreen from "./src/screen/drinks/AddDrinkScreen";
 import SessionBillScreen from "./src/screen/session/SessionBillScreen";
 import PastSessionsScreen from "./src/screen/session/PastSessionsScreen";
+import LoginScreen from "./src/screen/account/LoginScreen";
 
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
 const PastNavigator = createStackNavigator();
 const SessionNavigator = createStackNavigator();
+const PaymentNavigator = createStackNavigator();
+const StockNavigator = createStackNavigator();
+const AccountNavigator = createStackNavigator();
 
 export function CustomersStack() {
   return (
@@ -75,6 +79,33 @@ export function SessionStack() {
   );
 }
 
+export function PaymentStack() {
+  return (
+    <PaymentNavigator.Navigator headerMode="none">
+
+    </PaymentNavigator.Navigator>
+  )
+}
+
+export function StockStack() {
+  return (
+    <StockNavigator.Navigator headerMode="none">
+      
+    </StockNavigator.Navigator>
+  )
+}
+
+export function AccountStack() {
+  return (
+    <AccountNavigator.Navigator headerMode="none">
+      <AccountNavigator.Screen
+        name="Login"
+        component={LoginScreen}
+      />
+    </AccountNavigator.Navigator>
+  )
+}
+
 export default function App() {
   return (
     <NavigationContainer>
@@ -95,6 +126,9 @@ export default function App() {
         <DrawerNavigator.Screen name="Session" component={SessionStack} />
         <DrawerNavigator.Screen name="Past" component={PastStack} />
         <DrawerNavigator.Screen name="Customers" component={CustomersStack} />
+        <DrawerNavigator.Screen name="Payments" component={PaymentStack} />
+        <DrawerNavigator.Screen name="Stock" component={StockStack} />
+        <DrawerNavigator.Screen name="Account" component={AccountStack} />
       </DrawerNavigator.Navigator>
     </NavigationContainer>
   );
