@@ -14,8 +14,8 @@ export function getDrinksByCategory(category) {
   };
 }
 
-export function createCustomer(name) {
-  console.log("Creating customer: " + name);
+export function createCustomer(name, phone) {
+  console.log("Creating customer: " + name + phone);
   return 200;
 }
 

@@ -15,6 +15,7 @@ import { apisAreAvailable } from "expo";
 export default function AddCustomerScreen({ navigation }) {
   
   let name = "";
+  let phone = "";
   
   return (
     <SafeAreaView style={styles.container}>
@@ -27,8 +28,16 @@ export default function AddCustomerScreen({ navigation }) {
           multiline={false}
           style={styles.input}
         />
+        <Text style={styles.input__label}>Phone number</Text>
+        <TextInput
+          autoCompleteType={"tel"}
+          onChangeText={given => phone = given}
+          keyboardType={"phone-pad"}
+          multiline={false}
+          style={styles.input}
+        />
         <TouchableOpacity 
-          onPress={() => createCustomer(name, navigation)}
+          onPress={() => createCustomer(name, phone, navigation)}
         style={styles.button__wrapper}>
           <View style={styles.button__submit}>
             <Text style={styles.button__text}>Submit</Text>
@@ -40,9 +49,9 @@ export default function AddCustomerScreen({ navigation }) {
   
   
 }
-function createCustomer(name, navigation) {
+function createCustomer(name, phone, navigation) {
   if(name !== "") {
-    let id = api.createCustomer(name);
+    let id = api.createCustomer(name, phone);
     navigation.navigate("Customer overview", id)
   }
 }
