@@ -1,7 +1,6 @@
 import { Alert } from "react-native";
-
+import * as storage from "../service/BarStorageService.js";
 const api_url = "https://tungstun-bar-api.herokuapp.com/api";
-let token;
 
 function throwError(message) {
   Alert.alert(
@@ -17,12 +16,28 @@ function throwError(message) {
   );
 }
 
-export function login(email, password) {
-  let data = { "username": email, "password": password };
+async function getRequest(url) {
+  const jwt = await storage.getJWT();
+
+  return fetch(api_url + url, {
+    method: "GET",
+    headers: {
+      authorization: jwt,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  }).then((response) => {
+    if (response.ok) return response;
+    else throw "Something whent wrong...";
+  });
+}
+
+export async function login(email, password) {
+  let data = { username: email, password: password };
   fetch(api_url + "/login", {
     method: "POST",
     headers: {
-      Accept: 'application/json',
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
@@ -32,12 +47,12 @@ export function login(email, password) {
       else throw "d gebruikersnaam/wachtwoord";
     })
     .then((headers) => {
-      token = headers.get("authorization");
-      console.log(token);
+      storage.storeJWT(headers.get("authorization"));
     })
     .catch((error) => {
       throwError();
     });
+  
 }
 
 export function addDrink(customer, drink) {
@@ -61,70 +76,12 @@ export function createCustomer(name, phone) {
   return 200;
 }
 
-export function getCurrentSession() {
-  console.log("Getting the current session...")
+export async function getBars() {
+  console.log(await getRequest("/bars"));
+}
 
-  fetch(api_url + "/bars/" + 2 + "/sessions/" + 6, {
-    method: "GET",
-    headers: {
-      "authorization": token,
-      Accept: 'application/json',
-      "Content-Type": "application/json",
-    }
-  })
-    .then((response) => {
-      console.log("Session status: " + response.status)
-      if (response.ok) return response.json();
-      else throw "d gebruikersnaam/wachtwoord";
-    })
-    .then((json) => {
-      console.log(json);
-    })
-    .catch((error) => {
-      throwError();
-    });
-
-  return {
-    id: 1,
-    name: "Oudjaarsavond",
-    customers: [
-      {
-        id: 1,
-        name: "Jort",
-        currentBill: {
-          total: 21.5,
-        },
-      },
-      {
-        id: 3,
-        name: "Jona",
-        currentBill: {
-          total: 26.5,
-        },
-      },
-      {
-        id: 5,
-        name: "Fee",
-        currentBill: {
-          total: 7.49,
-        },
-      },
-      {
-        id: 6,
-        name: "Dante",
-        currentBill: {
-          total: 2.1,
-        },
-      },
-      {
-        id: 7,
-        name: "Sep",
-        currentBill: {
-          total: 2.1,
-        },
-      },
-    ],
-  };
+export async function getCurrentSession() {
+  return await getRequest("/bars/" + 2 + "/sessions/" + 6)
 }
 
 export function getSessionById(sessionId) {

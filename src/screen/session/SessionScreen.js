@@ -1,71 +1,73 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import variables, { colors, mock } from "../../theme/variables.js";
-import { Button, Dimensions } from "react-native";
+import { Button, Dimensions, ActivityIndicator } from "react-native";
 import HeaderLayout from "../../layout/HeaderLayout";
 import BottomBarLayout from "../../layout/SessionBottomBarLayout";
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
 
 export default function SessionScreen({ route, navigation }) {
-  let state = { refreshing: false }
-  let session = getSession(route);
+  const [isLoading, setLoading] = useState(true);
+  const [session, setSession] = useState({});
 
-  let _handleRefresh = () => {
-    session = api.getCurrentSession();
-    state.refreshing = false;
-  }
+  useEffect(() => {
+    api
+      .getCurrentSession()
+      .then((response) => response.json())
+      .then((json) => {setSession(json); setLoading(false)})
+      .catch((error) => alert(error))
+  });
+  // else {
+  //   api.getSessionById(route.params.sessionId);
+  // }
 
   return (
     <SafeAreaView style={styles.container}>
       <HeaderLayout navigation={navigation} />
-      <View style={styles.session}>
-        <Text style={styles.session__title}>{session.name}</Text>
-        <View style={styles.session__customers}>
-          <FlatList
-            //Connect to API
-            data={session.customers}
-            renderItem={({ item }) =>
-              customerListItem(navigation, item, session.id)
-            }
-            keyExtractor={(item) => item.id.toString()}
-            numColumns={2}
-            columnWrapperStyle={styles.customers__row}
-            refreshing={state.refreshing}
-            onRefresh={() => _handleRefresh()}
-          />
+      {isLoading ? (
+        <ActivityIndicator />
+      ) : (
+        <View style={styles.session}>
+          <Text style={styles.session__title}>{session.name}</Text>
+          <View style={styles.session__customers}>
+            <FlatList
+          data={session.bills}
+          renderItem={({ item }) =>
+            customerListItem(navigation, item, session.id)
+          }
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+          columnWrapperStyle={styles.customers__row}
+          refreshing={isLoading}
+          onRefresh={() => _getSession}
+        />
+          </View>
         </View>
-      </View>
+      )}
       <BottomBarLayout sessionId={session.id}></BottomBarLayout>
     </SafeAreaView>
   );
 }
 
-function customerListItem(navigation, customer, sessionId) {
+function customerListItem(navigation, bill, sessionId) {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Drink Categories", { customer })}
+      onPress={() => navigation.navigate("Drink Categories", { bill })}
       onLongPress={() =>
-        navigation.navigate("Session Bill", { customer, sessionId })
+        navigation.navigate("Session Bill", { bill, sessionId })
       }
     >
       <View style={styles.customer}>
-        <Text style={styles.customer__name}>{customer.name}</Text>
+        <Text style={styles.customer__name}>{bill.customer.name}</Text>
         <Text style={styles.customer__total}>
-          €{customer.currentBill.total.toFixed(2)}
+          €{bill.totalPrice.toFixed(2)}
         </Text>
       </View>
     </TouchableOpacity>
   );
-}
-
-function getSession(route) {
-  if (route.params === undefined) {
-    return api.getCurrentSession();
-  }
-  return api.getSessionById(route.params.sessionId);
 }
 
 const styles = StyleSheet.create({
