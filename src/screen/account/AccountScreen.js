@@ -6,48 +6,28 @@ import { Button, TextInput, TouchableOpacity } from "react-native";
 import HeaderLayout from "../../layout/HeaderLayout";
 import * as api from "../../service/BarApiService.js";
 
-export default function LoginScreen({ navigation }) {
+export default function AccountScreen({ navigation }) {
 
-  let email = "";
-  let password = "";
+  const _logout = () => {
+    api.logout();
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <HeaderLayout navigation={navigation} />
-      <Text style={styles.title}>Log in</Text>
+      <Text style={styles.title}>Account</Text>
       <View style={styles.content}>
-        <Text style={styles.input__label}>Email</Text>
-        <TextInput
-          autoCompleteType={"email"}
-          onChangeText={(given) => (email = given)}
-          keyboardType={"email-address"}
-          multiline={false}
-          style={styles.input}
-        />
-        <Text style={styles.input__label}>Password</Text>
-        <TextInput
-          autoCompleteType={"password"}
-          onChangeText={(given) => (password = given)}
-          keyboardType={"default"}
-          multiline={false}
-          style={styles.input}
-          secureTextEntry={true}
-        />
-        <TouchableOpacity 
-          onPress={() => login(email, password, navigation)}
-        style={styles.button__wrapper}>
+      <TouchableOpacity 
+          onPress={() => _logout()}
+          style={styles.button__wrapper}>
           <View style={styles.button__submit}>
-            <Text style={styles.button__text}>Submit</Text>
+            <Text style={styles.button__text}>Log out</Text>
           </View>
         </TouchableOpacity>
+
       </View>
     </SafeAreaView>
   );
-}
-
-function login(email, password) {
-  api.login(email, password);
-
 }
 
 const styles = StyleSheet.create({

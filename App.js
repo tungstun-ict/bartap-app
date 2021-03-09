@@ -1,7 +1,7 @@
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SessionScreen from "./src/screen/session/SessionScreen";
 import CustomersScreen from "./src/screen/customer/CustomersScreen";
 import AddCustomerScreen from "./src/screen/customer/AddCustomerScreen";
@@ -14,6 +14,8 @@ import AddDrinksScreen from "./src/screen/drinks/AddDrinkScreen";
 import SessionBillScreen from "./src/screen/session/SessionBillScreen";
 import PastSessionsScreen from "./src/screen/session/PastSessionsScreen";
 import LoginScreen from "./src/screen/account/LoginScreen";
+import AccountScreen from "./src/screen/account/AccountScreen";
+import * as storage from "./src/service/BarStorageService.js";
 
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
@@ -22,6 +24,7 @@ const SessionNavigator = createStackNavigator();
 const PaymentNavigator = createStackNavigator();
 const StockNavigator = createStackNavigator();
 const AccountNavigator = createStackNavigator();
+const SignInNavigator = createStackNavigator();
 
 export function CustomersStack() {
   return (
@@ -43,34 +46,32 @@ export function CustomersStack() {
 }
 
 export function PastStack() {
-  return(
-    <PastNavigator.Navigator headerMode="none" initialRouteName="Sessions Overview">
+  return (
+    <PastNavigator.Navigator
+      headerMode="none"
+      initialRouteName="Sessions Overview"
+    >
       <PastNavigator.Screen
         name="Sessions Overview"
-        component={PastSessionsScreen}>
-      </PastNavigator.Screen>
-      <PastNavigator.Screen
-        name="Past session"
-        component={SessionScreen}/>
+        component={PastSessionsScreen}
+      ></PastNavigator.Screen>
+      <PastNavigator.Screen name="Past session" component={SessionScreen} />
     </PastNavigator.Navigator>
-  )
+  );
 }
 
 export function SessionStack() {
   return (
-    <SessionNavigator.Navigator headerMode="none" intialRouteName="Current Session">
-      <SessionNavigator.Screen
-        name="Session"
-        component={SessionScreen}
-      />
+    <SessionNavigator.Navigator
+      headerMode="none"
+      intialRouteName="Current Session"
+    >
+      <SessionNavigator.Screen name="Session" component={SessionScreen} />
       <SessionNavigator.Screen
         name="Drink Categories"
         component={DrinkCategoriesScreen}
       />
-      <SessionNavigator.Screen
-        name="Add Drink"
-        component={AddDrinksScreen}
-      />
+      <SessionNavigator.Screen name="Add Drink" component={AddDrinksScreen} />
       <SessionNavigator.Screen
         name="Session Bill"
         component={SessionBillScreen}
@@ -81,32 +82,48 @@ export function SessionStack() {
 
 export function PaymentStack() {
   return (
-    <PaymentNavigator.Navigator headerMode="none">
-
-    </PaymentNavigator.Navigator>
-  )
+    <PaymentNavigator.Navigator headerMode="none"></PaymentNavigator.Navigator>
+  );
 }
 
 export function StockStack() {
   return (
-    <StockNavigator.Navigator headerMode="none">
-      
-    </StockNavigator.Navigator>
-  )
+    <StockNavigator.Navigator headerMode="none"></StockNavigator.Navigator>
+  );
 }
 
 export function AccountStack() {
   return (
     <AccountNavigator.Navigator headerMode="none">
-      <AccountNavigator.Screen
-        name="Login"
-        component={LoginScreen}
-      />
+      <AccountNavigator.Screen name="Account" component={AccountScreen} />
     </AccountNavigator.Navigator>
-  )
+  );
+}
+
+export function SignInStack() {
+  return (
+    <SignInNavigator.Navigator headerMode="none">
+      <AccountNavigator.Screen name="Login" component={LoginScreen} />
+    </SignInNavigator.Navigator>
+  );
 }
 
 export default function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  
+  useEffect(() => {
+    const getToken = async () => {
+      try {
+        await storage.getJWT();
+        setLoggedIn(true);
+      } catch (e) {
+        setLoggedIn(false);
+      }
+    }
+    getToken();
+  })
+  
+
   return (
     <NavigationContainer>
       <DrawerNavigator.Navigator
@@ -123,12 +140,21 @@ export default function App() {
           },
         }}
       >
-        <DrawerNavigator.Screen name="Session" component={SessionStack} />
-        <DrawerNavigator.Screen name="Past" component={PastStack} />
-        <DrawerNavigator.Screen name="Customers" component={CustomersStack} />
-        <DrawerNavigator.Screen name="Payments" component={PaymentStack} />
-        <DrawerNavigator.Screen name="Stock" component={StockStack} />
-        <DrawerNavigator.Screen name="Account" component={AccountStack} />
+        {loggedIn ? (
+          <React.Fragment>
+            <DrawerNavigator.Screen name="Session" component={SessionStack} />
+            <DrawerNavigator.Screen name="Past" component={PastStack} />
+            <DrawerNavigator.Screen
+              name="Customers"
+              component={CustomersStack}
+            />
+            <DrawerNavigator.Screen name="Payments" component={PaymentStack} />
+            <DrawerNavigator.Screen name="Stock" component={StockStack} />
+            <DrawerNavigator.Screen name="Account" component={AccountStack} />
+          </React.Fragment>
+        ) : (
+          <DrawerNavigator.Screen name="Sign In" component={SignInStack} />
+        )}
       </DrawerNavigator.Navigator>
     </NavigationContainer>
   );

@@ -10,13 +10,19 @@ export async function storeJWT(jwt){
 }
 
 export async function getJWT() {
-  try {
-    const jwt = await AsyncStorage.getItem('@jwt')
+  const jwt = await AsyncStorage.getItem('@jwt')
     if(jwt !== null) {
+      console.log(jwt)
       return jwt;
     }
+    throw "Could not retrieve login credentials"
+}
+
+export async function removeJWT() {
+  try {
+    await AsyncStorage.removeItem('@jwt')
   } catch(e) {
-    Alert.prompt("Error", "Could not retrieve login credentials");
+    console.error(e);
   }
 }
 

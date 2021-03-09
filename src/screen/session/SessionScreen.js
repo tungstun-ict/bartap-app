@@ -14,15 +14,20 @@ export default function SessionScreen({ route, navigation }) {
   const [session, setSession] = useState({});
 
   useEffect(() => {
-    api
-      .getCurrentSession()
-      .then((response) => response.json())
-      .then((json) => {setSession(json); setLoading(false)})
-      .catch((error) => alert(error))
+    if (route.params !== null) {
+      api
+        .getCurrentSession()
+        .then((response) => response.json())
+        .then((json) => {setSession(json);setLoading(false);})
+        .catch((error) => alert(error));
+    } else {
+      api
+        .getSessionById(route.params.sessionId)
+        .then((response) => response.json())
+        .then((json) => {setSession(json);setLoading(false);})
+        .catch((error) => alert(error));
+    }
   });
-  // else {
-  //   api.getSessionById(route.params.sessionId);
-  // }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -34,16 +39,16 @@ export default function SessionScreen({ route, navigation }) {
           <Text style={styles.session__title}>{session.name}</Text>
           <View style={styles.session__customers}>
             <FlatList
-          data={session.bills}
-          renderItem={({ item }) =>
-            customerListItem(navigation, item, session.id)
-          }
-          keyExtractor={(item) => item.id.toString()}
-          numColumns={2}
-          columnWrapperStyle={styles.customers__row}
-          refreshing={isLoading}
-          onRefresh={() => _getSession}
-        />
+              data={session.bills}
+              renderItem={({ item }) =>
+                customerListItem(navigation, item, session.id)
+              }
+              keyExtractor={(item) => item.id.toString()}
+              numColumns={2}
+              columnWrapperStyle={styles.customers__row}
+              refreshing={isLoading}
+              onRefresh={() => setLoading(true)}
+            />
           </View>
         </View>
       )}

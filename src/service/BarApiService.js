@@ -28,7 +28,7 @@ async function getRequest(url) {
     },
   }).then((response) => {
     if (response.ok) return response;
-    else throw "Something whent wrong...";
+    else throw "Could not make request";
   });
 }
 
@@ -53,6 +53,11 @@ export async function login(email, password) {
       throwError();
     });
   
+}
+
+export async function logout() {
+  await storage.removeJWT()
+  console.log('Logged out.')
 }
 
 export function addDrink(customer, drink) {
