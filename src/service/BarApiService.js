@@ -18,8 +18,9 @@ function throwError(message) {
 
 async function getRequest(url) {
   const jwt = await storage.getJWT();
-
+  console.log("PARTY")
   return fetch(api_url + url, {
+
     method: "GET",
     headers: {
       authorization: jwt,
@@ -65,16 +66,8 @@ export function addDrink(customer, drink) {
   console.log("Adding drink: " + drink.name + " to " + customer.name);
 }
 
-export function getDrinksByCategory(category) {
-  return {
-    title: "Beers",
-    drinks: [
-      { id: 1, name: "Heiniken vaasje", price: 1.25 },
-      { id: 2, name: "Heiniken fluitje", price: 1.0 },
-      { id: 3, name: "la Chouffe", price: 2.5 },
-      { id: 4, name: "Hertog Jan flesje", price: 1.2 },
-    ],
-  };
+export async function getDrinksByCategory(category) {
+  return await getRequest("/bars/1/products?categoryId=" + category.id)
 }
 
 export function createCustomer(name, phone) {
@@ -88,6 +81,10 @@ export async function getBars() {
 
 export async function getCurrentSession() {
   return await getRequest("/bars/1/sessions/active")
+}
+
+export async function getCategories() {
+  return await getRequest("/bars/1/categories");
 }
 
 export function getSessionById(sessionId) {

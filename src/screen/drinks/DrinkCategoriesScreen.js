@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
 import { colors, mock } from "../../theme/variables.js";
 import StackHeaderLayout from "../../layout/StackHeaderLayout";
 import { FlatList, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native";
+import * as api from "../../service/BarApiService.js";
 
 export default function DrinkCategoriesScreen({ route, navigation }) {
-  const { customer } = route.params;
+  const [categories, setCategories ] = useState([])
+  
+  useEffect(()=> {
+    api.getCategories()
+    .then((categories) => categories.json())
+    .then((json) => setCategories(json))
+    .catch((error) => alert(error));;
+  }, [])
+
+  const { bill } = route.params;
+  const customer = bill.customer;
   return (
     <SafeAreaView style={styles.container}>
       <StackHeaderLayout navigation={navigation} title="Add drink" />
@@ -15,7 +26,7 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
         <View style={styles.categories}>
           <FlatList
             //Connect to API
-            data={mock.DRINKS_CATEGORIES}
+            data={categories}
             renderItem={({ item }) => categoryListItem(navigation, customer, item)}
             keyExtractor={(item) => item.id.toString()}
             numColumns={2}

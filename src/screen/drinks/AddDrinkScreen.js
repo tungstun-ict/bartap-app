@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as api from "../../service/BarApiService.js";
 import {
   SafeAreaView,
@@ -15,18 +15,25 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 
 export default function AddDrinksScreen({ route, navigation }) {
+  const [drinks, setDrinks] = useState([]);
   const { customer, category } = route.params;
-  const categoryDrinks = api.getDrinksByCategory(category);
+
+  useEffect(() => {
+    api.getDrinksByCategory(category)
+  .then((response) => response.json())
+  .then((json) => setDrinks(json))
+  .catch((error) => alert(error));
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
       <StackHeaderLayout navigation={navigation} />
-      <Text style={styles.title}>{categoryDrinks.title}</Text>
+      <Text style={styles.title}>{category.name}</Text>
       <View style={styles.content}>
         <FlatList
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
-          data={categoryDrinks.drinks}
+          data={drinks}
           renderItem={({ item }) => listItem(navigation, item, customer)}
         />
       </View>
@@ -40,7 +47,7 @@ function listItem(navigation, drink, customer) {
       onPress={() => handlePress(navigation, drink, customer)}
     >
       <View style={styles.listItem}>
-        <Text style={styles.listItem__name}>{drink.name}</Text>
+        <Text style={styles.listItem__name}>{drink.brand} {drink.name}</Text>
         <Text style={styles.listItem__price}>€{drink.price.toFixed(2)}</Text>
       </View>
     </TouchableOpacity>
@@ -84,15 +91,16 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    height: 50,
     backgroundColor: colors.BACKGROUND,
     borderBottomColor: colors.ELEMENT_BACKGROUND,
     borderBottomWidth: 2,
+    paddingVertical: 10,
     width: "95%",
   },
   listItem__name: {
     fontSize: 20,
     color: colors.TEXT_PRIMARY,
+    width: "80%",
   },
   listItem__price: {
     fontSize: 20,

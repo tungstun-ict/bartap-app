@@ -15,6 +15,7 @@ export default function SessionScreen({ route, navigation }) {
 
   useEffect(() => {
     if (route.params !== null) {
+      console.log("GREAT PARTY")
       api
         .getCurrentSession()
         .then((response) => response.json())
@@ -27,7 +28,7 @@ export default function SessionScreen({ route, navigation }) {
         .then((json) => {setSession(json);setLoading(false);})
         .catch((error) => alert(error));
     }
-  });
+  }, [isLoading]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -61,7 +62,7 @@ export default function SessionScreen({ route, navigation }) {
 function customerListItem(navigation, bill, sessionId) {
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Drink Categories", { bill })}
+      onPress={() => navigation.navigate("Drink Categories", {bill, sessionId})}
       onLongPress={() =>
         navigation.navigate("Session Bill", { bill, sessionId })
       }
