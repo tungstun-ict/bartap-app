@@ -1,59 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
-import * as api from "../../service/BarApiService.js";
-import variables, { colors, mock } from "../../theme/variables.js";
-import { Button, Dimensions, ActivityIndicator } from "react-native";
-import HeaderLayout from "../../layout/HeaderLayout";
-import BottomBarLayout from "../../layout/SessionBottomBarLayout";
-import { FlatList } from "react-native";
+import { colors } from "../theme/variables.js";
+import { Dimensions } from "react-native";
+
 import { TouchableOpacity } from "react-native";
 
-export default function SessionScreen({ route, navigation }) {
-  const [isLoading, setLoading] = useState(true);
-  const [session, setSession] = useState({});
-
-  useEffect(() => {
-    if (route.params !== null) {
-      api
-        .getCurrentSession()
-        .then((response) => response.json())
-        .then((json) => {setSession(json);setLoading(false);})
-        .catch((error) => {alert(error); setLoading(false)});
-    } else {
-      api
-        .getSessionById(route.params.sessionId)
-        .then((response) => response.json())
-        .then((json) => {setSession(json);setLoading(false);})
-        .catch((error) => alert(error));
-    }
-  });
-
+export default function SplashScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderLayout navigation={navigation} />
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <View style={styles.session}>
-          <Text style={styles.session__title}>{session.name}</Text>
-          <View style={styles.session__customers}>
-            <FlatList
-              style={styles.list}
-              data={session.bills}
-              renderItem={({ item }) =>
-                customerListItem(navigation, item, session.id)
-              }
-              keyExtractor={(item) => item.id.toString()}
-              numColumns={2}
-              columnWrapperStyle={styles.customers__row}
-              refreshing={isLoading}
-              onRefresh={() => setLoading(true)}
-            />
-          </View>
-        </View>
-      )}
-      <BottomBarLayout sessionId={session.id}></BottomBarLayout>
+      <Text style={styles.text}>Loading</Text>
+      {/* <Image source={require("../assets/icon.png")}/> */}
     </SafeAreaView>
   );
 }

@@ -1,7 +1,7 @@
 import { NavigationContainer, StackActions } from "@react-navigation/native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import SessionScreen from "./src/screen/session/SessionScreen";
 import CustomersScreen from "./src/screen/customer/CustomersScreen";
 import AddCustomerScreen from "./src/screen/customer/AddCustomerScreen";
@@ -16,6 +16,10 @@ import PastSessionsScreen from "./src/screen/session/PastSessionsScreen";
 import LoginScreen from "./src/screen/account/LoginScreen";
 import AccountScreen from "./src/screen/account/AccountScreen";
 import * as storage from "./src/service/BarStorageService.js";
+import * as api from "./src/service/BarApiService.js";
+import SplashScreen from "./src/screen/SplashScreen";
+
+const AuthContext = createContext();
 
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
@@ -95,7 +99,7 @@ export function StockStack() {
 export function AccountStack() {
   return (
     <AccountNavigator.Navigator headerMode="none">
-      <AccountNavigator.Screen name="Account" component={AccountScreen} />
+      <AccountNavigator.Screen name="Account" component={AccountScreen} initialParams={{'context': AuthContext}} />
     </AccountNavigator.Navigator>
   );
 }
@@ -103,60 +107,122 @@ export function AccountStack() {
 export function SignInStack() {
   return (
     <SignInNavigator.Navigator headerMode="none">
-      <AccountNavigator.Screen name="Login" component={LoginScreen} />
+      <AccountNavigator.Screen name="Login" component={LoginScreen} initialParams={{'context': AuthContext}} />
     </SignInNavigator.Navigator>
   );
 }
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  
-  useEffect(() => {
-    const getToken = async () => {
-      try {
-        await storage.getJWT();
-        setLoggedIn(true);
-      } catch (e) {
-        setLoggedIn(false);
+  const [state, dispatch] = React.useReducer(
+    (prevState, action) => {
+      switch (action.type) {
+        case "RESTORE_TOKEN":
+          return {
+            ...prevState,
+            userToken: action.token,
+            isLoading: false,
+          };
+        case "SIGN_IN":
+          return {
+            ...prevState,
+            isSignout: false,
+            userToken: action.token,
+          };
+        case "SIGN_OUT":
+          return {
+            ...prevState,
+            isSignout: true,
+            userToken: null,
+          };
       }
-    }
-    getToken();
-  })
-  
+    },
+    {
+      isLoading: true,
+      isSignout: false,
+      userToken: null,
+    },
+  );
+
+  useEffect(() => {
+    const bootstrapAsync = async () => {
+      let userToken;
+      try {
+        userToken = await storage.getJWT();
+        
+      } catch (e) {
+        userToken = null;
+      }
+      dispatch({ type: "RESTORE_TOKEN", token: userToken });
+      console.log(state.userToken);
+    };
+    
+    bootstrapAsync();
+  }, []);
+
+  const authContext = React.useMemo(
+    () => ({
+      signIn: async (data) => {
+        let jwt = api.login(data.email, data.password);
+
+        dispatch({ type: "SIGN_IN", token: jwt });
+      },
+      signOut: () => {
+        api.logout();
+        dispatch({ type: "SIGN_OUT" })
+      },
+      signUp: async (data) => {
+        api.signUp(data.email, data.password, data.name);
+        let jwt = api.login(data.email, data.password);
+
+        dispatch({ type: "SIGN_IN", token: jwt });
+      },
+    }),
+    [],
+  );
+
+  if (state.isLoading) {
+    // We haven't finished checking for the token yet
+    return <SplashScreen />;
+  }
 
   return (
-    <NavigationContainer>
-      <DrawerNavigator.Navigator
-        sceneContainerStyle={{ backgroundColor: "black" }}
-        initialRouteName="Session"
-        drawerStyle={styles.drawer}
-        drawerContentOptions={{
-          activeTintColor: colors.TEXT_PRIMARY,
-          activeBackgroundColor: colors.ELEMENT_BACKGROUND_SELECTED,
-          inactiveTintColor: colors.TEXT_PRIMARY,
-          labelStyle: {
-            fontSize: 30,
-            fontWeight: "bold",
-          },
-        }}
-      >
-        {loggedIn ? (
-          <React.Fragment>
-            <DrawerNavigator.Screen name="Session" component={SessionStack} />
-            <DrawerNavigator.Screen name="Past" component={PastStack} />
-            <DrawerNavigator.Screen
-              name="Customers"
-              component={CustomersStack}
-            />
-            <DrawerNavigator.Screen name="Payments" component={PaymentStack} />
-            <DrawerNavigator.Screen name="Stock" component={StockStack} />
-            <DrawerNavigator.Screen name="Account" component={AccountStack} />
-          </React.Fragment>
-        ) : (
-          <DrawerNavigator.Screen name="Sign In" component={SignInStack} />
-        )}
-      </DrawerNavigator.Navigator>
-    </NavigationContainer>
+    <AuthContext.Provider value={authContext}>
+      <NavigationContainer>
+        <DrawerNavigator.Navigator
+          sceneContainerStyle={{ backgroundColor: "black" }}
+          initialRouteName="Session"
+          drawerStyle={styles.drawer}
+          drawerContentOptions={{
+            activeTintColor: colors.TEXT_PRIMARY,
+            activeBackgroundColor: colors.ELEMENT_BACKGROUND_SELECTED,
+            inactiveTintColor: colors.TEXT_PRIMARY,
+            labelStyle: {
+              fontSize: 30,
+              fontWeight: "bold",
+            },
+          }}
+        >
+          {state.userToken !== null ? (
+            <React.Fragment>
+              <DrawerNavigator.Screen name="Session" component={SessionStack} />
+              <DrawerNavigator.Screen name="Past" component={PastStack} />
+              <DrawerNavigator.Screen
+                name="Customers"
+                component={CustomersStack}
+              />
+              <DrawerNavigator.Screen
+                name="Payments"
+                component={PaymentStack}
+              />
+              <DrawerNavigator.Screen name="Stock" component={StockStack} />
+              <DrawerNavigator.Screen name="Account" component={AccountStack} />
+            </React.Fragment>
+          ) : (
+            <DrawerNavigator.Screen name="Sign In" component={SignInStack} />
+          )}
+        </DrawerNavigator.Navigator>
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }
 

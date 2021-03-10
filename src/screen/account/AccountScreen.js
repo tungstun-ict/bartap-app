@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
@@ -6,10 +6,12 @@ import { Button, TextInput, TouchableOpacity } from "react-native";
 import HeaderLayout from "../../layout/HeaderLayout";
 import * as api from "../../service/BarApiService.js";
 
-export default function AccountScreen({ navigation }) {
+export default function AccountScreen({ navigation, route}) {
 
+  const authContext  = route.params.context; 
+  const { signOut } = useContext(authContext);
   const _logout = () => {
-    api.logout();
+    signOut();
   }
 
   return (

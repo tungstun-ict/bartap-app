@@ -33,6 +33,7 @@ async function getRequest(url) {
 }
 
 export async function login(email, password) {
+  console.log("logging in...")
   let data = { username: email, password: password };
   fetch(api_url + "/login", {
     method: "POST",
@@ -50,7 +51,7 @@ export async function login(email, password) {
       storage.storeJWT(headers.get("authorization"));
     })
     .catch((error) => {
-      throwError();
+      throwError(error);
     });
   
 }
@@ -86,7 +87,7 @@ export async function getBars() {
 }
 
 export async function getCurrentSession() {
-  return await getRequest("/bars/" + 2 + "/sessions/" + 6)
+  return await getRequest("/bars/1/sessions/active")
 }
 
 export function getSessionById(sessionId) {

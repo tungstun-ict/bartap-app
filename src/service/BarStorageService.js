@@ -4,6 +4,7 @@ import { Alert } from 'react-native';
 export async function storeJWT(jwt){
   try {
     await AsyncStorage.setItem('@jwt', jwt);
+    console.log("logged in with token: " + jwt)
   } catch (e) {
     Alert.prompt("Error", "Could not store login credentials");
   }
@@ -12,7 +13,6 @@ export async function storeJWT(jwt){
 export async function getJWT() {
   const jwt = await AsyncStorage.getItem('@jwt')
     if(jwt !== null) {
-      console.log(jwt)
       return jwt;
     }
     throw "Could not retrieve login credentials"

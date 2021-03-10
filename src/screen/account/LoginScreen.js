@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
@@ -6,10 +6,14 @@ import { Button, TextInput, TouchableOpacity } from "react-native";
 import HeaderLayout from "../../layout/HeaderLayout";
 import * as api from "../../service/BarApiService.js";
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({ navigation, route }) {
 
-  let email = "";
-  let password = "";
+  const authContext  = route.params.context; 
+
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const { signIn } = useContext(authContext);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -19,7 +23,8 @@ export default function LoginScreen({ navigation }) {
         <Text style={styles.input__label}>Email</Text>
         <TextInput
           autoCompleteType={"email"}
-          onChangeText={(given) => (email = given)}
+          value={email}
+          onChangeText={setEmail}
           keyboardType={"email-address"}
           multiline={false}
           style={styles.input}
@@ -27,14 +32,15 @@ export default function LoginScreen({ navigation }) {
         <Text style={styles.input__label}>Password</Text>
         <TextInput
           autoCompleteType={"password"}
-          onChangeText={(given) => (password = given)}
+          value={password}
+          onChangeText={setPassword}
           keyboardType={"default"}
           multiline={false}
           style={styles.input}
           secureTextEntry={true}
         />
         <TouchableOpacity 
-          onPress={() => login(email, password, navigation)}
+          onPress={() => signIn({email: email, password: password})}
         style={styles.button__wrapper}>
           <View style={styles.button__submit}>
             <Text style={styles.button__text}>Submit</Text>
