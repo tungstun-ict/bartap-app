@@ -12,7 +12,6 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
   
   useEffect(()=> {
     api.getCategories()
-    .then((categories) => categories.json())
     .then((json) => setCategories(json))
     .catch((error) => alert(error));;
   }, [])

@@ -17,9 +17,8 @@ export default function SessionScreen({ route, navigation }) {
     if (route.params !== null && isLoading) {
       api
         .getCurrentSession()
-        .then((response) => response.json())
         .then((json) => {setSession(json);setLoading(false);})
-        .catch((error) => {alert(error); setLoading(false)});
+        .catch((error) => {console.error(error); setLoading(false)});
     }
   }, [isLoading]);
 

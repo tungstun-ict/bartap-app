@@ -40,7 +40,7 @@ export default function LoginScreen({ navigation }) {
           secureTextEntry={true}
         />
         <TouchableOpacity 
-          onPress={() => signIn({email: email, password: password})}
+          onPress={() => signIn({"email": email, "password": password})}
         style={styles.button__wrapper}>
           <View style={styles.button__submit}>
             <Text style={styles.button__text}>Submit</Text>

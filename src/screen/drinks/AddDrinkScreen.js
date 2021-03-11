@@ -20,7 +20,6 @@ export default function AddDrinksScreen({ route, navigation }) {
 
   useEffect(() => {
     api.getDrinksByCategory(category)
-  .then((response) => response.json())
   .then((json) => setDrinks(json))
   .catch((error) => alert(error));
   }, [])

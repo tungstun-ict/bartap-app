@@ -1,22 +1,22 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export async function storeaccessToken(accessToken){
+export async function storeAccessToken(accessToken){
   try {
-    await AsyncStorage.setItem('@accessToken', accessToken);
+    await AsyncStorage.setItem('@accessToken',accessToken);
   } catch (e) {
-    throw "Could not store login credentials"
+    throw e;
   }
 }
 
-export async function getaccessToken() {
-  const accessToken = await AsyncStorage.getItem('@accessToken')
-    if(accessToken !== null) {
-      return accessToken;
+export async function getAccessToken() {
+  const accesToken = await AsyncStorage.getItem('@accessToken')
+    if(accesToken !== null) {
+      return accesToken;
     }
     throw "Could not retrieve login credentials"
 }
 
-export async function removeaccessToken() {
+export async function removeAccessToken() {
   try {
     await AsyncStorage.removeItem('@accessToken')
   } catch(e) {

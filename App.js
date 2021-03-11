@@ -143,15 +143,14 @@ export default function App() {
 
   useEffect(() => {
     const bootstrapAsync = async () => {
-      let userToken;
+      let userToken = null;
       try {
-        userToken = await storage.getaccessToken();
+        userToken = await storage.getAccessToken();
         
       } catch (e) {
         userToken = null;
       }
       dispatch({ type: "RESTORE_TOKEN", token: userToken });
-      console.log(state.userToken);
     };
     
     bootstrapAsync();
@@ -161,7 +160,6 @@ export default function App() {
     () => ({
       signIn: async (data) => {
         let accessToken;
-
         try {
           accessToken = await api.login(data.email, data.password);
           dispatch({ type: "SIGN_IN", token: accessToken });
@@ -170,13 +168,13 @@ export default function App() {
         }
         
       },
-      signOut: () => {
-        api.logout();
+      signOut: async () => {
+        await api.logout();
         dispatch({ type: "SIGN_OUT" })
       },
       signUp: async (data) => {
         api.signUp(data.email, data.password, data.name);
-        let accessToken = api.login(data.email, data.password).catch(error => alert(error));
+        let accessToken = await api.login(data.email, data.password).catch(error => alert(error));
 
         dispatch({ type: "SIGN_IN", token: accessToken });
       },

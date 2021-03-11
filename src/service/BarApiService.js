@@ -1,62 +1,101 @@
-import { useState } from "react";
-import { Alert } from "react-native";
 import * as storage from "../service/BarStorageService.js";
-import AuthContext from "../service/Context.js";
+import axios from 'axios';
 const api_url = "https://tungstun-bar-api.herokuapp.com/api";
 
-async function getRequest(url) {
-  const accessToken = await storage.getaccessToken();
-  console.log("Doing a getRequest on URL: " + url);
-  return fetch(api_url + url, {
+const api = axios.create({
+  baseURL: "https://tungstun-bar-api.herokuapp.com/api"
+});
 
-    method: "GET",
-    headers: {
-      "authorization": accessToken,
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-    },
-  }).then((response) => {
-    if (response.ok) return response;
-    if(response.status === 401) {
-      refreshTokens();
-      console.log("Retrying:")
-      return getRequest(url);
+api.defaults.headers.common["token_type"] = "bearer";
+api.defaults.headers.common["Accept"] = "application/json";
+api.defaults.headers.common["Content-Type"] = "application/json"; 
+
+api.interceptors.response.use(
+  async function (response) {
+    return response;
+  },
+  async function (error) {
+    const originalRequest = error.config;
+    console.log("INTERCEPT STATUS: " + JSON.stringify(error.message))
+    let refreshToken = await storage.getRefreshToken()
+    let accessToken = await storage.getAccessToken()
+    if (refreshToken && error.response.status === 403 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      return api.post("/authenticate/refresh", { "refreshToken": refreshToken, "accessToken": accessToken }, {"access_token": accessToken})
+      .then(async (res) => {
+        if (res.status === 200) {
+          await storage.storeAccessToken(res.headers.access_token);
+          console.log("Access token refreshed! : " + res.headers.access_token);
+          let headers = originalRequest.headers;
+          headers.access_token = res.headers.access_token;
+          originalRequest.headers = headers;
+          return api(originalRequest);
+        }
+      })
     }
-    else throw "Could not make request";
+    return Promise.reject(error);
   });
-}
-export async function refreshTokens() {
-  const accessToken = await storage.getaccessToken();
-  const refreshToken = await storage.getRefreshToken();
 
-  let tokens = null;
-  tokens = await fetch(api_url + "/authenticate/refresh", {
-    method: "POST",
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-    },
-    body: {
-      "token_type": "bearer",
-      "accessToken": accessToken,
-      "refreshToken": refreshToken,
-    }
-  }).then(response => {
-    if(response.ok) {
+async function getRequest(url) {
+  const accessToken = await storage.getAccessToken();
+  console.log("Doing a getRequest on URL: " + url);
 
-    } else {
-      const { signOut } = useContext(AuthContext);
-      signOut();
-    }
+  return api.get(url, {headers: {"access_token": accessToken}})
+  .then((response) => {
+    return response.data;
   })
+  .catch((e) => {
+    throw  e
+  });
+  // return fetch(api_url + url, {
 
-  
+  //   method: "GET",
+  //   headers: {
+  //     "token_type": "bearer",
+  //     "access_token": accessToken,
+  //     "Accept": "application/json",
+  //     "Content-Type": "application/json",
+  //   },
+  // }).then((response) => {
+  //   if (response.ok) return response;
+  //   if(response.status === 403) {
+  //     console.log("Access token expired, asking for a new one;")
+  //     // refreshTokens();
+  //     throw "Could not make request";
+  //   }
+    
+  // }).catch((e) => {throw e});
 }
+
+// async function refreshTokens() {
+//   const accessToken = await storage.getAccessToken();
+//   const refreshToken = await storage.getRefreshToken();
+
+//     await fetch(api_url + "/authenticate/refresh", {
+//     method: "POST",
+//     headers: {
+//       "Accept": "application/json",
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       "accessToken": accessToken,
+//       "refreshToken": refreshToken,
+//     })
+//   }).then((response) => {
+//     if(response.ok) {
+//       console.log("Got new tokens, storing them now!")
+//       storage.storeaccessToken(response.headers.get("access_token"))
+      
+//     }
+//   }).catch((e) => {
+//   console.error(e)
+//   });
+// }
 
 
 export async function login(email, password) {
   console.log("logging in...")
-  let data = { username: email, password: password };
+  let data = { "userIdentification": email, "password": password };
   let tokens = null;
   tokens = await fetch(api_url + "/authenticate", {
     method: "POST",
@@ -68,22 +107,24 @@ export async function login(email, password) {
   })
     .then((response) => {
       if (response.ok) {
+        console.log("Credentials ok: Storing now")
         return {
           "accessToken": response.headers.get("access_token"), 
           "refreshToken": response.headers.get("refresh_token")
-        };
+        }
       }
     }).catch((error) => {
       throw error;
-
     })
 
-    await storage.storeaccessToken(tokens.accessToken);
+    console.log(tokens)
+    await storage.storeAccessToken(tokens.accessToken);
     await storage.storeRefreshToken(tokens.refreshToken);
 }
 
 export async function logout() {
-  await storage.removeaccessToken()
+  await storage.removeAccessToken()
+  await storage.removeRefreshToken()
   console.log('Logged out.')
 }
 
@@ -101,7 +142,7 @@ export function createCustomer(name, phone) {
 }
 
 export async function getBars() {
-  console.log(await getRequest("/bars"));
+ return await getRequest("/bars");
 }
 
 export async function getCurrentSession() {
