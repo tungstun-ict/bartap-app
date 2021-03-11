@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   list: {
-    height: "auto",
+    height: "100%",
   },
   customer: {
     flex: 1,

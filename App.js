@@ -145,7 +145,7 @@ export default function App() {
     const bootstrapAsync = async () => {
       let userToken;
       try {
-        userToken = await storage.getJWT();
+        userToken = await storage.getaccessToken();
         
       } catch (e) {
         userToken = null;
@@ -160,11 +160,11 @@ export default function App() {
   const authContext = React.useMemo(
     () => ({
       signIn: async (data) => {
-        let jwt;
+        let accessToken;
 
         try {
-          jwt = await api.login(data.email, data.password);
-          dispatch({ type: "SIGN_IN", token: jwt });
+          accessToken = await api.login(data.email, data.password);
+          dispatch({ type: "SIGN_IN", token: accessToken });
         } catch (e){
           alert(e)
         }
@@ -176,9 +176,9 @@ export default function App() {
       },
       signUp: async (data) => {
         api.signUp(data.email, data.password, data.name);
-        let jwt = api.login(data.email, data.password).catch(error => alert(error));
+        let accessToken = api.login(data.email, data.password).catch(error => alert(error));
 
-        dispatch({ type: "SIGN_IN", token: jwt });
+        dispatch({ type: "SIGN_IN", token: accessToken });
       },
     }),
     [],

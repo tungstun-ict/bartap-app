@@ -1,44 +1,64 @@
 import { useState } from "react";
 import { Alert } from "react-native";
 import * as storage from "../service/BarStorageService.js";
+import AuthContext from "../service/Context.js";
 const api_url = "https://tungstun-bar-api.herokuapp.com/api";
 
-function throwError(message) {
-  Alert.alert(
-    "Error",
-    message,
-    [
-      {
-        text: "Yes",
-        style: "cancel",
-      },
-    ],
-    { cancelable: false },
-  );
-}
-
 async function getRequest(url) {
-  const jwt = await storage.getJWT();
+  const accessToken = await storage.getaccessToken();
   console.log("Doing a getRequest on URL: " + url);
   return fetch(api_url + url, {
 
     method: "GET",
     headers: {
-      "authorization": jwt,
+      "authorization": accessToken,
       "Accept": "application/json",
       "Content-Type": "application/json",
     },
   }).then((response) => {
     if (response.ok) return response;
+    if(response.status === 401) {
+      refreshTokens();
+      console.log("Retrying:")
+      return getRequest(url);
+    }
     else throw "Could not make request";
   });
 }
+export async function refreshTokens() {
+  const accessToken = await storage.getaccessToken();
+  const refreshToken = await storage.getRefreshToken();
+
+  let tokens = null;
+  tokens = await fetch(api_url + "/authenticate/refresh", {
+    method: "POST",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+    },
+    body: {
+      "token_type": "bearer",
+      "accessToken": accessToken,
+      "refreshToken": refreshToken,
+    }
+  }).then(response => {
+    if(response.ok) {
+
+    } else {
+      const { signOut } = useContext(AuthContext);
+      signOut();
+    }
+  })
+
+  
+}
+
 
 export async function login(email, password) {
   console.log("logging in...")
   let data = { username: email, password: password };
-  let jwt = null;
-  jwt = await fetch(api_url + "/login", {
+  let tokens = null;
+  tokens = await fetch(api_url + "/authenticate", {
     method: "POST",
     headers: {
       "Accept": "application/json",
@@ -47,15 +67,23 @@ export async function login(email, password) {
     body: JSON.stringify(data),
   })
     .then((response) => {
-      if (response.ok) return response.headers.get("authorization");
-      else throw response.status + " Verkeerde gebruikersnaam/wachtwoord";
+      if (response.ok) {
+        return {
+          "accessToken": response.headers.get("access_token"), 
+          "refreshToken": response.headers.get("refresh_token")
+        };
+      }
+    }).catch((error) => {
+      throw error;
+
     })
 
-    await storage.storeJWT(jwt)  
+    await storage.storeaccessToken(tokens.accessToken);
+    await storage.storeRefreshToken(tokens.refreshToken);
 }
 
 export async function logout() {
-  await storage.removeJWT()
+  await storage.removeaccessToken()
   console.log('Logged out.')
 }
 
