@@ -25,7 +25,6 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       <View style={styles.content}>
         <View style={styles.categories}>
           <FlatList
-            //Connect to API
             data={categories}
             renderItem={({ item }) => categoryListItem(navigation, customer, item)}
             keyExtractor={(item) => item.id.toString()}

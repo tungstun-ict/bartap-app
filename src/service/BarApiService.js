@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Alert } from "react-native";
 import * as storage from "../service/BarStorageService.js";
 const api_url = "https://tungstun-bar-api.herokuapp.com/api";
@@ -18,13 +19,13 @@ function throwError(message) {
 
 async function getRequest(url) {
   const jwt = await storage.getJWT();
-  console.log("PARTY")
+  console.log("Doing a getRequest on URL: " + url);
   return fetch(api_url + url, {
 
     method: "GET",
     headers: {
-      authorization: jwt,
-      Accept: "application/json",
+      "authorization": jwt,
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
   }).then((response) => {
@@ -36,25 +37,21 @@ async function getRequest(url) {
 export async function login(email, password) {
   console.log("logging in...")
   let data = { username: email, password: password };
-  fetch(api_url + "/login", {
+  let jwt = null;
+  jwt = await fetch(api_url + "/login", {
     method: "POST",
     headers: {
-      Accept: "application/json",
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   })
     .then((response) => {
-      if (response.ok) return response.headers;
-      else throw "d gebruikersnaam/wachtwoord";
+      if (response.ok) return response.headers.get("authorization");
+      else throw response.status + " Verkeerde gebruikersnaam/wachtwoord";
     })
-    .then((headers) => {
-      storage.storeJWT(headers.get("authorization"));
-    })
-    .catch((error) => {
-      throwError(error);
-    });
-  
+
+    await storage.storeJWT(jwt)  
 }
 
 export async function logout() {

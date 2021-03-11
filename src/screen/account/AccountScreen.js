@@ -5,11 +5,11 @@ import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import { Button, TextInput, TouchableOpacity } from "react-native";
 import HeaderLayout from "../../layout/HeaderLayout";
 import * as api from "../../service/BarApiService.js";
+import { AuthContext } from "../../service/Context.js";
 
-export default function AccountScreen({ navigation, route}) {
+export default function AccountScreen({ navigation }) {
 
-  const authContext  = route.params.context; 
-  const { signOut } = useContext(authContext);
+  const { signOut } = useContext(AuthContext);
   const _logout = () => {
     signOut();
   }

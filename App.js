@@ -18,9 +18,7 @@ import AccountScreen from "./src/screen/account/AccountScreen";
 import * as storage from "./src/service/BarStorageService.js";
 import * as api from "./src/service/BarApiService.js";
 import SplashScreen from "./src/screen/SplashScreen";
-
-const AuthContext = createContext();
-
+import {AuthContext} from "./src/service/Context.js";
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
 const PastNavigator = createStackNavigator();
@@ -162,9 +160,15 @@ export default function App() {
   const authContext = React.useMemo(
     () => ({
       signIn: async (data) => {
-        let jwt = api.login(data.email, data.password);
+        let jwt;
 
-        dispatch({ type: "SIGN_IN", token: jwt });
+        try {
+          jwt = await api.login(data.email, data.password);
+          dispatch({ type: "SIGN_IN", token: jwt });
+        } catch (e){
+          alert(e)
+        }
+        
       },
       signOut: () => {
         api.logout();
@@ -172,7 +176,7 @@ export default function App() {
       },
       signUp: async (data) => {
         api.signUp(data.email, data.password, data.name);
-        let jwt = api.login(data.email, data.password);
+        let jwt = api.login(data.email, data.password).catch(error => alert(error));
 
         dispatch({ type: "SIGN_IN", token: jwt });
       },

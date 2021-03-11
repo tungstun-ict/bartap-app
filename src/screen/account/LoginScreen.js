@@ -5,15 +5,15 @@ import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import { Button, TextInput, TouchableOpacity } from "react-native";
 import HeaderLayout from "../../layout/HeaderLayout";
 import * as api from "../../service/BarApiService.js";
+import { AuthContext } from "../../service/Context.js";
 
-export default function LoginScreen({ navigation, route }) {
+export default function LoginScreen({ navigation }) {
 
-  const authContext  = route.params.context; 
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const { signIn } = useContext(authContext);
+  const { signIn } = useContext(AuthContext);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -49,11 +49,6 @@ export default function LoginScreen({ navigation, route }) {
       </View>
     </SafeAreaView>
   );
-}
-
-function login(email, password) {
-  api.login(email, password);
-
 }
 
 const styles = StyleSheet.create({

@@ -11,32 +11,22 @@ import { TouchableOpacity } from "react-native";
 
 export default function SessionScreen({ route, navigation }) {
   const [isLoading, setLoading] = useState(true);
-  const [session, setSession] = useState({});
+  const [session, setSession] = useState({bills: []});
 
   useEffect(() => {
-    if (route.params !== null) {
-      console.log("GREAT PARTY")
+    if (route.params !== null && isLoading) {
       api
         .getCurrentSession()
         .then((response) => response.json())
         .then((json) => {setSession(json);setLoading(false);})
         .catch((error) => {alert(error); setLoading(false)});
-    } else {
-      api
-        .getSessionById(route.params.sessionId)
-        .then((response) => response.json())
-        .then((json) => {setSession(json);setLoading(false);})
-        .catch((error) => alert(error));
     }
   }, [isLoading]);
 
   return (
     <SafeAreaView style={styles.container}>
       <HeaderLayout navigation={navigation} />
-      {isLoading ? (
-        <ActivityIndicator />
-      ) : (
-        <View style={styles.session}>
+      <View style={styles.session}>
           <Text style={styles.session__title}>{session.name}</Text>
           <View style={styles.session__customers}>
             <FlatList
@@ -53,8 +43,7 @@ export default function SessionScreen({ route, navigation }) {
             />
           </View>
         </View>
-      )}
-      <BottomBarLayout sessionId={session.id}></BottomBarLayout>
+      <BottomBarLayout style={styles.bottomBar} sessionId={session.id}></BottomBarLayout>
     </SafeAreaView>
   );
 }
@@ -90,9 +79,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  bottomBar: {
+    marginTop: "auto",
+  },
   session: {
     flex: 1,
     width: "100%",
+    height: "100%",
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "flex-start",
@@ -117,7 +110,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   list: {
-    height: "100%",
+    height: "auto",
   },
   customer: {
     flex: 1,
