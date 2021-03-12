@@ -46,6 +46,7 @@ export default function AccountScreen({ navigation }) {
           style={styles.picker}
           selectedValue={selectedBar}
           itemStyle={styles.picker__item}
+          
           onValueChange={(itemValue, itemIndex) => {
             setSelectedBar(itemValue);
           }}>

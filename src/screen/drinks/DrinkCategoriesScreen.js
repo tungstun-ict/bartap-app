@@ -16,8 +16,8 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
     .catch((error) => alert(error));;
   }, [])
 
-  const { bill } = route.params;
-  const customer = bill.customer;
+  const { billId, sessionId } = route.params;
+
   return (
     <SafeAreaView style={styles.container}>
       <StackHeaderLayout navigation={navigation} title="Add drink" />
@@ -25,7 +25,7 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
         <View style={styles.categories}>
           <FlatList
             data={categories}
-            renderItem={({ item }) => categoryListItem(navigation, customer, item)}
+            renderItem={({ item }) => categoryListItem(navigation, item, billId, sessionId)}
             keyExtractor={(item) => item.id.toString()}
             numColumns={2}
             columnWrapperStyle={styles.categories__row}
@@ -36,10 +36,10 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
   );
 }
 
-function categoryListItem(navigation, customer, category) {
+function categoryListItem(navigation, category, billId, sessionId) {
   return (
     <TouchableOpacity
-      onPress={() => handleOnPress(navigation, customer, category)}
+      onPress={() => handleOnPress(navigation, category, billId, sessionId)}
     >
       <View style={styles.category}>
         <Text style={styles.category__name}>{category.name}</Text>
@@ -48,10 +48,11 @@ function categoryListItem(navigation, customer, category) {
   );
 }
 
-function handleOnPress(navigation, customer, category) {
+function handleOnPress(navigation, category, billId, sessionId) {
   navigation.navigate("Add Drink", {
-    customer,
-    category
+    category,
+    billId,
+    sessionId
   });
 }
 

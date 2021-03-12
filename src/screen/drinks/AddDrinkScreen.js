@@ -16,10 +16,10 @@ import { ceil } from "react-native-reanimated";
 
 export default function AddDrinksScreen({ route, navigation }) {
   const [drinks, setDrinks] = useState([]);
-  const { customer, category } = route.params;
+  const { category, billId, sessionId } = route.params;
 
   useEffect(() => {
-    api.getDrinksByCategory(category)
+    api.getDrinksByCategory(category.id)
   .then((json) => setDrinks(json))
   .catch((error) => alert(error));
   }, [])
@@ -33,17 +33,17 @@ export default function AddDrinksScreen({ route, navigation }) {
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
           data={drinks}
-          renderItem={({ item }) => listItem(navigation, item, customer)}
+          renderItem={({ item }) => listItem(navigation, item, billId, sessionId)}
         />
       </View>
     </SafeAreaView>
   );
 }
 
-function listItem(navigation, drink, customer) {
+function listItem(navigation, drink, billId, sessionId) {
   return (
     <TouchableOpacity
-      onPress={() => handlePress(navigation, drink, customer)}
+      onPress={async () => await handlePress(navigation, drink, billId, sessionId)}
     >
       <View style={styles.listItem}>
         <Text style={styles.listItem__name}>{drink.brand} {drink.name}</Text>
@@ -53,9 +53,8 @@ function listItem(navigation, drink, customer) {
   );
 }
 
-function handlePress(navigation, drink, customer) {
-  api.addDrink(customer, drink);
-  
+async function handlePress(navigation, drink, billId, sessionId) {
+  await api.addDrink(billId, drink.id, sessionId);
   navigation.navigate("Session");
 }
 

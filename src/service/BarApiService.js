@@ -102,11 +102,16 @@ export async function logout() {
   console.log('Logged out.')
 }
 
-export async function addDrink(customer, drink) {
+export async function addDrink(billId, drinkId, sessionId) {
+  await api.put(`/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`, {
+    "amount": 1,
+    "bartenderId": 1,
+    "productId": drinkId,
+  });
 }
 
-export async function getDrinksByCategory(category) {
-  return await getRequest(`/bars/${await storage.getActiveBar()}/products?categoryId=${category.id}`)
+export async function getDrinksByCategory(categoryId) {
+  return await getRequest(`/bars/${await storage.getActiveBar()}/products?categoryId=${categoryId}`)
 }
 
 export function createCustomer(name, phone) {

@@ -55,11 +55,12 @@ export default function SessionScreen({ route, navigation }) {
 }
 
 function customerListItem(navigation, bill, sessionId) {
+  let billId = bill.id;
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Drink Categories", {bill, sessionId})}
+      onPress={() => navigation.navigate("Drink Categories", {billId, sessionId})}
       onLongPress={() =>
-        navigation.navigate("Session Bill", { bill, sessionId })
+        navigation.navigate("Session Bill", { billId, sessionId })
       }
     >
       <View style={styles.customer}>
