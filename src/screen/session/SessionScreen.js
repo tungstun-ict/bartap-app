@@ -14,6 +14,13 @@ export default function SessionScreen({ route, navigation }) {
   const [session, setSession] = useState({bills: []});
 
   useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      setLoading(true);
+      setSession({bills: []})
+    }, [navigation])
+  });
+
+  useEffect(() => {
     if (route.params !== null && isLoading) {
       api
         .getCurrentSession()

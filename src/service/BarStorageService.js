@@ -48,3 +48,28 @@ export async function removeRefreshToken() {
   }
 }
 
+export async function storeActiveBar(bar){
+  console.log("Storing active bar: " + bar)
+  try {
+    await AsyncStorage.setItem('@activeBar', bar);
+  } catch (e) {
+    throw "Could not store active bar"
+  }
+}
+
+export async function getActiveBar() {
+  const bar = await AsyncStorage.getItem('@activeBar')
+    if(bar !== null) {
+      return bar;
+    }
+    throw "Could not retrieve active bar"
+}
+
+export async function removeActiveBar() {
+  try {
+    await AsyncStorage.removeItem('@activeBar')
+  } catch(e) {
+    console.error(e);
+  }
+}
+

@@ -21,7 +21,7 @@ api.interceptors.response.use(
     let accessToken = await storage.getAccessToken()
     if (refreshToken && error.response.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
-      return api.post("/authenticate/refresh", { "refreshToken": refreshToken, "accessToken": accessToken }, {"access_token": accessToken})
+      return api.post("/authenticate/refresh", { "refreshToken": refreshToken, "accessToken": accessToken })
       .then(async (res) => {
         if (res.status === 200) {
           await storage.storeAccessToken(res.headers.access_token);
@@ -34,7 +34,7 @@ api.interceptors.response.use(
       })
     }
     return Promise.reject(error);
-  });
+});
 
 async function getRequest(url) {
   const accessToken = await storage.getAccessToken();
@@ -66,32 +66,6 @@ async function getRequest(url) {
     
   // }).catch((e) => {throw e});
 }
-
-// async function refreshTokens() {
-//   const accessToken = await storage.getAccessToken();
-//   const refreshToken = await storage.getRefreshToken();
-
-//     await fetch(api_url + "/authenticate/refresh", {
-//     method: "POST",
-//     headers: {
-//       "Accept": "application/json",
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify({
-//       "accessToken": accessToken,
-//       "refreshToken": refreshToken,
-//     })
-//   }).then((response) => {
-//     if(response.ok) {
-//       console.log("Got new tokens, storing them now!")
-//       storage.storeaccessToken(response.headers.get("access_token"))
-      
-//     }
-//   }).catch((e) => {
-//   console.error(e)
-//   });
-// }
-
 
 export async function login(email, password) {
   console.log("logging in...")
@@ -128,12 +102,11 @@ export async function logout() {
   console.log('Logged out.')
 }
 
-export function addDrink(customer, drink) {
-  console.log("Adding drink: " + drink.name + " to " + customer.name);
+export async function addDrink(customer, drink) {
 }
 
 export async function getDrinksByCategory(category) {
-  return await getRequest("/bars/1/products?categoryId=" + category.id)
+  return await getRequest(`/bars/${await storage.getActiveBar()}/products?categoryId=${category.id}`)
 }
 
 export function createCustomer(name, phone) {
@@ -142,15 +115,15 @@ export function createCustomer(name, phone) {
 }
 
 export async function getBars() {
- return await getRequest("/bars");
+ return await getRequest(`/bars`);
 }
 
 export async function getCurrentSession() {
-  return await getRequest("/bars/1/sessions/active")
+  return await getRequest(`/bars/${await storage.getActiveBar()}/sessions/active`)
 }
 
 export async function getCategories() {
-  return await getRequest("/bars/1/categories");
+  return await getRequest(`/bars/${await storage.getActiveBar()}/categories`);
 }
 
 export function getSessionById(sessionId) {
