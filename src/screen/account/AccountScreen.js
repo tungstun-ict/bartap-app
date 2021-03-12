@@ -33,7 +33,7 @@ export default function AccountScreen({ navigation }) {
   }, [selectedBar])
 
   let pickerItems = bars.map((bar) => {
-    return <Picker.Item label={bar.name} value={bar.id}/>
+    return <Picker.Item label={bar.name} value={bar.id} key={bar.id}/>
   })
 
   return (

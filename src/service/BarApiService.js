@@ -123,6 +123,10 @@ export async function getBars() {
  return await getRequest(`/bars`);
 }
 
+export async function getBillByBillIdAndSessionId(billId, sessionId) {
+  return await getRequest(`/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`)
+}
+
 export async function getCurrentSession() {
   return await getRequest(`/bars/${await storage.getActiveBar()}/sessions/active`)
 }

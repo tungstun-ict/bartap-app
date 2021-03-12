@@ -17,7 +17,8 @@ export default function SessionScreen({ route, navigation }) {
     const unsubscribe = navigation.addListener('focus', () => {
       setLoading(true);
       setSession({bills: []})
-    }, [navigation])
+    })
+    return unsubscribe;
   });
 
   useEffect(() => {
@@ -25,7 +26,7 @@ export default function SessionScreen({ route, navigation }) {
       api
         .getCurrentSession()
         .then((json) => {setSession(json);setLoading(false);})
-        .catch((error) => {console.error(error); setLoading(false)});
+        .catch((error) => {alert(error); setLoading(false)});
     }
   }, [isLoading]);
 

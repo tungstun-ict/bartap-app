@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import * as api from "../../service/BarApiService.js";
 import {
   SafeAreaView,
@@ -14,34 +14,80 @@ import StackHeaderLayout from "../../layout/StackHeaderLayout";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function SessionBillScreen({ route, navigation }) {
-  const { customer, sessionId } = route.params;
-  const bill = api.getBillBySessionIdAndCustomerId(sessionId, customer.id);
+  const { billId, sessionId } = route.params;
+  const [bill, setBill] = useState({"customer": {"name": ""}, "totalPrice": 0});
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setLoading(true);
+      setBill({"customer": {"name": ""}, "totalPrice": 0});
+    });
+    return unsubscribe;
+  });
+
+  useEffect(() => {
+    if (route.params !== null && isLoading) {
+      api
+        .getBillByBillIdAndSessionId(billId, sessionId)
+        .then((json) => {
+          setBill(json);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+          setLoading(false);
+        });
+      console.log(bill);
+    }
+  }, [isLoading]);
 
   return (
     <SafeAreaView style={styles.container}>
       <StackHeaderLayout navigation={navigation} />
-      <Text style={styles.title}>Bill {customer.name}</Text>
-      <View style={styles.content}>
-        <FlatList
-          keyExtractor={(item) => item.id.toString()}
-          style={styles.list}
-          data={bill.orders}
-          renderItem={({ item }) => listItem(item)}
-          ListFooterComponent={footerListItem(bill)}
-        />
-      </View>
+          <Text style={styles.title}>Bill {bill.customer.name}</Text>
+          <View style={styles.content}>
+            <FlatList
+              keyExtractor={(item) => item.id.toString()}
+              style={styles.list}
+              data={bill.orders}
+              renderItem={({ item }) => listItem(item)}
+              //ListFooterComponent={footerListItem(bill)}
+              refreshing={isLoading}
+              onRefresh={() => setLoading(true)}
+            />
+            <View style={styles.listItem__footer}>
+            <Text style={styles.listItem__footer__text}>
+                Total:
+              </Text>
+              <Text style={styles.listItem__footer__text__price}>
+                €{bill.totalPrice.toFixed(2)}
+              </Text>
+              
+            </View>
+          </View>
     </SafeAreaView>
   );
 }
 
 function listItem(order) {
-  const timestamp = new Date(order.timestamp);
+  const timestamp = new Date(order.creationDate);
   return (
     <View style={styles.listItemOrder}>
-      <Text style={styles.listItem__timestamp}>{timestamp.getHours()}:{timestamp.getMinutes()}</Text>
+      <Text style={styles.listItem__timestamp}>
+        {timestamp.getHours() < 10
+          ? "0" + timestamp.getHours()
+          : timestamp.getHours()}
+        :
+        {timestamp.getMinutes() < 10
+          ? "0" + timestamp.getMinutes()
+          : timestamp.getMinutes()}
+      </Text>
       <Text style={styles.listItemOrderLine__name}>{order.product.name}</Text>
       <Text style={styles.listItemOrderLine__amount}>{order.amount} x</Text>
-      <Text style={styles.listItemOrderLine__price}>€{order.totalPrice.toFixed(2)}</Text>
+      <Text style={styles.listItemOrderLine__price}>
+        €{(order.product.price * order.amount).toFixed(2)}
+      </Text>
     </View>
   );
 }
@@ -50,14 +96,16 @@ function footerListItem(bill) {
   return (
     <View style={styles.listItem__footer}>
       <Text style={styles.listItem__timestamp}></Text>
-      <Text style={styles.listItem__footer__text}>€{bill.totalPrice}</Text>
+      <Text style={styles.listItem__footer__text}>
+        €{bill.totalPrice.toFixed(2)}
+      </Text>
     </View>
   );
 }
 
 function handlePress(navigation, drink, customer) {
   api.addDrink(customer, drink);
-  
+
   navigation.navigate("Current Session");
 }
 
@@ -72,6 +120,7 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     width: "100%",
+    height: "100%",
   },
   title: {
     height: 40,
@@ -80,11 +129,17 @@ const styles = StyleSheet.create({
     fontSize: sizes.TITLE,
     fontWeight: "bold",
   },
+  text: {
+    color: colors.TEXT_TERTIARY,
+    fontSize: 50,
+    fontWeight: "bold",
+  },
   list: {
-    flex: 1,
+    flex: 4,
     flexDirection: "column",
     alignSelf: "center",
     width: "100%",
+    height: "100%",
   },
   listItem: {
     alignSelf: "center",
@@ -158,15 +213,26 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
   },
   listItem__footer: {
-    flex: 1,
+    zIndex: 5,
+    height: "auto",
     flexDirection: "row",
     alignItems: "center",
     color: colors.TEXT_PRIMARY,
   },
-  listItem__footer__text: {
+  listItem__footer__text__price: {
     marginLeft: "auto",
     color: colors.TEXT_PRIMARY,
     fontSize: 30,
+    alignSelf: "center",
+    height: "auto",
+    fontWeight: "bold",
+  },
+  listItem__footer__text: {
+    marginLeft: 10,
+    color: colors.TEXT_PRIMARY,
+    fontSize: 30,
+    alignSelf: "center",
+    height: "auto",
     fontWeight: "bold",
   },
 });
