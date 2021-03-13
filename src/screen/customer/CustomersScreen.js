@@ -32,6 +32,18 @@ export default function CustomersScreen({ navigation }) {
       });
   }, [isLoading]);
 
+  const listItem = (customer) => {
+     return (
+      <TouchableOpacity
+        onPress={() => navigation.navigate("Customer overview", customer.id)}
+      >
+        <View style={styles.listItem}>
+          <Text style={styles.listItem__name}>{customer.name}</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <HeaderLayout navigation={navigation} />
@@ -41,37 +53,21 @@ export default function CustomersScreen({ navigation }) {
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
           data={customers}
-          renderItem={({ item }) => listItem(navigation, item)}
-          ListFooterComponent={listFooterItem(navigation)}
+          renderItem={(item) => listItem(item.item)}
           refreshing={isLoading}
           onRefresh={() => setLoading(true)}
         />
+        <TouchableOpacity 
+          onPress={() => navigation.navigate("Add new customer")}
+          style={styles.button__wrapper}>
+          <View style={styles.button}>
+            <Text style={styles.button__text}>Add a new customer</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 }
-
-function listItem(navigation, customer) {
-  return (
-    <TouchableOpacity
-      onPress={() => navigation.navigate("Customer overview", customer.id)}
-    >
-      <View style={styles.listItem}>
-        <Text style={styles.listItem__name}>{customer.name}</Text>
-      </View>
-    </TouchableOpacity>
-  );
-}
-
-const listFooterItem = (navigation) => {
-  return (
-    <TouchableOpacity onPress={() => navigation.navigate("Add new customer")}>
-      <View style={styles.listItem__footer}>
-        <Text style={styles.listItem__footer__text}>Add a new customer</Text>
-      </View>
-    </TouchableOpacity>
-  );
-};
 
 const styles = StyleSheet.create({
   container: {
@@ -84,6 +80,9 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     width: "100%",
+    height: "100%",
+    flexDirection: "column",
+    alignItems: "flex-start",
   },
   title: {
     height: 40,
@@ -93,9 +92,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   list: {
-    flex: 1,
     flexDirection: "column",
     alignSelf: "center",
+    height: 100,
     width: "100%",
   },
   listItem: {
@@ -113,18 +112,24 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: colors.TEXT_PRIMARY,
   },
-  listItem__footer: {
+  button: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    height: 40,
+    height: "100%",
     width: "95%",
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.TEXT_PRIMARY,
     borderRadius: 5,
-    marginTop: 10,
+    marginTop: 0,
     alignSelf: "center",
   },
-  listItem__footer__text: {
+  button__wrapper: {
+    flex: 1,
+    maxHeight: 40,
+    minWidth: "100%",
+    marginVertical: 10,
+  },
+  button__text: {
     color: colors.TEXT_SECONDARY,
     fontSize: 20,
     fontWeight: "bold",

@@ -114,9 +114,12 @@ export async function getDrinksByCategory(categoryId) {
   return await getRequest(`/bars/${await storage.getActiveBar()}/products?categoryId=${categoryId}`)
 }
 
-export function createCustomer(name, phone) {
-  console.log("Creating customer: " + name + phone);
-  return 200;
+export async function createCustomer(name, phone) {
+  return await api.post(`/bars/${await storage.getActiveBar()}/people`, {
+    "name": name,
+    "phoneNumber": phone,
+  });
+  
 }
 
 export async function getBars() {
@@ -183,11 +186,8 @@ export function getSessionById(sessionId) {
   };
 }
 
-export function getCustomerById(id) {
-  return {
-    name: "customer " + id,
-    id: id,
-  };
+export async function getCustomerById(id) {
+  return await getRequest(`/bars/${await storage.getActiveBar()}/people/${id}`)
 }
 
 export function getBillBySessionIdAndCustomerId(sessionId, customerId) {

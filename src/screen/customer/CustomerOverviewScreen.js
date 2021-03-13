@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { SafeAreaView } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import { StyleSheet, Text, View, Image } from "react-native";
@@ -7,7 +7,15 @@ import { Button } from "react-native";
 import StackHeaderLayout from "../../layout/StackHeaderLayout.js";
 
 export default function CustomerOverviewScreen({ route, navigation }) {
-  const customer = api.getCustomerById(route.params);
+  const [customer, setCustomer] = useState({});
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api.getCustomerById(route.params)
+      .then((json) => {setCustomer(json); setLoading(false);})
+      .catch((error) => alert(error));
+  }, []);
+
   return (
     <SafeAreaView style={styles.container}>
       <StackHeaderLayout navigation={navigation} title={customer.name} />

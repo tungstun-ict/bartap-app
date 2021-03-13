@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import variables, { colors, mock } from "../../theme/variables.js";
@@ -13,10 +13,16 @@ import { ceil } from "react-native-reanimated";
 import { apisAreAvailable } from "expo";
 
 export default function AddCustomerScreen({ navigation }) {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   
-  let name = "";
-  let phone = "";
-  
+ const createCustomer = async (name, phone) => {
+  if(name !== "" && phone !== "") {
+    let customer = await api.createCustomer(name, phone);
+    navigation.navigate("Customer overview", customer.id);
+  }
+}
+
   return (
     <SafeAreaView style={styles.container}>
       <StackHeaderLayout navigation={navigation} title="Add Customer" />
@@ -24,21 +30,21 @@ export default function AddCustomerScreen({ navigation }) {
         <Text style={styles.input__label}>Name</Text>
         <TextInput
           autoCompleteType={"name"}
-          onChangeText={given => name = given}
+          onChangeText={setName}
           multiline={false}
           style={styles.input}
         />
         <Text style={styles.input__label}>Phone number</Text>
         <TextInput
           autoCompleteType={"tel"}
-          onChangeText={given => phone = given}
+          onChangeText={setPhone}
           keyboardType={"phone-pad"}
           multiline={false}
           style={styles.input}
         />
         <TouchableOpacity 
-          onPress={() => createCustomer(name, phone, navigation)}
-        style={styles.button__wrapper}>
+          onPress={() => createCustomer(name, phone).catch(error => alert(error))}
+          style={styles.button__wrapper}>
           <View style={styles.button__submit}>
             <Text style={styles.button__text}>Submit</Text>
           </View>
@@ -48,12 +54,6 @@ export default function AddCustomerScreen({ navigation }) {
   );
   
   
-}
-function createCustomer(name, phone, navigation) {
-  if(name !== "") {
-    let id = api.createCustomer(name, phone);
-    navigation.navigate("Customer overview", id)
-  }
 }
 
 
