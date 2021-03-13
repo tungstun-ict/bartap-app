@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   StyleSheet,
@@ -10,10 +10,28 @@ import {
 } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import HeaderLayout from "../../layout/HeaderLayout";
+import * as api from "../../service/BarApiService.js";
+import * as storage from "../../service/BarStorageService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 
 export default function CustomersScreen({ navigation }) {
+  const [customers, setCustomers] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api
+      .getAllCustomersByBarId()
+      .then((json) => {
+        setCustomers(json);
+        setLoading(false);
+      })
+      .catch((error) => {
+        alert(error);
+        setLoading(false);
+      });
+  }, [isLoading]);
+
   return (
     <SafeAreaView style={styles.container}>
       <HeaderLayout navigation={navigation} />
@@ -22,9 +40,11 @@ export default function CustomersScreen({ navigation }) {
         <FlatList
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
-          data={mock.CUSTOMERS}
+          data={customers}
           renderItem={({ item }) => listItem(navigation, item)}
           ListFooterComponent={listFooterItem(navigation)}
+          refreshing={isLoading}
+          onRefresh={() => setLoading(true)}
         />
       </View>
     </SafeAreaView>
@@ -33,7 +53,9 @@ export default function CustomersScreen({ navigation }) {
 
 function listItem(navigation, customer) {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Customer overview", customer.id)}>
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Customer overview", customer.id)}
+    >
       <View style={styles.listItem}>
         <Text style={styles.listItem__name}>{customer.name}</Text>
       </View>
@@ -43,7 +65,7 @@ function listItem(navigation, customer) {
 
 const listFooterItem = (navigation) => {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Add new customer", )}>
+    <TouchableOpacity onPress={() => navigation.navigate("Add new customer")}>
       <View style={styles.listItem__footer}>
         <Text style={styles.listItem__footer__text}>Add a new customer</Text>
       </View>

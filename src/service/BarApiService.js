@@ -131,6 +131,10 @@ export async function getCurrentSession() {
   return await getRequest(`/bars/${await storage.getActiveBar()}/sessions/active`)
 }
 
+export async function getAllCustomersByBarId() {
+  return await getRequest(`/bars/${await storage.getActiveBar()}/people`)
+}
+
 export async function getCategories() {
   return await getRequest(`/bars/${await storage.getActiveBar()}/categories`);
 }
