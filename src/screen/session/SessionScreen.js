@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import variables, { colors, mock } from "../../theme/variables.js";
-import { Button, Dimensions, ActivityIndicator } from "react-native";
+import { Button, Dimensions, ActivityIndicator, RefreshControl } from "react-native";
 import HeaderLayout from "../../layout/HeaderLayout";
 import BottomBarLayout from "../../layout/SessionBottomBarLayout";
 import { FlatList } from "react-native";
@@ -11,13 +11,13 @@ import { TouchableOpacity } from "react-native";
 
 export default function SessionScreen({ route, navigation }) {
   const [isLoading, setLoading] = useState(true);
-  const [session, setSession] = useState({bills: []});
+  const [session, setSession] = useState({ bills: [] });
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
+    const unsubscribe = navigation.addListener("focus", () => {
       setLoading(true);
-      setSession({bills: []})
-    })
+      setSession({ bills: [] });
+    });
     return unsubscribe;
   });
 
@@ -25,32 +25,56 @@ export default function SessionScreen({ route, navigation }) {
     if (route.params !== null && isLoading) {
       api
         .getCurrentSession()
-        .then((json) => {setSession(json);setLoading(false);})
-        .catch((error) => {alert(error); setLoading(false)});
+        .then((json) => {
+          setSession(json);
+          setLoading(false);
+        })
+        .catch((error) => {
+          alert(error);
+          setLoading(false);
+        });
     }
   }, [isLoading]);
+
+  const addCustomer = () => {
+    console.log(session.id)
+    navigation.navigate("Add customer to session", {"sessionId": session.id});
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <HeaderLayout navigation={navigation} />
       <View style={styles.session}>
+        <View style={styles.header}>
           <Text style={styles.session__title}>{session.name}</Text>
-          <View style={styles.session__customers}>
-            <FlatList
-              style={styles.list}
-              data={session.bills}
-              renderItem={({ item }) =>
-                customerListItem(navigation, item, session.id)
-              }
-              keyExtractor={(item) => item.id.toString()}
-              numColumns={2}
-              columnWrapperStyle={styles.customers__row}
-              refreshing={isLoading}
-              onRefresh={() => setLoading(true)}
-            />
-          </View>
+          <TouchableOpacity style={styles.addButton} onPress={addCustomer}>
+            <Text style={styles.addButton__text}>+</Text>
+          </TouchableOpacity>
         </View>
-      <BottomBarLayout style={styles.bottomBar} sessionId={session.id}></BottomBarLayout>
+        <View style={styles.session__customers}>
+          <FlatList
+            refreshControl={
+              <RefreshControl
+                 tintColor="white"
+             />}
+            colors={["white"]}
+            style={styles.list}
+            data={session.bills}
+            renderItem={({ item }) =>
+              customerListItem(navigation, item, session.id)
+            }
+            keyExtractor={(item) => item.id.toString()}
+            numColumns={2}
+            columnWrapperStyle={styles.customers__row}
+            refreshing={isLoading}
+            onRefresh={() => setLoading(true)}
+          />
+        </View>
+      </View>
+      <BottomBarLayout
+        style={styles.bottomBar}
+        sessionId={session.id}
+      ></BottomBarLayout>
     </SafeAreaView>
   );
 }
@@ -59,7 +83,9 @@ function customerListItem(navigation, bill, sessionId) {
   let billId = bill.id;
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Drink Categories", {billId, sessionId})}
+      onPress={() =>
+        navigation.navigate("Drink Categories", { billId, sessionId })
+      }
       onLongPress={() =>
         navigation.navigate("Session Bill", { billId, sessionId })
       }
@@ -99,6 +125,29 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     padding: 10,
   },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+    minHeight: 40,
+  },
+  addButton: {
+    flexDirection: "column",
+    marginLeft: "auto",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  addButton__text: {
+    textAlign: "center",
+    color: colors.TEXT_PRIMARY,
+    fontWeight: "bold",
+    width: "100%",
+    height: "100%",
+    margin: 10,
+    marginRight: 10,
+    fontSize: 40,
+  },
   session__customers: {
     marginVertical: 10,
     width: "100%",
@@ -110,6 +159,7 @@ const styles = StyleSheet.create({
   session__title: {
     color: colors.TEXT_PRIMARY,
     fontSize: 25,
+    flex: 1,
     fontWeight: "bold",
   },
   text: {

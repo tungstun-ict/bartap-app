@@ -18,7 +18,8 @@ import AccountScreen from "./src/screen/account/AccountScreen";
 import * as storage from "./src/service/BarStorageService.js";
 import * as api from "./src/service/BarApiService.js";
 import SplashScreen from "./src/screen/SplashScreen";
-import {AuthContext} from "./src/service/Context.js";
+import { AuthContext } from "./src/service/Context.js";
+import AddCustomerSession from "./src/screen/session/AddCustomerSession";
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
 const PastNavigator = createStackNavigator();
@@ -82,6 +83,10 @@ export function SessionStack() {
         name="Session Bill"
         component={SessionBillScreen}
       />
+      <SessionNavigator.Screen
+        name="Add customer to session"
+        component={AddCustomerSession}
+      />
     </SessionNavigator.Navigator>
   );
 }
@@ -101,7 +106,11 @@ export function StockStack() {
 export function AccountStack() {
   return (
     <AccountNavigator.Navigator headerMode="none">
-      <AccountNavigator.Screen name="Account" component={AccountScreen} initialParams={{'context': AuthContext}} />
+      <AccountNavigator.Screen
+        name="Account"
+        component={AccountScreen}
+        initialParams={{ context: AuthContext }}
+      />
     </AccountNavigator.Navigator>
   );
 }
@@ -109,7 +118,11 @@ export function AccountStack() {
 export function SignInStack() {
   return (
     <SignInNavigator.Navigator headerMode="none">
-      <AccountNavigator.Screen name="Login" component={LoginScreen} initialParams={{'context': AuthContext}} />
+      <AccountNavigator.Screen
+        name="Login"
+        component={LoginScreen}
+        initialParams={{ context: AuthContext }}
+      />
     </SignInNavigator.Navigator>
   );
 }
@@ -150,13 +163,12 @@ export default function App() {
       let userToken = null;
       try {
         userToken = await storage.getAccessToken();
-        
       } catch (e) {
         userToken = null;
       }
       dispatch({ type: "RESTORE_TOKEN", token: userToken });
     };
-    
+
     bootstrapAsync();
   }, []);
 
@@ -167,18 +179,19 @@ export default function App() {
         try {
           accessToken = await api.login(data.email, data.password);
           dispatch({ type: "SIGN_IN", token: accessToken });
-        } catch (e){
-          alert(e)
+        } catch (e) {
+          alert(e);
         }
-        
       },
       signOut: async () => {
         await api.logout();
-        dispatch({ type: "SIGN_OUT" })
+        dispatch({ type: "SIGN_OUT" });
       },
       signUp: async (data) => {
         api.signUp(data.email, data.password, data.name);
-        let accessToken = await api.login(data.email, data.password).catch(error => alert(error));
+        let accessToken = await api
+          .login(data.email, data.password)
+          .catch((error) => alert(error));
 
         dispatch({ type: "SIGN_IN", token: accessToken });
       },

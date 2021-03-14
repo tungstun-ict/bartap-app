@@ -195,13 +195,13 @@ const styles = StyleSheet.create({
   },
   listItemOrderLine__amount: {
     fontSize: 15,
-    color: colors.TEXT_SECONDARY,
+    color: colors.TEXT_PRIMARY,
     alignSelf: "center",
     marginLeft: "auto",
   },
   listItemOrderLine__price: {
     fontSize: 15,
-    color: colors.TEXT_SECONDARY,
+    color: colors.TEXT_PRIMARY,
     fontWeight: "bold",
     alignSelf: "center",
     marginLeft: 10,

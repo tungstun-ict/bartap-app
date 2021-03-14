@@ -1,14 +1,14 @@
 import * as storage from "../service/BarStorageService.js";
-import axios from 'axios';
+import axios from "axios";
 const api_url = "https://tungstun-bar-api.herokuapp.com/api";
 
 const api = axios.create({
-  baseURL: "https://tungstun-bar-api.herokuapp.com/api"
+  baseURL: "https://tungstun-bar-api.herokuapp.com/api",
 });
 
 api.defaults.headers.common["token_type"] = "bearer";
 api.defaults.headers.common["Accept"] = "application/json";
-api.defaults.headers.common["Content-Type"] = "application/json"; 
+api.defaults.headers.common["Content-Type"] = "application/json";
 
 api.interceptors.response.use(
   async function (response) {
@@ -16,111 +16,144 @@ api.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config;
-    console.log("INTERCEPT STATUS: " + JSON.stringify(error.message))
-    let refreshToken = await storage.getRefreshToken()
-    let accessToken = await storage.getAccessToken()
-    if (refreshToken && error.response.status === 403 && !originalRequest._retry) {
+    console.log("INTERCEPT STATUS: " + JSON.stringify(error.message));
+    let refreshToken = await storage.getRefreshToken();
+    let accessToken = await storage.getAccessToken();
+    if (
+      refreshToken &&
+      error.response.status === 403 &&
+      !originalRequest._retry
+    ) {
       originalRequest._retry = true;
-      return api.post("/authenticate/refresh", { "refreshToken": refreshToken, "accessToken": accessToken })
-      .then(async (res) => {
-        if (res.status === 200) {
-          await storage.storeAccessToken(res.headers.access_token);
-          console.log("Access token refreshed! : " + res.headers.access_token);
-          let headers = originalRequest.headers;
-          headers.access_token = res.headers.access_token;
-          originalRequest.headers = headers;
-          return api(originalRequest);
-        }
-      })
+      return api
+        .post("/authenticate/refresh", {
+          refreshToken: refreshToken,
+          accessToken: accessToken,
+        })
+        .then(async (res) => {
+          if (res.status === 200) {
+            await storage.storeAccessToken(res.headers.access_token);
+            console.log(
+              "Access token refreshed! : " + res.headers.access_token,
+            );
+            let headers = originalRequest.headers;
+            headers.access_token = res.headers.access_token;
+            originalRequest.headers = headers;
+            return api(originalRequest);
+          }
+        });
     }
     return Promise.reject(error);
-});
+  },
+);
 
 async function getRequest(url) {
   const accessToken = await storage.getAccessToken();
   console.log("Doing a getRequest on URL: " + url);
 
-  return api.get(url, {headers: {"access_token": accessToken}})
-  .then((response) => {
-    return response.data;
-  })
-  .catch((e) => {
-    throw  e
-  });
+  return api
+    .get(url, { headers: { access_token: accessToken } })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((e) => {
+      throw e;
+    });
 }
 
 export async function login(email, password) {
-  console.log("logging in...")
-  let data = { "userIdentification": email, "password": password };
+  console.log("logging in...");
+  let data = { userIdentification: email, password: password };
   let tokens = null;
   tokens = await fetch(api_url + "/authenticate", {
     method: "POST",
     headers: {
-      "Accept": "application/json",
+      Accept: "application/json",
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   })
     .then((response) => {
       if (response.ok) {
-        console.log("Credentials ok: Storing now")
+        console.log("Credentials ok: Storing now");
         return {
-          "accessToken": response.headers.get("access_token"), 
-          "refreshToken": response.headers.get("refresh_token")
-        }
+          accessToken: response.headers.get("access_token"),
+          refreshToken: response.headers.get("refresh_token"),
+        };
       }
-    }).catch((error) => {
-      throw error;
     })
+    .catch((error) => {
+      throw error;
+    });
 
-    console.log(tokens)
-    await storage.storeAccessToken(tokens.accessToken);
-    await storage.storeRefreshToken(tokens.refreshToken);
+  console.log(tokens);
+  await storage.storeAccessToken(tokens.accessToken);
+  await storage.storeRefreshToken(tokens.refreshToken);
 }
 
 export async function logout() {
-  await storage.removeAccessToken()
-  await storage.removeRefreshToken()
-  console.log('Logged out.')
+  await storage.removeAccessToken();
+  await storage.removeRefreshToken();
+  console.log("Logged out.");
 }
 
 export async function addDrink(billId, drinkId, sessionId) {
-  await api.put(`/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`, {
-    "amount": 1,
-    "bartenderId": 1,
-    "productId": drinkId,
-  });
+  await api.put(
+    `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`,
+    {
+      amount: 1,
+      bartenderId: 1,
+      productId: drinkId,
+    },
+  );
+}
+
+export async function addCustomerToSession(sessionId, customerId) {
+  console.log(sessionId + " " + customerId);
+  await api.post(
+    `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/`,
+    {
+      "customerId": customerId,
+    }
+  );
 }
 
 export async function getDrinksByCategory(categoryId) {
-  return await getRequest(`/bars/${await storage.getActiveBar()}/products?categoryId=${categoryId}`)
+  return await getRequest(
+    `/bars/${await storage.getActiveBar()}/products?categoryId=${categoryId}`,
+  );
 }
 
 export async function createCustomer(name, phone) {
   return await api.post(`/bars/${await storage.getActiveBar()}/people`, {
-    "name": name,
-    "phoneNumber": phone,
+    name: name,
+    phoneNumber: phone,
   });
-  
 }
 export async function getBillsByCustomerId(id) {
-  return await getRequest(`/bars/${await storage.getActiveBar()}/people/${id}/bills`);
+  return await getRequest(
+    `/bars/${await storage.getActiveBar()}/people/${id}/bills`,
+  );
 }
 
 export async function getBars() {
- return await getRequest(`/bars`);
+  return await getRequest(`/bars`);
 }
 
 export async function getBillByBillIdAndSessionId(billId, sessionId) {
-  return await getRequest(`/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`)
+  return await getRequest(
+    `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`,
+  );
 }
 
 export async function getCurrentSession() {
-  return await getRequest(`/bars/${await storage.getActiveBar()}/sessions/active`)
+  return await getRequest(
+    `/bars/${await storage.getActiveBar()}/sessions/active`,
+  );
 }
 
 export async function getAllCustomersByBarId() {
-  return await getRequest(`/bars/${await storage.getActiveBar()}/people`)
+  return await getRequest(`/bars/${await storage.getActiveBar()}/people`);
 }
 
 export async function getCategories() {
@@ -172,7 +205,7 @@ export function getSessionById(sessionId) {
 }
 
 export async function getCustomerById(id) {
-  return await getRequest(`/bars/${await storage.getActiveBar()}/people/${id}`)
+  return await getRequest(`/bars/${await storage.getActiveBar()}/people/${id}`);
 }
 
 export function getBillBySessionIdAndCustomerId(sessionId, customerId) {
