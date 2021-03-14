@@ -76,17 +76,17 @@ export default function CustomerOverviewScreen({ route, navigation }) {
             </View>
           </View>
         </View>
-        {customer.hasOwnProperty("user") ? (
-          <Text></Text>
-        ) : (
+        { (!customer.hasOwnProperty("user")) ? (
           <TouchableOpacity
-            onPress={() => setShowQr(true)}
-            style={styles.button__wrapper}
-          >
-            <View style={styles.button__submit}>
-              <Text style={styles.button__text}>Connect account</Text>
-            </View>
-          </TouchableOpacity>
+          onPress={() => setShowQr(true)}
+          style={styles.button__wrapper}
+        >
+          <View style={styles.button__submit}>
+            <Text style={styles.button__text}>Connect account</Text>
+          </View>
+        </TouchableOpacity>
+        ) : (
+          null
         )}
 
         <Text style={styles.title}>Bills</Text>

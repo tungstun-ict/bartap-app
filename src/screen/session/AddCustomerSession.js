@@ -29,7 +29,8 @@ export default function AddCustomerSession({ route, navigation }) {
         setLoading(false);
       })
       .catch((error) => {
-        alert(error);
+        if(error.response.status === 409) alert("Persoon al toegevoegd aan error")
+        else alert(error);
         setLoading(false);
       });
   }, [isLoading]);

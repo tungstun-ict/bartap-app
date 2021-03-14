@@ -3,13 +3,18 @@ import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import variables, { colors, mock } from "../../theme/variables.js";
-import { Button, Dimensions, ActivityIndicator, RefreshControl } from "react-native";
+import {
+  Button,
+  Dimensions,
+  ActivityIndicator,
+  RefreshControl,
+} from "react-native";
 import HeaderLayout from "../../layout/HeaderLayout";
 import BottomBarLayout from "../../layout/SessionBottomBarLayout";
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
 
-export default function SessionScreen({ route, navigation }) {
+export default function SessionScreen({ navigation }) {
   const [isLoading, setLoading] = useState(true);
   const [session, setSession] = useState({ bills: [] });
 
@@ -22,7 +27,8 @@ export default function SessionScreen({ route, navigation }) {
   });
 
   useEffect(() => {
-    if (route.params !== null && isLoading) {
+    if (isLoading == true) {
+      console.log("fetching data");
       api
         .getCurrentSession()
         .then((json) => {
@@ -36,11 +42,25 @@ export default function SessionScreen({ route, navigation }) {
     }
   }, [isLoading]);
 
-  const addCustomer = () => {
-    console.log(session.id)
-    navigation.navigate("Add customer to session", {"sessionId": session.id});
+  const formatData = (data, numColumns) => {
+    const numberOfFullRows = Math.floor(data.length / numColumns);
+  
+    let numberOfElementsLastRow = data.length - (numberOfFullRows * numColumns);
+    while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
+      data.push({ id: `blank-${numberOfElementsLastRow}`, empty: true, "customer": {"name": ""}, "totalPrice": 0 });
+      numberOfElementsLastRow++;
+    }
+  
+    return data;
   };
 
+  const addCustomer = () => {
+    console.log(session.id);
+    navigation.navigate("Add customer to session", { sessionId: session.id });
+  };
+
+
+  const numColumns = 2;
   return (
     <SafeAreaView style={styles.container}>
       <HeaderLayout navigation={navigation} />
@@ -53,16 +73,20 @@ export default function SessionScreen({ route, navigation }) {
         </View>
         <View style={styles.session__customers}>
           <FlatList
-            refreshControl={
-              <RefreshControl
-                 tintColor="white"
-             />}
-            colors={["white"]}
+            // refreshControl={
+            //   <RefreshControl
+            //      tintColor="white"
+            //  />}
+            // colors={["white"]}
             style={styles.list}
-            data={session.bills}
-            renderItem={({ item }) =>
-              customerListItem(navigation, item, session.id)
-            }
+            data={formatData(session.bills, numColumns)}
+            renderItem={({ item }) => {
+              if (item.empty === true) {
+                return <View style={[styles.customer, styles.itemInvisible]} />;
+              } else {
+                return customerListItem(navigation, item, session.id)
+              }
+            }}
             keyExtractor={(item) => item.id.toString()}
             numColumns={2}
             columnWrapperStyle={styles.customers__row}
@@ -110,11 +134,12 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
   },
   bottomBar: {
-    marginTop: "auto",
+    marginTop: 200,
   },
   session: {
     flex: 1,
@@ -124,6 +149,10 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     padding: 10,
+    
+  },
+  itemInvisible: {
+    backgroundColor: 'transparent',
   },
   header: {
     flexDirection: "row",
@@ -131,6 +160,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flex: 1,
     minHeight: 40,
+    maxHeight: 40,
   },
   addButton: {
     flexDirection: "column",
@@ -168,7 +198,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   list: {
-    height: "100%",
+    height: "auto",
+    width: "100%",
+    marginBottom: 20,
   },
   customer: {
     flex: 1,
@@ -176,7 +208,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
     marginVertical: 10,
     height: Dimensions.get("window").height / 7,
-    width: Dimensions.get("window").width / 2 - 30,
+    maxWidth: Dimensions.get("window").width / 2 - 30,
+    minWidth: Dimensions.get("window").width / 2 - 30,
     borderRadius: 5,
   },
   customer__name: {
