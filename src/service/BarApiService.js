@@ -47,24 +47,6 @@ async function getRequest(url) {
   .catch((e) => {
     throw  e
   });
-  // return fetch(api_url + url, {
-
-  //   method: "GET",
-  //   headers: {
-  //     "token_type": "bearer",
-  //     "access_token": accessToken,
-  //     "Accept": "application/json",
-  //     "Content-Type": "application/json",
-  //   },
-  // }).then((response) => {
-  //   if (response.ok) return response;
-  //   if(response.status === 403) {
-  //     console.log("Access token expired, asking for a new one;")
-  //     // refreshTokens();
-  //     throw "Could not make request";
-  //   }
-    
-  // }).catch((e) => {throw e});
 }
 
 export async function login(email, password) {
@@ -120,6 +102,9 @@ export async function createCustomer(name, phone) {
     "phoneNumber": phone,
   });
   
+}
+export async function getBillsByCustomerId(id) {
+  return await getRequest(`/bars/${await storage.getActiveBar()}/people/${id}/bills`);
 }
 
 export async function getBars() {

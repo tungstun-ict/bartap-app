@@ -23,10 +23,11 @@
     "react-native-elements": "^3.0.1",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-grid-component": "^2.0.1",
+    "react-native-qrcode-svg": "^6.1.1",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.0",
-    "react-native-svg": "12.1.0",
+    "react-native-svg": "^12.1.0",
     "react-native-web": "~0.13.12"
   },
   "devDependencies": {

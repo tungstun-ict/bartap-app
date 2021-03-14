@@ -43,6 +43,10 @@ export function CustomersStack() {
         name="Customer overview"
         component={CustomerOverviewScreen}
       />
+      <CustomersNavigator.Screen
+        name="Customer Bill"
+        component={SessionBillScreen}
+      />
     </CustomersNavigator.Navigator>
   );
 }
