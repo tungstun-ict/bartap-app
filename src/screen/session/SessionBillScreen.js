@@ -9,19 +9,21 @@ import {
   Button,
   FlatList,
 } from "react-native";
+import SwipeableFlatList from 'react-native-swipeable-list';
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import StackHeaderLayout from "../../layout/StackHeaderLayout";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { Alert } from "react-native";
 
 export default function SessionBillScreen({ route, navigation }) {
   const { billId, sessionId } = route.params;
-  const [bill, setBill] = useState({"customer": {"name": ""}, "totalPrice": 0});
+  const [bill, setBill] = useState({ customer: { name: "" }, totalPrice: 0 });
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       setLoading(true);
-      setBill({"customer": {"name": ""}, "totalPrice": 0});
+      setBill({ customer: { name: "" }, totalPrice: 0 });
     });
     return unsubscribe;
   });
@@ -42,30 +44,85 @@ export default function SessionBillScreen({ route, navigation }) {
     }
   }, [isLoading]);
 
+  const handleDeleteBill = () => {
+    Alert.alert(
+      "Are you sure?",
+      "You are about to delete this bill. This process is not reversable",
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            api.deleteBill(sessionId, billId).catch((error) => {
+              alert(error);
+            });
+            navigation.navigate("Session");
+          },
+        },
+        {
+          text: "No",
+          onPress: () => console.log("User canceled locking this session"),
+          style: "cancel",
+        },
+      ],
+      { cancelable: false },
+    );
+  };
+
+  const swipeableView = (item) => {
+    return (
+      <View style={styles.qaContainer}>
+        <View style={styles.qaButton}>
+          <TouchableOpacity
+            onPress={() => {
+              console.log(item)
+              api.deleteOrderFromBill(sessionId, billId, item.item.id)
+                .catch((error) => {alert(error);});
+              setLoading(true);
+            }}>
+          <Text style={[styles.qaButton__text]}>Delete</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
+  }
+
   return (
     <SafeAreaView style={styles.container}>
       <StackHeaderLayout navigation={navigation} />
-          <Text style={styles.title}>Bill {bill.customer.name}</Text>
-          <View style={styles.content}>
-            <FlatList
-              keyExtractor={(item) => item.id.toString()}
-              style={styles.list}
-              data={bill.orders}
-              renderItem={({ item }) => listItem(item)}
-              //ListFooterComponent={footerListItem(bill)}
-              refreshing={isLoading}
-              onRefresh={() => setLoading(true)}
-            />
-            <View style={styles.listItem__footer}>
-            <Text style={styles.listItem__footer__text}>
-                Total:
-              </Text>
-              <Text style={styles.listItem__footer__text__price}>
-                €{bill.totalPrice.toFixed(2)}
-              </Text>
-              
-            </View>
-          </View>
+      <View style={styles.header}>
+        <Text style={styles.title}>Bill {bill.customer.name}</Text>
+        <TouchableOpacity
+          style={styles.deleteButton}
+          onPress={() => handleDeleteBill()}
+        >
+          <Image
+            source={require("../../assets/trashbin.png")}
+            tintColor={"white"}
+            style={styles.deleteButton__image}
+            resizeMode={"contain"}
+          />
+        </TouchableOpacity>
+      </View>
+      <View style={styles.content}>
+        <SwipeableFlatList
+          keyExtractor={(item) => item.id.toString()}
+          style={styles.list}
+          data={bill.orders}
+          renderItem={({ item }) => listItem(item)}
+          //ListFooterComponent={footerListItem(bill)}
+          refreshing={isLoading}
+          onRefresh={() => setLoading(true)}
+          maxSwipeDistance={88}
+          renderQuickActions={(item) => swipeableView(item)}
+          shouldBounceOnMount={true}
+        />
+        <View style={styles.listItem__footer}>
+          <Text style={styles.listItem__footer__text}>Total:</Text>
+          <Text style={styles.listItem__footer__text__price}>
+            €{bill.totalPrice.toFixed(2)}
+          </Text>
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -92,23 +149,6 @@ function listItem(order) {
   );
 }
 
-function footerListItem(bill) {
-  return (
-    <View style={styles.listItem__footer}>
-      <Text style={styles.listItem__timestamp}></Text>
-      <Text style={styles.listItem__footer__text}>
-        €{bill.totalPrice.toFixed(2)}
-      </Text>
-    </View>
-  );
-}
-
-function handlePress(navigation, drink, customer) {
-  api.addDrink(customer, drink);
-
-  navigation.navigate("Current Session");
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -122,7 +162,22 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
+  qaContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+  },
+  qaButton: {
+    width: 80,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  qaButton__text: {
+    fontWeight: 'bold',
+    color: "red",
+  },
   title: {
+    flex: 1,
     height: 40,
     margin: 10,
     color: colors.TEXT_PRIMARY,
@@ -140,6 +195,22 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: "100%",
     height: "100%",
+  },
+  deleteButton: {
+    backgroundColor: colors.ELEMENT_BACKGROUND,
+    marginLeft: "auto",
+    marginRight: 10,
+  },
+  deleteButton__image: {
+    height: 30,
+    width: 25,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    width: "100%",
+    maxHeight: 60,
+    flex: 1,
   },
   listItem: {
     alignSelf: "center",

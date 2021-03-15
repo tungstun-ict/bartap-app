@@ -124,6 +124,15 @@ export async function addCustomerToSession(sessionId, customerId) {
   );
 }
 
+export async function deleteOrderFromBill(sessionId, billId, itemId) {
+  return await api.delete(`/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}/orders/${itemId}`)
+
+}
+
+export async function deleteBill(sessionId, billId) {
+  return await api.delete(`/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`)
+}
+
 export async function getDrinksByCategory(categoryId) {
   return await getRequest(
     `/bars/${await storage.getActiveBar()}/products?categoryId=${categoryId}`,
