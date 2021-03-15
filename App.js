@@ -1,4 +1,5 @@
 import { NavigationContainer, StackActions } from "@react-navigation/native";
+import { ThemeProvider } from 'react-native-elements';
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState, createContext } from "react";
@@ -21,6 +22,10 @@ import * as api from "./src/service/BarApiService.js";
 import SplashScreen from "./src/screen/SplashScreen";
 import { AuthContext } from "./src/service/Context.js";
 import AddCustomerSession from "./src/screen/session/AddCustomerSession";
+import StockOverviewScreen from "./src/screen/stock/StockOverviewScreen";
+import AddCategoryScreen from "./src/screen/stock/AddCategoryScreen";
+import AddProductStockScreen from "./src/screen/stock/AddProductStockScreen";
+import CategoryOverviewScreen from "./src/screen/stock/CategoryOverviewScreen";
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
 const PastNavigator = createStackNavigator();
@@ -96,15 +101,28 @@ export function SessionStack() {
   );
 }
 
-export function PaymentStack() {
-  return (
-    <PaymentNavigator.Navigator headerMode="none"></PaymentNavigator.Navigator>
-  );
-}
+// export function PaymentStack() {
+//   return (
+//     <PaymentNavigator.Navigator headerMode="none"></PaymentNavigator.Navigator>
+//   );
+// }
 
 export function StockStack() {
   return (
-    <StockNavigator.Navigator headerMode="none"></StockNavigator.Navigator>
+    <StockNavigator.Navigator headerMode="none">
+      <StockNavigator.Screen
+        name="Stock Overview"
+        component={StockOverviewScreen} />
+        <StockNavigator.Screen
+        name="Add Category"
+        component={AddCategoryScreen} />
+        <StockNavigator.Screen
+        name="Add Product"
+        component={AddProductStockScreen} />
+         <StockNavigator.Screen
+        name="Category Overview"
+        component={CategoryOverviewScreen} />
+    </StockNavigator.Navigator>
   );
 }
 
@@ -162,6 +180,11 @@ export default function App() {
       userToken: null,
     },
   );
+const theme = {
+    colors: {
+      primary: 'white',
+  }
+}
 
   useEffect(() => {
     const bootstrapAsync = async () => {
@@ -210,7 +233,8 @@ export default function App() {
   }
 
   return (
-    <AuthContext.Provider value={authContext}>
+    <ThemeProvider theme={theme}>
+      <AuthContext.Provider value={authContext}>
       <NavigationContainer>
         <DrawerNavigator.Navigator
           sceneContainerStyle={{ backgroundColor: "black" }}
@@ -234,10 +258,10 @@ export default function App() {
                 name="Customers"
                 component={CustomersStack}
               />
-              <DrawerNavigator.Screen
+              {/* <DrawerNavigator.Screen
                 name="Payments"
                 component={PaymentStack}
-              />
+              /> */}
               <DrawerNavigator.Screen name="Stock" component={StockStack} />
               <DrawerNavigator.Screen name="Account" component={AccountStack} />
             </React.Fragment>
@@ -247,6 +271,7 @@ export default function App() {
         </DrawerNavigator.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>
+    </ThemeProvider>
   );
 }
 

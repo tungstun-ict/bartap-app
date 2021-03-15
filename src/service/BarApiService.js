@@ -99,7 +99,7 @@ export async function logout() {
 
 export async function createSession(name) {
   await api.post(`/bars/${await storage.getActiveBar()}/sessions`, {
-    "name": name
+    name: name,
   });
 }
 
@@ -114,29 +114,56 @@ export async function addDrink(billId, drinkId, sessionId) {
   );
 }
 
+export async function createProduct(
+  name,
+  brand,
+  selectedCategory,
+  isFavourite,
+  sellingPrice,
+  productType,
+  size
+) {
+  return await api.post(`/bars/${await storage.getActiveBar()}/products`, {
+    brand: brand,
+    categoryId: selectedCategory,
+    isFavorite: isFavourite,
+    name: name,
+    price: sellingPrice,
+    productType: productType,
+    size: size,
+  });
+}
+
 export async function addCustomerToSession(sessionId, customerId) {
   console.log(sessionId + " " + customerId);
   await api.post(
     `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/`,
     {
-      "customerId": customerId,
-    }
+      customerId: customerId,
+    },
   );
 }
 
 export async function deleteOrderFromBill(sessionId, billId, itemId) {
-  return await api.delete(`/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}/orders/${itemId}`)
-
+  return await api.delete(
+    `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}/orders/${itemId}`,
+  );
 }
 
 export async function deleteBill(sessionId, billId) {
-  return await api.delete(`/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`)
+  return await api.delete(
+    `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`,
+  );
 }
 
 export async function getDrinksByCategory(categoryId) {
   return await getRequest(
     `/bars/${await storage.getActiveBar()}/products?categoryId=${categoryId}`,
   );
+}
+
+export async function getAllProductsByBar() {
+  return await getRequest(`/bars/${await storage.getActiveBar()}/products`);
 }
 
 export async function createCustomer(name, phone) {
@@ -224,7 +251,9 @@ export async function getCustomerById(id) {
 }
 
 export async function lockSession(sessionId) {
-  return await api.patch(`/bars/${await storage.getActiveBar()}/sessions/${sessionId}/lock`);
+  return await api.patch(
+    `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/lock`,
+  );
 }
 
 export function getBillBySessionIdAndCustomerId(sessionId, customerId) {

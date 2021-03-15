@@ -9,7 +9,7 @@ import {
   Button,
   FlatList,
 } from "react-native";
-import SwipeableFlatList from 'react-native-swipeable-list';
+import SwipeableFlatList from "react-native-swipeable-list";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import StackHeaderLayout from "../../layout/StackHeaderLayout";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -53,7 +53,13 @@ export default function SessionBillScreen({ route, navigation }) {
           text: "Yes",
           onPress: () => {
             api.deleteBill(sessionId, billId).catch((error) => {
-              alert(error);
+              if (error.response.status === 409) {
+                alert(
+                  "Session is locked. You must unlock first before editing anything.",
+                );
+              } else {
+                alert(error);
+              }
             });
             navigation.navigate("Session");
           },
@@ -74,17 +80,27 @@ export default function SessionBillScreen({ route, navigation }) {
         <View style={styles.qaButton}>
           <TouchableOpacity
             onPress={() => {
-              console.log(item)
-              api.deleteOrderFromBill(sessionId, billId, item.item.id)
-                .catch((error) => {alert(error);});
+              console.log(item);
+              api
+                .deleteOrderFromBill(sessionId, billId, item.item.id)
+                .catch((error) => {
+                  if (error.response.status === 409) {
+                    alert(
+                      "Session is locked. You must unlock first before editing anything.",
+                    );
+                  } else {
+                    alert(error);
+                  }
+                });
               setLoading(true);
-            }}>
-          <Text style={[styles.qaButton__text]}>Delete</Text>
+            }}
+          >
+            <Text style={[styles.qaButton__text]}>Delete</Text>
           </TouchableOpacity>
         </View>
       </View>
-    )
-  }
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -164,16 +180,16 @@ const styles = StyleSheet.create({
   },
   qaContainer: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
+    flexDirection: "row",
+    justifyContent: "flex-end",
   },
   qaButton: {
     width: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   qaButton__text: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     color: "red",
   },
   title: {
