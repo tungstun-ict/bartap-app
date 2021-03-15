@@ -21,7 +21,7 @@ export default function HeaderLayout({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={styles.header__center}>
-        <Text style={styles.header__title}>{mock.ORGANISATION_NAME}</Text>
+        <Text style={styles.header__title} numberOfLines={1}>{mock.ORGANISATION_NAME}</Text>
       </View>
       <View style={styles.header__right}></View>
     </View>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, Alert } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import variables, { colors, mock } from "../../theme/variables.js";
 import {
@@ -10,18 +10,17 @@ import {
   RefreshControl,
 } from "react-native";
 import HeaderLayout from "../../layout/HeaderLayout";
-import BottomBarLayout from "../../layout/SessionBottomBarLayout";
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
 
 export default function SessionScreen({ navigation }) {
   const [isLoading, setLoading] = useState(true);
-  const [session, setSession] = useState({ bills: [] });
+  const [session, setSession] = useState({ bills: [], locked: true });
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       setLoading(true);
-      setSession({ bills: [] });
+      setSession({ bills: [], locked: true });
     });
     return unsubscribe;
   });
@@ -36,7 +35,12 @@ export default function SessionScreen({ navigation }) {
           setLoading(false);
         })
         .catch((error) => {
-          alert(error);
+          if (error.response.status === 404) {
+            setSession({ bills: [], locked: true });
+          } else {
+            alert(error);
+          }
+
           setLoading(false);
         });
     }
@@ -44,13 +48,21 @@ export default function SessionScreen({ navigation }) {
 
   const formatData = (data, numColumns) => {
     const numberOfFullRows = Math.floor(data.length / numColumns);
-  
-    let numberOfElementsLastRow = data.length - (numberOfFullRows * numColumns);
-    while (numberOfElementsLastRow !== numColumns && numberOfElementsLastRow !== 0) {
-      data.push({ id: `blank-${numberOfElementsLastRow}`, empty: true, "customer": {"name": ""}, "totalPrice": 0 });
+
+    let numberOfElementsLastRow = data.length - numberOfFullRows * numColumns;
+    while (
+      numberOfElementsLastRow !== numColumns &&
+      numberOfElementsLastRow !== 0
+    ) {
+      data.push({
+        id: `blank-${numberOfElementsLastRow}`,
+        empty: true,
+        customer: { name: "" },
+        totalPrice: 0,
+      });
       numberOfElementsLastRow++;
     }
-  
+
     return data;
   };
 
@@ -59,6 +71,33 @@ export default function SessionScreen({ navigation }) {
     navigation.navigate("Add customer to session", { sessionId: session.id });
   };
 
+  const handleLockSession = () => {
+    Alert.alert(
+      "Are you sure?",
+      "You are about to lock this session. This process is not reversable",
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            api.lockSession(session.id).catch((error) => {
+              alert(error);
+            });
+            setLoading(true);
+          },
+        },
+        {
+          text: "No",
+          onPress: () => console.log("User canceled locking this session"),
+          style: "cancel",
+        },
+      ],
+      { cancelable: false },
+    );
+  };
+
+  const handleNewSession = () => {
+    navigation.navigate("New Session");
+  };
 
   const numColumns = 2;
   return (
@@ -84,7 +123,7 @@ export default function SessionScreen({ navigation }) {
               if (item.empty === true) {
                 return <View style={[styles.customer, styles.itemInvisible]} />;
               } else {
-                return customerListItem(navigation, item, session.id)
+                return customerListItem(navigation, item, session.id);
               }
             }}
             keyExtractor={(item) => item.id.toString()}
@@ -95,10 +134,40 @@ export default function SessionScreen({ navigation }) {
           />
         </View>
       </View>
-      <BottomBarLayout
-        style={styles.bottomBar}
-        sessionId={session.id}
-      ></BottomBarLayout>
+      <View style={styles.bottomBar}>
+        <View style={styles.bottomBar__bar}>
+          <TouchableOpacity style={styles.buttonDisabled}>
+            <Image
+              style={styles.button__image}
+              source={require("../../assets/clock.png")}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonDisabled}>
+            <Image
+              style={styles.button__image}
+              source={require("../../assets/stats.png")}
+            />
+          </TouchableOpacity>
+          {!session.locked ? (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleLockSession()}
+            >
+              <Image
+                style={styles.button__image}
+                source={require("../../assets/close.png")}
+              />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleNewSession()}
+            >
+              <Text style={styles.addSessionButton}>+</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -115,7 +184,7 @@ function customerListItem(navigation, bill, sessionId) {
       }
     >
       <View style={styles.customer}>
-        <Text style={styles.customer__name}>{bill.customer.name}</Text>
+        <Text style={styles.customer__name} numberOfLines={2}>{bill.customer.name}</Text>
         <Text style={styles.customer__total}>
           €{bill.totalPrice.toFixed(2)}
         </Text>
@@ -138,8 +207,49 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  bottomBar__bar: {
+    flex: 1,
+    flexDirection: "row",
+    height: 100,
+    backgroundColor: colors.ELEMENT_BACKGROUND,
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+  },
+
+  button: {
+    marginHorizontal: 20,
+    flex: 1,
+    height: 70,
+    width: 70,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
+  },
+  buttonDisabled: {
+    marginHorizontal: 20,
+    flex: 1,
+    height: 70,
+    width: 70,
+    borderRadius: 5,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: colors.ELEMENT_BACKGROUND_SELECTED,
+  },
+  addSessionButton: {
+    fontSize: 50,
+    fontWeight: "bold",
+  },
+  button__image: {
+    height: 40,
+    width: 40,
+  },
+  button__text: {
+    color: colors.TEXT_SECONDARY,
+  },
   bottomBar: {
-    marginTop: 200,
+    height: 100,
   },
   session: {
     flex: 1,
@@ -149,10 +259,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     alignItems: "flex-start",
     padding: 10,
-    
   },
   itemInvisible: {
-    backgroundColor: 'transparent',
+    backgroundColor: "transparent",
   },
   header: {
     flexDirection: "row",
@@ -198,6 +307,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   list: {
+    
     height: "auto",
     width: "100%",
     marginBottom: 20,

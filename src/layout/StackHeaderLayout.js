@@ -21,7 +21,7 @@ export default function StackHeaderLayout({ navigation, title }) {
         </TouchableOpacity>
       </View>
       <View style={styles.header__center}>
-        <Text style={styles.header__title}>{title}</Text>
+        <Text style={styles.header__title} numberOfLines={1}>{title}</Text>
       </View>
       <View style={styles.header__right}></View>
     </View>

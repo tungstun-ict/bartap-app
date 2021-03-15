@@ -97,6 +97,12 @@ export async function logout() {
   console.log("Logged out.");
 }
 
+export async function createSession(name) {
+  await api.post(`/bars/${await storage.getActiveBar()}/sessions`, {
+    "name": name
+  });
+}
+
 export async function addDrink(billId, drinkId, sessionId) {
   await api.put(
     `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`,
@@ -208,6 +214,10 @@ export async function getCustomerById(id) {
   return await getRequest(`/bars/${await storage.getActiveBar()}/people/${id}`);
 }
 
+export async function lockSession(sessionId) {
+  return await api.patch(`/bars/${await storage.getActiveBar()}/sessions/${sessionId}/lock`);
+}
+
 export function getBillBySessionIdAndCustomerId(sessionId, customerId) {
   return {
     customerId: customerId,
@@ -275,8 +285,4 @@ export function getAllSessions() {
       timestamp: "2020-10-26T21:29:45.846+00:00",
     },
   ];
-}
-
-export function lockSession(sessionId) {
-  console.log("locked session " + sessionId);
 }

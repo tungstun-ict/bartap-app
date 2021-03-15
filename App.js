@@ -14,6 +14,7 @@ import AddDrinksScreen from "./src/screen/drinks/AddDrinkScreen";
 import SessionBillScreen from "./src/screen/session/SessionBillScreen";
 import PastSessionsScreen from "./src/screen/session/PastSessionsScreen";
 import LoginScreen from "./src/screen/account/LoginScreen";
+import NewSessionScreen from "./src/screen/session/NewSessionScreen";
 import AccountScreen from "./src/screen/account/AccountScreen";
 import * as storage from "./src/service/BarStorageService.js";
 import * as api from "./src/service/BarApiService.js";
@@ -86,6 +87,10 @@ export function SessionStack() {
       <SessionNavigator.Screen
         name="Add customer to session"
         component={AddCustomerSession}
+      />
+      <SessionNavigator.Screen
+        name="New Session"
+        component={NewSessionScreen}
       />
     </SessionNavigator.Navigator>
   );

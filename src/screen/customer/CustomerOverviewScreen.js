@@ -59,16 +59,16 @@ export default function CustomerOverviewScreen({ route, navigation }) {
         <View style={styles.information}>
           <View style={styles.table}>
             <View style={styles.column}>
-              <Text style={styles.name}>Name:</Text>
-              <Text style={styles.name}>ID:</Text>
-              <Text style={styles.name}>Phone number:</Text>
-              <Text style={styles.name}>Account:</Text>
+              <Text style={styles.name} numberOfLines={1}>Name:</Text>
+              <Text style={styles.name} numberOfLines={1}>ID:</Text>
+              <Text style={styles.name} numberOfLines={1}>Phone number:</Text>
+              <Text style={styles.name} numberOfLines={1}>Account:</Text>
             </View>
             <View style={styles.column}>
-              <Text style={styles.attribute}>{customer.name}</Text>
-              <Text style={styles.attribute}>{customer.id}</Text>
+              <Text style={styles.attribute} numberOfLines={1}>{customer.name}</Text>
+              <Text style={styles.attribute} >{customer.id}</Text>
               <Text style={styles.attribute}>{customer.phoneNumber}</Text>
-              <Text style={styles.attribute}>
+              <Text style={styles.attribute} numberOfLines={1}>
                 {customer.hasOwnProperty("user")
                   ? customer.user.mail
                   : "Not connected"}
