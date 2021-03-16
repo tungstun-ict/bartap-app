@@ -26,6 +26,7 @@ import StockOverviewScreen from "./src/screen/stock/StockOverviewScreen";
 import AddCategoryScreen from "./src/screen/stock/AddCategoryScreen";
 import AddProductStockScreen from "./src/screen/stock/AddProductStockScreen";
 import CategoryOverviewScreen from "./src/screen/stock/CategoryOverviewScreen";
+import { StatusBar } from "expo-status-bar";
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
 const PastNavigator = createStackNavigator();
@@ -271,6 +272,7 @@ const theme = {
         </DrawerNavigator.Navigator>
       </NavigationContainer>
     </AuthContext.Provider>
+    <StatusBar style="light" />
     </ThemeProvider>
   );
 }
