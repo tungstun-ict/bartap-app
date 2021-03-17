@@ -174,7 +174,7 @@ export async function createCustomer(name, phone) {
   return await api.post(`/bars/${await storage.getActiveBar()}/people`, {
     name: name,
     phoneNumber: phone,
-  });
+  }).then((response) => {return response.data});
 }
 export async function getBillsByCustomerId(id) {
   return await getRequest(

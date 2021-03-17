@@ -30,7 +30,8 @@ export default function CustomersScreen({ navigation }) {
   });
 
   useEffect(() => {
-    api
+    if(isLoading) {
+      api
       .getAllCustomersByBarId()
       .then((json) => {
         setCustomers(json);
@@ -40,6 +41,7 @@ export default function CustomersScreen({ navigation }) {
         alert(error);
         setLoading(false);
       });
+    }
   }, [isLoading]);
 
   const listItem = (customer) => {

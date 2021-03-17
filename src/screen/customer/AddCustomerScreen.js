@@ -15,11 +15,15 @@ import { apisAreAvailable } from "expo";
 export default function AddCustomerScreen({ navigation }) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [createdCustomer, setCreatedCustomer] = useState({});
   
- const createCustomer = async (name, phone) => {
+ const createCustomer = (name, phone) => {
   if(name !== "" && phone !== "") {
-    let customer = await api.createCustomer(name, phone);
-    navigation.navigate("Customer overview", customer.id);
+     api.createCustomer(name, phone)
+      .finally(() => {
+        navigation.navigate("Customers");
+     })
+     .catch((error) => alert(error));
   }
 }
 
@@ -43,7 +47,7 @@ export default function AddCustomerScreen({ navigation }) {
           style={styles.input}
         />
         <TouchableOpacity 
-          onPress={() => createCustomer(name, phone).catch(error => alert(error))}
+          onPress={() => createCustomer(name, phone)}
           style={styles.button__wrapper}>
           <View style={styles.button__submit}>
             <Text style={styles.button__text}>Submit</Text>

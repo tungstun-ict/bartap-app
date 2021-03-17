@@ -14,7 +14,8 @@ export default function CustomerOverviewScreen({ route, navigation }) {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    api
+    if(isLoading) {
+      api
       .getCustomerById(route.params)
       .then((json) => {
         setCustomer(json);
@@ -28,6 +29,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
         setLoading(false);
       })
       .catch((error) => alert(error));
+    }
   }, [isLoading]);
 
   const listItem = (bill) => {
@@ -50,9 +52,11 @@ export default function CustomerOverviewScreen({ route, navigation }) {
   };
 
   const handleDeleteCustomer = () => {
-    api.deleteCustomer(customer.id)
-    .finally(navigation.navigate("Customers"))
-    .catch((error) => alert(error));
+    api.deleteCustomer(customer.id).then(() => {
+      console.log("deleting customer " + customer.name)
+    })
+    .finally(() => {navigation.navigate("Customers")})
+    .catch((error) => console.error(error));
   }
 
   return (
