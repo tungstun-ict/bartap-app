@@ -1,4 +1,4 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
@@ -8,44 +8,60 @@ import * as api from "../../service/BarApiService.js";
 import { AuthContext } from "../../service/Context.js";
 
 export default function LoginScreen({ navigation }) {
-
-
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
   const { signIn } = useContext(AuthContext);
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderLayout navigation={navigation} />
-      <Text style={styles.title}>Log in</Text>
       <View style={styles.content}>
-        <Text style={styles.input__label}>Email</Text>
-        <TextInput
-          autoCompleteType={"email"}
-          value={email}
-          onChangeText={setEmail}
-          keyboardType={"email-address"}
-          multiline={false}
-          style={styles.input}
-        />
-        <Text style={styles.input__label}>Password</Text>
-        <TextInput
-          autoCompleteType={"password"}
-          value={password}
-          onChangeText={setPassword}
-          keyboardType={"default"}
-          multiline={false}
-          style={styles.input}
-          secureTextEntry={true}
-        />
-        <TouchableOpacity 
-          onPress={() => signIn({"email": email, "password": password})}
-        style={styles.button__wrapper}>
-          <View style={styles.button__submit}>
-            <Text style={styles.button__text}>Submit</Text>
-          </View>
-        </TouchableOpacity>
+        <Image
+            style={styles.logo}
+            resizeMethod={"resize"}
+            resizeMode={"contain"}
+            source={require("../../assets/logo.png")}
+          />
+          <Text style={styles.logoText}>{mock.ORGANISATION_NAME}</Text>
+        <View style={styles.form}>
+          <TextInput
+            placeholder={"Email adress"}
+            placeholderTextColor={colors.TEXT_SECONDARY}
+            autoCompleteType={"email"}
+            value={email}
+            onChangeText={setEmail}
+            keyboardType={"email-address"}
+            multiline={false}
+            style={styles.input}
+          />
+          <TextInput
+            placeholder={"Password"}
+            placeholderTextColor={colors.TEXT_SECONDARY}
+            autoCompleteType={"password"}
+            value={password}
+            onChangeText={setPassword}
+            keyboardType={"default"}
+            multiline={false}
+            style={styles.input}
+            secureTextEntry={true}
+          />
+          <TouchableOpacity
+            onPress={() => signIn({ email: email, password: password })}
+            style={styles.button__wrapper}
+          >
+            <View style={styles.button__submit}>
+              <Text style={styles.button__text}>Log in</Text>
+            </View>
+          </TouchableOpacity>
+          <Text
+            onPress={() => {
+              alert("Feature not available, ask administrators for account credentials.")
+            }}
+            style={styles.link}
+          >
+            I do not have an account
+          </Text>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -61,7 +77,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: "flex-start",
+    flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
     width: "100%",
     paddingHorizontal: 10,
@@ -73,10 +90,27 @@ const styles = StyleSheet.create({
     fontSize: sizes.TITLE,
     fontWeight: "bold",
   },
+  logo: {
+    height: 120,
+  },
+  logoText: {
+    color: colors.TEXT_PRIMARY,
+    fontSize: 40,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  form: {
+    width: "100%",
+  },
   text: {
     color: colors.TEXT_TERTIARY,
     fontSize: 50,
     fontWeight: "bold",
+  },
+  link: {
+    color: colors.TEXT_PRIMARY,
+    textAlign: "center",
+    textDecorationLine: "underline",
   },
   input: {
     width: "100%",
@@ -110,6 +144,7 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 20,
   },
   button__text: {
     fontSize: 15,

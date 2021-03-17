@@ -76,17 +76,18 @@ export async function login(email, password) {
     .then((response) => {
       if (response.ok) {
         console.log("Credentials ok: Storing now");
-        return {
-          accessToken: response.headers.get("access_token"),
-          refreshToken: response.headers.get("refresh_token"),
-        };
+        if (response.headers.get("access_token"))
+          return {
+            accessToken: response.headers.get("access_token"),
+            refreshToken: response.headers.get("refresh_token"),
+          };
+      } else {
+        throw "Credentials not ok";
       }
     })
     .catch((error) => {
       throw error;
     });
-
-  console.log(tokens);
   await storage.storeAccessToken(tokens.accessToken);
   await storage.storeRefreshToken(tokens.refreshToken);
 }
@@ -104,7 +105,9 @@ export async function createSession(name) {
 }
 
 export async function deleteCustomer(customerId) {
-  await api.delete(`/bars/${await storage.getActiveBar()}/people/${customerId}`);
+  await api.delete(
+    `/bars/${await storage.getActiveBar()}/people/${customerId}`,
+  );
 }
 
 export async function addDrink(billId, drinkId, sessionId) {
@@ -125,7 +128,7 @@ export async function createProduct(
   isFavourite,
   sellingPrice,
   productType,
-  size
+  size,
 ) {
   return await api.post(`/bars/${await storage.getActiveBar()}/products`, {
     brand: brand,
@@ -171,10 +174,14 @@ export async function getAllProductsByBar() {
 }
 
 export async function createCustomer(name, phone) {
-  return await api.post(`/bars/${await storage.getActiveBar()}/people`, {
-    name: name,
-    phoneNumber: phone,
-  }).then((response) => {return response.data});
+  return await api
+    .post(`/bars/${await storage.getActiveBar()}/people`, {
+      name: name,
+      phoneNumber: phone,
+    })
+    .then((response) => {
+      return response.data;
+    });
 }
 export async function getBillsByCustomerId(id) {
   return await getRequest(
