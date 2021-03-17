@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, SafeAreaView } from "react-native";
+import { FlatList, RefreshControl, SafeAreaView } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import { StyleSheet, Text, View, Image, Modal } from "react-native";
 import variables, { colors, mock } from "../../theme/variables.js";
@@ -15,25 +15,28 @@ export default function StockOverviewScreen({ route, navigation }) {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    if(isLoading) {
-      api.getCategories()
+    if (isLoading) {
+      api
+        .getCategories()
         .then((json) => {
           setCategories(json);
           setLoading(false);
         })
         .catch((error) => {
-        alert(error);
-        setLoading(false);
-      })
+          alert(error);
+          setLoading(false);
+        });
     }
   }, [isLoading]);
-
 
   const listItem = (category) => {
     console.log(category);
     return (
       <TouchableOpacity
-        onPress={() =>{ navigation.navigate("Category Overview", category)}}>
+        onPress={() => {
+          navigation.navigate("Category Overview", category);
+        }}
+      >
         <View style={styles.listItem}>
           <Text style={styles.listItem__name}>{category.name}</Text>
           {/* <Text style={styles.listItem__price}>
@@ -67,6 +70,9 @@ export default function StockOverviewScreen({ route, navigation }) {
         </View> */}
         <Text style={styles.title}>Categories</Text>
         <FlatList
+          refreshControl={
+            <RefreshControl onRefresh={() => setLoading(true)} refreshing={isLoading} tintColor="white" />
+          }
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
           data={categories}
@@ -74,16 +80,18 @@ export default function StockOverviewScreen({ route, navigation }) {
           refreshing={isLoading}
           onRefresh={() => setLoading(true)}
         />
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={() => navigation.navigate("Add Category")}
-          style={styles.button__wrapper}>
+          style={styles.button__wrapper}
+        >
           <View style={styles.button}>
             <Text style={styles.button__text}>Add a new category</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={() => navigation.navigate("Add Product")}
-          style={styles.button__wrapper}>
+          style={styles.button__wrapper}
+        >
           <View style={styles.button}>
             <Text style={styles.button__text}>Add a new product</Text>
           </View>
@@ -115,7 +123,6 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     backgroundColor: colors.BACKGROUND,
-
   },
   button: {
     alignItems: "center",

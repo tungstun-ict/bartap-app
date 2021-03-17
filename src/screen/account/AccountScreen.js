@@ -33,7 +33,7 @@ export default function AccountScreen({ navigation }) {
   }, [selectedBar])
 
   let pickerItems = bars.map((bar) => {
-    return <Picker.Item label={bar.name} value={bar.id} key={bar.id}/>
+    return <Picker.Item style={styles.picker__item} label={bar.name} value={bar.id} key={bar.id}/>
   })
 
   return (
@@ -90,15 +90,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   picker: {
+    height: 60,
     borderColor: colors.TEXT_PRIMARY,
-    borderWidth: 5,
-    color: colors.TEXT_PRIMARY,
+    borderWidth: 1,
     backgroundColor: colors.ELEMENT_BACKGROUND,
+    color: colors.TEXT_PRIMARY,
     borderRadius: 5,
+    justifyContent: "center",
     marginVertical: 10,
   },
   picker__item: {
-    color: "black"
+    height: 50,
+    color: "white"
   },
   text: {
     color: colors.TEXT_TERTIARY,

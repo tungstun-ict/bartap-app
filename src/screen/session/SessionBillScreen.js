@@ -8,6 +8,7 @@ import {
   Image,
   Button,
   FlatList,
+  RefreshControl,
 } from "react-native";
 import SwipeableFlatList from "react-native-swipeable-list";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
@@ -83,6 +84,7 @@ export default function SessionBillScreen({ route, navigation }) {
               console.log(item);
               api
                 .deleteOrderFromBill(sessionId, billId, item.item.id)
+                .finally(() => setLoading(true))
                 .catch((error) => {
                   if (error.response.status === 409) {
                     alert(
@@ -92,7 +94,6 @@ export default function SessionBillScreen({ route, navigation }) {
                     alert(error);
                   }
                 });
-              setLoading(true);
             }}
           >
             <Text style={[styles.qaButton__text]}>Delete</Text>
@@ -113,7 +114,6 @@ export default function SessionBillScreen({ route, navigation }) {
         >
           <Image
             source={require("../../assets/trashbin.png")}
-            tintColor={"white"}
             style={styles.deleteButton__image}
             resizeMode={"contain"}
           />
@@ -125,7 +125,12 @@ export default function SessionBillScreen({ route, navigation }) {
           style={styles.list}
           data={bill.orders}
           renderItem={({ item }) => listItem(item)}
-          //ListFooterComponent={footerListItem(bill)}
+          refreshControl={
+            <RefreshControl
+              onRefresh={() => setLoading(true)}
+              refreshing={isLoading}
+              tintColor="white"
+           />}
           refreshing={isLoading}
           onRefresh={() => setLoading(true)}
           maxSwipeDistance={88}
@@ -213,13 +218,13 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   deleteButton: {
-    backgroundColor: colors.ELEMENT_BACKGROUND,
     marginLeft: "auto",
     marginRight: 10,
   },
   deleteButton__image: {
     height: 30,
     width: 25,
+    tintColor: "white",
   },
   header: {
     flexDirection: "row",

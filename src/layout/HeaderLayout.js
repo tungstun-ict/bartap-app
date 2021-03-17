@@ -13,7 +13,8 @@ export default function HeaderLayout({ navigation }) {
   return (
     <View style={styles.header}>
       <View style={styles.header__left}>
-        <TouchableOpacity onPress={openDrawer}>
+        <TouchableOpacity onPress={openDrawer}
+          style={styles.header__button}>
           <Image
             style={styles.header__menuIcon}
             source={require("../assets/menu/menu-icon.png")}
@@ -63,7 +64,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-
+  header__button: {
+    width: 75,
+    height: "100%",
+    justifyContent: "center",
+  },
   header__right: {
     flex: 1,
     justifyContent: "center",

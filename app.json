@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "bar App",
+    "name": "Bar App",
     "slug": "bar-application",
-    "version": "0.0.1",
+    "owner": "tungstun",
+    "version": "0.0.3",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "splash": {
@@ -19,7 +20,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.tungstun.bar-application",
-      "buildNumber": "0.0.1"
+      "buildNumber": "0.0.3"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,7 +28,7 @@
         "backgroundColor": "#212121"
       },
       "package": "com.tungstun.bar_application",
-      "versionCode": 1
+      "versionCode": 3
     },
     "web": {
       "favicon": "./src/assets/favicon.png"

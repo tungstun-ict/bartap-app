@@ -8,6 +8,7 @@ import {
   Image,
   Button,
   FlatList,
+  RefreshControl,
 } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import StackHeaderLayout from "../../layout/StackHeaderLayout";
@@ -19,22 +20,24 @@ export default function CategoryOverviewScreen({ route, navigation }) {
   const category = route.params;
 
   useEffect(() => {
-    api.getDrinksByCategory(category.id)
-  .then((json) => setDrinks(json))
-  .catch((error) => alert(error));
-  }, [])
+    api
+      .getDrinksByCategory(category.id)
+      .then((json) => setDrinks(json))
+      .catch((error) => alert(error));
+  }, []);
 
   const listItem = (drink) => {
     return (
-      <TouchableOpacity
-      >
+      <TouchableOpacity>
         <View style={styles.listItem}>
-          <Text style={styles.listItem__name}>{drink.brand} {drink.name}</Text>
+          <Text style={styles.listItem__name}>
+            {drink.brand} {drink.name}
+          </Text>
           <Text style={styles.listItem__price}>€{drink.price.toFixed(2)}</Text>
         </View>
       </TouchableOpacity>
     );
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -42,6 +45,9 @@ export default function CategoryOverviewScreen({ route, navigation }) {
       <Text style={styles.title}>{category.name}</Text>
       <View style={styles.content}>
         <FlatList
+          refreshControl={
+            <RefreshControl onRefresh={() => setLoading(true)} refreshing={isLoading} tintColor="white" />
+          }
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
           data={drinks}

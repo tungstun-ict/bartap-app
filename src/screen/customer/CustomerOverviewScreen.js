@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, SafeAreaView } from "react-native";
+import { FlatList, RefreshControl, SafeAreaView } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import { StyleSheet, Text, View, Image, Modal } from "react-native";
 import variables, { colors, mock } from "../../theme/variables.js";
@@ -33,7 +33,6 @@ export default function CustomerOverviewScreen({ route, navigation }) {
   const listItem = (bill) => {
     const billId = bill.id;
     const sessionId = bill.session.id;
-
     return (
       <TouchableOpacity
         onPress={() =>
@@ -49,6 +48,12 @@ export default function CustomerOverviewScreen({ route, navigation }) {
       </TouchableOpacity>
     );
   };
+
+  const handleDeleteCustomer = () => {
+    api.deleteCustomer(customer.id)
+    .finally(navigation.navigate("Customers"))
+    .catch((error) => alert(error));
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -79,10 +84,10 @@ export default function CustomerOverviewScreen({ route, navigation }) {
         { (!customer.hasOwnProperty("user")) ? (
           <TouchableOpacity
           onPress={() => setShowQr(true)}
-          style={styles.button__wrapper}
+          style={styles.connectButton__wrapper}
         >
           <View style={styles.button__submit}>
-            <Text style={styles.button__text}>Connect account</Text>
+            <Text style={styles.connectButton__text}>Connect account</Text>
           </View>
         </TouchableOpacity>
         ) : (
@@ -95,11 +100,25 @@ export default function CustomerOverviewScreen({ route, navigation }) {
             keyExtractor={(item) => item.id.toString()}
             style={styles.list}
             data={bills}
+            refreshControl={
+              <RefreshControl
+                onRefresh={() => setLoading(true)}
+                refreshing={isLoading}
+                tintColor="white"
+             />}
             renderItem={(item) => listItem(item.item)}
             refreshing={isLoading}
             onRefresh={() => setLoading(true)}
           />
         </View>
+        <TouchableOpacity
+          onPress={() => handleDeleteCustomer()}
+          style={styles.button__wrapper}
+        >
+          <View style={styles.button}>
+            <Text style={styles.button__text}>Delete customer</Text>
+          </View>
+        </TouchableOpacity>
       </View>
       <Modal
         animationType="slide"
@@ -160,16 +179,38 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 5,
   },
-  button__wrapper: {
-    width: "95%",
-    backgroundColor: colors.ELEMENT_BACKGROUND,
-    height: 40,
-    marginVertical: 10,
+  button: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    height: "100%",
+    width: "100%",
+    backgroundColor: colors.ELEMENT_BACKGROUND_WARNING,
+    borderRadius: 5,
+    marginTop: 0,
+    alignSelf: "center",
+  },
+  connectButton__wrapper: {
+    flex: 1,
+    maxHeight: 40,
+    marginBottom: 20,
+    width: "95%",
+  },
+  button__wrapper: {
+    flex: 1,
+    maxHeight: 50,
+    marginTop: "auto",
+    width: "95%",
+    marginVertical: 10,
   },
   button__text: {
-    fontSize: 15,
+    color: colors.TEXT_PRIMARY,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  connectButton__text: {
+    color: "black",
+    fontSize: 20,
     fontWeight: "bold",
   },
   information: {

@@ -8,6 +8,7 @@ import {
   Image,
   Button,
   FlatList,
+  RefreshControl,
 } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import StackHeaderLayout from "../../layout/StackHeaderLayout";
@@ -26,6 +27,9 @@ export default function PastSessionsScreen({ route, navigation }) {
       <Text style={styles.title}>Past sessions</Text>
       <View style={styles.content}>
         <FlatList
+          // refreshControl={
+          //   <RefreshControl refreshing={isLoading} tintColor="white" />
+          // }
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
           data={sessions}
@@ -54,9 +58,7 @@ function listItem(navigation, session) {
 }
 
 function handlePress(navigation, sessionId) {
-  navigation.navigate(
-    "Past session", {sessionId: sessionId}
-  );
+  navigation.navigate("Past session", { sessionId: sessionId });
 }
 
 const styles = StyleSheet.create({

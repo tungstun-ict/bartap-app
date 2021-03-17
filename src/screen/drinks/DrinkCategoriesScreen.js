@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { SafeAreaView } from "react-native";
+import { RefreshControl, SafeAreaView } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
 import { colors, mock } from "../../theme/variables.js";
 import StackHeaderLayout from "../../layout/StackHeaderLayout";
@@ -8,13 +8,21 @@ import { TouchableOpacity } from "react-native";
 import * as api from "../../service/BarApiService.js";
 
 export default function DrinkCategoriesScreen({ route, navigation }) {
-  const [categories, setCategories ] = useState([])
-  
-  useEffect(()=> {
-    api.getCategories()
-    .then((json) => setCategories(json))
-    .catch((error) => alert(error));;
-  }, [])
+  const [categories, setCategories] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    api
+      .getCategories()
+      .then((json) => {
+        setCategories(json);
+        setLoading(false);
+      })
+      .catch((error) => {
+        alert(error)
+        setLoading(false);
+      });
+  }, []);
 
   const { billId, sessionId } = route.params;
 
@@ -24,8 +32,13 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       <View style={styles.content}>
         <View style={styles.categories}>
           <FlatList
+            refreshControl={
+              <RefreshControl onRefresh={() => setLoading(true)} refreshing={isLoading} tintColor="white" />
+            }
             data={categories}
-            renderItem={({ item }) => categoryListItem(navigation, item, billId, sessionId)}
+            renderItem={({ item }) =>
+              categoryListItem(navigation, item, billId, sessionId)
+            }
             keyExtractor={(item) => item.id.toString()}
             numColumns={2}
             columnWrapperStyle={styles.categories__row}
@@ -52,7 +65,7 @@ function handleOnPress(navigation, category, billId, sessionId) {
   navigation.navigate("Add Drink", {
     category,
     billId,
-    sessionId
+    sessionId,
   });
 }
 
@@ -79,8 +92,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,
-    height: Dimensions.get('window').height / 7 ,
-    width: Dimensions.get('window').width / 2 -30,
+    height: Dimensions.get("window").height / 7,
+    width: Dimensions.get("window").width / 2 - 30,
     borderRadius: 5,
   },
   categories__row: {

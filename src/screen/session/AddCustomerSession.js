@@ -7,6 +7,7 @@ import {
   Image,
   Button,
   FlatList,
+  RefreshControl,
 } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import HeaderLayout from "../../layout/HeaderLayout";
@@ -62,6 +63,12 @@ export default function AddCustomerSession({ route, navigation }) {
         <FlatList
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
+          refreshControl={
+            <RefreshControl
+              onRefresh={() => setLoading(true)}
+              refreshing={isLoading}
+              tintColor="white"
+           />}
           data={customers}
           renderItem={(item) => listItem(item.item)}
           refreshing={isLoading}

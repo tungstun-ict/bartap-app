@@ -112,11 +112,13 @@ export default function SessionScreen({ navigation }) {
         </View>
         <View style={styles.session__customers}>
           <FlatList
-            // refreshControl={
-            //   <RefreshControl
-            //      tintColor="white"
-            //  />}
-            // colors={["white"]}
+            refreshControl={
+              <RefreshControl
+                refreshing={isLoading}
+                onRefresh={() => setLoading(true)}
+                tintColor="white"
+             />}
+            colors={["white"]}
             style={styles.list}
             data={formatData(session.bills, numColumns)}
             renderItem={({ item }) => {
@@ -208,9 +210,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   bottomBar__bar: {
-    flex: 1,
     flexDirection: "row",
     height: 100,
+    marginTop: 20,
     backgroundColor: colors.ELEMENT_BACKGROUND,
     justifyContent: "center",
     alignItems: "center",
@@ -249,7 +251,7 @@ const styles = StyleSheet.create({
     color: colors.TEXT_SECONDARY,
   },
   bottomBar: {
-    height: 100,
+    height: "auto",
   },
   session: {
     flex: 1,
@@ -308,10 +310,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   list: {
-    
-    height: "auto",
+    height: "100%",
     width: "100%",
-    marginBottom: 20,
   },
   customer: {
     flex: 1,

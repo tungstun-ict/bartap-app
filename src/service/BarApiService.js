@@ -103,6 +103,10 @@ export async function createSession(name) {
   });
 }
 
+export async function deleteCustomer(customerId) {
+  await api.delete(`/bars/${await storage.getActiveBar()}/people/${customerId}`);
+}
+
 export async function addDrink(billId, drinkId, sessionId) {
   await api.put(
     `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`,

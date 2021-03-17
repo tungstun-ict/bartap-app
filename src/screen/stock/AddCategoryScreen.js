@@ -83,16 +83,19 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   picker: {
+    height: 60,
     borderColor: colors.TEXT_PRIMARY,
-    borderWidth: 5,
-    color: colors.TEXT_PRIMARY,
+    borderWidth: 1,
     backgroundColor: colors.ELEMENT_BACKGROUND,
+    color: colors.TEXT_PRIMARY,
     borderRadius: 5,
+    justifyContent: "center",
     marginVertical: 10,
     width: "100%",
   },
   picker__item: {
-    color: "black"
+    height: 50,
+    color: "white"
   },
   input: {
     width: "100%",

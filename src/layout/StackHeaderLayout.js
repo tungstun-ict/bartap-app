@@ -13,7 +13,9 @@ export default function StackHeaderLayout({ navigation, title }) {
   return (
     <View style={styles.header}>
       <View style={styles.header__left}>
-        <TouchableOpacity onPress={navigateBack}>
+        <TouchableOpacity 
+        style={styles.header__button}
+        onPress={navigateBack}>
           <Image
             style={styles.header__menuIcon}
             source={require("../assets/menu/back-icon.png")}
@@ -51,6 +53,11 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     width: 25,
     height: 20,
+  },
+  header__button: {
+    width: 75,
+    height: "100%",
+    justifyContent: "center",
   },
 
   header__left: {

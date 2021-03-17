@@ -7,6 +7,7 @@ import {
   Image,
   Button,
   FlatList,
+  RefreshControl,
 } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import HeaderLayout from "../../layout/HeaderLayout";
@@ -14,10 +15,19 @@ import * as api from "../../service/BarApiService.js";
 import * as storage from "../../service/BarStorageService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
+import SwipeableFlatList from "react-native-swipeable-list";
 
 export default function CustomersScreen({ navigation }) {
   const [customers, setCustomers] = useState([]);
   const [isLoading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setLoading(true);
+      setCustomers([]);
+    });
+    return unsubscribe;
+  });
 
   useEffect(() => {
     api
@@ -33,7 +43,7 @@ export default function CustomersScreen({ navigation }) {
   }, [isLoading]);
 
   const listItem = (customer) => {
-     return (
+    return (
       <TouchableOpacity
         onPress={() => navigation.navigate("Customer overview", customer.id)}
       >
@@ -42,7 +52,7 @@ export default function CustomersScreen({ navigation }) {
         </View>
       </TouchableOpacity>
     );
-  }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -50,6 +60,9 @@ export default function CustomersScreen({ navigation }) {
       <Text style={styles.title}>Customers</Text>
       <View style={styles.content}>
         <FlatList
+          refreshControl={
+            <RefreshControl onRefresh={() => setLoading(true)} refreshing={isLoading} tintColor="white" />
+          }
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
           data={customers}
@@ -57,9 +70,10 @@ export default function CustomersScreen({ navigation }) {
           refreshing={isLoading}
           onRefresh={() => setLoading(true)}
         />
-        <TouchableOpacity 
+        <TouchableOpacity
           onPress={() => navigation.navigate("Add new customer")}
-          style={styles.button__wrapper}>
+          style={styles.button__wrapper}
+        >
           <View style={styles.button}>
             <Text style={styles.button__text}>Add a new customer</Text>
           </View>

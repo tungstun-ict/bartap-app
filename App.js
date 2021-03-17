@@ -207,6 +207,9 @@ const theme = {
         let accessToken;
         try {
           accessToken = await api.login(data.email, data.password);
+          const bars = await(api.getBars());
+          await storage.storeActiveBar(bars[0].id.toString());
+
           dispatch({ type: "SIGN_IN", token: accessToken });
         } catch (e) {
           alert(e);
