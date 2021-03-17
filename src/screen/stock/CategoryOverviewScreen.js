@@ -17,13 +17,16 @@ import { ceil } from "react-native-reanimated";
 
 export default function CategoryOverviewScreen({ route, navigation }) {
   const [drinks, setDrinks] = useState([]);
+  const [isLoading, setLoading] = useState(true);
   const category = route.params;
 
   useEffect(() => {
     api
       .getDrinksByCategory(category.id)
-      .then((json) => setDrinks(json))
-      .catch((error) => alert(error));
+      .then((json) => {setDrinks(json)
+      setLoading(false)})
+      .catch((error) => {alert(error)
+      setLoading(false)});
   }, []);
 
   const listItem = (drink) => {

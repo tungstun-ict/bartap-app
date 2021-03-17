@@ -97,9 +97,8 @@ export default function CustomerOverviewScreen({ route, navigation }) {
         ) : (
           null
         )}
-
-        <Text style={styles.title}>Bills</Text>
         <View style={styles.bills}>
+        <Text style={styles.title}>Bills</Text>
           <FlatList
             keyExtractor={(item) => item.id.toString()}
             style={styles.list}
@@ -203,6 +202,7 @@ const styles = StyleSheet.create({
   button__wrapper: {
     flex: 1,
     maxHeight: 50,
+    minHeight: 40,
     marginTop: "auto",
     width: "95%",
     marginVertical: 10,
@@ -231,6 +231,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   list: {
+    flex: 1,
     flexDirection: "column",
     alignSelf: "center",
     width: "100%",
@@ -278,5 +279,6 @@ const styles = StyleSheet.create({
   },
   bills: {
     width: "100%",
+    flex: 1,
   },
 });
