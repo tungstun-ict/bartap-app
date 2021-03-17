@@ -17,7 +17,7 @@ export const sizes = {
 
 //TODO: Connect to API
 export const mock = {
-  ORGANISATION_NAME: "Bart's Bar",
+  ORGANISATION_NAME: "Bartap",
   CURRENT_SESSION_NAME: "Oudjaarsavond",
 
   CURRENT_SESSION_CUSTOMERS: [
