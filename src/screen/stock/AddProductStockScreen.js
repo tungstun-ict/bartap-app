@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { KeyboardAvoidingView, SafeAreaView, ScrollView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
-import variables, { colors, mock } from "../../theme/variables.js";
-import { Button } from "react-native";
+import variables, { colors, mock } from "../../theme/variables.js"; 
 import HeaderLayout from "../../layout/HeaderLayout";
 import StackHeaderLayout from "../../layout/StackHeaderLayout.js";
 import { TextInput } from "react-native";
-import { Dimensions } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
-import { apisAreAvailable } from "expo";
 import { Picker } from "@react-native-picker/picker";
-import { CheckBox } from "@react-native-community/checkbox";
 
 export default function AddProductStockScreen({ navigation }) {
   const [categories, setCategories] = useState([]);
@@ -53,8 +49,8 @@ export default function AddProductStockScreen({ navigation }) {
         sellingPrice,
         productType,
         size
-      ).finally(() => navigation.navigate("Category Overview", selectedCategory)).catch(error => alert(error.response.toString()));
-      
+      )
+      .finally(() => navigation.navigate("Category Overview", selectedCategory)).catch(error => alert(error.response.toString()));
     } else {
       alert("HOT DAMN, no goeie invoer");
       console.log(`${name} ${brand} ${isFavourite} ${selectedCategory.id} ${sellingPrice} ${size} ${productType} `)

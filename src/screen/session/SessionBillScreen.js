@@ -53,7 +53,11 @@ export default function SessionBillScreen({ route, navigation }) {
         {
           text: "Yes",
           onPress: () => {
-            api.deleteBill(sessionId, billId).catch((error) => {
+            api.deleteBill(sessionId, billId)
+            .finally(() => {
+              navigation.navigate("Session");
+            })
+            .catch((error) => {
               if (error.response.status === 409) {
                 alert(
                   "Session is locked. You must unlock first before editing anything.",
@@ -62,7 +66,7 @@ export default function SessionBillScreen({ route, navigation }) {
                 alert(error);
               }
             });
-            navigation.navigate("Session");
+            
           },
         },
         {

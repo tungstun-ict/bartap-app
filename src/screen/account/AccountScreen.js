@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
@@ -8,33 +8,43 @@ import * as api from "../../service/BarApiService.js";
 import { AuthContext } from "../../service/Context.js";
 import { Picker } from "@react-native-picker/picker";
 import { Value } from "react-native-reanimated";
-import { StackActions } from '@react-navigation/native';
+import { StackActions } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/core";
 import * as storage from "../../service/BarStorageService.js";
 
 export default function AccountScreen({ navigation }) {
-  const [selectedBar, setSelectedBar] = useState(storage.getActiveBar().catch((error) => alert(error)));
+  const [selectedBar, setSelectedBar] = useState(
+    storage.getActiveBar().catch((error) => alert(error)),
+  );
   const [bars, setBars] = useState([]);
 
   const { signOut } = useContext(AuthContext);
   const _logout = () => {
     signOut();
-  }
+  };
 
   useEffect(() => {
-    console.log("Getting all bars!")
-    api.getBars()
-    .then((json) => setBars(json))
-    .catch((error) => alert(error));
+    console.log("Getting all bars!");
+    api
+      .getBars()
+      .then((json) => setBars(json))
+      .catch((error) => alert(error));
   }, []);
 
   useEffect(() => {
-    storage.storeActiveBar(selectedBar.toString()).catch((error) => error)
-  }, [selectedBar])
+    storage.storeActiveBar(selectedBar.toString()).catch((error) => error);
+  }, [selectedBar]);
 
   let pickerItems = bars.map((bar) => {
-    return <Picker.Item style={styles.picker__item} label={bar.name} value={bar.id} key={bar.id}/>
-  })
+    return (
+      <Picker.Item
+        style={styles.picker__item}
+        label={bar.name}
+        value={bar.id}
+        key={bar.id}
+      />
+    );
+  });
 
   return (
     <SafeAreaView style={styles.container}>
@@ -43,25 +53,24 @@ export default function AccountScreen({ navigation }) {
       <View style={styles.content}>
         <View style={styles.barsView}>
           <Picker
-          style={styles.picker}
-          selectedValue={selectedBar}
-          itemStyle={styles.picker__item}
-          
-          onValueChange={(itemValue, itemIndex) => {
-            setSelectedBar(itemValue);
-          }}>
-          {
-            pickerItems
-          }</Picker>
+            style={styles.picker}
+            selectedValue={selectedBar}
+            itemStyle={styles.picker__item}
+            onValueChange={(itemValue, itemIndex) => {
+              setSelectedBar(itemValue);
+            }}
+          >
+            {pickerItems}
+          </Picker>
         </View>
-      <TouchableOpacity 
+        <TouchableOpacity
           onPress={() => _logout()}
-          style={styles.button__wrapper}>
+          style={styles.button__wrapper}
+        >
           <View style={styles.button__submit}>
             <Text style={styles.button__text}>Log out</Text>
           </View>
         </TouchableOpacity>
-
       </View>
     </SafeAreaView>
   );
@@ -101,7 +110,7 @@ const styles = StyleSheet.create({
   },
   picker__item: {
     height: 50,
-    color: "white"
+    color: "white",
   },
   text: {
     color: colors.TEXT_TERTIARY,

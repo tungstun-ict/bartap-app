@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import variables, { colors, mock } from "../../theme/variables.js";
@@ -14,13 +14,20 @@ import { apisAreAvailable } from "expo";
 
 export default function NewSessionScreen({ navigation }) {
   const [name, setName] = useState("");
-  
- const createSession = async () => {
-  if(name !== "") {
-    await api.createSession(name);
-    navigation.navigate("Session");
-  }
-}
+
+  const createSession = () => {
+    if (name !== "") {
+      api
+        .createSession(name)
+        .then((session) => { console.log(session)})
+        .finally(() => {
+          navigation.navigate("Session");
+        })
+        .catch((error) => alert(error));
+    }else {
+      alert("Name cannot be empty");
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -33,10 +40,11 @@ export default function NewSessionScreen({ navigation }) {
           multiline={false}
           style={styles.input}
         />
-        
-        <TouchableOpacity 
-          onPress={() => createSession().catch(error => alert(error))}
-          style={styles.button__wrapper}>
+
+        <TouchableOpacity
+          onPress={() => createSession()}
+          style={styles.button__wrapper}
+        >
           <View style={styles.button__submit}>
             <Text style={styles.button__text}>Submit</Text>
           </View>
@@ -44,10 +52,7 @@ export default function NewSessionScreen({ navigation }) {
       </View>
     </SafeAreaView>
   );
-  
-  
 }
-
 
 const styles = StyleSheet.create({
   container: {

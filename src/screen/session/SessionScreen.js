@@ -79,10 +79,11 @@ export default function SessionScreen({ navigation }) {
         {
           text: "Yes",
           onPress: () => {
-            api.lockSession(session.id).catch((error) => {
+            api.lockSession(session.id)
+            .finally(() => {setLoading(true);})
+            .catch((error) => {
               alert(error);
             });
-            setLoading(true);
           },
         },
         {
