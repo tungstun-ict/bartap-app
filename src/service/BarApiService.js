@@ -267,6 +267,10 @@ export async function lockSession(sessionId) {
   );
 }
 
+export async function getAllSessions() {
+  return await getRequest(`/bars/${await storage.getActiveBar()}/sessions`)
+}
+
 export function getBillBySessionIdAndCustomerId(sessionId, customerId) {
   return {
     customerId: customerId,
@@ -308,30 +312,4 @@ export function getBillBySessionIdAndCustomerId(sessionId, customerId) {
       },
     ],
   };
-}
-
-export function getAllSessions() {
-  return [
-    {
-      id: 2,
-      name: "Avond met Sep",
-      timestamp: "2020-12-21T21:29:45.846+00:00",
-    },
-    {
-      id: 1,
-      name: "Eerste kerstdag",
-      timestamp: "2020-12-25T21:29:45.846+00:00",
-    },
-
-    {
-      id: 3,
-      name: "Avond met Feestcommisie",
-      timestamp: "2020-11-12T21:29:45.846+00:00",
-    },
-    {
-      id: 4,
-      name: "Avond met Sep",
-      timestamp: "2020-10-26T21:29:45.846+00:00",
-    },
-  ];
 }
