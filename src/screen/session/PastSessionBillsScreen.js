@@ -15,14 +15,15 @@ import StackHeaderLayout from "../../layout/StackHeaderLayout";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import HeaderLayout from "../../layout/HeaderLayout.js";
 
-export default function PastSessionsScreen({ route, navigation }) {
+export default function PastSessionBillsScreen({ route, navigation }) {
   const [isLoading, setLoading] = useState(true);
-  const [sessions, setSessions] = useState([]);
+  const [bills, setBills] = useState([]);
+  const sessionId = route.params;
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       setLoading(true);
-      setSessions([]);
+      setBills([]);
     });
     return unsubscribe;
   });
@@ -30,14 +31,9 @@ export default function PastSessionsScreen({ route, navigation }) {
   useEffect(() => {
     if (isLoading) {
       api
-        .getAllSessions()
-        .then((sessions) => {
-          return sessions.sort((x, y) => {
-            return new Date(y.creationDate) - new Date(x.creationDate);
-          });
-        })
-        .then((sortedSessions) => {
-          setSessions(sortedSessions);
+        .getSessionById(sessionId)
+        .then((session) => {
+          setBills(session.bills);
           setLoading(false);
         })
         .catch((error) => {
@@ -47,23 +43,18 @@ export default function PastSessionsScreen({ route, navigation }) {
     }
   }, [isLoading]);
 
-  const handlePress = (sessionId) => {
-    navigation.navigate("Session Bills", sessionId);
-  };
-
-  const listItem = (session) => {
-    const timestamp = new Date(session.creationDate);
+  const listItem = (bill) => {
+    
+    console.log(bill);
     return (
-      <TouchableOpacity onPress={() => handlePress(session.id)}>
+      <TouchableOpacity
+        onPress={() => {navigation.navigate("Past Session Bill", {"billId": bill.id, "sessionId": sessionId})}}>
         <View style={styles.listItem}>
-          <Text numberOfLines={1} style={styles.listItem__name}>
-            {session.name}
-          </Text>
-          <Text style={styles.listItem__price}>
-            {timestamp.getDate()}-{timestamp.getMonth() + 1}-
-            {timestamp.getFullYear()}
-          </Text>
-        </View>
+        <Text style={styles.listItem__name}>{bill.customer.name}</Text>
+        <Text style={styles.listItem__price}>
+          €{bill.totalPrice.toFixed(2)}
+        </Text>
+      </View>
       </TouchableOpacity>
     );
   };
@@ -81,12 +72,16 @@ export default function PastSessionsScreen({ route, navigation }) {
           onRefresh={() => setLoading(true)}
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
-          data={sessions}
+          data={bills}
           renderItem={({ item }) => listItem(item)}
         />
       </View>
     </SafeAreaView>
   );
+}
+
+function handlePress(navigation, sessionId) {
+  navigation.navigate("Past session", { sessionId: sessionId });
 }
 
 const styles = StyleSheet.create({

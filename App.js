@@ -1,5 +1,5 @@
 import { NavigationContainer, StackActions } from "@react-navigation/native";
-import { ThemeProvider } from 'react-native-elements';
+import { ThemeProvider } from "react-native-elements";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect, useState, createContext } from "react";
@@ -27,6 +27,7 @@ import AddCategoryScreen from "./src/screen/stock/AddCategoryScreen";
 import AddProductStockScreen from "./src/screen/stock/AddProductStockScreen";
 import CategoryOverviewScreen from "./src/screen/stock/CategoryOverviewScreen";
 import { StatusBar } from "expo-status-bar";
+import PastSessionBillsScreen from "./src/screen/session/PastSessionBillsScreen";
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
 const PastNavigator = createStackNavigator();
@@ -70,6 +71,14 @@ export function PastStack() {
         component={PastSessionsScreen}
       ></PastNavigator.Screen>
       <PastNavigator.Screen name="Past session" component={SessionScreen} />
+      <SessionNavigator.Screen
+        name="Session Bills"
+        component={PastSessionBillsScreen}
+      />
+      <SessionNavigator.Screen
+        name="Past Session Bill"
+        component={SessionBillScreen}
+      />
     </PastNavigator.Navigator>
   );
 }
@@ -113,16 +122,20 @@ export function StockStack() {
     <StockNavigator.Navigator headerMode="none">
       <StockNavigator.Screen
         name="Stock Overview"
-        component={StockOverviewScreen} />
-        <StockNavigator.Screen
+        component={StockOverviewScreen}
+      />
+      <StockNavigator.Screen
         name="Add Category"
-        component={AddCategoryScreen} />
-        <StockNavigator.Screen
+        component={AddCategoryScreen}
+      />
+      <StockNavigator.Screen
         name="Add Product"
-        component={AddProductStockScreen} />
-         <StockNavigator.Screen
+        component={AddProductStockScreen}
+      />
+      <StockNavigator.Screen
         name="Category Overview"
-        component={CategoryOverviewScreen} />
+        component={CategoryOverviewScreen}
+      />
     </StockNavigator.Navigator>
   );
 }
@@ -181,11 +194,11 @@ export default function App() {
       userToken: null,
     },
   );
-const theme = {
+  const theme = {
     colors: {
-      primary: 'white',
-  }
-}
+      primary: "white",
+    },
+  };
 
   useEffect(() => {
     const bootstrapAsync = async () => {
@@ -207,7 +220,7 @@ const theme = {
         let accessToken;
         try {
           accessToken = await api.login(data.email, data.password);
-          const bars = await(api.getBars());
+          const bars = await api.getBars();
           await storage.storeActiveBar(bars[0].id.toString());
 
           dispatch({ type: "SIGN_IN", token: accessToken });
@@ -239,43 +252,49 @@ const theme = {
   return (
     <ThemeProvider theme={theme}>
       <AuthContext.Provider value={authContext}>
-      <NavigationContainer>
-        <DrawerNavigator.Navigator
-          sceneContainerStyle={{ backgroundColor: "black" }}
-          initialRouteName="Session"
-          drawerStyle={styles.drawer}
-          drawerContentOptions={{
-            activeTintColor: colors.TEXT_PRIMARY,
-            activeBackgroundColor: colors.ELEMENT_BACKGROUND_SELECTED,
-            inactiveTintColor: colors.TEXT_PRIMARY,
-            labelStyle: {
-              fontSize: 30,
-              fontWeight: "bold",
-            },
-          }}
-        >
-          {state.userToken !== null ? (
-            <React.Fragment>
-              <DrawerNavigator.Screen name="Session" component={SessionStack} />
-              <DrawerNavigator.Screen name="Past" component={PastStack} />
-              <DrawerNavigator.Screen
-                name="Customers"
-                component={CustomersStack}
-              />
-              {/* <DrawerNavigator.Screen
+        <NavigationContainer>
+          <DrawerNavigator.Navigator
+            sceneContainerStyle={{ backgroundColor: "black" }}
+            initialRouteName="Session"
+            drawerStyle={styles.drawer}
+            drawerContentOptions={{
+              activeTintColor: colors.TEXT_PRIMARY,
+              activeBackgroundColor: colors.ELEMENT_BACKGROUND_SELECTED,
+              inactiveTintColor: colors.TEXT_PRIMARY,
+              labelStyle: {
+                fontSize: 30,
+                fontWeight: "bold",
+              },
+            }}
+          >
+            {state.userToken !== null ? (
+              <React.Fragment>
+                <DrawerNavigator.Screen
+                  name="Session"
+                  component={SessionStack}
+                />
+                <DrawerNavigator.Screen name="Past" component={PastStack} />
+                <DrawerNavigator.Screen
+                  name="Customers"
+                  component={CustomersStack}
+                />
+                {/* <DrawerNavigator.Screen
                 name="Payments"
                 component={PaymentStack}
               /> */}
-              <DrawerNavigator.Screen name="Stock" component={StockStack} />
-              <DrawerNavigator.Screen name="Account" component={AccountStack} />
-            </React.Fragment>
-          ) : (
-            <DrawerNavigator.Screen name="Sign In" component={SignInStack} />
-          )}
-        </DrawerNavigator.Navigator>
-      </NavigationContainer>
-    </AuthContext.Provider>
-    <StatusBar style="light" />
+                <DrawerNavigator.Screen name="Stock" component={StockStack} />
+                <DrawerNavigator.Screen
+                  name="Account"
+                  component={AccountStack}
+                />
+              </React.Fragment>
+            ) : (
+              <DrawerNavigator.Screen name="Sign In" component={SignInStack} />
+            )}
+          </DrawerNavigator.Navigator>
+        </NavigationContainer>
+      </AuthContext.Provider>
+      <StatusBar style="light" />
     </ThemeProvider>
   );
 }
