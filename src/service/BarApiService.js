@@ -127,7 +127,6 @@ export async function createProduct(
   selectedCategory,
   isFavourite,
   sellingPrice,
-  productType,
   size,
 ) {
   return await api.post(`/bars/${await storage.getActiveBar()}/products`, {
@@ -136,7 +135,6 @@ export async function createProduct(
     isFavorite: isFavourite,
     name: name,
     price: sellingPrice,
-    productType: productType,
     size: size,
   });
 }

@@ -15,10 +15,9 @@ export default function AddProductStockScreen({ navigation }) {
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
   const [isFavourite, setFavourite] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(0);
   const [sellingPrice, setSellingPrice] = useState(null);
   const [size, setSize] = useState(0);
-  const [productType, setProductType] = useState("Drink");
 
   useEffect(() => {
     api
@@ -38,8 +37,7 @@ export default function AddProductStockScreen({ navigation }) {
       selectedCategory !== null &&
       sellingPrice !== null &&
       brand !== "" &&
-      size > 0 &&
-      productType !== ""
+      size > 0
     ) {
       api.createProduct(
         name,
@@ -47,13 +45,11 @@ export default function AddProductStockScreen({ navigation }) {
         selectedCategory.id,
         isFavourite,
         sellingPrice,
-        productType,
         size
       )
-      .finally(() => navigation.navigate("Category Overview", selectedCategory)).catch(error => alert(error.response.toString()));
+      .finally(() => navigation.navigate("Category Overview", selectedCategory)).catch(error => alert(error));
     } else {
       alert("HOT DAMN, no goeie invoer");
-      console.log(`${name} ${brand} ${isFavourite} ${selectedCategory.id} ${sellingPrice} ${size} ${productType} `)
     }
   };
 
@@ -98,19 +94,6 @@ export default function AddProductStockScreen({ navigation }) {
           }}
         >
           {pickerItems}
-        </Picker>
-        <Text style={styles.input__label}>Type</Text>
-        <Picker
-          style={styles.picker}
-          selectedValue={productType}
-          itemStyle={styles.picker__item}
-          onValueChange={(itemValue) => {
-            setProductType(itemValue);
-          }}
-        >
-          <Picker.Item label="Drink" value="DRINK" key={0} />
-          <Picker.Item label="Food" value="FOOD" key={1} />
-          <Picker.Item label="Other" value="OTHER" key={2} />
         </Picker>
         <Text style={styles.input__label}>Selling price</Text>
         <TextInput

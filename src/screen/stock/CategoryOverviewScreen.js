@@ -21,13 +21,15 @@ export default function CategoryOverviewScreen({ route, navigation }) {
   const category = route.params;
 
   useEffect(() => {
-    api
+    if(isLoading) {
+      api
       .getDrinksByCategory(category.id)
       .then((json) => {setDrinks(json)
       setLoading(false)})
       .catch((error) => {alert(error)
       setLoading(false)});
-  }, []);
+    }
+  }, [isLoading]);
 
   const listItem = (drink) => {
     return (
