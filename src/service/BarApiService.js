@@ -224,9 +224,20 @@ export async function lockSession(sessionId) {
 }
 
 export async function getAllSessions() {
-  return await getRequest(`/bars/${await storage.getActiveBar()}/sessions`)
+  return await getRequest(`/bars/${await storage.getActiveBar()}/sessions`);
 }
 
 export async function getSessionById(sessionId) {
-  return await getRequest(`/bars/${await storage.getActiveBar()}/sessions/${sessionId}`)
+  return await getRequest(
+    `/bars/${await storage.getActiveBar()}/sessions/${sessionId}`,
+  );
+}
+
+export async function createBar(name, address, mail, phone) {
+  return await api.post(`/bars`, {
+    address: address,
+    mail: mail,
+    name: name,
+    phoneNumber: phone,
+  });
 }

@@ -25,7 +25,7 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.logoText}>{mock.ORGANISATION_NAME}</Text>
         <View style={styles.form}>
           <TextInput
-            placeholder={"Email adress"}
+            placeholder={"Email adress / username"}
             placeholderTextColor={colors.TEXT_SECONDARY}
             autoCompleteType={"email"}
             value={email}

@@ -55,7 +55,7 @@ export default function SessionBillScreen({ route, navigation }) {
           onPress: () => {
             api.deleteBill(sessionId, billId)
             .finally(() => {
-              navigation.navigate("Session");
+              navigation.goBack();
             })
             .catch((error) => {
               if (error.response.status === 409) {

@@ -17,6 +17,7 @@ export default function AccountScreen({ navigation }) {
     storage.getActiveBar().catch((error) => alert(error)),
   );
   const [bars, setBars] = useState([]);
+  const [isLoading, setLoading] = useState(true);
 
   const { signOut } = useContext(AuthContext);
   const _logout = () => {
@@ -24,15 +25,27 @@ export default function AccountScreen({ navigation }) {
   };
 
   useEffect(() => {
-    console.log("Getting all bars!");
-    api
-      .getBars()
-      .then((json) => setBars(json))
-      .catch((error) => alert(error));
-  }, []);
+    const unsubscribe = navigation.addListener("focus", () => {
+      setBars([]);
+      setLoading(true);
+    });
+    return unsubscribe;
+  });
 
   useEffect(() => {
-    storage.storeActiveBar(selectedBar.toString()).catch((error) => error);
+    if (isLoading) {
+      console.log("Getting all bars!");
+      api
+        .getBars()
+        .then((json) => {setBars(json); setLoading(false);})
+        .catch((error) => alert(error));
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    if(selectedBar !== null ) {
+      storage.storeActiveBar(selectedBar.toString()).catch((error) => error);
+    }
   }, [selectedBar]);
 
   let pickerItems = bars.map((bar) => {
@@ -51,7 +64,30 @@ export default function AccountScreen({ navigation }) {
       <HeaderLayout navigation={navigation} />
       <Text style={styles.title}>Account</Text>
       <View style={styles.content}>
+        <View style={styles.information}>
+          <View style={styles.table}>
+            <View style={styles.column}>
+              <Text style={styles.name} numberOfLines={1}>
+                Name:
+              </Text>
+              <Text style={styles.name} numberOfLines={1}>
+                ID:
+              </Text>
+              <Text style={styles.name} numberOfLines={1}>
+                Phone number:
+              </Text>
+            </View>
+            <View style={styles.column}>
+              <Text style={styles.attribute} numberOfLines={1}>
+                None
+              </Text>
+              <Text style={styles.attribute}>None</Text>
+              <Text style={styles.attribute}>None</Text>
+            </View>
+          </View>
+        </View>
         <View style={styles.barsView}>
+          <Text style={styles.optionTitle}>Active bar</Text>
           <Picker
             style={styles.picker}
             selectedValue={selectedBar}
@@ -62,13 +98,23 @@ export default function AccountScreen({ navigation }) {
           >
             {pickerItems}
           </Picker>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Create Bar");
+            }}
+            style={styles.button__wrapper}
+          >
+            <View style={styles.button__submit}>
+              <Text style={styles.button__text}>Create a new bar</Text>
+            </View>
+          </TouchableOpacity>
         </View>
         <TouchableOpacity
           onPress={() => _logout()}
-          style={styles.button__wrapper}
+          style={styles.logoutButton__wrapper}
         >
           <View style={styles.button__submit}>
-            <Text style={styles.button__text}>Log out</Text>
+            <Text style={styles.logoutButton__text}>Log out</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -108,6 +154,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginVertical: 10,
   },
+  optionTitle: {
+    color: colors.TEXT_PRIMARY,
+    fontWeight: "bold",
+    fontSize: 20,
+  },
   picker__item: {
     height: 50,
     color: "white",
@@ -146,6 +197,15 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "auto",
   },
+  logoutButton__wrapper: {
+    minWidth: "100%",
+    backgroundColor: colors.ELEMENT_BACKGROUND_WARNING,
+    borderRadius: 5,
+    marginTop: "auto",
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   button__wrapper: {
     minWidth: "100%",
     backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
@@ -154,8 +214,38 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  logoutButton__text: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: colors.TEXT_PRIMARY,
+  },
   button__text: {
     fontSize: 15,
     fontWeight: "bold",
+  },
+  information: {
+    backgroundColor: colors.ELEMENT_BACKGROUND,
+    padding: 20,
+    borderRadius: 5,
+    margin: 10,
+    width: "100%",
+  },
+  table: {
+    flexDirection: "row",
+  },
+  column: {
+    flex: 1,
+  },
+  name: {
+    color: colors.TEXT_PRIMARY,
+    textAlign: "left",
+    fontSize: 15,
+    fontWeight: "normal",
+  },
+  attribute: {
+    color: colors.TEXT_PRIMARY,
+    textAlign: "right",
+    fontSize: 15,
+    fontWeight: "normal",
   },
 });

@@ -18,7 +18,7 @@ import HeaderLayout from "../../layout/HeaderLayout.js";
 export default function PastSessionBillsScreen({ route, navigation }) {
   const [isLoading, setLoading] = useState(true);
   const [bills, setBills] = useState([]);
-  const sessionId = route.params;
+  const {sessionId, sessionName} = route.params;
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
@@ -61,8 +61,8 @@ export default function PastSessionBillsScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderLayout navigation={navigation} />
-      <Text style={styles.title}>Past sessions</Text>
+      <StackHeaderLayout navigation={navigation} />
+      <Text style={styles.title}>{sessionName}</Text>
       <View style={styles.content}>
         <FlatList
           refreshControl={

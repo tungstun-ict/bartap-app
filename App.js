@@ -28,6 +28,7 @@ import AddProductStockScreen from "./src/screen/stock/AddProductStockScreen";
 import CategoryOverviewScreen from "./src/screen/stock/CategoryOverviewScreen";
 import { StatusBar } from "expo-status-bar";
 import PastSessionBillsScreen from "./src/screen/session/PastSessionBillsScreen";
+import CreateBarScreen from "./src/screen/account/CreateBarScreen";
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
 const PastNavigator = createStackNavigator();
@@ -148,6 +149,11 @@ export function AccountStack() {
         component={AccountScreen}
         initialParams={{ context: AuthContext }}
       />
+      <AccountNavigator.Screen
+        name="Create Bar"
+        component={CreateBarScreen}
+        initialParams={{ context: AuthContext }}
+      />
     </AccountNavigator.Navigator>
   );
 }
@@ -221,7 +227,9 @@ export default function App() {
         try {
           accessToken = await api.login(data.email, data.password);
           const bars = await api.getBars();
-          await storage.storeActiveBar(bars[0].id.toString());
+          if(bars[0] !== undefined) {
+            await storage.storeActiveBar(bars[0].id.toString());
+          }
 
           dispatch({ type: "SIGN_IN", token: accessToken });
         } catch (e) {

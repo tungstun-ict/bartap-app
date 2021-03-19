@@ -47,14 +47,14 @@ export default function PastSessionsScreen({ route, navigation }) {
     }
   }, [isLoading]);
 
-  const handlePress = (sessionId) => {
-    navigation.navigate("Session Bills", sessionId);
+  const handlePress = (sessionId, sessionName) => {
+    navigation.navigate("Session Bills", {"sessionId": sessionId, "sessionName": sessionName});
   };
 
   const listItem = (session) => {
     const timestamp = new Date(session.creationDate);
     return (
-      <TouchableOpacity onPress={() => handlePress(session.id)}>
+      <TouchableOpacity onPress={() => handlePress(session.id, session.name)}>
         <View style={styles.listItem}>
           <Text numberOfLines={1} style={styles.listItem__name}>
             {session.name}

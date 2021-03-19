@@ -15,12 +15,12 @@ import { TouchableOpacity } from "react-native";
 
 export default function SessionScreen({ navigation }) {
   const [isLoading, setLoading] = useState(true);
-  const [session, setSession] = useState({ bills: [], locked: true });
+  const [session, setSession] = useState({ bills: [], locked: true, name: "Not found" });
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       setLoading(true);
-      setSession({ bills: [], locked: true });
+      setSession({ bills: [], locked: true, name: "Not found" });
     });
     return unsubscribe;
   });
@@ -36,7 +36,7 @@ export default function SessionScreen({ navigation }) {
         })
         .catch((error) => {
           if (error.response.status === 404) {
-            setSession({ bills: [], locked: true });
+            setSession({ bills: [], locked: true, name: "Not found" });
           } else {
             alert(error);
           }
