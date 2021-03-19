@@ -57,8 +57,8 @@ export default function AddDrinksScreen({ route, navigation }) {
 function listItem(navigation, drink, billId, sessionId) {
   return (
     <TouchableOpacity
-      onPress={async () =>
-        await handlePress(navigation, drink, billId, sessionId)
+      onPress={() =>
+        handlePress(navigation, drink, billId, sessionId)
       }
     >
       <View style={styles.listItem}>
@@ -72,8 +72,10 @@ function listItem(navigation, drink, billId, sessionId) {
 }
 
 async function handlePress(navigation, drink, billId, sessionId) {
-  await api.addDrink(billId, drink.id, sessionId);
-  navigation.navigate("Session");
+  api.addDrink(billId, drink.id, sessionId)
+  .finally(() => { navigation.navigate("Session") })
+  .catch(error => alert(error));
+  ;
 }
 
 const styles = StyleSheet.create({

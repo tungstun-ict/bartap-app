@@ -111,6 +111,7 @@ export async function deleteCustomer(customerId) {
 }
 
 export async function addDrink(billId, drinkId, sessionId) {
+  console.log("Adding drink: " + drinkId + " to " + billId + " for session " + sessionId)
   await api.put(
     `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`,
     {
@@ -165,6 +166,13 @@ export async function getDrinksByCategory(categoryId) {
   return await getRequest(
     `/bars/${await storage.getActiveBar()}/products?categoryId=${categoryId}`,
   );
+}
+
+export async function createCategory(name, type) {
+  return await api.post(`/bars/${await storage.getActiveBar()}/categories`, {
+    "name": name,
+    "productType": type,
+  });
 }
 
 export async function getAllProductsByBar() {

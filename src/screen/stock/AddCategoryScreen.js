@@ -17,10 +17,16 @@ export default function AddCategoryScreen({ navigation }) {
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   
- const createCategory = async (name) => {
+ const createCategory = (name) => {
   if(name !== "") {
-    await api.createProduct(name, type);
-    navigation.navigate("Stock Overview");
+    api.createCategory(name, type)
+    .finally(() => {
+      navigation.navigate("Stock Overview");
+    })
+    .catch((error) => {
+      alert(error);
+    })
+    
   }
 }
 
@@ -48,7 +54,7 @@ export default function AddCategoryScreen({ navigation }) {
             <Picker.Item label="Other" value="Other" key={2}/>
           </Picker>
         <TouchableOpacity 
-          onPress={() => createCategory(name).catch(error => alert(error))}
+          onPress={() => createCategory(name)}
           style={styles.button__wrapper}>
           <View style={styles.button__submit}>
             <Text style={styles.button__text}>Submit</Text>
