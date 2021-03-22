@@ -13,7 +13,6 @@ import {
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import StackHeaderLayout from "../../layout/StackHeaderLayout";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { ceil } from "react-native-reanimated";
 
 export default function CategoryOverviewScreen({ route, navigation }) {
   const [drinks, setDrinks] = useState([]);
@@ -21,13 +20,19 @@ export default function CategoryOverviewScreen({ route, navigation }) {
   const category = route.params;
 
   useEffect(() => {
-    if(isLoading) {
+    if (isLoading) {
       api
-      .getDrinksByCategory(category.id)
-      .then((json) => {setDrinks(json)
-      setLoading(false)})
-      .catch((error) => {alert(error)
-      setLoading(false)});
+        .getDrinksByCategory(category.id)
+        .then((json) => {
+          setDrinks(json.sort(function(a, b) {
+            return a.id - b.id;
+        }));
+          setLoading(false);
+        })
+        .catch((error) => {
+          alert(error);
+          setLoading(false);
+        });
     }
   }, [isLoading]);
 
@@ -51,13 +56,25 @@ export default function CategoryOverviewScreen({ route, navigation }) {
       <View style={styles.content}>
         <FlatList
           refreshControl={
-            <RefreshControl onRefresh={() => setLoading(true)} refreshing={isLoading} tintColor="white" />
+            <RefreshControl
+              onRefresh={() => setLoading(true)}
+              refreshing={isLoading}
+              tintColor="white"
+            />
           }
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
           data={drinks}
           renderItem={(item) => listItem(item.item)}
         />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Edit Category", category.id)}
+          style={styles.button__wrapper}
+        >
+          <View style={styles.button}>
+            <Text style={styles.button__text}>Edit</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -123,6 +140,26 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   listItem__footer__text: {
+    color: colors.TEXT_SECONDARY,
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 40,
+    minWidth: "95%",
+    backgroundColor: colors.TEXT_PRIMARY,
+    borderRadius: 5,
+    marginTop: 0,
+    alignSelf: "center",
+  },
+  button__wrapper: {
+    minHeight: 50,
+    maxWidth: "100%",
+    marginBottom: 10,
+  },
+  button__text: {
     color: colors.TEXT_SECONDARY,
     fontSize: 20,
     fontWeight: "bold",

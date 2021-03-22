@@ -67,7 +67,6 @@ export default function SessionScreen({ navigation }) {
   };
 
   const addCustomer = () => {
-    console.log(session.id);
     navigation.navigate("Add customer to session", { sessionId: session.id });
   };
 

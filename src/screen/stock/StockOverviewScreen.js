@@ -15,11 +15,20 @@ export default function StockOverviewScreen({ route, navigation }) {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setLoading(true);
+    });
+    return unsubscribe;
+  });
+
+  useEffect(() => {
     if (isLoading) {
       api
         .getCategories()
         .then((json) => {
-          setCategories(json);
+          setCategories(json.sort(function(a, b) {
+            return a.id - b.id;
+        }));
           setLoading(false);
         })
         .catch((error) => {
@@ -30,7 +39,6 @@ export default function StockOverviewScreen({ route, navigation }) {
   }, [isLoading]);
 
   const listItem = (category) => {
-    console.log(category);
     return (
       <TouchableOpacity
         onPress={() => {

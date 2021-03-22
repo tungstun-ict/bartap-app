@@ -29,6 +29,7 @@ import CategoryOverviewScreen from "./src/screen/stock/CategoryOverviewScreen";
 import { StatusBar } from "expo-status-bar";
 import PastSessionBillsScreen from "./src/screen/session/PastSessionBillsScreen";
 import CreateBarScreen from "./src/screen/account/CreateBarScreen";
+import EditCategoryScreen from "./src/screen/stock/EditCategoryScreen";
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
 const PastNavigator = createStackNavigator();
@@ -136,6 +137,10 @@ export function StockStack() {
       <StockNavigator.Screen
         name="Category Overview"
         component={CategoryOverviewScreen}
+      />
+      <StockNavigator.Screen
+        name="Edit Category"
+        component={EditCategoryScreen}
       />
     </StockNavigator.Navigator>
   );

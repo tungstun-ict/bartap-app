@@ -19,7 +19,6 @@ export default function NewSessionScreen({ navigation }) {
     if (name !== "") {
       api
         .createSession(name)
-        .then((session) => { console.log(session)})
         .finally(() => {
           navigation.navigate("Session");
         })

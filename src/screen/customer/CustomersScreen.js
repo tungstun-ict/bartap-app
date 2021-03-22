@@ -136,10 +136,12 @@ const styles = StyleSheet.create({
     backgroundColor: colors.TEXT_PRIMARY,
     borderRadius: 5,
     marginTop: 0,
+    
     alignSelf: "center",
   },
   button__wrapper: {
     flex: 1,
+    marginBottom: 10,
     maxHeight: 40,
     minWidth: "100%",
     marginVertical: 10,

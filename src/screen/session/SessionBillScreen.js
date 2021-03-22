@@ -85,7 +85,6 @@ export default function SessionBillScreen({ route, navigation }) {
         <View style={styles.qaButton}>
           <TouchableOpacity
             onPress={() => {
-              console.log(item);
               api
                 .deleteOrderFromBill(sessionId, billId, item.item.id)
                 .finally(() => setLoading(true))

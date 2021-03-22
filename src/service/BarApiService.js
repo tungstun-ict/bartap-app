@@ -168,11 +168,22 @@ export async function getDrinksByCategory(categoryId) {
   );
 }
 
+export async function updateCategory(categoryId, newName, newType) {
+  return await api.put(`/bars/${await storage.getActiveBar()}/categories/${categoryId}`, {
+    "name": newName,
+    "type": newType
+  });
+}
+
 export async function createCategory(name, type) {
   return await api.post(`/bars/${await storage.getActiveBar()}/categories`, {
     "name": name,
     "productType": type,
   });
+}
+
+export async function getCategoryById(categoryId) {
+  return await getRequest(`/bars/${await storage.getActiveBar()}/categories/${categoryId}`);
 }
 
 export async function getAllProductsByBar() {

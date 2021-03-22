@@ -203,6 +203,7 @@ const styles = StyleSheet.create({
     flex: 1,
     maxHeight: 50,
     minHeight: 40,
+    marginBottom: 10,
     marginTop: "auto",
     width: "95%",
     marginVertical: 10,

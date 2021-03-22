@@ -44,8 +44,6 @@ export default function PastSessionBillsScreen({ route, navigation }) {
   }, [isLoading]);
 
   const listItem = (bill) => {
-    
-    console.log(bill);
     return (
       <TouchableOpacity
         onPress={() => {navigation.navigate("Past Session Bill", {"billId": bill.id, "sessionId": sessionId})}}>
