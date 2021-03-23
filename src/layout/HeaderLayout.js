@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { colors, mock } from "../theme/variables.js";
 import { useIsDrawerOpen } from "@react-navigation/drawer";
+import Constants from 'expo-constants';
 
 export default function HeaderLayout({ navigation }) {
   const openDrawer = () => {
@@ -22,7 +23,7 @@ export default function HeaderLayout({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={styles.header__center}>
-        <Text style={styles.header__title} numberOfLines={1}>{mock.ORGANISATION_NAME}</Text>
+        <Text style={styles.header__title} numberOfLines={1}>{mock.ORGANISATION_NAME + " v" + Constants.manifest.version}</Text>
       </View>
       <View style={styles.header__right}></View>
     </View>
@@ -56,6 +57,7 @@ const styles = StyleSheet.create({
 
   header__left: {
     flex: 1,
+    maxWidth: 30,
     justifyContent: "center",
   },
 
@@ -70,6 +72,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   header__right: {
+    maxWidth: 30,
     flex: 1,
     justifyContent: "center",
   },
