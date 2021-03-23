@@ -35,7 +35,7 @@ export default function AddDrinksScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} />
+      <StackHeaderLayout navigation={navigation} title="Add product" />
       <Text style={styles.title}>{category.name}</Text>
       <View style={styles.content}>
         <FlatList
