@@ -26,9 +26,11 @@ export default function StockOverviewScreen({ route, navigation }) {
       api
         .getCategories()
         .then((json) => {
-          setCategories(json.sort(function(a, b) {
-            return a.id - b.id;
-        }));
+          setCategories(
+            json.sort(function (a, b) {
+              return a.id - b.id;
+            }),
+          );
           setLoading(false);
         })
         .catch((error) => {
@@ -59,27 +61,14 @@ export default function StockOverviewScreen({ route, navigation }) {
     <SafeAreaView style={styles.container}>
       <HeaderLayout navigation={navigation} title="Stock" />
       <View style={styles.content}>
-        {/* <Text style={styles.title}>Information</Text>
-        <View style={styles.information}>
-          <View style={styles.table}>
-            <View style={styles.column}>
-              <Text style={styles.name} numberOfLines={1}>Name:</Text>
-              <Text style={styles.name} numberOfLines={1}>ID:</Text>
-              <Text style={styles.name} numberOfLines={1}>Phone number:</Text>
-              <Text style={styles.name} numberOfLines={1}>Account:</Text>
-            </View>
-            <View style={styles.column}>
-              <Text style={styles.attribute} numberOfLines={1}></Text>
-              <Text style={styles.attribute} ></Text>
-              <Text style={styles.attribute}></Text>
-              <Text style={styles.attribute} numberOfLines={1}></Text>
-            </View>
-          </View>
-        </View> */}
         <Text style={styles.title}>Categories</Text>
         <FlatList
           refreshControl={
-            <RefreshControl onRefresh={() => setLoading(true)} refreshing={isLoading} tintColor="white" />
+            <RefreshControl
+              onRefresh={() => setLoading(true)}
+              refreshing={isLoading}
+              tintColor="white"
+            />
           }
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
@@ -88,22 +77,24 @@ export default function StockOverviewScreen({ route, navigation }) {
           refreshing={isLoading}
           onRefresh={() => setLoading(true)}
         />
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Add Category")}
-          style={styles.button__wrapper}
-        >
-          <View style={styles.button}>
-            <Text style={styles.button__text}>Add a new category</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Add Product")}
-          style={styles.button__wrapper}
-        >
-          <View style={styles.button}>
-            <Text style={styles.button__text}>Add a new product</Text>
-          </View>
-        </TouchableOpacity>
+        <View style={styles.bottomButtons}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Add Category")}
+            style={styles.button__wrapper}
+          >
+            <View style={styles.button}>
+              <Text style={styles.button__text}>New category</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Add Product")}
+            style={styles.button__wrapper}
+          >
+            <View style={styles.button}>
+              <Text style={styles.button__text}>New product</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
@@ -132,19 +123,24 @@ const styles = StyleSheet.create({
   searchBar: {
     backgroundColor: colors.BACKGROUND,
   },
+  bottomButtons: {
+    flexDirection: "row",
+    marginTop: 10,
+  },
   button: {
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    minHeight: 40,
-    minWidth: "100%",
     backgroundColor: colors.TEXT_PRIMARY,
     borderRadius: 5,
-    marginTop: 0,
+    width: "100%",
     alignSelf: "center",
   },
   button__wrapper: {
+    backgroundColor: colors.ELEMENT_BACKGROUND,
+    marginHorizontal: 10,
+    flex: 1,
     minHeight: 50,
-    maxWidth: "100%",
     marginBottom: 10,
   },
   button__text: {

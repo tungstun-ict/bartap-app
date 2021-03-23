@@ -201,7 +201,7 @@ const styles = StyleSheet.create({
   },
   button__wrapper: {
     flex: 1,
-    maxHeight: 50,
+    maxHeight: 40,
     minHeight: 40,
     marginBottom: 10,
     marginTop: "auto",
@@ -255,6 +255,7 @@ const styles = StyleSheet.create({
   listItem__price: {
     fontSize: 20,
     marginLeft: "auto",
+    fontWeight: "bold",
     textAlign: "right",
     color: colors.TEXT_PRIMARY,
   },

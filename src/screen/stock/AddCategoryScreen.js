@@ -32,7 +32,7 @@ export default function AddCategoryScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} title="Add Category" />
+      <StackHeaderLayout navigation={navigation} title="New Category" />
       <View style={styles.content}>
         <Text style={styles.input__label}>Name</Text>
         <TextInput

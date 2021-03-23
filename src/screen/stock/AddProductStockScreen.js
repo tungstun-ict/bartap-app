@@ -65,7 +65,7 @@ export default function AddProductStockScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} title="Add Drink" />
+      <StackHeaderLayout navigation={navigation} title="New product" />
       <ScrollView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.content}
