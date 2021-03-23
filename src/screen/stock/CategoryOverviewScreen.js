@@ -38,7 +38,8 @@ export default function CategoryOverviewScreen({ route, navigation }) {
 
   const listItem = (drink) => {
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => {navigation.navigate("Edit Product", drink.id)}}>
         <View style={styles.listItem}>
           <Text style={styles.listItem__name}>
             {drink.brand} {drink.name}

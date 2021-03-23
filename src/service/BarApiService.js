@@ -111,7 +111,9 @@ export async function deleteCustomer(customerId) {
 }
 
 export async function addDrink(billId, drinkId, sessionId) {
-  console.log("Adding drink: " + drinkId + " to " + billId + " for session " + sessionId)
+  console.log(
+    "Adding drink: " + drinkId + " to " + billId + " for session " + sessionId,
+  );
   await api.put(
     `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`,
     {
@@ -168,22 +170,33 @@ export async function getDrinksByCategory(categoryId) {
   );
 }
 
+export async function getProductById(productId) {
+  return await getRequest(
+    `/bars/${await storage.getActiveBar()}/products/${productId}`,
+  );
+}
+
 export async function updateCategory(categoryId, newName, newType) {
-  return await api.put(`/bars/${await storage.getActiveBar()}/categories/${categoryId}`, {
-    "name": newName,
-    "type": newType
-  });
+  return await api.put(
+    `/bars/${await storage.getActiveBar()}/categories/${categoryId}`,
+    {
+      name: newName,
+      type: newType,
+    },
+  );
 }
 
 export async function createCategory(name, type) {
   return await api.post(`/bars/${await storage.getActiveBar()}/categories`, {
-    "name": name,
-    "productType": type,
+    name: name,
+    productType: type,
   });
 }
 
 export async function getCategoryById(categoryId) {
-  return await getRequest(`/bars/${await storage.getActiveBar()}/categories/${categoryId}`);
+  return await getRequest(
+    `/bars/${await storage.getActiveBar()}/categories/${categoryId}`,
+  );
 }
 
 export async function getAllProductsByBar() {
@@ -247,6 +260,28 @@ export async function getAllSessions() {
 export async function getSessionById(sessionId) {
   return await getRequest(
     `/bars/${await storage.getActiveBar()}/sessions/${sessionId}`,
+  );
+}
+
+export async function updateProduct(
+  productId,
+  name,
+  brand,
+  selectedCategoryId,
+  isFavourite,
+  sellingPrice,
+  size,
+) {
+  return await api.put(
+    `/bars/${await storage.getActiveBar()}/products/${productId}`,
+    {
+      brand: brand,
+      categoryId: selectedCategoryId,
+      isFavorite: isFavourite,
+      name: name,
+      price: sellingPrice,
+      size: size,
+    },
   );
 }
 
