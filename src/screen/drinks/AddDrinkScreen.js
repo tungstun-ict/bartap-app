@@ -21,7 +21,8 @@ export default function AddDrinksScreen({ route, navigation }) {
   const { category, billId, sessionId } = route.params;
 
   useEffect(() => {
-    api
+    if(isLoading) {
+      api
       .getDrinksByCategory(category.id)
       .then((json) => {
         setDrinks(json)
@@ -31,7 +32,8 @@ export default function AddDrinksScreen({ route, navigation }) {
         alert(error)
         setLoading(false)
       });
-  }, []);
+    }
+  }, [isLoading]);
 
   return (
     <SafeAreaView style={styles.container}>

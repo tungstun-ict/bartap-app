@@ -108,9 +108,9 @@ export default function SessionBillScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} />
+      <StackHeaderLayout navigation={navigation} title="Bill" />
       <View style={styles.header}>
-        <Text style={styles.title}>Bill {bill.customer.name}</Text>
+        <Text style={styles.title}>{bill.customer.name}</Text>
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={() => handleDeleteBill()}
@@ -313,6 +313,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     color: colors.TEXT_PRIMARY,
+    marginBottom: 10,
+    marginHorizontal: 10,
+    backgroundColor: colors.ELEMENT_BACKGROUND,
+    borderRadius: 5,
   },
   listItem__footer__text__price: {
     marginLeft: "auto",
@@ -320,10 +324,11 @@ const styles = StyleSheet.create({
     fontSize: 30,
     alignSelf: "center",
     height: "auto",
+    margin: 10,
     fontWeight: "bold",
   },
   listItem__footer__text: {
-    marginLeft: 10,
+    margin: 10,
     color: colors.TEXT_PRIMARY,
     fontSize: 30,
     alignSelf: "center",
