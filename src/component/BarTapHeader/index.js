@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
 
   header__left: {
     flex: 1,
-    maxWidth: 30,
+    maxWidth: 75,
     justifyContent: "center",
   },
 
@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   header__button: {
-    width: 75,
+    width: "100%",
     height: "100%",
     justifyContent: "center",
   },
   header__right: {
-    maxWidth: 30,
+    maxWidth: 75,
     flex: 1,
     justifyContent: "center",
   },
