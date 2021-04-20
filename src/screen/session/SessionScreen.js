@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "center",
     justifyContent: "flex-start",
   },
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: 100,
     marginTop: 20,
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
+    backgroundColor: colors.BARTAP_DARK_GREY_LIGHT,
   },
   buttonDisabled: {
     marginHorizontal: 20,
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.ELEMENT_BACKGROUND_SELECTED,
+    backgroundColor: colors.BARTAP_DARK_GREY_SELECTED,
   },
   addSessionButton: {
     fontSize: 50,
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     width: 40,
   },
   button__text: {
-    color: colors.TEXT_SECONDARY,
+    color: colors.BARTAP_LIGHT_GREY,
   },
   bottomBar: {
     height: "auto",
@@ -281,7 +281,7 @@ const styles = StyleSheet.create({
   },
   addButton__text: {
     textAlign: "center",
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontWeight: "bold",
     width: "100%",
     height: "100%",
@@ -299,13 +299,13 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   session__title: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontSize: 25,
     flex: 1,
     fontWeight: "bold",
   },
   text: {
-    color: colors.TEXT_TERTIARY,
+    color: colors.BARTAP_GREY,
     fontSize: 50,
     fontWeight: "bold",
   },
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
   customer: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
+    backgroundColor: colors.BARTAP_DARK_GREY_LIGHT,
     marginVertical: 10,
     height: Dimensions.get("window").height / 7,
     maxWidth: Dimensions.get("window").width / 2 - 30,
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
   addCustomer: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.ELEMENT_BACKGROUND_SELECTED,
+    backgroundColor: colors.BARTAP_DARK_GREY_SELECTED,
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 10,

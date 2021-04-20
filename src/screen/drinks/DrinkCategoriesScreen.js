@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "center",
     justifyContent: "flex-start",
   },
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   category: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
+    backgroundColor: colors.BARTAP_DARK_GREY_LIGHT,
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,

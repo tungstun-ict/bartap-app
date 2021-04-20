@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "center",
     justifyContent: "center",
   },
   text: {
-    color: colors.TEXT_TERTIARY,
+    color: colors.BARTAP_GREY,
     fontSize: 50,
     fontWeight: "bold",
   },

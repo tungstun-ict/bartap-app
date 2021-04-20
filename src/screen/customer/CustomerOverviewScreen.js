@@ -135,7 +135,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
           <QRCode value={`${customer.id}`}
           color="white"
           size={200}
-          backgroundColor={colors.ELEMENT_BACKGROUND} />
+          backgroundColor={colors.BARTAP_DARK_GREY} />
           <Text style={styles.modal__text}>{customer.name}</Text>
         </View>
       </Modal>
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -163,19 +163,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     padding: 10,
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
     height: "100%",
     width: "100%"
   },
   modal__text: {
     fontSize: 30,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontWeight: "bold",
     marginTop: 20,
   },
   button__submit: {
     height: 50,
-    backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
+    backgroundColor: colors.BARTAP_DARK_GREY_LIGHT,
     width: "100%",
     marginVertical: 10,
     justifyContent: "center",
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "100%",
     width: "100%",
-    backgroundColor: colors.ELEMENT_BACKGROUND_WARNING,
+    backgroundColor: colors.BARTAP_DARK_GREY_WARNING,
     borderRadius: 5,
     marginTop: 0,
     alignSelf: "center",
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   button__text: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontSize: 20,
     fontWeight: "bold",
   },
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   information: {
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
     padding: 20,
     borderRadius: 5,
     margin: 10,
@@ -243,24 +243,24 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 50,
-    backgroundColor: colors.BACKGROUND,
-    borderBottomColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
+    borderBottomColor: colors.BARTAP_DARK_GREY,
     borderBottomWidth: 2,
     width: "95%",
   },
   listItem__name: {
     fontSize: 20,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
   },
   listItem__price: {
     fontSize: 20,
     marginLeft: "auto",
     fontWeight: "bold",
     textAlign: "right",
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
   },
   title: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontWeight: "bold",
     alignSelf: "flex-start",
     marginHorizontal: 10,
@@ -268,13 +268,13 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   name: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     textAlign: "left",
     fontSize: 15,
     fontWeight: "normal",
   },
   attribute: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     textAlign: "right",
     fontSize: 15,
     fontWeight: "normal",

@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   title: {
     height: 40,
     margin: 10,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontSize: sizes.TITLE,
     fontWeight: "bold",
   },
@@ -118,14 +118,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 50,
-    backgroundColor: colors.BACKGROUND,
-    borderBottomColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
+    borderBottomColor: colors.BARTAP_DARK_GREY,
     borderBottomWidth: 2,
     width: "95%",
   },
   listItem__name: {
     fontSize: 20,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
   },
   button: {
     flex: 1,
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "100%",
     width: "95%",
-    backgroundColor: colors.TEXT_PRIMARY,
+    backgroundColor: colors.BARTAP_WHITE,
     borderRadius: 5,
     marginTop: 0,
     
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   button__text: {
-    color: colors.TEXT_SECONDARY,
+    color: colors.BARTAP_LIGHT_GREY,
     fontSize: 20,
     fontWeight: "bold",
   },

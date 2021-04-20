@@ -1,13 +1,23 @@
 import React from "react";
+import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import { colors } from "../../theme/variables.js"
 
-export default function BarTapButton({ onPress, text }) {
+export default function BarTapButton({ onPress, text, colour, textColour, style }) {
+  const buttonColor = {
+    backgroundColor: colour,
+  }
+
+  const textColor = {
+    color: textColour,
+  }
+  
   return (
     <TouchableOpacity
-      onPress={() => onPress}
-      style={styles.wrapper}
+      onPress={onPress}
+      style={[styles.wrapper, buttonColor, style]}
     >
       <View style={styles.button}>
-        <Text style={styles.text}>{text}</Text>
+        <Text style={[styles.text, textColor]}>{text}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -16,11 +26,9 @@ export default function BarTapButton({ onPress, text }) {
 const styles = StyleSheet.create({
     wrapper: {
         minWidth: "100%",
-        backgroundColor: colors.ELEMENT_BACKGROUND_WARNING,
         borderRadius: 5,
-        marginTop: "auto",
-        marginBottom: 10,
-        height: 40,
+        height: 50,
+        backgroundColor: colors.BARTAP_WHITE,
         alignItems: "center",
         justifyContent: "center",
       },
@@ -35,6 +43,6 @@ const styles = StyleSheet.create({
       text: {
         fontSize: 15,
         fontWeight: "bold",
-        color: colors.TEXT_PRIMARY,
+        color: colors.BARTAP_BLACK,
       },
 })

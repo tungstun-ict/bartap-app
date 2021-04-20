@@ -10,6 +10,7 @@ import { Picker } from "@react-native-picker/picker";
 import { Value } from "react-native-reanimated";
 import { StackActions } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/core";
+import BarTapButton from "../../component/BarTapButton";
 import * as storage from "../../service/BarStorageService.js";
 
 export default function AccountScreen({ navigation }) {
@@ -98,6 +99,11 @@ export default function AccountScreen({ navigation }) {
           >
             {pickerItems}
           </Picker>
+          <BarTapButton 
+            onPress={() => navigation.navigate("Create Bar")} 
+            text={"Create a new bar"} 
+            colour={colors.BARTAP_WHITE}
+            textColour={colors.BARTAP_BLACK}/>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Create Bar");
@@ -109,14 +115,12 @@ export default function AccountScreen({ navigation }) {
             </View>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
+        <BarTapButton 
           onPress={() => _logout()}
-          style={styles.logoutButton__wrapper}
-        >
-          <View style={styles.button__submit}>
-            <Text style={styles.logoutButton__text}>Log out</Text>
-          </View>
-        </TouchableOpacity>
+          colour={colors.BARTAP_RED}
+          textColour={colors.BARTAP_WHITE}
+          style={styles.logoutButton}
+          text={"Log out"}/>
       </View>
     </SafeAreaView>
   );
@@ -126,7 +130,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
@@ -140,22 +144,22 @@ const styles = StyleSheet.create({
   title: {
     height: 40,
     margin: 10,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontSize: sizes.TITLE,
     fontWeight: "bold",
   },
   picker: {
     height: 60,
-    borderColor: colors.TEXT_PRIMARY,
+    borderColor: colors.BARTAP_WHITE,
     borderWidth: 1,
-    backgroundColor: colors.ELEMENT_BACKGROUND,
-    color: colors.TEXT_PRIMARY,
+    backgroundColor: colors.BARTAP_DARK_GREY,
+    color: colors.BARTAP_WHITE,
     borderRadius: 5,
     justifyContent: "center",
     marginVertical: 10,
   },
   optionTitle: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontWeight: "bold",
     fontSize: 20,
   },
@@ -164,14 +168,14 @@ const styles = StyleSheet.create({
     color: "white",
   },
   text: {
-    color: colors.TEXT_TERTIARY,
+    color: colors.BARTAP_GREY,
     fontSize: 50,
     fontWeight: "bold",
   },
   input: {
     width: "100%",
     marginVertical: 10,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     borderColor: "white",
     borderWidth: 1,
     borderRadius: 5,
@@ -179,53 +183,22 @@ const styles = StyleSheet.create({
     height: 50,
   },
   input__label: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     alignSelf: "flex-start",
     fontWeight: "bold",
     fontSize: 20,
     marginTop: 10,
   },
-  button__submit: {
-    height: 50,
-    width: "100%",
-    marginVertical: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-  },
   barsView: {
     width: "100%",
     height: "auto",
   },
-  logoutButton__wrapper: {
-    minWidth: "100%",
-    backgroundColor: colors.ELEMENT_BACKGROUND_WARNING,
-    borderRadius: 5,
+  logoutButton: {
     marginTop: "auto",
     marginBottom: 10,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button__wrapper: {
-    minWidth: "100%",
-    backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
-    borderRadius: 5,
-    height: 40,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  logoutButton__text: {
-    fontSize: 15,
-    fontWeight: "bold",
-    color: colors.TEXT_PRIMARY,
-  },
-  button__text: {
-    fontSize: 15,
-    fontWeight: "bold",
   },
   information: {
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
     padding: 20,
     borderRadius: 5,
     margin: 10,
@@ -238,13 +211,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   name: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     textAlign: "left",
     fontSize: 15,
     fontWeight: "normal",
   },
   attribute: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     textAlign: "right",
     fontSize: 15,
     fontWeight: "normal",

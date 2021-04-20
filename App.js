@@ -275,9 +275,9 @@ export default function App() {
             initialRouteName="Session"
             drawerStyle={styles.drawer}
             drawerContentOptions={{
-              activeTintColor: colors.TEXT_PRIMARY,
-              activeBackgroundColor: colors.ELEMENT_BACKGROUND_SELECTED,
-              inactiveTintColor: colors.TEXT_PRIMARY,
+              activeTintColor: colors.BARTAP_WHITE,
+              activeBackgroundColor: colors.BARTAP_DARK_GREY_SELECTED,
+              inactiveTintColor: colors.BARTAP_WHITE,
               labelStyle: {
                 fontSize: 30,
                 fontWeight: "bold",
@@ -318,7 +318,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   drawer: {
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
     width: 240,
   },
   drawerItem: {},

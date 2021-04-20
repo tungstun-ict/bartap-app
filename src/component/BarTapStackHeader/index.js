@@ -39,11 +39,11 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     alignItems: "center",
     width: "100%",
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
   },
 
   header__title: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontWeight: "bold",
     fontSize: 20,
   },

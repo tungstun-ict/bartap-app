@@ -29,6 +29,6 @@ export default function BarTapDrawer({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     marginTop: StatusBar.currentHeight + 50,
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
   },
 });

@@ -164,7 +164,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "center",
     justifyContent: "flex-start",
   },
@@ -176,16 +176,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   text: {
-    color: colors.TEXT_TERTIARY,
+    color: colors.BARTAP_GREY,
     fontSize: 50,
     fontWeight: "bold",
   },
   picker: {
     height: 60,
-    borderColor: colors.TEXT_PRIMARY,
+    borderColor: colors.BARTAP_WHITE,
     borderWidth: 1,
-    backgroundColor: colors.ELEMENT_BACKGROUND,
-    color: colors.TEXT_PRIMARY,
+    backgroundColor: colors.BARTAP_DARK_GREY,
+    color: colors.BARTAP_WHITE,
     borderRadius: 5,
     justifyContent: "center",
     marginVertical: 10,
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
   input: {
     width: "100%",
     marginVertical: 10,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     borderColor: "white",
     borderWidth: 1,
     borderRadius: 5,
@@ -206,7 +206,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   input__label: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     alignSelf: "flex-start",
     fontWeight: "bold",
     fontSize: 20,
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   },
   button__submit: {
     height: 50,
-    backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
+    backgroundColor: colors.BARTAP_DARK_GREY_LIGHT,
     width: "100%",
     marginVertical: 10,
     justifyContent: "center",
@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   },
   button__wrapper: {
     minWidth: "100%",
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
     height: 50,
     alignItems: "center",
     justifyContent: "center",
