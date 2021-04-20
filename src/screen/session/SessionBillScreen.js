@@ -15,6 +15,7 @@ import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Alert } from "react-native";
+import BarTapListItem from "../../component/BarTapListItem/index.js";
 
 export default function SessionBillScreen({ route, navigation }) {
   const { billId, sessionId } = route.params;
@@ -154,22 +155,12 @@ export default function SessionBillScreen({ route, navigation }) {
 function listItem(order) {
   const timestamp = new Date(order.creationDate);
   return (
-    <View style={styles.listItemOrder}>
-      <Text style={styles.listItem__timestamp}>
-        {timestamp.getHours() < 10
-          ? "0" + timestamp.getHours()
-          : timestamp.getHours()}
-        :
-        {timestamp.getMinutes() < 10
-          ? "0" + timestamp.getMinutes()
-          : timestamp.getMinutes()}
-      </Text>
-      <Text style={styles.listItemOrderLine__name}>{order.product.name}</Text>
-      <Text style={styles.listItemOrderLine__amount}>{order.amount} x</Text>
-      <Text style={styles.listItemOrderLine__price}>
-        €{(order.product.price * order.amount).toFixed(2)}
-      </Text>
-    </View>
+    <BarTapListItem 
+      timestamp={timestamp}
+      name={order.product.name}
+      multiplier={order.amount}
+      price={(order.product.price * order.amount).toFixed(2)}
+    />
   );
 }
 
@@ -218,6 +209,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignSelf: "center",
     width: "100%",
+    paddingHorizontal: 10,
     height: "100%",
   },
   deleteButton: {
@@ -235,77 +227,6 @@ const styles = StyleSheet.create({
     width: "100%",
     maxHeight: 60,
     flex: 1,
-  },
-  listItem: {
-    alignSelf: "center",
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    height: 50,
-    backgroundColor: colors.BARTAP_BLACK,
-    borderBottomColor: colors.BARTAP_DARK_GREY,
-    borderBottomWidth: 2,
-    width: "95%",
-  },
-  listItemOrder: {
-    alignSelf: "center",
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-    backgroundColor: colors.BARTAP_BLACK,
-    borderBottomColor: colors.BARTAP_DARK_GREY,
-    borderBottomWidth: 2,
-    width: "95%",
-    height: 50,
-  },
-  listItemOrderLine: {
-    alignSelf: "center",
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    height: 50,
-    backgroundColor: colors.BARTAP_BLACK,
-    borderBottomWidth: 2,
-    width: "95%",
-  },
-  listItem__name: {
-    fontSize: 20,
-    color: colors.BARTAP_WHITE,
-    alignSelf: "center",
-    marginRight: 10,
-  },
-  listItem__timestamp: {
-    fontSize: 20,
-    color: colors.BARTAP_LIGHT_GREY,
-    alignSelf: "center",
-    marginRight: 10,
-  },
-  listItemOrderLine__name: {
-    fontSize: 15,
-    color: colors.BARTAP_WHITE,
-    alignSelf: "center",
-    marginRight: 10,
-  },
-  listItemOrderLine__amount: {
-    fontSize: 15,
-    color: colors.BARTAP_WHITE,
-    alignSelf: "center",
-    marginLeft: "auto",
-  },
-  listItemOrderLine__price: {
-    fontSize: 15,
-    color: colors.BARTAP_WHITE,
-    fontWeight: "bold",
-    alignSelf: "center",
-    marginLeft: 10,
-  },
-  listItem__price: {
-    fontSize: 20,
-    color: colors.BARTAP_WHITE,
-    fontWeight: "bold",
-    marginLeft: "auto",
   },
   listItem__footer: {
     zIndex: 5,

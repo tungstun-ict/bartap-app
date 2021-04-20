@@ -14,6 +14,7 @@ import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import BarTapButton from "../../component/BarTapButton/index.js";
+import BarTapListItem from "../../component/BarTapListItem/index.js";
 
 export default function CategoryOverviewScreen({ route, navigation }) {
   const [drinks, setDrinks] = useState([]);
@@ -25,9 +26,11 @@ export default function CategoryOverviewScreen({ route, navigation }) {
       api
         .getDrinksByCategory(category.id)
         .then((json) => {
-          setDrinks(json.sort(function(a, b) {
-            return a.id - b.id;
-        }));
+          setDrinks(
+            json.sort(function (a, b) {
+              return a.id - b.id;
+            }),
+          );
           setLoading(false);
         })
         .catch((error) => {
@@ -39,15 +42,13 @@ export default function CategoryOverviewScreen({ route, navigation }) {
 
   const listItem = (drink) => {
     return (
-      <TouchableOpacity
-        onPress={() => {navigation.navigate("Edit Product", drink.id)}}>
-        <View style={styles.listItem}>
-          <Text style={styles.listItem__name}>
-            {drink.brand} {drink.name}
-          </Text>
-          <Text style={styles.listItem__price}>€{drink.price.toFixed(2)}</Text>
-        </View>
-      </TouchableOpacity>
+      <BarTapListItem
+        onPress={() => {
+          navigation.navigate("Edit Product", drink.id);
+        }}
+        name={`${drink.brand} ${drink.name}`}
+        price={drink.price.toFixed(2)}
+      />
     );
   };
 
@@ -69,9 +70,10 @@ export default function CategoryOverviewScreen({ route, navigation }) {
           data={drinks}
           renderItem={(item) => listItem(item.item)}
         />
-        <BarTapButton 
+        <BarTapButton
           onPress={() => navigation.navigate("Edit Category", category.id)}
-          text={"Edit"}/>
+          text={"Edit"}
+        />
       </View>
     </SafeAreaView>
   );
@@ -102,29 +104,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignSelf: "center",
     width: "100%",
-  },
-  listItem: {
-    alignSelf: "center",
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    backgroundColor: colors.BARTAP_BLACK,
-    borderBottomColor: colors.BARTAP_DARK_GREY,
-    borderBottomWidth: 2,
-    paddingVertical: 10,
-    width: "100%",
-  },
-  listItem__name: {
-    fontSize: 20,
-    color: colors.BARTAP_WHITE,
-    width: "80%",
-  },
-  listItem__price: {
-    fontSize: 20,
-    color: colors.BARTAP_WHITE,
-    fontWeight: "bold",
-    marginLeft: "auto",
   },
   listItem__footer: {
     flex: 1,

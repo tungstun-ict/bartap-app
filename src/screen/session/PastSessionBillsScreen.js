@@ -14,6 +14,7 @@ import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import BarTapHeader from "../../component/BarTapHeader";
+import BarTapListItem from "../../component/BarTapListItem/index.js";
 
 export default function PastSessionBillsScreen({ route, navigation }) {
   const [isLoading, setLoading] = useState(true);
@@ -45,15 +46,10 @@ export default function PastSessionBillsScreen({ route, navigation }) {
 
   const listItem = (bill) => {
     return (
-      <TouchableOpacity
-        onPress={() => {navigation.navigate("Past Session Bill", {"billId": bill.id, "sessionId": sessionId})}}>
-        <View style={styles.listItem}>
-        <Text style={styles.listItem__name}>{bill.customer.name}</Text>
-        <Text style={styles.listItem__price}>
-          €{bill.totalPrice.toFixed(2)}
-        </Text>
-      </View>
-      </TouchableOpacity>
+      <BarTapListItem 
+        onPress={() => {navigation.navigate("Past Session Bill", {"billId": bill.id, "sessionId": sessionId})}}
+        name={bill.customer.name}
+        price={bill.totalPrice.toFixed(2)}/>
     );
   };
 
@@ -76,10 +72,6 @@ export default function PastSessionBillsScreen({ route, navigation }) {
       </View>
     </SafeAreaView>
   );
-}
-
-function handlePress(navigation, sessionId) {
-  navigation.navigate("Past session", { sessionId: sessionId });
 }
 
 const styles = StyleSheet.create({
@@ -106,6 +98,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignSelf: "center",
     width: "100%",
+    paddingHorizontal: 10,
   },
   listItem: {
     alignSelf: "center",

@@ -14,6 +14,7 @@ import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
+import BarTapListItem from "../../component/BarTapListItem/index.js";
 
 export default function AddDrinksScreen({ route, navigation }) {
   const [drinks, setDrinks] = useState([]);
@@ -57,19 +58,11 @@ export default function AddDrinksScreen({ route, navigation }) {
 }
 
 function listItem(navigation, drink, billId, sessionId) {
-  return (
-    <TouchableOpacity
-      onPress={() =>
-        handlePress(navigation, drink, billId, sessionId)
-      }
-    >
-      <View style={styles.listItem}>
-        <Text style={styles.listItem__name}>
-          {drink.brand} {drink.name}
-        </Text>
-        <Text style={styles.listItem__price}>€{drink.price.toFixed(2)}</Text>
-      </View>
-    </TouchableOpacity>
+  return(
+    <BarTapListItem 
+      onPress={() => handlePress(navigation, drink, billId, sessionId)}
+      name={`${drink.brand} ${drink.name}`}
+      price={drink.price.toFixed(2)}/>
   );
 }
 
@@ -104,44 +97,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignSelf: "center",
     width: "100%",
-  },
-  listItem: {
-    alignSelf: "center",
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    backgroundColor: colors.BARTAP_BLACK,
-    borderBottomColor: colors.BARTAP_DARK_GREY,
-    borderBottomWidth: 2,
-    paddingVertical: 10,
-    width: "95%",
-  },
-  listItem__name: {
-    fontSize: 20,
-    color: colors.BARTAP_WHITE,
-    width: "80%",
-  },
-  listItem__price: {
-    fontSize: 20,
-    color: colors.BARTAP_WHITE,
-    fontWeight: "bold",
-    marginLeft: "auto",
-  },
-  listItem__footer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    height: 40,
-    width: "95%",
-    backgroundColor: colors.BARTAP_DARK_GREY,
-    borderRadius: 5,
-    marginTop: 10,
-    alignSelf: "center",
-  },
-  listItem__footer__text: {
-    color: colors.BARTAP_LIGHT_GREY,
-    fontSize: 20,
-    fontWeight: "bold",
+    paddingHorizontal: 10,
   },
 });
