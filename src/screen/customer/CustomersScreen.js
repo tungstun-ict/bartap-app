@@ -16,6 +16,7 @@ import * as storage from "../../service/BarStorageService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 import SwipeableFlatList from "react-native-swipeable-list";
+import BarTapButton from "../../component/BarTapButton/index.js";
 
 export default function CustomersScreen({ navigation }) {
   const [customers, setCustomers] = useState([]);
@@ -72,14 +73,9 @@ export default function CustomersScreen({ navigation }) {
           refreshing={isLoading}
           onRefresh={() => setLoading(true)}
         />
-        <TouchableOpacity
+        <BarTapButton 
           onPress={() => navigation.navigate("Add new customer")}
-          style={styles.button__wrapper}
-        >
-          <View style={styles.button}>
-            <Text style={styles.button__text}>Add a new customer</Text>
-          </View>
-        </TouchableOpacity>
+          text={"Add new customer"}/>
       </View>
     </SafeAreaView>
   );
@@ -96,9 +92,10 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     width: "100%",
+    paddingHorizontal: 10,
     height: "100%",
     flexDirection: "column",
-    alignItems: "flex-start",
+    alignItems: "flex-start"
   },
   title: {
     height: 40,
@@ -121,34 +118,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.BARTAP_BLACK,
     borderBottomColor: colors.BARTAP_DARK_GREY,
     borderBottomWidth: 2,
-    width: "95%",
+    width: "100%",
   },
   listItem__name: {
     fontSize: 20,
     color: colors.BARTAP_WHITE,
-  },
-  button: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
-    width: "95%",
-    backgroundColor: colors.BARTAP_WHITE,
-    borderRadius: 5,
-    marginTop: 0,
-    
-    alignSelf: "center",
-  },
-  button__wrapper: {
-    flex: 1,
-    marginBottom: 10,
-    maxHeight: 40,
-    minWidth: "100%",
-    marginVertical: 10,
-  },
-  button__text: {
-    color: colors.BARTAP_LIGHT_GREY,
-    fontSize: 20,
-    fontWeight: "bold",
   },
 });
