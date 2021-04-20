@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
   customer: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_DARK_GREY_LIGHT,
+    backgroundColor: colors.BARTAP_WHITE,
     marginVertical: 10,
     height: Dimensions.get("window").height / 7,
     maxWidth: Dimensions.get("window").width / 2 - 30,

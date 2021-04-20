@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   category: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_DARK_GREY_LIGHT,
+    backgroundColor: colors.BARTAP_WHITE,
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,

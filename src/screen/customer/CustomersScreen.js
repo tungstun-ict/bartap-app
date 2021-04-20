@@ -17,6 +17,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 import SwipeableFlatList from "react-native-swipeable-list";
 import BarTapButton from "../../component/BarTapButton/index.js";
+import BarTapListItem from "../../component/BarTapListItem/index.js";
 
 export default function CustomersScreen({ navigation }) {
   const [customers, setCustomers] = useState([]);
@@ -47,13 +48,9 @@ export default function CustomersScreen({ navigation }) {
 
   const listItem = (customer) => {
     return (
-      <TouchableOpacity
+      <BarTapListItem 
         onPress={() => navigation.navigate("Customer overview", customer.id)}
-      >
-        <View style={styles.listItem}>
-          <Text style={styles.listItem__name}>{customer.name}</Text>
-        </View>
-      </TouchableOpacity>
+        name={customer.name}/>
     );
   };
 
@@ -108,20 +105,5 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignSelf: "center",
     width: "100%",
-  },
-  listItem: {
-    alignSelf: "center",
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    height: 50,
-    backgroundColor: colors.BARTAP_BLACK,
-    borderBottomColor: colors.BARTAP_DARK_GREY,
-    borderBottomWidth: 2,
-    width: "100%",
-  },
-  listItem__name: {
-    fontSize: 20,
-    color: colors.BARTAP_WHITE,
   },
 });

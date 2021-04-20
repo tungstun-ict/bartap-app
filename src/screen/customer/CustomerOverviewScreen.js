@@ -7,6 +7,7 @@ import { Button, TouchableOpacity } from "react-native";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import QRCode from "react-native-qrcode-svg";
 import BarTapButton from "../../component/BarTapButton/index.js";
+import BarTapListItem from "../../component/BarTapListItem/index.js";
 
 export default function CustomerOverviewScreen({ route, navigation }) {
   const [customer, setCustomer] = useState({});
@@ -36,19 +37,15 @@ export default function CustomerOverviewScreen({ route, navigation }) {
   const listItem = (bill) => {
     const billId = bill.id;
     const sessionId = bill.session.id;
-    return (
-      <TouchableOpacity
+    console.log(bill)
+    return(
+      <BarTapListItem 
         onPress={() =>
           navigation.navigate("Customer Bill", { billId, sessionId })
         }
-      >
-        <View style={styles.listItem}>
-          <Text style={styles.listItem__name}>{bill.session.name}</Text>
-          <Text style={styles.listItem__price}>
-            €{bill.totalPrice.toFixed(2)}
-          </Text>
-        </View>
-      </TouchableOpacity>
+        name={bill.session.name}
+        price={bill.totalPrice.toFixed(2)}
+        />
     );
   };
 

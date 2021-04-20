@@ -42,6 +42,7 @@ export default function AddCustomerSession({ route, navigation }) {
   };
 
   const listItem = (customer) => {
+    console.log(customer.id)
     return (
       <TouchableOpacity
         onPress={async () =>

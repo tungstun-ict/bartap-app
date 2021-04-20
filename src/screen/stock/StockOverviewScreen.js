@@ -9,6 +9,7 @@ import QRCode from "react-native-qrcode-svg";
 import BarTapHeader from "../../component/BarTapHeader";
 import SearchBar from "react-native-elements/dist/searchbar/SearchBar-ios";
 import BarTapButton from "../../component/BarTapButton/index.js";
+import BarTapListItem from "../../component/BarTapListItem/index.js";
 
 export default function StockOverviewScreen({ route, navigation }) {
   const [categories, setCategories] = useState([]);
@@ -43,18 +44,12 @@ export default function StockOverviewScreen({ route, navigation }) {
 
   const listItem = (category) => {
     return (
-      <TouchableOpacity
+      <BarTapListItem
         onPress={() => {
           navigation.navigate("Category Overview", category);
         }}
-      >
-        <View style={styles.listItem}>
-          <Text style={styles.listItem__name}>{category.name}</Text>
-          {/* <Text style={styles.listItem__price}>
-            €{category.price.toFixed(2)}
-          </Text> */}
-        </View>
-      </TouchableOpacity>
+        name={category.name}
+      />
     );
   };
 
@@ -144,27 +139,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     alignSelf: "center",
     width: "100%",
-  },
-  listItem: {
-    alignSelf: "center",
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    height: 50,
-    backgroundColor: colors.BARTAP_BLACK,
-    borderBottomColor: colors.BARTAP_DARK_GREY,
-    borderBottomWidth: 2,
-    width: "95%",
-  },
-  listItem__name: {
-    fontSize: 20,
-    color: colors.BARTAP_WHITE,
-  },
-  listItem__price: {
-    fontSize: 20,
-    marginLeft: "auto",
-    textAlign: "right",
-    color: colors.BARTAP_WHITE,
+    paddingHorizontal: 10,
   },
   title: {
     color: colors.BARTAP_WHITE,
