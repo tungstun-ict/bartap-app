@@ -8,6 +8,7 @@ import BarTapStackHeader from "../../component/BarTapStackHeader";
 import QRCode from "react-native-qrcode-svg";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
 
 export default function CustomerOverviewScreen({ route, navigation }) {
   const [customer, setCustomer] = useState({});
@@ -62,7 +63,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
       
       <BarTapStackHeader navigation={navigation} title={customer.name} />
       <View style={styles.content}>
-        <Text style={styles.title}>Information</Text>
+        <BarTapTitle text={"Information"} level={1} /> 
         <View style={styles.information}>
           <View style={styles.table}>
             <View style={styles.column}>
@@ -89,7 +90,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
           text={"Connect Account"}/>
         )}
         <View style={styles.bills}>
-        <Text style={styles.title}>Bills</Text>
+        <BarTapTitle text={"Bills"} level={1} /> 
           <FlatList
             keyExtractor={(item) => item.id.toString()}
             style={styles.list}
@@ -142,8 +143,6 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
     width: "95%",
   },
   modal: {
@@ -165,7 +164,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.BARTAP_DARK_GREY,
     padding: 20,
     borderRadius: 5,
-    margin: 10,
     width: "100%",
   },
   table: {
@@ -201,13 +199,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "right",
     color: colors.BARTAP_WHITE,
-  },
-  title: {
-    color: colors.BARTAP_WHITE,
-    fontWeight: "bold",
-    alignSelf: "flex-start",
-    marginTop: 10,
-    fontSize: 25,
   },
   name: {
     color: colors.BARTAP_WHITE,

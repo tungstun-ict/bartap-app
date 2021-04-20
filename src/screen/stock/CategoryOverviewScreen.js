@@ -15,6 +15,7 @@ import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
 
 export default function CategoryOverviewScreen({ route, navigation }) {
   const [drinks, setDrinks] = useState([]);
@@ -55,8 +56,8 @@ export default function CategoryOverviewScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <BarTapStackHeader navigation={navigation} />
-      <Text style={styles.title}>{category.name}</Text>
       <View style={styles.content}>
+      <BarTapTitle text={category.name} level={1} />
         <FlatList
           refreshControl={
             <RefreshControl
@@ -92,33 +93,10 @@ const styles = StyleSheet.create({
     width: "100%",
     paddingHorizontal: 10,
   },
-  title: {
-    height: 40,
-    margin: 10,
-    color: colors.BARTAP_WHITE,
-    fontSize: sizes.TITLE,
-    fontWeight: "bold",
-  },
   list: {
     flex: 1,
     flexDirection: "column",
     alignSelf: "center",
     width: "100%",
-  },
-  listItem__footer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    height: 40,
-    width: "100%",
-    backgroundColor: colors.BARTAP_DARK_GREY,
-    borderRadius: 5,
-    marginTop: 10,
-    alignSelf: "center",
-  },
-  listItem__footer__text: {
-    color: colors.BARTAP_LIGHT_GREY,
-    fontSize: 20,
-    fontWeight: "bold",
   },
 });

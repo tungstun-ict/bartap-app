@@ -10,6 +10,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 import { Picker } from "@react-native-picker/picker";
 import BarTapButton from "../../component/BarTapButton/index.js";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
 
 export default function AddProductStockScreen({ navigation }) {
   const [categories, setCategories] = useState([]);
@@ -71,21 +72,21 @@ export default function AddProductStockScreen({ navigation }) {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.content}
       >
-        <Text style={styles.input__label}>Name</Text>
+        <BarTapTitle text={"Name"} level={2} />
         <TextInput
           autoCompleteType={"name"}
           onChangeText={setName}
           multiline={false}
           style={styles.input}
         />
-        <Text style={styles.input__label}>Brand</Text>
+        <BarTapTitle text={"Brand"} level={2} />
         <TextInput
           autoCompleteType={"name"}
           onChangeText={setBrand}
           multiline={false}
           style={styles.input}
         />
-        <Text style={styles.input__label}>Category</Text>
+        <BarTapTitle text={"Category"} level={2} />
         <Picker
           style={styles.picker}
           selectedValue={selectedCategory}
@@ -96,21 +97,21 @@ export default function AddProductStockScreen({ navigation }) {
         >
           {pickerItems}
         </Picker>
-        <Text style={styles.input__label}>Selling price</Text>
+        <BarTapTitle text={"Selling price"} level={2} />
         <TextInput
           onChangeText={setSellingPrice}
           multiline={false}
           keyboardType={"numeric"}
           style={styles.input}
         />
-        <Text style={styles.input__label}>Size (ml)</Text>
+        <BarTapTitle text={"Size (ml)"} level={2} />
         <TextInput
           onChangeText={setSize}
           multiline={false}
           keyboardType={"numeric"}
           style={styles.input}
         />
-        <BarTapButton onPress={() => createProduct()} text={"Submit"} />
+        <BarTapButton style={styles.button} onPress={() => createProduct()} text={"Submit"} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -126,15 +127,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    // justifyContent: "flex-start",
-    // alignItems: "center",
     width: "100%",
     paddingHorizontal: 10,
-  },
-  text: {
-    color: colors.BARTAP_GREY,
-    fontSize: 50,
-    fontWeight: "bold",
   },
   picker: {
     height: 60,
@@ -144,7 +138,6 @@ const styles = StyleSheet.create({
     color: colors.BARTAP_WHITE,
     borderRadius: 5,
     justifyContent: "center",
-    marginVertical: 10,
     width: "100%",
   },
   picker__item: {
@@ -153,39 +146,13 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    marginVertical: 10,
     color: colors.BARTAP_WHITE,
     borderColor: "white",
     borderWidth: 1,
     borderRadius: 5,
-    paddingLeft: 10,
     height: 50,
   },
-  input__label: {
-    color: colors.BARTAP_WHITE,
-    alignSelf: "flex-start",
-    fontWeight: "bold",
-    fontSize: 20,
+  button: {
     marginTop: 10,
-  },
-  button__submit: {
-    height: 50,
-    backgroundColor: colors.BARTAP_DARK_GREY_LIGHT,
-    width: "100%",
-    marginVertical: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-  },
-  button__wrapper: {
-    minWidth: "100%",
-    backgroundColor: colors.BARTAP_DARK_GREY,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button__text: {
-    fontSize: 15,
-    fontWeight: "bold",
-  },
+  }
 });

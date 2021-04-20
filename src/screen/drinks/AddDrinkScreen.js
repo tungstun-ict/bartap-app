@@ -15,6 +15,7 @@ import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
 
 export default function AddDrinksScreen({ route, navigation }) {
   const [drinks, setDrinks] = useState([]);
@@ -22,28 +23,32 @@ export default function AddDrinksScreen({ route, navigation }) {
   const { category, billId, sessionId } = route.params;
 
   useEffect(() => {
-    if(isLoading) {
+    if (isLoading) {
       api
-      .getDrinksByCategory(category.id)
-      .then((json) => {
-        setDrinks(json)
-        setLoading(false);
-      })
-      .catch((error) => {
-        alert(error)
-        setLoading(false)
-      });
+        .getDrinksByCategory(category.id)
+        .then((json) => {
+          setDrinks(json);
+          setLoading(false);
+        })
+        .catch((error) => {
+          alert(error);
+          setLoading(false);
+        });
     }
   }, [isLoading]);
 
   return (
     <SafeAreaView style={styles.container}>
       <BarTapStackHeader navigation={navigation} title="Add product" />
-      <Text style={styles.title}>{category.name}</Text>
       <View style={styles.content}>
+        <BarTapTitle text={category.name} level={1} />
         <FlatList
           refreshControl={
-            <RefreshControl onRefresh={() => setLoading(true)} refreshing={isLoading} tintColor="white" />
+            <RefreshControl
+              onRefresh={() => setLoading(true)}
+              refreshing={isLoading}
+              tintColor="white"
+            />
           }
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
@@ -58,19 +63,22 @@ export default function AddDrinksScreen({ route, navigation }) {
 }
 
 function listItem(navigation, drink, billId, sessionId) {
-  return(
-    <BarTapListItem 
+  return (
+    <BarTapListItem
       onPress={() => handlePress(navigation, drink, billId, sessionId)}
       name={`${drink.brand} ${drink.name}`}
-      price={drink.price.toFixed(2)}/>
+      price={drink.price.toFixed(2)}
+    />
   );
 }
 
 async function handlePress(navigation, drink, billId, sessionId) {
-  api.addDrink(billId, drink.id, sessionId)
-  .finally(() => { navigation.navigate("Session") })
-  .catch(error => alert(error));
-  ;
+  api
+    .addDrink(billId, drink.id, sessionId)
+    .finally(() => {
+      navigation.navigate("Session");
+    })
+    .catch((error) => alert(error));
 }
 
 const styles = StyleSheet.create({
@@ -84,19 +92,12 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     width: "100%",
-  },
-  title: {
-    height: 40,
-    margin: 10,
-    color: colors.BARTAP_WHITE,
-    fontSize: sizes.TITLE,
-    fontWeight: "bold",
+    paddingHorizontal: 10,
   },
   list: {
     flex: 1,
     flexDirection: "column",
     alignSelf: "center",
     width: "100%",
-    paddingHorizontal: 10,
   },
 });

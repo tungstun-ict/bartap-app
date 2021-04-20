@@ -16,6 +16,8 @@ import * as storage from "../../service/BarStorageService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
+import BarTapListItem from "../../component/BarTapListItem/index.js";
 
 export default function AddCustomerSession({ route, navigation }) {
   const [customers, setCustomers] = useState([]);
@@ -30,7 +32,8 @@ export default function AddCustomerSession({ route, navigation }) {
         setLoading(false);
       })
       .catch((error) => {
-        if(error.response.status === 409) alert("Persoon al toegevoegd aan error")
+        if (error.response.status === 409)
+          alert("Persoon al toegevoegd aan error");
         else alert(error);
         setLoading(false);
       });
@@ -42,25 +45,22 @@ export default function AddCustomerSession({ route, navigation }) {
   };
 
   const listItem = (customer) => {
-    console.log(customer.id)
+    console.log(customer.id);
     return (
-      <TouchableOpacity
+      <BarTapListItem
         onPress={async () =>
           addCustomer(customer.id).catch((error) => alert(error))
         }
-      >
-        <View style={styles.listItem}>
-          <Text style={styles.listItem__name}>{customer.name}</Text>
-        </View>
-      </TouchableOpacity>
+        name={customer.name}
+      />
     );
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <BarTapStackHeader navigation={navigation} />
-      <Text style={styles.title}>Customers</Text>
       <View style={styles.content}>
+        <BarTapTitle text={"Customers"} level={1} />
         <FlatList
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
@@ -69,7 +69,8 @@ export default function AddCustomerSession({ route, navigation }) {
               onRefresh={() => setLoading(true)}
               refreshing={isLoading}
               tintColor="white"
-           />}
+            />
+          }
           data={customers}
           renderItem={(item) => listItem(item.item)}
           refreshing={isLoading}
@@ -85,63 +86,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     backgroundColor: colors.BARTAP_BLACK,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
   },
   content: {
     flex: 1,
-    width: "100%",
-    height: "100%",
+    paddingHorizontal: 10,
     flexDirection: "column",
-    alignItems: "flex-start",
-  },
-  title: {
-    height: 40,
-    margin: 10,
-    color: colors.BARTAP_WHITE,
-    fontSize: sizes.TITLE,
-    fontWeight: "bold",
   },
   list: {
     flexDirection: "column",
     alignSelf: "center",
     width: "100%",
-  },
-  listItem: {
-    alignSelf: "center",
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    height: 50,
-    backgroundColor: colors.BARTAP_BLACK,
-    borderBottomColor: colors.BARTAP_DARK_GREY,
-    borderBottomWidth: 2,
-    width: "95%",
-  },
-  listItem__name: {
-    fontSize: 20,
-    color: colors.BARTAP_WHITE,
-  },
-  button: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
-    width: "95%",
-    backgroundColor: colors.BARTAP_WHITE,
-    borderRadius: 5,
-    marginTop: 0,
-    alignSelf: "center",
-  },
-  button__wrapper: {
-    flex: 1,
-    maxHeight: 40,
-    minWidth: "100%",
-    marginVertical: 10,
-  },
-  button__text: {
-    color: colors.BARTAP_LIGHT_GREY,
-    fontSize: 20,
-    fontWeight: "bold",
   },
 });

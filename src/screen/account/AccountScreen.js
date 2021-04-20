@@ -12,6 +12,7 @@ import { StackActions } from "@react-navigation/native";
 import { useFocusEffect } from "@react-navigation/core";
 import BarTapButton from "../../component/BarTapButton";
 import * as storage from "../../service/BarStorageService.js";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
 
 export default function AccountScreen({ navigation }) {
   const [selectedBar, setSelectedBar] = useState(
@@ -38,13 +39,16 @@ export default function AccountScreen({ navigation }) {
       console.log("Getting all bars!");
       api
         .getBars()
-        .then((json) => {setBars(json); setLoading(false);})
+        .then((json) => {
+          setBars(json);
+          setLoading(false);
+        })
         .catch((error) => alert(error));
     }
   }, [isLoading]);
 
   useEffect(() => {
-    if(selectedBar !== null ) {
+    if (selectedBar !== null) {
       storage.storeActiveBar(selectedBar.toString()).catch((error) => error);
     }
   }, [selectedBar]);
@@ -63,8 +67,8 @@ export default function AccountScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <BarTapHeader navigation={navigation} />
-      <Text style={styles.title}>Account</Text>
       <View style={styles.content}>
+        <BarTapTitle text={"Account"} level={1} />
         <View style={styles.information}>
           <View style={styles.table}>
             <View style={styles.column}>
@@ -88,7 +92,7 @@ export default function AccountScreen({ navigation }) {
           </View>
         </View>
         <View style={styles.barsView}>
-          <Text style={styles.optionTitle}>Active bar</Text>
+          <BarTapTitle text={"Active bar"} level={2} />
           <Picker
             style={styles.picker}
             selectedValue={selectedBar}
@@ -99,16 +103,18 @@ export default function AccountScreen({ navigation }) {
           >
             {pickerItems}
           </Picker>
-          <BarTapButton 
-            onPress={() => navigation.navigate("Create Bar")} 
-            text={"Create a new bar"} />
+          <BarTapButton
+            onPress={() => navigation.navigate("Create Bar")}
+            text={"Create a new bar"}
+          />
         </View>
-        <BarTapButton 
+        <BarTapButton
           onPress={() => _logout()}
           colour={colors.BARTAP_RED}
           textColour={colors.BARTAP_WHITE}
           style={styles.logoutButton}
-          text={"Log out"}/>
+          text={"Log out"}
+        />
       </View>
     </SafeAreaView>
   );
@@ -124,17 +130,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
     width: "100%",
     paddingHorizontal: 10,
-  },
-  title: {
-    height: 40,
-    margin: 10,
-    color: colors.BARTAP_WHITE,
-    fontSize: sizes.TITLE,
-    fontWeight: "bold",
   },
   picker: {
     height: 60,
@@ -142,9 +139,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     backgroundColor: colors.BARTAP_DARK_GREY,
     color: colors.BARTAP_WHITE,
+    marginBottom: 10,
     borderRadius: 5,
     justifyContent: "center",
-    marginVertical: 10,
   },
   optionTitle: {
     color: colors.BARTAP_WHITE,
@@ -189,7 +186,6 @@ const styles = StyleSheet.create({
     backgroundColor: colors.BARTAP_DARK_GREY,
     padding: 20,
     borderRadius: 5,
-    margin: 10,
     width: "100%",
   },
   table: {

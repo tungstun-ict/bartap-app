@@ -10,6 +10,7 @@ import BarTapHeader from "../../component/BarTapHeader";
 import SearchBar from "react-native-elements/dist/searchbar/SearchBar-ios";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
 
 export default function StockOverviewScreen({ route, navigation }) {
   const [categories, setCategories] = useState([]);
@@ -57,7 +58,7 @@ export default function StockOverviewScreen({ route, navigation }) {
     <SafeAreaView style={styles.container}>
       <BarTapHeader navigation={navigation} title="Stock" />
       <View style={styles.content}>
-        <Text style={styles.title}>Categories</Text>
+      <BarTapTitle text={"Categories"} level={1} />
         <FlatList
           refreshControl={
             <RefreshControl
@@ -101,17 +102,8 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "center",
+    paddingHorizontal: 10,
     width: "100%",
-  },
-  list: {
-    flexDirection: "column",
-    alignSelf: "center",
-    width: "100%",
-  },
-  searchBar: {
-    backgroundColor: colors.BARTAP_BLACK,
   },
   bottomButtons: {
     flexDirection: "column",
@@ -122,43 +114,9 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginVertical: 5,
   },
-  information: {
-    backgroundColor: colors.BARTAP_DARK_GREY,
-    padding: 20,
-    borderRadius: 5,
-    marginTop: 10,
-    width: "95%",
-  },
-  table: {
-    flexDirection: "row",
-  },
-  column: {
-    flex: 1,
-  },
   list: {
     flexDirection: "column",
     alignSelf: "center",
     width: "100%",
-    paddingHorizontal: 10,
-  },
-  title: {
-    color: colors.BARTAP_WHITE,
-    fontWeight: "bold",
-    alignSelf: "flex-start",
-    marginHorizontal: 10,
-    marginTop: 10,
-    fontSize: 25,
-  },
-  name: {
-    color: colors.BARTAP_WHITE,
-    textAlign: "left",
-    fontSize: 15,
-    fontWeight: "normal",
-  },
-  attribute: {
-    color: colors.BARTAP_WHITE,
-    textAlign: "right",
-    fontSize: 15,
-    fontWeight: "normal",
   },
 });
