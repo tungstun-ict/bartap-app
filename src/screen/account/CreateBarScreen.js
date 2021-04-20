@@ -6,6 +6,8 @@ import { TextInput } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
+import BarTapButton from "../../component/BarTapButton/index.js";
+import { color } from "react-native-reanimated";
 
 export default function CreateBarScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -60,15 +62,11 @@ export default function CreateBarScreen({ navigation }) {
           keyboardType={"phone-pad"}
           style={styles.input}
         />
-
-        <TouchableOpacity
+        <BarTapButton 
           onPress={() => createBar()}
-          style={styles.button__wrapper}
-        >
-          <View style={styles.button__submit}>
-            <Text style={styles.button__text}>Submit</Text>
-          </View>
-        </TouchableOpacity>
+          text={"Create"}
+          
+          />
       </KeyboardAvoidingView>
     </SafeAreaView>
   );
@@ -110,25 +108,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     marginTop: 10,
-  },
-  button__submit: {
-    height: 50,
-    backgroundColor: colors.BARTAP_DARK_GREY_LIGHT,
-    width: "100%",
-    marginVertical: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-  },
-  button__wrapper: {
-    minWidth: "100%",
-    backgroundColor: colors.BARTAP_DARK_GREY,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button__text: {
-    fontSize: 15,
-    fontWeight: "bold",
   },
 });

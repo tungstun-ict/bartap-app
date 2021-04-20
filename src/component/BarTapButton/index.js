@@ -3,13 +3,8 @@ import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import { colors } from "../../theme/variables.js"
 
 export default function BarTapButton({ onPress, text, colour, textColour, style }) {
-  const buttonColor = {
-    backgroundColor: colour,
-  }
-
-  const textColor = {
-    color: textColour,
-  }
+  const buttonColor = colour ? { backgroundColor: colour, } : { backgroundColor: colors.BARTAP_WHITE }
+  const textColor = textColour ? { color: textColour, } : { color: colors.BARTAP_BLACK }
   
   return (
     <TouchableOpacity

@@ -101,19 +101,7 @@ export default function AccountScreen({ navigation }) {
           </Picker>
           <BarTapButton 
             onPress={() => navigation.navigate("Create Bar")} 
-            text={"Create a new bar"} 
-            colour={colors.BARTAP_WHITE}
-            textColour={colors.BARTAP_BLACK}/>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Create Bar");
-            }}
-            style={styles.button__wrapper}
-          >
-            <View style={styles.button__submit}>
-              <Text style={styles.button__text}>Create a new bar</Text>
-            </View>
-          </TouchableOpacity>
+            text={"Create a new bar"} />
         </View>
         <BarTapButton 
           onPress={() => _logout()}
