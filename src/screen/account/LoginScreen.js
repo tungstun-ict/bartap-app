@@ -6,6 +6,7 @@ import { Button, TextInput, TouchableOpacity } from "react-native";
 import BarTapHeader from "../../component/BarTapHeader";
 import * as api from "../../service/BarApiService.js";
 import { AuthContext } from "../../service/Context.js";
+import BarTapButton from "../../component/BarTapButton/index.js";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = React.useState("");
@@ -45,14 +46,10 @@ export default function LoginScreen({ navigation }) {
             style={styles.input}
             secureTextEntry={true}
           />
-          <TouchableOpacity
+          <BarTapButton 
             onPress={() => signIn({ email: email, password: password })}
-            style={styles.button__wrapper}
-          >
-            <View style={styles.button__submit}>
-              <Text style={styles.button__text}>Log in</Text>
-            </View>
-          </TouchableOpacity>
+            text={"Log in"}
+            style={styles.button}/>
           <Text
             onPress={() => {
               alert("Feature not available, ask administrators for account credentials.")
@@ -129,25 +126,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
   },
-  button__submit: {
-    height: 50,
-    width: "100%",
-    marginVertical: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-  },
-  button__wrapper: {
-    minWidth: "100%",
-    backgroundColor: colors.BARTAP_DARK_GREY_LIGHT,
-    borderRadius: 5,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
+  button: {
     marginBottom: 20,
-  },
-  button__text: {
-    fontSize: 15,
-    fontWeight: "bold",
   },
 });
