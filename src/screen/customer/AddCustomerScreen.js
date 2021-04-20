@@ -12,6 +12,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 import { apisAreAvailable } from "expo";
 import BarTapButton from "../../component/BarTapButton/index.js";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
 
 export default function AddCustomerScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -32,14 +33,14 @@ export default function AddCustomerScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <BarTapStackHeader navigation={navigation} title="Add Customer" />
       <View style={styles.content}>
-        <Text style={styles.input__label}>Name</Text>
+        <BarTapTitle text={"Name"} level={2} />
         <TextInput
           autoCompleteType={"name"}
           onChangeText={setName}
           multiline={false}
           style={styles.input}
         />
-        <Text style={styles.input__label}>Phone number</Text>
+        <BarTapTitle text={"Phone number"} level={2} />
         <TextInput
           autoCompleteType={"tel"}
           onChangeText={setPhone}
@@ -49,7 +50,8 @@ export default function AddCustomerScreen({ navigation }) {
         />
         <BarTapButton 
           onPress={() => createCustomer(name, phone)}
-          text={"Submit"}/>
+          text={"Submit"}
+          style={styles.button}/>
       </View>
     </SafeAreaView>
   );
@@ -68,19 +70,11 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
     width: "100%",
     paddingHorizontal: 10,
   },
-  text: {
-    color: colors.BARTAP_GREY,
-    fontSize: 50,
-    fontWeight: "bold",
-  },
   input: {
     width: "100%",
-    marginVertical: 10,
     color: colors.BARTAP_WHITE,
     borderColor: "white",
     borderWidth: 1,
@@ -88,11 +82,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     height: 50,
   },
-  input__label: {
-    color: colors.BARTAP_WHITE,
-    alignSelf: "flex-start",
-    fontWeight: "bold",
-    fontSize: 20,
+  button: {
     marginTop: 10,
-  },
+  }
 });

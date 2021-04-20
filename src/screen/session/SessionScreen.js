@@ -304,11 +304,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontWeight: "bold",
   },
-  text: {
-    color: colors.BARTAP_GREY,
-    fontSize: 50,
-    fontWeight: "bold",
-  },
   list: {
     height: "100%",
     width: "100%",

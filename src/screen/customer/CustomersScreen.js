@@ -18,6 +18,7 @@ import { ceil } from "react-native-reanimated";
 import SwipeableFlatList from "react-native-swipeable-list";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
 
 export default function CustomersScreen({ navigation }) {
   const [customers, setCustomers] = useState([]);
@@ -32,36 +33,41 @@ export default function CustomersScreen({ navigation }) {
   });
 
   useEffect(() => {
-    if(isLoading) {
+    if (isLoading) {
       api
-      .getAllCustomersByBarId()
-      .then((json) => {
-        setCustomers(json);
-        setLoading(false);
-      })
-      .catch((error) => {
-        alert(error);
-        setLoading(false);
-      });
+        .getAllCustomersByBarId()
+        .then((json) => {
+          setCustomers(json);
+          setLoading(false);
+        })
+        .catch((error) => {
+          alert(error);
+          setLoading(false);
+        });
     }
   }, [isLoading]);
 
   const listItem = (customer) => {
     return (
-      <BarTapListItem 
+      <BarTapListItem
         onPress={() => navigation.navigate("Customer overview", customer.id)}
-        name={customer.name}/>
+        name={customer.name}
+      />
     );
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <BarTapHeader navigation={navigation} />
-      <Text style={styles.title}>Customers</Text>
       <View style={styles.content}>
+        <BarTapTitle text={"Customers"} level={1} />
         <FlatList
           refreshControl={
-            <RefreshControl onRefresh={() => setLoading(true)} refreshing={isLoading} tintColor="white" />
+            <RefreshControl
+              onRefresh={() => setLoading(true)}
+              refreshing={isLoading}
+              tintColor="white"
+            />
           }
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
@@ -70,9 +76,10 @@ export default function CustomersScreen({ navigation }) {
           refreshing={isLoading}
           onRefresh={() => setLoading(true)}
         />
-        <BarTapButton 
+        <BarTapButton
           onPress={() => navigation.navigate("Add new customer")}
-          text={"Add new customer"}/>
+          text={"Add new customer"}
+        />
       </View>
     </SafeAreaView>
   );
@@ -92,14 +99,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: "100%",
     flexDirection: "column",
-    alignItems: "flex-start"
-  },
-  title: {
-    height: 40,
-    margin: 10,
-    color: colors.BARTAP_WHITE,
-    fontSize: sizes.TITLE,
-    fontWeight: "bold",
+    alignItems: "flex-start",
   },
   list: {
     flexDirection: "column",

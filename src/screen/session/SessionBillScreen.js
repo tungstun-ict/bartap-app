@@ -16,6 +16,7 @@ import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Alert } from "react-native";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
 
 export default function SessionBillScreen({ route, navigation }) {
   const { billId, sessionId } = route.params;
@@ -54,20 +55,20 @@ export default function SessionBillScreen({ route, navigation }) {
         {
           text: "Yes",
           onPress: () => {
-            api.deleteBill(sessionId, billId)
-            .finally(() => {
-              navigation.goBack();
-            })
-            .catch((error) => {
-              if (error.response.status === 409) {
-                alert(
-                  "Session is locked. You must unlock first before editing anything.",
-                );
-              } else {
-                alert(error);
-              }
-            });
-            
+            api
+              .deleteBill(sessionId, billId)
+              .finally(() => {
+                navigation.goBack();
+              })
+              .catch((error) => {
+                if (error.response.status === 409) {
+                  alert(
+                    "Session is locked. You must unlock first before editing anything.",
+                  );
+                } else {
+                  alert(error);
+                }
+              });
           },
         },
         {
@@ -110,20 +111,20 @@ export default function SessionBillScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <BarTapStackHeader navigation={navigation} title="Bill" />
-      <View style={styles.header}>
-        <Text style={styles.title}>{bill.customer.name}</Text>
-        <TouchableOpacity
-          style={styles.deleteButton}
-          onPress={() => handleDeleteBill()}
-        >
-          <Image
-            source={require("../../assets/trashbin.png")}
-            style={styles.deleteButton__image}
-            resizeMode={"contain"}
-          />
-        </TouchableOpacity>
-      </View>
       <View style={styles.content}>
+        <View style={styles.header}>
+          <BarTapTitle text={bill.customer.name} level={1} />
+          <TouchableOpacity
+            style={styles.deleteButton}
+            onPress={() => handleDeleteBill()}
+          >
+            <Image
+              source={require("../../assets/trashbin.png")}
+              style={styles.deleteButton__image}
+              resizeMode={"contain"}
+            />
+          </TouchableOpacity>
+        </View>
         <SwipeableFlatList
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
@@ -134,7 +135,8 @@ export default function SessionBillScreen({ route, navigation }) {
               onRefresh={() => setLoading(true)}
               refreshing={isLoading}
               tintColor="white"
-           />}
+            />
+          }
           refreshing={isLoading}
           onRefresh={() => setLoading(true)}
           maxSwipeDistance={88}
@@ -155,7 +157,7 @@ export default function SessionBillScreen({ route, navigation }) {
 function listItem(order) {
   const timestamp = new Date(order.creationDate);
   return (
-    <BarTapListItem 
+    <BarTapListItem
       timestamp={timestamp}
       name={order.product.name}
       multiplier={order.amount}
@@ -176,6 +178,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
+    paddingHorizontal: 10,
   },
   qaContainer: {
     flex: 1,
@@ -191,30 +194,15 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "red",
   },
-  title: {
-    flex: 1,
-    height: 40,
-    margin: 10,
-    color: colors.BARTAP_WHITE,
-    fontSize: sizes.TITLE,
-    fontWeight: "bold",
-  },
-  text: {
-    color: colors.BARTAP_GREY,
-    fontSize: 50,
-    fontWeight: "bold",
-  },
   list: {
     flex: 4,
     flexDirection: "column",
     alignSelf: "center",
     width: "100%",
-    paddingHorizontal: 10,
     height: "100%",
   },
   deleteButton: {
     marginLeft: "auto",
-    marginRight: 10,
   },
   deleteButton__image: {
     height: 30,
@@ -224,6 +212,7 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     width: "100%",
     maxHeight: 60,
     flex: 1,
