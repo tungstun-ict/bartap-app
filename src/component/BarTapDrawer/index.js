@@ -1,11 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { DrawerItem, DrawerItemList } from "@react-navigation/drawer";
+import { StyleSheet } from "react-native";
+import { DrawerItem } from "@react-navigation/drawer";
 import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
-import { colors, mock } from "../theme/variables";
+import { colors } from "../../theme/variables";
 
-export default function DrawerLayout({ navigation }) {
+export default function BarTapDrawer({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <DrawerItem

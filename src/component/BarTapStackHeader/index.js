@@ -2,10 +2,9 @@ import React from "react";
 import { StatusBar } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { colors, mock } from "../theme/variables.js";
-import { useIsDrawerOpen } from "@react-navigation/drawer";
+import { colors } from "../../theme/variables.js";
 
-export default function StackHeaderLayout({ navigation, title }) {
+export default function BarTapStackHeader({ navigation, title }) {
   const navigateBack = () => {
     navigation.goBack();
   };
@@ -18,7 +17,7 @@ export default function StackHeaderLayout({ navigation, title }) {
         onPress={navigateBack}>
           <Image
             style={styles.header__menuIcon}
-            source={require("../assets/menu/back-icon.png")}
+            source={require("../../assets/menu/back-icon.png")}
           ></Image>
         </TouchableOpacity>
       </View>

@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import SwipeableFlatList from "react-native-swipeable-list";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
-import StackHeaderLayout from "../../layout/StackHeaderLayout";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Alert } from "react-native";
 
@@ -108,7 +108,7 @@ export default function SessionBillScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} title="Bill" />
+      <BarTapStackHeader navigation={navigation} title="Bill" />
       <View style={styles.header}>
         <Text style={styles.title}>{bill.customer.name}</Text>
         <TouchableOpacity

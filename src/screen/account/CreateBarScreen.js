@@ -1,16 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { KeyboardAvoidingView, SafeAreaView } from "react-native";
-import { StyleSheet, Text, View, Image } from "react-native";
-import variables, { colors, mock } from "../../theme/variables.js";
-import { Button } from "react-native";
-import HeaderLayout from "../../layout/HeaderLayout";
-import StackHeaderLayout from "../../layout/StackHeaderLayout.js";
+import { StyleSheet, Text, View } from "react-native";
+import { colors } from "../../theme/variables.js";
 import { TextInput } from "react-native";
-import { Dimensions } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { ceil } from "react-native-reanimated";
-import { apisAreAvailable } from "expo";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 
 export default function CreateBarScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -33,7 +28,7 @@ export default function CreateBarScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} title="New Bar" />
+      <BarTapStackHeader navigation={navigation} title="New Bar" />
       <KeyboardAvoidingView style={styles.content}>
         <Text style={styles.input__label}>Name</Text>
         <TextInput

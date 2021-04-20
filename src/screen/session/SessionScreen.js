@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from "react-native";
-import HeaderLayout from "../../layout/HeaderLayout";
+import BarTapHeader from "../../component/BarTapHeader";
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
 
@@ -102,7 +102,7 @@ export default function SessionScreen({ navigation }) {
   const numColumns = 2;
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderLayout navigation={navigation} />
+      <BarTapHeader navigation={navigation} />
       <View style={styles.session}>
         <View style={styles.header}>
           <Text style={styles.session__title}>{session.name}</Text>

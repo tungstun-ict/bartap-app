@@ -3,8 +3,8 @@ import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import variables, { colors, mock } from "../../theme/variables.js";
 import { Button } from "react-native";
-import HeaderLayout from "../../layout/HeaderLayout";
-import StackHeaderLayout from "../../layout/StackHeaderLayout.js";
+import BarTapHeader from "../../component/BarTapHeader";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TextInput } from "react-native";
 import { Dimensions } from "react-native";
 import * as api from "../../service/BarApiService.js";
@@ -48,7 +48,7 @@ export default function EditCategoryScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} title="" />
+      <BarTapStackHeader navigation={navigation} title="" />
       <View style={styles.content}>
         <Text style={styles.input__label}>Name</Text>
         <TextInput

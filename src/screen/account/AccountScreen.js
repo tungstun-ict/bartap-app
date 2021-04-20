@@ -3,7 +3,7 @@ import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import { Button, TextInput, TouchableOpacity } from "react-native";
-import HeaderLayout from "../../layout/HeaderLayout";
+import BarTapHeader from "../../component/BarTapHeader";
 import * as api from "../../service/BarApiService.js";
 import { AuthContext } from "../../service/Context.js";
 import { Picker } from "@react-native-picker/picker";
@@ -61,7 +61,7 @@ export default function AccountScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderLayout navigation={navigation} />
+      <BarTapHeader navigation={navigation} />
       <Text style={styles.title}>Account</Text>
       <View style={styles.content}>
         <View style={styles.information}>

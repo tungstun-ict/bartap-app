@@ -10,7 +10,7 @@ import {
   RefreshControl,
 } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
-import HeaderLayout from "../../layout/HeaderLayout";
+import BarTapHeader from "../../component/BarTapHeader";
 import * as api from "../../service/BarApiService.js";
 import * as storage from "../../service/BarStorageService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -58,7 +58,7 @@ export default function CustomersScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderLayout navigation={navigation} />
+      <BarTapHeader navigation={navigation} />
       <Text style={styles.title}>Customers</Text>
       <View style={styles.content}>
         <FlatList

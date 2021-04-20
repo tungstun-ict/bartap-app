@@ -11,9 +11,9 @@ import {
   RefreshControl,
 } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
-import StackHeaderLayout from "../../layout/StackHeaderLayout";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import HeaderLayout from "../../layout/HeaderLayout.js";
+import BarTapHeader from "../../component/BarTapHeader";
 
 export default function PastSessionBillsScreen({ route, navigation }) {
   const [isLoading, setLoading] = useState(true);
@@ -59,7 +59,7 @@ export default function PastSessionBillsScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} />
+      <BarTapStackHeader navigation={navigation} />
       <Text style={styles.title}>{sessionName}</Text>
       <View style={styles.content}>
         <FlatList

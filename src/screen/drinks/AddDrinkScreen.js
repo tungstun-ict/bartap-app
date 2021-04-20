@@ -11,7 +11,7 @@ import {
   RefreshControl,
 } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
-import StackHeaderLayout from "../../layout/StackHeaderLayout";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 
@@ -37,7 +37,7 @@ export default function AddDrinksScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} title="Add product" />
+      <BarTapStackHeader navigation={navigation} title="Add product" />
       <Text style={styles.title}>{category.name}</Text>
       <View style={styles.content}>
         <FlatList

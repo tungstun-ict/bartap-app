@@ -4,7 +4,7 @@ import * as api from "../../service/BarApiService.js";
 import { StyleSheet, Text, View, Image, Modal } from "react-native";
 import variables, { colors, mock } from "../../theme/variables.js";
 import { Button, TouchableOpacity } from "react-native";
-import StackHeaderLayout from "../../layout/StackHeaderLayout.js";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import QRCode from "react-native-qrcode-svg";
 
 export default function CustomerOverviewScreen({ route, navigation }) {
@@ -62,7 +62,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       
-      <StackHeaderLayout navigation={navigation} title={customer.name} />
+      <BarTapStackHeader navigation={navigation} title={customer.name} />
       <View style={styles.content}>
         <Text style={styles.title}>Information</Text>
         <View style={styles.information}>

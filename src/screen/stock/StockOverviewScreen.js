@@ -4,9 +4,9 @@ import * as api from "../../service/BarApiService.js";
 import { StyleSheet, Text, View, Image, Modal } from "react-native";
 import variables, { colors, mock } from "../../theme/variables.js";
 import { Button, TouchableOpacity } from "react-native";
-import StackHeaderLayout from "../../layout/StackHeaderLayout.js";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import QRCode from "react-native-qrcode-svg";
-import HeaderLayout from "../../layout/HeaderLayout.js";
+import BarTapHeader from "../../component/BarTapHeader";
 import SearchBar from "react-native-elements/dist/searchbar/SearchBar-ios";
 
 export default function StockOverviewScreen({ route, navigation }) {
@@ -59,7 +59,7 @@ export default function StockOverviewScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderLayout navigation={navigation} title="Stock" />
+      <BarTapHeader navigation={navigation} title="Stock" />
       <View style={styles.content}>
         <Text style={styles.title}>Categories</Text>
         <FlatList

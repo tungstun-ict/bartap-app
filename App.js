@@ -6,7 +6,6 @@ import React, { useEffect, useState, createContext } from "react";
 import SessionScreen from "./src/screen/session/SessionScreen";
 import CustomersScreen from "./src/screen/customer/CustomersScreen";
 import AddCustomerScreen from "./src/screen/customer/AddCustomerScreen";
-import DrawerLayout from "./src/layout/DrawerLayout";
 import { colors, mock } from "./src/theme/variables";
 import { StyleSheet } from "react-native";
 import CustomerOverviewScreen from "./src/screen/customer/CustomerOverviewScreen";

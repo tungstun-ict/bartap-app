@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { KeyboardAvoidingView, SafeAreaView, ScrollView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import variables, { colors, mock } from "../../theme/variables.js"; 
-import HeaderLayout from "../../layout/HeaderLayout";
-import StackHeaderLayout from "../../layout/StackHeaderLayout.js";
+import BarTapHeader from "../../component/BarTapHeader";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TextInput } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -65,7 +65,7 @@ export default function AddProductStockScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} title="New product" />
+      <BarTapStackHeader navigation={navigation} title="New product" />
       <ScrollView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.content}

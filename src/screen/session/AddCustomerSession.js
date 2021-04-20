@@ -10,12 +10,12 @@ import {
   RefreshControl,
 } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
-import HeaderLayout from "../../layout/HeaderLayout";
+import BarTapHeader from "../../component/BarTapHeader";
 import * as api from "../../service/BarApiService.js";
 import * as storage from "../../service/BarStorageService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
-import StackHeaderLayout from "../../layout/StackHeaderLayout.js";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 
 export default function AddCustomerSession({ route, navigation }) {
   const [customers, setCustomers] = useState([]);
@@ -57,7 +57,7 @@ export default function AddCustomerSession({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} />
+      <BarTapStackHeader navigation={navigation} />
       <Text style={styles.title}>Customers</Text>
       <View style={styles.content}>
         <FlatList
