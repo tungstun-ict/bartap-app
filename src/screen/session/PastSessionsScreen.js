@@ -11,9 +11,9 @@ import {
   RefreshControl,
 } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
-import StackHeaderLayout from "../../layout/StackHeaderLayout";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import HeaderLayout from "../../layout/HeaderLayout.js";
+import BarTapHeader from "../../component/BarTapHeader";
 
 export default function PastSessionsScreen({ route, navigation }) {
   const [isLoading, setLoading] = useState(true);
@@ -70,7 +70,7 @@ export default function PastSessionsScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderLayout navigation={navigation} />
+      <BarTapHeader navigation={navigation} />
       <Text style={styles.title}>Past sessions</Text>
       <View style={styles.content}>
         <FlatList
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   title: {
     height: 40,
     margin: 10,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontSize: sizes.TITLE,
     fontWeight: "bold",
   },
@@ -121,19 +121,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     height: 50,
-    backgroundColor: colors.BACKGROUND,
-    borderBottomColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
+    borderBottomColor: colors.BARTAP_DARK_GREY,
     borderBottomWidth: 2,
     width: "95%",
   },
   listItem__name: {
     fontSize: 20,
     width: "60%",
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
   },
   listItem__price: {
     fontSize: 20,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontWeight: "bold",
     marginLeft: "auto",
   },
@@ -143,13 +143,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 40,
     width: "95%",
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
     borderRadius: 5,
     marginTop: 10,
     alignSelf: "center",
   },
   listItem__footer__text: {
-    color: colors.TEXT_SECONDARY,
+    color: colors.BARTAP_LIGHT_GREY,
     fontSize: 20,
     fontWeight: "bold",
   },

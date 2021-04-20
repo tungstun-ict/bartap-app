@@ -2,11 +2,10 @@ import React from "react";
 import { StatusBar } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { colors, mock } from "../theme/variables.js";
-import { useIsDrawerOpen } from "@react-navigation/drawer";
+import { colors, mock } from "../../theme/variables.js";
 import Constants from 'expo-constants';
 
-export default function HeaderLayout({ navigation }) {
+export default function BarTapHeader({ navigation }) {
   const openDrawer = () => {
     navigation.openDrawer();
   };
@@ -18,7 +17,7 @@ export default function HeaderLayout({ navigation }) {
           style={styles.header__button}>
           <Image
             style={styles.header__menuIcon}
-            source={require("../assets/menu/menu-icon.png")}
+            source={require("../../assets/menu/menu-icon.png")}
           ></Image>
         </TouchableOpacity>
       </View>
@@ -40,11 +39,11 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     alignItems: "center",
     width: "100%",
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
   },
 
   header__title: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontWeight: "bold",
     fontSize: 20,
   },

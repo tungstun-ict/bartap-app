@@ -11,8 +11,9 @@ import {
   RefreshControl,
 } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
-import StackHeaderLayout from "../../layout/StackHeaderLayout";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import BarTapButton from "../../component/BarTapButton/index.js";
 
 export default function CategoryOverviewScreen({ route, navigation }) {
   const [drinks, setDrinks] = useState([]);
@@ -52,7 +53,7 @@ export default function CategoryOverviewScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} />
+      <BarTapStackHeader navigation={navigation} />
       <Text style={styles.title}>{category.name}</Text>
       <View style={styles.content}>
         <FlatList
@@ -68,14 +69,9 @@ export default function CategoryOverviewScreen({ route, navigation }) {
           data={drinks}
           renderItem={(item) => listItem(item.item)}
         />
-        <TouchableOpacity
+        <BarTapButton 
           onPress={() => navigation.navigate("Edit Category", category.id)}
-          style={styles.button__wrapper}
-        >
-          <View style={styles.button}>
-            <Text style={styles.button__text}>Edit</Text>
-          </View>
-        </TouchableOpacity>
+          text={"Edit"}/>
       </View>
     </SafeAreaView>
   );
@@ -85,18 +81,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
   content: {
     flex: 1,
     width: "100%",
+    paddingHorizontal: 10,
   },
   title: {
     height: 40,
     margin: 10,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontSize: sizes.TITLE,
     fontWeight: "bold",
   },
@@ -112,20 +109,20 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    backgroundColor: colors.BACKGROUND,
-    borderBottomColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
+    borderBottomColor: colors.BARTAP_DARK_GREY,
     borderBottomWidth: 2,
     paddingVertical: 10,
-    width: "95%",
+    width: "100%",
   },
   listItem__name: {
     fontSize: 20,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     width: "80%",
   },
   listItem__price: {
     fontSize: 20,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontWeight: "bold",
     marginLeft: "auto",
   },
@@ -134,34 +131,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: 40,
-    width: "95%",
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    width: "100%",
+    backgroundColor: colors.BARTAP_DARK_GREY,
     borderRadius: 5,
     marginTop: 10,
     alignSelf: "center",
   },
   listItem__footer__text: {
-    color: colors.TEXT_SECONDARY,
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  button: {
-    alignItems: "center",
-    justifyContent: "center",
-    minHeight: 40,
-    minWidth: "95%",
-    backgroundColor: colors.TEXT_PRIMARY,
-    borderRadius: 5,
-    marginTop: 0,
-    alignSelf: "center",
-  },
-  button__wrapper: {
-    minHeight: 50,
-    maxWidth: "100%",
-    marginBottom: 10,
-  },
-  button__text: {
-    color: colors.TEXT_SECONDARY,
+    color: colors.BARTAP_LIGHT_GREY,
     fontSize: 20,
     fontWeight: "bold",
   },

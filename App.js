@@ -6,7 +6,6 @@ import React, { useEffect, useState, createContext } from "react";
 import SessionScreen from "./src/screen/session/SessionScreen";
 import CustomersScreen from "./src/screen/customer/CustomersScreen";
 import AddCustomerScreen from "./src/screen/customer/AddCustomerScreen";
-import DrawerLayout from "./src/layout/DrawerLayout";
 import { colors, mock } from "./src/theme/variables";
 import { StyleSheet } from "react-native";
 import CustomerOverviewScreen from "./src/screen/customer/CustomerOverviewScreen";
@@ -276,9 +275,9 @@ export default function App() {
             initialRouteName="Session"
             drawerStyle={styles.drawer}
             drawerContentOptions={{
-              activeTintColor: colors.TEXT_PRIMARY,
-              activeBackgroundColor: colors.ELEMENT_BACKGROUND_SELECTED,
-              inactiveTintColor: colors.TEXT_PRIMARY,
+              activeTintColor: colors.BARTAP_WHITE,
+              activeBackgroundColor: colors.BARTAP_DARK_GREY_SELECTED,
+              inactiveTintColor: colors.BARTAP_WHITE,
               labelStyle: {
                 fontSize: 30,
                 fontWeight: "bold",
@@ -319,7 +318,7 @@ export default function App() {
 
 const styles = StyleSheet.create({
   drawer: {
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
     width: 240,
   },
   drawerItem: {},

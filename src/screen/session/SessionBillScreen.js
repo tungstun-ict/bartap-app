@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import SwipeableFlatList from "react-native-swipeable-list";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
-import StackHeaderLayout from "../../layout/StackHeaderLayout";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Alert } from "react-native";
 
@@ -108,7 +108,7 @@ export default function SessionBillScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} title="Bill" />
+      <BarTapStackHeader navigation={navigation} title="Bill" />
       <View style={styles.header}>
         <Text style={styles.title}>{bill.customer.name}</Text>
         <TouchableOpacity
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
@@ -204,12 +204,12 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 40,
     margin: 10,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontSize: sizes.TITLE,
     fontWeight: "bold",
   },
   text: {
-    color: colors.TEXT_TERTIARY,
+    color: colors.BARTAP_GREY,
     fontSize: 50,
     fontWeight: "bold",
   },
@@ -243,8 +243,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     height: 50,
-    backgroundColor: colors.BACKGROUND,
-    borderBottomColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
+    borderBottomColor: colors.BARTAP_DARK_GREY,
     borderBottomWidth: 2,
     width: "95%",
   },
@@ -254,8 +254,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "flex-start",
-    backgroundColor: colors.BACKGROUND,
-    borderBottomColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
+    borderBottomColor: colors.BARTAP_DARK_GREY,
     borderBottomWidth: 2,
     width: "95%",
     height: 50,
@@ -266,44 +266,44 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 50,
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     borderBottomWidth: 2,
     width: "95%",
   },
   listItem__name: {
     fontSize: 20,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     alignSelf: "center",
     marginRight: 10,
   },
   listItem__timestamp: {
     fontSize: 20,
-    color: colors.TEXT_SECONDARY,
+    color: colors.BARTAP_LIGHT_GREY,
     alignSelf: "center",
     marginRight: 10,
   },
   listItemOrderLine__name: {
     fontSize: 15,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     alignSelf: "center",
     marginRight: 10,
   },
   listItemOrderLine__amount: {
     fontSize: 15,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     alignSelf: "center",
     marginLeft: "auto",
   },
   listItemOrderLine__price: {
     fontSize: 15,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontWeight: "bold",
     alignSelf: "center",
     marginLeft: 10,
   },
   listItem__price: {
     fontSize: 20,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontWeight: "bold",
     marginLeft: "auto",
   },
@@ -312,15 +312,15 @@ const styles = StyleSheet.create({
     height: "auto",
     flexDirection: "row",
     alignItems: "center",
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     marginBottom: 10,
     marginHorizontal: 10,
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
     borderRadius: 5,
   },
   listItem__footer__text__price: {
     marginLeft: "auto",
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontSize: 30,
     alignSelf: "center",
     height: "auto",
@@ -329,7 +329,7 @@ const styles = StyleSheet.create({
   },
   listItem__footer__text: {
     margin: 10,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontSize: 30,
     alignSelf: "center",
     height: "auto",

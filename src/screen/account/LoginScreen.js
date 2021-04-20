@@ -3,9 +3,10 @@ import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
 import { Button, TextInput, TouchableOpacity } from "react-native";
-import HeaderLayout from "../../layout/HeaderLayout";
+import BarTapHeader from "../../component/BarTapHeader";
 import * as api from "../../service/BarApiService.js";
 import { AuthContext } from "../../service/Context.js";
+import BarTapButton from "../../component/BarTapButton/index.js";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = React.useState("");
@@ -26,7 +27,7 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.form}>
           <TextInput
             placeholder={"Email adress / username"}
-            placeholderTextColor={colors.TEXT_SECONDARY}
+            placeholderTextColor={colors.BARTAP_LIGHT_GREY}
             autoCompleteType={"email"}
             value={email}
             onChangeText={setEmail}
@@ -36,7 +37,7 @@ export default function LoginScreen({ navigation }) {
           />
           <TextInput
             placeholder={"Password"}
-            placeholderTextColor={colors.TEXT_SECONDARY}
+            placeholderTextColor={colors.BARTAP_LIGHT_GREY}
             autoCompleteType={"password"}
             value={password}
             onChangeText={setPassword}
@@ -45,14 +46,10 @@ export default function LoginScreen({ navigation }) {
             style={styles.input}
             secureTextEntry={true}
           />
-          <TouchableOpacity
+          <BarTapButton 
             onPress={() => signIn({ email: email, password: password })}
-            style={styles.button__wrapper}
-          >
-            <View style={styles.button__submit}>
-              <Text style={styles.button__text}>Log in</Text>
-            </View>
-          </TouchableOpacity>
+            text={"Log in"}
+            style={styles.button}/>
           <Text
             onPress={() => {
               alert("Feature not available, ask administrators for account credentials.")
@@ -71,7 +68,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
@@ -86,7 +83,7 @@ const styles = StyleSheet.create({
   title: {
     height: 40,
     margin: 10,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontSize: sizes.TITLE,
     fontWeight: "bold",
   },
@@ -94,7 +91,7 @@ const styles = StyleSheet.create({
     height: 120,
   },
   logoText: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontSize: 40,
     fontWeight: "bold",
     marginBottom: 20,
@@ -103,19 +100,19 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   text: {
-    color: colors.TEXT_TERTIARY,
+    color: colors.BARTAP_GREY,
     fontSize: 50,
     fontWeight: "bold",
   },
   link: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     textAlign: "center",
     textDecorationLine: "underline",
   },
   input: {
     width: "100%",
     marginVertical: 10,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     borderColor: "white",
     borderWidth: 1,
     borderRadius: 5,
@@ -123,31 +120,13 @@ const styles = StyleSheet.create({
     height: 50,
   },
   input__label: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     alignSelf: "flex-start",
     fontWeight: "bold",
     fontSize: 20,
     marginTop: 10,
   },
-  button__submit: {
-    height: 50,
-    width: "100%",
-    marginVertical: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-  },
-  button__wrapper: {
-    minWidth: "100%",
-    backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
-    borderRadius: 5,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
+  button: {
     marginBottom: 20,
-  },
-  button__text: {
-    fontSize: 15,
-    fontWeight: "bold",
   },
 });

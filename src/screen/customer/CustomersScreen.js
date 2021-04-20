@@ -10,12 +10,13 @@ import {
   RefreshControl,
 } from "react-native";
 import variables, { colors, mock, sizes } from "../../theme/variables.js";
-import HeaderLayout from "../../layout/HeaderLayout";
+import BarTapHeader from "../../component/BarTapHeader";
 import * as api from "../../service/BarApiService.js";
 import * as storage from "../../service/BarStorageService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 import SwipeableFlatList from "react-native-swipeable-list";
+import BarTapButton from "../../component/BarTapButton/index.js";
 
 export default function CustomersScreen({ navigation }) {
   const [customers, setCustomers] = useState([]);
@@ -58,7 +59,7 @@ export default function CustomersScreen({ navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderLayout navigation={navigation} />
+      <BarTapHeader navigation={navigation} />
       <Text style={styles.title}>Customers</Text>
       <View style={styles.content}>
         <FlatList
@@ -72,14 +73,9 @@ export default function CustomersScreen({ navigation }) {
           refreshing={isLoading}
           onRefresh={() => setLoading(true)}
         />
-        <TouchableOpacity
+        <BarTapButton 
           onPress={() => navigation.navigate("Add new customer")}
-          style={styles.button__wrapper}
-        >
-          <View style={styles.button}>
-            <Text style={styles.button__text}>Add a new customer</Text>
-          </View>
-        </TouchableOpacity>
+          text={"Add new customer"}/>
       </View>
     </SafeAreaView>
   );
@@ -89,21 +85,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
   content: {
     flex: 1,
     width: "100%",
+    paddingHorizontal: 10,
     height: "100%",
     flexDirection: "column",
-    alignItems: "flex-start",
+    alignItems: "flex-start"
   },
   title: {
     height: 40,
     margin: 10,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontSize: sizes.TITLE,
     fontWeight: "bold",
   },
@@ -118,37 +115,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 50,
-    backgroundColor: colors.BACKGROUND,
-    borderBottomColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
+    borderBottomColor: colors.BARTAP_DARK_GREY,
     borderBottomWidth: 2,
-    width: "95%",
+    width: "100%",
   },
   listItem__name: {
     fontSize: 20,
-    color: colors.TEXT_PRIMARY,
-  },
-  button: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
-    width: "95%",
-    backgroundColor: colors.TEXT_PRIMARY,
-    borderRadius: 5,
-    marginTop: 0,
-    
-    alignSelf: "center",
-  },
-  button__wrapper: {
-    flex: 1,
-    marginBottom: 10,
-    maxHeight: 40,
-    minWidth: "100%",
-    marginVertical: 10,
-  },
-  button__text: {
-    color: colors.TEXT_SECONDARY,
-    fontSize: 20,
-    fontWeight: "bold",
+    color: colors.BARTAP_WHITE,
   },
 });

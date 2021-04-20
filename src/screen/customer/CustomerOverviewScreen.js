@@ -4,8 +4,9 @@ import * as api from "../../service/BarApiService.js";
 import { StyleSheet, Text, View, Image, Modal } from "react-native";
 import variables, { colors, mock } from "../../theme/variables.js";
 import { Button, TouchableOpacity } from "react-native";
-import StackHeaderLayout from "../../layout/StackHeaderLayout.js";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import QRCode from "react-native-qrcode-svg";
+import BarTapButton from "../../component/BarTapButton/index.js";
 
 export default function CustomerOverviewScreen({ route, navigation }) {
   const [customer, setCustomer] = useState({});
@@ -62,7 +63,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       
-      <StackHeaderLayout navigation={navigation} title={customer.name} />
+      <BarTapStackHeader navigation={navigation} title={customer.name} />
       <View style={styles.content}>
         <Text style={styles.title}>Information</Text>
         <View style={styles.information}>
@@ -85,17 +86,10 @@ export default function CustomerOverviewScreen({ route, navigation }) {
             </View>
           </View>
         </View>
-        { (!customer.hasOwnProperty("user")) ? (
-          <TouchableOpacity
+        { (!customer.hasOwnProperty("user")) && (
+          <BarTapButton 
           onPress={() => setShowQr(true)}
-          style={styles.connectButton__wrapper}
-        >
-          <View style={styles.button__submit}>
-            <Text style={styles.connectButton__text}>Connect account</Text>
-          </View>
-        </TouchableOpacity>
-        ) : (
-          null
+          text={"Connect Account"}/>
         )}
         <View style={styles.bills}>
         <Text style={styles.title}>Bills</Text>
@@ -114,14 +108,11 @@ export default function CustomerOverviewScreen({ route, navigation }) {
             onRefresh={() => setLoading(true)}
           />
         </View>
-        <TouchableOpacity
+        <BarTapButton 
           onPress={() => handleDeleteCustomer()}
-          style={styles.button__wrapper}
-        >
-          <View style={styles.button}>
-            <Text style={styles.button__text}>Delete customer</Text>
-          </View>
-        </TouchableOpacity>
+          text={"Delete customer"}
+          colour={colors.BARTAP_RED}
+          textColour={colors.BARTAP_WHITE}/>
       </View>
       <Modal
         animationType="slide"
@@ -135,7 +126,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
           <QRCode value={`${customer.id}`}
           color="white"
           size={200}
-          backgroundColor={colors.ELEMENT_BACKGROUND} />
+          backgroundColor={colors.BARTAP_DARK_GREY} />
           <Text style={styles.modal__text}>{customer.name}</Text>
         </View>
       </Modal>
@@ -147,7 +138,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -156,74 +147,29 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    width: "100%",
+    width: "95%",
   },
   modal: {
     justifyContent: "center",
     alignItems: "center",
     alignSelf: "center",
     padding: 10,
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
     height: "100%",
     width: "100%"
   },
   modal__text: {
     fontSize: 30,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontWeight: "bold",
     marginTop: 20,
   },
-  button__submit: {
-    height: 50,
-    backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
-    width: "100%",
-    marginVertical: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-  },
-  button: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    height: "100%",
-    width: "100%",
-    backgroundColor: colors.ELEMENT_BACKGROUND_WARNING,
-    borderRadius: 5,
-    marginTop: 0,
-    alignSelf: "center",
-  },
-  connectButton__wrapper: {
-    flex: 1,
-    maxHeight: 40,
-    marginBottom: 20,
-    width: "95%",
-  },
-  button__wrapper: {
-    flex: 1,
-    maxHeight: 40,
-    minHeight: 40,
-    marginBottom: 10,
-    marginTop: "auto",
-    width: "95%",
-    marginVertical: 10,
-  },
-  button__text: {
-    color: colors.TEXT_PRIMARY,
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  connectButton__text: {
-    color: "black",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
   information: {
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
     padding: 20,
     borderRadius: 5,
     margin: 10,
-    width: "95%",
+    width: "100%",
   },
   table: {
     flexDirection: "row",
@@ -243,38 +189,37 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 50,
-    backgroundColor: colors.BACKGROUND,
-    borderBottomColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
+    borderBottomColor: colors.BARTAP_DARK_GREY,
     borderBottomWidth: 2,
-    width: "95%",
+    width: "100%",
   },
   listItem__name: {
     fontSize: 20,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
   },
   listItem__price: {
     fontSize: 20,
     marginLeft: "auto",
     fontWeight: "bold",
     textAlign: "right",
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
   },
   title: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontWeight: "bold",
     alignSelf: "flex-start",
-    marginHorizontal: 10,
     marginTop: 10,
     fontSize: 25,
   },
   name: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     textAlign: "left",
     fontSize: 15,
     fontWeight: "normal",
   },
   attribute: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     textAlign: "right",
     fontSize: 15,
     fontWeight: "normal",

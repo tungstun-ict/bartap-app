@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { RefreshControl, SafeAreaView } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
 import { colors, mock } from "../../theme/variables.js";
-import StackHeaderLayout from "../../layout/StackHeaderLayout";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { FlatList, Dimensions } from "react-native";
 import { TouchableOpacity } from "react-native";
 import * as api from "../../service/BarApiService.js";
@@ -54,7 +54,7 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StackHeaderLayout navigation={navigation} title="Add product" />
+      <BarTapStackHeader navigation={navigation} title="Add product" />
       <View style={styles.content}>
         <View style={styles.categories}>
           <FlatList
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "center",
     justifyContent: "flex-start",
   },
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   category: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.ELEMENT_BACKGROUND_LIGHT,
+    backgroundColor: colors.BARTAP_DARK_GREY_LIGHT,
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,

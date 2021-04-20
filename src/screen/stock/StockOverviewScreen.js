@@ -4,10 +4,11 @@ import * as api from "../../service/BarApiService.js";
 import { StyleSheet, Text, View, Image, Modal } from "react-native";
 import variables, { colors, mock } from "../../theme/variables.js";
 import { Button, TouchableOpacity } from "react-native";
-import StackHeaderLayout from "../../layout/StackHeaderLayout.js";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import QRCode from "react-native-qrcode-svg";
-import HeaderLayout from "../../layout/HeaderLayout.js";
+import BarTapHeader from "../../component/BarTapHeader";
 import SearchBar from "react-native-elements/dist/searchbar/SearchBar-ios";
+import BarTapButton from "../../component/BarTapButton/index.js";
 
 export default function StockOverviewScreen({ route, navigation }) {
   const [categories, setCategories] = useState([]);
@@ -59,7 +60,7 @@ export default function StockOverviewScreen({ route, navigation }) {
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeaderLayout navigation={navigation} title="Stock" />
+      <BarTapHeader navigation={navigation} title="Stock" />
       <View style={styles.content}>
         <Text style={styles.title}>Categories</Text>
         <FlatList
@@ -78,22 +79,16 @@ export default function StockOverviewScreen({ route, navigation }) {
           onRefresh={() => setLoading(true)}
         />
         <View style={styles.bottomButtons}>
-          <TouchableOpacity
+          <BarTapButton
             onPress={() => navigation.navigate("Add Category")}
-            style={styles.button__wrapper}
-          >
-            <View style={styles.button}>
-              <Text style={styles.button__text}>New category</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity
+            text={"New Category"}
+            style={styles.button}
+          />
+          <BarTapButton
             onPress={() => navigation.navigate("Add Product")}
-            style={styles.button__wrapper}
-          >
-            <View style={styles.button}>
-              <Text style={styles.button__text}>New product</Text>
-            </View>
-          </TouchableOpacity>
+            text={"New Product"}
+            style={styles.button}
+          />
         </View>
       </View>
     </SafeAreaView>
@@ -104,7 +99,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -121,35 +116,19 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   searchBar: {
-    backgroundColor: colors.BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
   },
   bottomButtons: {
-    flexDirection: "row",
+    flexDirection: "column",
     marginTop: 10,
   },
   button: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: colors.TEXT_PRIMARY,
-    borderRadius: 5,
-    width: "100%",
+    width: "50%",
     alignSelf: "center",
-  },
-  button__wrapper: {
-    backgroundColor: colors.ELEMENT_BACKGROUND,
-    marginHorizontal: 10,
-    flex: 1,
-    minHeight: 50,
-    marginBottom: 10,
-  },
-  button__text: {
-    color: colors.TEXT_SECONDARY,
-    fontSize: 20,
-    fontWeight: "bold",
+    marginVertical: 5,
   },
   information: {
-    backgroundColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_DARK_GREY,
     padding: 20,
     borderRadius: 5,
     marginTop: 10,
@@ -172,23 +151,23 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 50,
-    backgroundColor: colors.BACKGROUND,
-    borderBottomColor: colors.ELEMENT_BACKGROUND,
+    backgroundColor: colors.BARTAP_BLACK,
+    borderBottomColor: colors.BARTAP_DARK_GREY,
     borderBottomWidth: 2,
     width: "95%",
   },
   listItem__name: {
     fontSize: 20,
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
   },
   listItem__price: {
     fontSize: 20,
     marginLeft: "auto",
     textAlign: "right",
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
   },
   title: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     fontWeight: "bold",
     alignSelf: "flex-start",
     marginHorizontal: 10,
@@ -196,13 +175,13 @@ const styles = StyleSheet.create({
     fontSize: 25,
   },
   name: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     textAlign: "left",
     fontSize: 15,
     fontWeight: "normal",
   },
   attribute: {
-    color: colors.TEXT_PRIMARY,
+    color: colors.BARTAP_WHITE,
     textAlign: "right",
     fontSize: 15,
     fontWeight: "normal",
