@@ -12,6 +12,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 import { apisAreAvailable } from "expo";
 import { Picker } from "@react-native-picker/picker";
+import BarTapButton from "../../component/BarTapButton/index.js";
 
 export default function EditCategoryScreen({ route, navigation }) {
   const [isLoading, setLoading] = useState(true);
@@ -58,14 +59,9 @@ export default function EditCategoryScreen({ route, navigation }) {
           multiline={false}
           style={styles.input}
         />
-        <TouchableOpacity
+        <BarTapButton 
           onPress={() => updateCategory()}
-          style={styles.button__wrapper}
-        >
-          <View style={styles.button__submit}>
-            <Text style={styles.button__text}>Submit</Text>
-          </View>
-        </TouchableOpacity>
+          text={"Submit"}/>
       </View>
     </SafeAreaView>
   );
@@ -122,25 +118,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     marginTop: 10,
-  },
-  button__submit: {
-    height: 50,
-    backgroundColor: colors.BARTAP_DARK_GREY_LIGHT,
-    width: "100%",
-    marginVertical: 10,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 5,
-  },
-  button__wrapper: {
-    minWidth: "100%",
-    backgroundColor: colors.BARTAP_DARK_GREY,
-    height: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button__text: {
-    fontSize: 15,
-    fontWeight: "bold",
   },
 });

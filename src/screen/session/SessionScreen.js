@@ -227,7 +227,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.BARTAP_DARK_GREY_LIGHT,
+    backgroundColor: colors.BARTAP_WHITE,
   },
   buttonDisabled: {
     marginHorizontal: 20,
@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.BARTAP_DARK_GREY_SELECTED,
+    backgroundColor: colors.BARTAP_SELECTED,
   },
   addSessionButton: {
     fontSize: 50,
@@ -339,7 +339,7 @@ const styles = StyleSheet.create({
   addCustomer: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_DARK_GREY_SELECTED,
+    backgroundColor: colors.BARTAP_SELECTED,
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 10,

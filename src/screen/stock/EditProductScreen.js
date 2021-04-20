@@ -9,6 +9,7 @@ import * as api from "../../service/BarApiService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 import { Picker } from "@react-native-picker/picker";
+import BarTapButton from "../../component/BarTapButton/index.js";
 
 export default function EditProductScreen({ route, navigation }) {
   const productId = route.params;
@@ -147,14 +148,9 @@ export default function EditProductScreen({ route, navigation }) {
           keyboardType={"numeric"}
           style={styles.input}
         />
-        <TouchableOpacity
+        <BarTapButton 
           onPress={() => updateProduct()}
-          style={styles.button__wrapper}
-        >
-          <View style={styles.button__submit}>
-            <Text style={styles.button__text}>Submit</Text>
-          </View>
-        </TouchableOpacity>
+          text={"Submit"}/>
       </ScrollView>
     </SafeAreaView>
   );
