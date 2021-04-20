@@ -6,6 +6,7 @@ import variables, { colors, mock } from "../../theme/variables.js";
 import { Button, TouchableOpacity } from "react-native";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import QRCode from "react-native-qrcode-svg";
+import BarTapButton from "../../component/BarTapButton/index.js";
 
 export default function CustomerOverviewScreen({ route, navigation }) {
   const [customer, setCustomer] = useState({});
@@ -85,17 +86,10 @@ export default function CustomerOverviewScreen({ route, navigation }) {
             </View>
           </View>
         </View>
-        { (!customer.hasOwnProperty("user")) ? (
-          <TouchableOpacity
+        { (!customer.hasOwnProperty("user")) && (
+          <BarTapButton 
           onPress={() => setShowQr(true)}
-          style={styles.connectButton__wrapper}
-        >
-          <View style={styles.button__submit}>
-            <Text style={styles.connectButton__text}>Connect account</Text>
-          </View>
-        </TouchableOpacity>
-        ) : (
-          null
+          text={"Connect Account"}/>
         )}
         <View style={styles.bills}>
         <Text style={styles.title}>Bills</Text>
@@ -114,14 +108,11 @@ export default function CustomerOverviewScreen({ route, navigation }) {
             onRefresh={() => setLoading(true)}
           />
         </View>
-        <TouchableOpacity
+        <BarTapButton 
           onPress={() => handleDeleteCustomer()}
-          style={styles.button__wrapper}
-        >
-          <View style={styles.button}>
-            <Text style={styles.button__text}>Delete customer</Text>
-          </View>
-        </TouchableOpacity>
+          text={"Delete customer"}
+          colour={colors.BARTAP_RED}
+          textColour={colors.BARTAP_WHITE}/>
       </View>
       <Modal
         animationType="slide"
@@ -156,7 +147,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "flex-start",
     alignItems: "center",
-    width: "100%",
+    width: "95%",
   },
   modal: {
     justifyContent: "center",
@@ -197,7 +188,7 @@ const styles = StyleSheet.create({
     flex: 1,
     maxHeight: 40,
     marginBottom: 20,
-    width: "95%",
+    width: "100%",
   },
   button__wrapper: {
     flex: 1,
@@ -205,7 +196,7 @@ const styles = StyleSheet.create({
     minHeight: 40,
     marginBottom: 10,
     marginTop: "auto",
-    width: "95%",
+    width: "100%",
     marginVertical: 10,
   },
   button__text: {
@@ -223,7 +214,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 5,
     margin: 10,
-    width: "95%",
+    width: "100%",
   },
   table: {
     flexDirection: "row",
@@ -246,7 +237,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.BARTAP_BLACK,
     borderBottomColor: colors.BARTAP_DARK_GREY,
     borderBottomWidth: 2,
-    width: "95%",
+    width: "100%",
   },
   listItem__name: {
     fontSize: 20,
@@ -263,7 +254,6 @@ const styles = StyleSheet.create({
     color: colors.BARTAP_WHITE,
     fontWeight: "bold",
     alignSelf: "flex-start",
-    marginHorizontal: 10,
     marginTop: 10,
     fontSize: 25,
   },
