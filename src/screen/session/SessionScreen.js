@@ -144,7 +144,8 @@ export default function SessionScreen({ navigation }) {
               source={require("../../assets/clock.png")}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonDisabled}>
+          <TouchableOpacity style={styles.buttonDisabled}
+            onPress={() => navigation.navigate("NFC Screen")}>
             <Image
               style={styles.button__image}
               source={require("../../assets/stats.png")}
