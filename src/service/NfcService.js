@@ -75,6 +75,7 @@ class NfcProxy {
   }
 
   decodePayload(payload) {
+    console.log(payload)
     return Ndef.text.decodePayload(payload);
   }
 

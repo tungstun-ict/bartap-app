@@ -40,16 +40,16 @@ export default function NFCScreen() {
       const ndef =
         Array.isArray(tag.ndefMessage) && tag.ndefMessage.length > 0
           ? tag.ndefMessage[0]
-          : null
+          : null;
       console.log(ndef)
-      setNfcStatus(NfcProxy.decodePayload(ndef.payload));
+      setNfcStatus(NfcProxy.d);
     } else {
       setNfcStatus("error");
     }
     setTimeout(closeBottomSheet, 3000);
   };
 
-  const writeTag = async (value) => {
+  const writeTag = async () => {
     console.warn(await NfcProxy.writeNdef({ type: "TEXT", value }));
   };
 
