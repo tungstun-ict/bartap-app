@@ -27,11 +27,11 @@
     "react-native": "~0.63.4",
     "react-native-config": "^1.4.2",
     "react-native-elements": "^3.3.1",
-    "react-native-gesture-handler": "~1.8.0",
+    "react-native-gesture-handler": "^1.10.3",
     "react-native-grid-component": "^2.0.1",
     "react-native-nfc-manager": "^3.3.0",
     "react-native-qrcode-svg": "^6.1.1",
-    "react-native-reanimated": "~1.13.0",
+    "react-native-reanimated": "^2.1.0",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.0",
     "react-native-svg": "^12.1.0",
@@ -39,6 +39,7 @@
     "react-native-unimodules": "~0.12.0",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
+    "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "revent-lib": "0.0.4"
   },
   "devDependencies": {

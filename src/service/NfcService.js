@@ -69,6 +69,15 @@ class NfcProxy {
     }
   }
 
+  async closeNfcDiscovery() {
+    NfcManager.setEventListener(NfcEvents.DiscoverTag, null);
+    NfcManager.setEventListener(NfcEvents.SessionClosed, null);
+  }
+
+  decodePayload(payload) {
+    return Ndef.text.decodePayload(payload);
+  }
+
   async isEnabled() {
     return NfcManager.isEnabled();
   }

@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
     borderBottomColor: colors.BARTAP_DARK_GREY,
     borderBottomWidth: 2,
     width: "100%",
-    maxHeight: 60,
+    height: 50,
   },
   timestamp: {
     fontSize: 20,
