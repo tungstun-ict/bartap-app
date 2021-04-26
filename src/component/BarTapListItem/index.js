@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, TouchableHighlight, StyleSheet } from "react-native";
+import { Image, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+
 import { colors } from "../../theme/variables.js";
 
 export default function BarTapListItem({
@@ -8,6 +9,7 @@ export default function BarTapListItem({
   name,
   multiplier,
   price,
+  payed,
   date,
 }) {
   return (
@@ -24,14 +26,23 @@ export default function BarTapListItem({
               : timestamp.getMinutes()}
           </Text>
         )}
-        {name && (<Text numberOfLines={1} style={styles.name}>{name}</Text>)}
+        {name && (
+          <Text numberOfLines={1} style={styles.name}>
+            {name}
+          </Text>
+        )}
         <View style={styles.right}>
-          {multiplier && (<Text style={styles.multiplier}>{multiplier}x</Text>)}
-          {price && (<Text style={styles.price}>€{price}</Text>)}
+          {payed && (
+            <Image
+              style={styles.payed}
+              source={require("../../assets/check.png")}
+            />
+          )}
+          {multiplier && <Text style={styles.multiplier}>{multiplier}x</Text>}
+          {price && <Text style={styles.price}>€{price}</Text>}
           {date && (
             <Text style={styles.price}>
-              {date.getDate()}-{date.getMonth() + 1}-
-              {date.getFullYear()}
+              {date.getDate()}-{date.getMonth() + 1}-{date.getFullYear()}
             </Text>
           )}
         </View>
@@ -80,5 +91,10 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginLeft: "auto",
+  },
+  payed: {
+    height: 20,
+    width: 20,
+    marginLeft: 10,
   },
 });
