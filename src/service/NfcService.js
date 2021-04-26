@@ -69,6 +69,11 @@ class NfcProxy {
     }
   }
 
+  async stopReading() {
+    NfcManager.unregisterTagEvent().catch(() => 0);
+    NfcManager.cancelTechnologyRequest();
+  }
+
   async closeNfcDiscovery() {
     NfcManager.setEventListener(NfcEvents.DiscoverTag, null);
     NfcManager.setEventListener(NfcEvents.SessionClosed, null);

@@ -30,7 +30,6 @@ import PastSessionBillsScreen from "./src/screen/session/PastSessionBillsScreen"
 import CreateBarScreen from "./src/screen/account/CreateBarScreen";
 import EditCategoryScreen from "./src/screen/stock/EditCategoryScreen";
 import EditProductScreen from "./src/screen/stock/EditProductScreen";
-import NFCScreen from "./src/screen/nfc/NFCScreen";
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
 const PastNavigator = createStackNavigator();
@@ -43,10 +42,10 @@ const SignInNavigator = createStackNavigator();
 export function CustomersStack() {
   return (
     <CustomersNavigator.Navigator
-      headerMode="none"
-      initialRouteName="Customers"
+      headerMode={"none"}
+      initialRouteName={"AllCustomers"}
     >
-      <CustomersNavigator.Screen name="Customers" component={CustomersScreen} />
+      <CustomersNavigator.Screen name="All Customers" component={CustomersScreen} />
       <CustomersNavigator.Screen
         name="Add new customer"
         component={AddCustomerScreen}
@@ -109,10 +108,6 @@ export function SessionStack() {
       <SessionNavigator.Screen
         name="New Session"
         component={NewSessionScreen}
-      />
-      <SessionNavigator.Screen
-        name="NFC Screen"
-        component={NFCScreen}
       />
     </SessionNavigator.Navigator>
   );

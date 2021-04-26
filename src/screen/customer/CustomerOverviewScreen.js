@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FlatList, RefreshControl, SafeAreaView } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import { StyleSheet, Text, View, Image, Modal } from "react-native";
@@ -9,7 +9,7 @@ import QRCode from "react-native-qrcode-svg";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
-import {encryptXor} from "../../service/XorEncryptionService.js";
+import { encryptXor } from "../../service/XorEncryptionService.js";
 import NfcProxy from "../../service/NfcService.js";
 import BottomSheet from "reanimated-bottom-sheet";
 import BarTapBottomSheet from "../../component/BarTapBottomSheet";
@@ -21,23 +21,29 @@ export default function CustomerOverviewScreen({ route, navigation }) {
   const [isLoading, setLoading] = useState(true);
   const [nfcStatus, setNfcStatus] = useState("searching");
 
-  const sheetRef = React.useRef(null);
+  const sheetRef = useRef(null);
+  const mounted = useRef(false);
+
+  console.log(route.params.id);
 
   useEffect(() => {
     NfcProxy.init().catch();
+    mounted.current = true;
+
+    return () => (mounted.current = false);
   }, []);
 
   useEffect(() => {
     if (isLoading) {
       api
-        .getCustomerById(route.params)
+        .getCustomerById(route.params.id)
         .then((json) => {
           setCustomer(json);
         })
         .catch((error) => alert(error));
 
       api
-        .getBillsByCustomerId(route.params)
+        .getBillsByCustomerId(route.params.id)
         .then((json) => {
           setBills(json);
           setLoading(false);
@@ -74,9 +80,11 @@ export default function CustomerOverviewScreen({ route, navigation }) {
   };
 
   const closeBottomSheet = () => {
-    sheetRef.current.snapTo(0);
-    NfcProxy.closeNfcDiscovery();
-    setNfcStatus("searching");
+    if (mounted.current) {
+      sheetRef.current.snapTo(0);
+      NfcProxy.closeNfcDiscovery();
+      setNfcStatus("searching");
+    }
   };
 
   const handleDeleteCustomer = () => {
@@ -93,7 +101,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
 
   const writeTag = async (value) => {
     sheetRef.current.snapTo(1);
-    if (await NfcProxy.writeNdef({type: 'TEXT', value})) {
+    if (await NfcProxy.writeNdef({ type: "TEXT", value })) {
       setNfcStatus("succes");
     } else {
       setNfcStatus("error");
@@ -142,7 +150,10 @@ export default function CustomerOverviewScreen({ route, navigation }) {
               onPress={() => setShowQr(true)}
               text={"Connect Account"}
             />
-            <BarTapButton onPress={() => writeTag(encryptXor(customer.id))} text={"Write NFC tag"} />
+            <BarTapButton
+              onPress={() => writeTag(encryptXor(customer.id))}
+              text={"Write NFC tag"}
+            />
           </View>
         )}
         <View style={styles.bills}>

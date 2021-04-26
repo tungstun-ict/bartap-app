@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image, Alert } from "react-native";
 import * as api from "../../service/BarApiService.js";
@@ -9,18 +9,34 @@ import {
   ActivityIndicator,
   RefreshControl,
 } from "react-native";
+import NfcProxy from "../../service/NfcService.js";
+import { encryptXor, decryptXor } from "../../service/XorEncryptionService.js";
 import BarTapHeader from "../../component/BarTapHeader";
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
+import BottomSheet from "reanimated-bottom-sheet";
+import BarTapBottomSheet from "../../component/BarTapBottomSheet/index.js";
+import BarTapButton from "../../component/BarTapButton/index.js";
 
 export default function SessionScreen({ navigation }) {
   const [isLoading, setLoading] = useState(true);
-  const [session, setSession] = useState({ bills: [], locked: true, name: "Not found" });
+  const [session, setSession] = useState({
+    bills: [],
+    locked: true,
+    name: "Not found",
+  });
+  const [nfcStatus, setNfcStatus] = useState("searching");
+  const mounted = useRef(false);
+  const sheetRef = React.useRef(null);
 
   useEffect(() => {
+    NfcProxy.init().catch();
+    mounted.current = true;
+
     const unsubscribe = navigation.addListener("focus", () => {
       setLoading(true);
       setSession({ bills: [], locked: true, name: "Not found" });
+      mounted.current = false;
     });
     return unsubscribe;
   });
@@ -45,6 +61,54 @@ export default function SessionScreen({ navigation }) {
         });
     }
   }, [isLoading]);
+
+  const readTag = async () => {
+    sheetRef.current.snapTo(1);
+    const tag = await NfcProxy.readTag();
+    if (tag) {
+      const ndef =
+        Array.isArray(tag.ndefMessage) && tag.ndefMessage.length > 0
+          ? tag.ndefMessage[0]
+          : null;
+      setNfcStatus(decryptXor(NfcProxy.decodePayload(ndef.payload)));
+      sheetRef.current.snapTo(2);
+    } else {
+      setNfcStatus("error");
+    }
+    if (nfcStatus !== "searching") setTimeout(closeBottomSheet, 3000);
+  };
+
+  const renderContent = () => {
+    return (
+      <BarTapBottomSheet height={290}>
+        <Image
+          style={styles.sheetLogo}
+          source={require("../../assets/nfc.png")}
+        />
+        <Text style={styles.sheetText}>{nfcStatus}</Text>
+        {typeof nfcStatus === "number" && (
+          <BarTapButton
+            text={"Customer info"}
+            onPress={() =>
+              navigation.navigate("Customers", {
+                screen: "Customer overview",
+                params: { id: nfcStatus },
+              })
+            }
+          />
+        )}
+      </BarTapBottomSheet>
+    );
+  };
+
+  const closeBottomSheet = () => {
+    if (mounted.current) {
+      setNfcStatus("searching");
+      sheetRef.current.snapTo(0);
+      NfcProxy.closeNfcDiscovery();
+      NfcProxy.stopReading();
+    }
+  };
 
   const formatData = (data, numColumns) => {
     const numberOfFullRows = Math.floor(data.length / numColumns);
@@ -78,11 +142,14 @@ export default function SessionScreen({ navigation }) {
         {
           text: "Yes",
           onPress: () => {
-            api.lockSession(session.id)
-            .finally(() => {setLoading(true);})
-            .catch((error) => {
-              alert(error);
-            });
+            api
+              .lockSession(session.id)
+              .finally(() => {
+                setLoading(true);
+              })
+              .catch((error) => {
+                alert(error);
+              });
           },
         },
         {
@@ -117,7 +184,8 @@ export default function SessionScreen({ navigation }) {
                 refreshing={isLoading}
                 onRefresh={() => setLoading(true)}
                 tintColor="white"
-             />}
+              />
+            }
             colors={["white"]}
             style={styles.list}
             data={formatData(session.bills, numColumns)}
@@ -144,11 +212,10 @@ export default function SessionScreen({ navigation }) {
               source={require("../../assets/clock.png")}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.buttonDisabled}
-            onPress={() => navigation.navigate("NFC Screen")}>
+          <TouchableOpacity style={styles.button} onPress={readTag}>
             <Image
               style={styles.button__image}
-              source={require("../../assets/stats.png")}
+              source={require("../../assets/nfc.png")}
             />
           </TouchableOpacity>
           {!session.locked ? (
@@ -171,6 +238,14 @@ export default function SessionScreen({ navigation }) {
           )}
         </View>
       </View>
+      <BottomSheet
+        enabledInnerScrolling={true}
+        ref={sheetRef}
+        snapPoints={[0, 220, 290]}
+        onCloseEnd={closeBottomSheet}
+        borderRadius={10}
+        renderContent={renderContent}
+      />
     </SafeAreaView>
   );
 }
@@ -187,7 +262,9 @@ function customerListItem(navigation, bill, sessionId) {
       }
     >
       <View style={styles.customer}>
-        <Text style={styles.customer__name} numberOfLines={2}>{bill.customer.name}</Text>
+        <Text style={styles.customer__name} numberOfLines={2}>
+          {bill.customer.name}
+        </Text>
         <Text style={styles.customer__total}>
           €{bill.totalPrice.toFixed(2)}
         </Text>
@@ -243,6 +320,7 @@ const styles = StyleSheet.create({
   addSessionButton: {
     fontSize: 50,
     fontWeight: "bold",
+    color: colors.BARTAP_BLACK,
   },
   button__image: {
     height: 40,
@@ -344,5 +422,20 @@ const styles = StyleSheet.create({
   },
   addCustomer__text: {
     fontSize: 30,
+  },
+  sheetLogo: {
+    height: 100,
+    width: 100,
+    tintColor: colors.BARTAP_WHITE,
+    alignSelf: "center",
+    marginTop: 20,
+  },
+  sheetText: {
+    alignSelf: "center",
+    fontSize: 20,
+    color: colors.BARTAP_WHITE,
+    fontWeight: "bold",
+    marginVertical: 20,
+    textAlign: "center",
   },
 });
