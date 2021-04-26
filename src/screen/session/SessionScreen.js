@@ -75,7 +75,7 @@ export default function SessionScreen({ navigation }) {
     } else {
       setNfcStatus("error");
     }
-    if (nfcStatus !== "searching") setTimeout(closeBottomSheet, 3000);
+    setTimeout(closeBottomSheet, 3000);
   };
 
   const renderContent = () => {
@@ -92,7 +92,7 @@ export default function SessionScreen({ navigation }) {
             onPress={() =>
               navigation.navigate("Customers", {
                 screen: "Customer overview",
-                params: { id: nfcStatus },
+                params: {id: nfcStatus}
               })
             }
           />
