@@ -50,7 +50,7 @@ export default function CustomersScreen({ navigation }) {
   const listItem = (customer) => {
     return (
       <BarTapListItem
-        onPress={() => navigation.navigate("Customer overview", customer.id)}
+        onPress={() => navigation.navigate("Customer overview", {id: customer.id})}
         name={customer.name}
       />
     );

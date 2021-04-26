@@ -42,10 +42,10 @@ const SignInNavigator = createStackNavigator();
 export function CustomersStack() {
   return (
     <CustomersNavigator.Navigator
-      headerMode="none"
-      initialRouteName="Customers"
+      headerMode={"none"}
+      initialRouteName={"AllCustomers"}
     >
-      <CustomersNavigator.Screen name="Customers" component={CustomersScreen} />
+      <CustomersNavigator.Screen name="All Customers" component={CustomersScreen} />
       <CustomersNavigator.Screen
         name="Add new customer"
         component={AddCustomerScreen}
