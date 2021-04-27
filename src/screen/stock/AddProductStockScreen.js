@@ -50,7 +50,7 @@ export default function AddProductStockScreen({ navigation }) {
           sellingPrice,
           size,
         )
-        .finally(() =>
+        .then(() =>
           navigation.navigate("Category Overview", selectedCategory),
         )
         .catch((error) => alert(error));

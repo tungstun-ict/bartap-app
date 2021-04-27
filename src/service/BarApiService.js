@@ -107,7 +107,7 @@ export async function createSession(name) {
 }
 
 export async function payBill(sessionId, billId) {
-  await api.patch(`/bars/${await storage.getActiveBar}/sessions/${sessionId}/bills/${billId}?isPayed=true`)
+  await api.patch(`/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}?isPayed=true`)
 }
 
 export async function deleteCustomer(customerId) {

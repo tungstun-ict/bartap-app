@@ -56,7 +56,7 @@ export default function SessionBillScreen({ route, navigation }) {
           onPress: () => {
             api
               .deleteBill(sessionId, billId)
-              .finally(() => {
+              .then(() => {
                 navigation.goBack();
               })
               .catch((error) => {
@@ -88,7 +88,7 @@ export default function SessionBillScreen({ route, navigation }) {
             onPress={() => {
               api
                 .deleteOrderFromBill(sessionId, billId, item.item.id)
-                .finally(() => setLoading(true))
+                .then(() => setLoading(true))
                 .catch((error) => {
                   if (error.response.status === 409) {
                     alert(
@@ -152,7 +152,7 @@ export default function SessionBillScreen({ route, navigation }) {
           {!bill.payed && (
             <BarTapButton
               style={styles.footerButton}
-              text={"Bill is payed"}
+              text={"Confirm payment"}
               onPress={payBill}
             />
           )}

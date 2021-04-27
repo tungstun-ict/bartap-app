@@ -20,7 +20,7 @@ export default function CreateBarScreen({ navigation }) {
     if (name !== "") {
       api
         .createBar(name, adress, mail, phone)
-        .finally(() => {
+        .then(() => {
           navigation.navigate("Account");
         })
         .catch((error) => alert(error));

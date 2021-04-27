@@ -1,22 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { SafeAreaView } from "react-native";
-import { StyleSheet, Text, View, Image, Alert } from "react-native";
-import * as api from "../../service/BarApiService.js";
-import variables, { colors, mock } from "../../theme/variables.js";
-import {
-  Button,
-  Dimensions,
-  ActivityIndicator,
-  RefreshControl,
-} from "react-native";
-import NfcProxy from "../../service/NfcService.js";
-import { encryptXor, decryptXor } from "../../service/XorEncryptionService.js";
-import BarTapHeader from "../../component/BarTapHeader";
+import { Alert, Image, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Button, Dimensions, RefreshControl } from "react-native";
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
+
 import BarTapBottomSheet from "../../component/BarTapBottomSheet/index.js";
 import BarTapButton from "../../component/BarTapButton/index.js";
+import BarTapHeader from "../../component/BarTapHeader";
+import * as api from "../../service/BarApiService.js";
+import NfcProxy from "../../service/NfcService.js";
+import { decryptXor, encryptXor } from "../../service/XorEncryptionService.js";
+import variables, { colors, mock } from "../../theme/variables.js";
 
 export default function SessionScreen({ navigation }) {
   const [isLoading, setLoading] = useState(true);
@@ -144,7 +140,7 @@ export default function SessionScreen({ navigation }) {
           onPress: () => {
             api
               .lockSession(session.id)
-              .finally(() => {
+              .then(() => {
                 setLoading(true);
               })
               .catch((error) => {
@@ -401,6 +397,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     margin: 5,
+    color: colors.BARTAP_BLACK,
   },
   customer__total: {
     width: "100%",
@@ -408,6 +405,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     marginTop: "auto",
     textAlign: "right",
+    color: colors.BARTAP_BLACK,
     paddingRight: 10,
   },
   addCustomer: {

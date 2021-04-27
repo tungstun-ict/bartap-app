@@ -32,18 +32,19 @@ export default function BarTapListItem({
           </Text>
         )}
         <View style={styles.right}>
-          {payed && (
-            <Image
-              style={styles.payed}
-              source={require("../../assets/check.png")}
-            />
-          )}
+          
           {multiplier && <Text style={styles.multiplier}>{multiplier}x</Text>}
           {price && <Text style={styles.price}>€{price}</Text>}
           {date && (
             <Text style={styles.price}>
               {date.getDate()}-{date.getMonth() + 1}-{date.getFullYear()}
             </Text>
+          )}
+          {payed && (
+            <Image
+              style={styles.payed}
+              source={require("../../assets/check.png")}
+            />
           )}
         </View>
       </View>
