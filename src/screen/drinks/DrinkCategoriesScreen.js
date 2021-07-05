@@ -139,6 +139,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
+    color: colors.BARTAP_BLACK,
   },
   categories: {
     marginVertical: 10,

@@ -108,12 +108,12 @@ export async function deleteCustomer(customerId) {
   );
 }
 
-export async function addDrink(billId, drinkId, sessionId) {
+export async function addDrink(billId, drinkId, sessionId, amount) {
 
   await api.put(
     `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`,
     {
-      amount: 1,
+      amount: amount,
       bartenderId: 1,
       productId: drinkId,
     },
