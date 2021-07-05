@@ -18,7 +18,6 @@ api.interceptors.response.use(
   },
   async function (error) {
     const originalRequest = error.config;
-    console.log("INTERCEPT STATUS: " + JSON.stringify(error.message));
     let refreshToken = await storage.getRefreshToken();
     let accessToken = await storage.getAccessToken();
     if (
@@ -35,9 +34,6 @@ api.interceptors.response.use(
         .then(async (res) => {
           if (res.status === 200) {
             await storage.storeAccessToken(res.headers.access_token);
-            console.log(
-              "Access token refreshed! : " + res.headers.access_token,
-            );
             let headers = originalRequest.headers;
             headers.access_token = res.headers.access_token;
             originalRequest.headers = headers;
@@ -51,7 +47,6 @@ api.interceptors.response.use(
 
 async function getRequest(url) {
   const accessToken = await storage.getAccessToken();
-  console.log("Doing a getRequest on URL: " + url);
 
   return api
     .get(url, { headers: { access_token: accessToken } })
@@ -64,7 +59,6 @@ async function getRequest(url) {
 }
 
 export async function login(email, password) {
-  console.log("logging in...");
   let data = { userIdentification: email, password: password };
   let tokens = null;
   tokens = await fetch(api_url + "/authenticate", {
@@ -77,7 +71,6 @@ export async function login(email, password) {
   })
     .then((response) => {
       if (response.ok) {
-        console.log("Credentials ok: Storing now");
         if (response.headers.get("access_token"))
           return {
             accessToken: response.headers.get("access_token"),
@@ -97,7 +90,6 @@ export async function login(email, password) {
 export async function logout() {
   await storage.removeAccessToken();
   await storage.removeRefreshToken();
-  console.log("Logged out.");
 }
 
 export async function createSession(name) {
@@ -116,14 +108,12 @@ export async function deleteCustomer(customerId) {
   );
 }
 
-export async function addDrink(billId, drinkId, sessionId) {
-  console.log(
-    "Adding drink: " + drinkId + " to " + billId + " for session " + sessionId,
-  );
+export async function addDrink(billId, drinkId, sessionId, amount) {
+
   await api.put(
     `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`,
     {
-      amount: 1,
+      amount: amount,
       bartenderId: 1,
       productId: drinkId,
     },
@@ -149,7 +139,6 @@ export async function createProduct(
 }
 
 export async function addCustomerToSession(sessionId, customerId) {
-  console.log(sessionId + " " + customerId);
   await api.post(
     `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/`,
     {

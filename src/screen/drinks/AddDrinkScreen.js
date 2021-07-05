@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Button, FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { ceil } from "react-native-reanimated";
+import { FlatList, Modal, RefreshControl, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
-import variables, { colors, mock, sizes } from "../../theme/variables.js";
+import { colors } from "../../theme/variables.js";
 
 export default function AddDrinksScreen({ route, navigation }) {
   const [drinks, setDrinks] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [amount, setAmount] = useState(1);
+  const [selectedItem, setSelectedItem] = useState(null);
   const { category, billId, sessionId } = route.params;
 
   useEffect(() => {
@@ -28,6 +29,34 @@ export default function AddDrinksScreen({ route, navigation }) {
         });
     }
   }, [isLoading]);
+
+  const selectAmount = (drink) => {
+    setSelectedItem(drink)
+    setDialogOpen(true);
+  }
+
+  const addItem = (navigation, billId, sessionId) => {
+    if(selectedItem === null) {
+      return;
+    }
+    
+    api
+      .addDrink(billId, selectedItem, sessionId, amount)
+      .catch((error) => alert(error))
+      .then(() => {
+        navigation.navigate("Session");
+      });
+  }
+
+  const listItem = (drink) => {
+    return (
+      <BarTapListItem
+        onPress={() => selectAmount(drink.id)}
+        name={`${drink.brand} ${drink.name}`}
+        price={drink.price.toFixed(2)}
+      />
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -46,31 +75,52 @@ export default function AddDrinksScreen({ route, navigation }) {
           style={styles.list}
           data={drinks}
           renderItem={({ item }) =>
-            listItem(navigation, item, billId, sessionId)
+            listItem(item)
           }
         />
       </View>
+      <Modal
+        animationType="fade"
+        visible={dialogOpen}
+        transparent={true}
+        onRequestClose={() => {
+          setDialogOpen(!dialogOpen);
+        }}
+      >
+        <TouchableOpacity style={styles.modal}
+          activeOpacity={0.2}
+          onPressOut={() => setDialogOpen(false)}>
+          <View style={styles.dialog}>
+            <View style={styles.dialogContent}>
+              <TextInput 
+                underline="transparent"
+                keyboardType={"number-pad"}
+                defaultValue={JSON.stringify(amount)}
+                onChangeText={(value) => { value && setAmount(parseInt(value))}}
+                style={styles.dialogContent__text} />
+            </View>
+            <View style={styles.dialogButtons}>
+              <TouchableOpacity 
+                onPress={() => amount <= 1 ? setAmount(1) : setAmount(amount - 1)}
+                style={styles.dialogButton}>
+                <Text style={styles.dialogButton__text}>-</Text>
+                </TouchableOpacity>
+              <TouchableOpacity 
+                onPress={() => setAmount(amount + 1)}
+                style={styles.dialogButton}>
+                <Text style={styles.dialogButton__text}>+</Text>
+                </TouchableOpacity>
+            </View>
+          </View>
+          <TouchableOpacity 
+            onPress={() => addItem(navigation, billId, sessionId)}
+            style={styles.confirmButton}>
+              <Text style={styles.confirmButton__text}>Confirm</Text>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
     </SafeAreaView>
   );
-}
-
-function listItem(navigation, drink, billId, sessionId) {
-  return (
-    <BarTapListItem
-      onPress={() => handlePress(navigation, drink, billId, sessionId)}
-      name={`${drink.brand} ${drink.name}`}
-      price={drink.price.toFixed(2)}
-    />
-  );
-}
-
-function handlePress(navigation, drink, billId, sessionId) {
-  api
-    .addDrink(billId, drink.id, sessionId)
-    .catch((error) => alert(error))
-    .then(() => {
-      navigation.navigate("Session");
-    });
 }
 
 const styles = StyleSheet.create({
@@ -92,4 +142,66 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width: "100%",
   },
+  modal: {
+    justifyContent: "center",
+    alignItems: "center",
+    alignSelf: "center",
+    padding: 10,
+    height: "100%",
+    backgroundColor: "rgba(0,0,0,0.8)",
+    width: "100%",
+  },
+  confirmButton: {
+    width: 200,
+    height: 70,
+    marginTop: 30,
+    borderRadius: 5,
+    backgroundColor: colors.BARTAP_WHITE,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  confirmButton__text: {
+    fontSize: 30,
+    fontWeight: "bold",
+    color: colors.BARTAP_BLACK,
+  },
+  dialog: {
+    maxHeight: 200,
+    minWidth: 200,
+    backgroundColor: colors.BARTAP_DARK_GREY,
+    borderRadius: 5,
+    flex: 1,
+    flexDirection: "column",
+    overflow: "hidden",
+  },
+  dialogContent: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  dialogContent__text: {
+    fontSize: 50,
+    textAlign: "center",
+    fontWeight: "bold",
+    color: colors.BARTAP_WHITE,
+
+  },
+  dialogButtons: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  dialogButton: {
+    flex: 0.48,
+    backgroundColor: colors.BARTAP_GREY,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  dialogButton__text: {
+    fontSize: 50,
+    textAlign: "center",
+    fontWeight: "bold",
+    color: colors.BARTAP_WHITE,
+  }
 });

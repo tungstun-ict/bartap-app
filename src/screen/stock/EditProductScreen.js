@@ -50,7 +50,6 @@ export default function EditProductScreen({ route, navigation }) {
           setBrand(json.brand);
           setSellingPrice(json.price);
           setSize(json.size);
-          console.log(json.category);
           setSelectedCategory(json.category);
           setLoading(false);
         })

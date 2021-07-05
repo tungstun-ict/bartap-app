@@ -1,23 +1,15 @@
-import React, { useState, useEffect } from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Button,
-  FlatList,
-  RefreshControl,
-} from "react-native";
-import variables, { colors, mock, sizes } from "../../theme/variables.js";
-import BarTapHeader from "../../component/BarTapHeader";
-import * as api from "../../service/BarApiService.js";
-import * as storage from "../../service/BarStorageService.js";
+import React, { useEffect, useState } from "react";
+import { Button, FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
+
+import BarTapHeader from "../../component/BarTapHeader";
+import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
-import BarTapListItem from "../../component/BarTapListItem/index.js";
+import * as api from "../../service/BarApiService.js";
+import * as storage from "../../service/BarStorageService.js";
+import variables, { colors, mock, sizes } from "../../theme/variables.js";
 
 export default function AddCustomerSession({ route, navigation }) {
   const [customers, setCustomers] = useState([]);
@@ -45,7 +37,6 @@ export default function AddCustomerSession({ route, navigation }) {
   };
 
   const listItem = (customer) => {
-    console.log(customer.id);
     return (
       <BarTapListItem
         onPress={async () =>

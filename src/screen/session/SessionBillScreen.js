@@ -61,9 +61,7 @@ export default function SessionBillScreen({ route, navigation }) {
               })
               .catch((error) => {
                 if (error.response.status === 409) {
-                  alert(
-                    "Session is locked. You must unlock first before editing anything.",
-                  );
+                  console.error("Something went wrong")
                 } else {
                   alert(error);
                 }
@@ -72,7 +70,7 @@ export default function SessionBillScreen({ route, navigation }) {
         },
         {
           text: "No",
-          onPress: () => console.log("User canceled locking this session"),
+          onPress: () => console.log("User canceled deleting this bill"),
           style: "cancel",
         },
       ],

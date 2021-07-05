@@ -49,7 +49,6 @@ export async function removeRefreshToken() {
 }
 
 export async function storeActiveBar(bar){
-  console.log("Storing active bar: " + bar)
   try {
     await AsyncStorage.setItem('@activeBar', bar);
   } catch (e) {

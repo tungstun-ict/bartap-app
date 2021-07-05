@@ -25,8 +25,6 @@ export default function CustomerOverviewScreen({ route, navigation }) {
   const sheetRef = useRef(null);
   const mounted = useRef(false);
 
-  console.log(route.params.id);
-
   useEffect(() => {
     NfcProxy.init().catch();
     mounted.current = true;
@@ -56,7 +54,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
   const listItem = (bill) => {
     const billId = bill.id;
     const sessionId = bill.session.id;
-    console.log(bill);
+    
     return (
       <BarTapListItem
         onPress={() =>

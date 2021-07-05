@@ -39,7 +39,6 @@ export default function SessionScreen({ navigation }) {
 
   useEffect(() => {
     if (isLoading == true) {
-      console.log("fetching data");
       api
         .getCurrentSession()
         .then((json) => {
