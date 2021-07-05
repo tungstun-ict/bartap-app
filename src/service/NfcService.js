@@ -1,10 +1,5 @@
-import {Platform} from 'react-native';
-import NfcManager, {
-  NfcTech,
-  Ndef,
-  NfcEvents,
-  NfcErrorIOS,
-} from 'react-native-nfc-manager';
+import { Platform } from 'react-native';
+import NfcManager, { Ndef, NfcErrorIOS, NfcEvents, NfcTech } from 'react-native-nfc-manager';
 import * as Revent from 'revent-lib';
 
 class ErrSuccess extends Error {}
@@ -80,7 +75,6 @@ class NfcProxy {
   }
 
   decodePayload(payload) {
-    console.log(payload)
     return Ndef.text.decodePayload(payload);
   }
 

@@ -1,18 +1,19 @@
+import { Picker } from "@react-native-picker/picker";
+import { useFocusEffect } from "@react-navigation/core";
+import { StackActions } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
 import { SafeAreaView } from "react-native";
-import { StyleSheet, Text, View, Image } from "react-native";
-import variables, { colors, mock, sizes } from "../../theme/variables.js";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { Button, TextInput, TouchableOpacity } from "react-native";
-import BarTapHeader from "../../component/BarTapHeader";
-import * as api from "../../service/BarApiService.js";
-import { AuthContext } from "../../service/Context.js";
-import { Picker } from "@react-native-picker/picker";
 import { Value } from "react-native-reanimated";
-import { StackActions } from "@react-navigation/native";
-import { useFocusEffect } from "@react-navigation/core";
+
 import BarTapButton from "../../component/BarTapButton";
-import * as storage from "../../service/BarStorageService.js";
+import BarTapHeader from "../../component/BarTapHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
+import * as api from "../../service/BarApiService.js";
+import * as storage from "../../service/BarStorageService.js";
+import { AuthContext } from "../../service/Context.js";
+import variables, { colors, mock, sizes } from "../../theme/variables.js";
 
 export default function AccountScreen({ navigation }) {
   const [selectedBar, setSelectedBar] = useState(
@@ -36,7 +37,6 @@ export default function AccountScreen({ navigation }) {
 
   useEffect(() => {
     if (isLoading) {
-      console.log("Getting all bars!");
       api
         .getBars()
         .then((json) => {

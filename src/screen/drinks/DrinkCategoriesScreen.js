@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { RefreshControl, SafeAreaView } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
-import { colors, mock } from "../../theme/variables.js";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
-import { FlatList, Dimensions } from "react-native";
+import { Dimensions, FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
+
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import * as api from "../../service/BarApiService.js";
+import { colors, mock } from "../../theme/variables.js";
 
 export default function DrinkCategoriesScreen({ route, navigation }) {
   const [categories, setCategories] = useState([]);
@@ -16,7 +17,6 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       api
       .getCategories()
       .then((json) => {
-        console.log(json[0])
         setCategories(json.sort(function (a, b) {
           return b.id < a.id;
         }),
