@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from "react";
+import { apisAreAvailable } from "expo";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native";
-import { StyleSheet, Text, View, Image } from "react-native";
-import variables, { colors, mock } from "../../theme/variables.js";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { Button } from "react-native";
-import BarTapHeader from "../../component/BarTapHeader";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
 import { TextInput } from "react-native";
 import { Dimensions } from "react-native";
-import * as api from "../../service/BarApiService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
-import { apisAreAvailable } from "expo";
+
 import BarTapButton from "../../component/BarTapButton/index.js";
+import BarTapHeader from "../../component/BarTapHeader";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
+import * as api from "../../service/BarApiService.js";
+import variables, { colors, mock } from "../../theme/variables.js";
 
 export default function NewSessionScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -21,10 +22,10 @@ export default function NewSessionScreen({ navigation }) {
     if (name !== "") {
       api
         .createSession(name)
-        .finally(() => {
+        .catch((error) => alert(error))
+        .then(() => {
           navigation.navigate("Session");
         })
-        .catch((error) => alert(error));
     } else {
       alert("Name cannot be empty");
     }

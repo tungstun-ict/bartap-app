@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from "react";
-import * as api from "../../service/BarApiService.js";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Button,
-  FlatList,
-  RefreshControl,
-} from "react-native";
-import variables, { colors, mock, sizes } from "../../theme/variables.js";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
+import { Button, FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
+
 import BarTapListItem from "../../component/BarTapListItem/index.js";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
+import * as api from "../../service/BarApiService.js";
+import variables, { colors, mock, sizes } from "../../theme/variables.js";
 
 export default function AddDrinksScreen({ route, navigation }) {
   const [drinks, setDrinks] = useState([]);
@@ -72,13 +64,13 @@ function listItem(navigation, drink, billId, sessionId) {
   );
 }
 
-async function handlePress(navigation, drink, billId, sessionId) {
+function handlePress(navigation, drink, billId, sessionId) {
   api
     .addDrink(billId, drink.id, sessionId)
-    .finally(() => {
+    .catch((error) => alert(error))
+    .then(() => {
       navigation.navigate("Session");
-    })
-    .catch((error) => alert(error));
+    });
 }
 
 const styles = StyleSheet.create({

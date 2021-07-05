@@ -22,7 +22,7 @@ export default function AddCustomerScreen({ navigation }) {
  const createCustomer = (name, phone) => {
   if(name !== "" && phone !== "") {
      api.createCustomer(name, phone)
-      .finally(() => {
+      .then(() => {
         navigation.navigate("Customers");
      })
      .catch((error) => alert(error));

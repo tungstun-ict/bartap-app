@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from "react";
-import * as api from "../../service/BarApiService.js";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Button,
-  FlatList,
-  RefreshControl,
-} from "react-native";
-import SwipeableFlatList from "react-native-swipeable-list";
-import variables, { colors, mock, sizes } from "../../theme/variables.js";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { Button, FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View } from "react-native";
 import { Alert } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import SwipeableFlatList from "react-native-swipeable-list";
+
+import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
+import * as api from "../../service/BarApiService.js";
+import variables, { colors, mock, sizes } from "../../theme/variables.js";
 
 export default function SessionBillScreen({ route, navigation }) {
   const { billId, sessionId } = route.params;
@@ -43,9 +36,15 @@ export default function SessionBillScreen({ route, navigation }) {
           console.error(error);
           setLoading(false);
         });
-      console.log(bill);
     }
   }, [isLoading]);
+
+  const payBill = () => {
+    api
+      .payBill(sessionId, billId)
+      .then(() => setLoading(true))
+      .catch(() => alert("Could not pay bill."));
+  };
 
   const handleDeleteBill = () => {
     Alert.alert(
@@ -57,7 +56,7 @@ export default function SessionBillScreen({ route, navigation }) {
           onPress: () => {
             api
               .deleteBill(sessionId, billId)
-              .finally(() => {
+              .then(() => {
                 navigation.goBack();
               })
               .catch((error) => {
@@ -89,7 +88,7 @@ export default function SessionBillScreen({ route, navigation }) {
             onPress={() => {
               api
                 .deleteOrderFromBill(sessionId, billId, item.item.id)
-                .finally(() => setLoading(true))
+                .then(() => setLoading(true))
                 .catch((error) => {
                   if (error.response.status === 409) {
                     alert(
@@ -143,11 +142,26 @@ export default function SessionBillScreen({ route, navigation }) {
           renderQuickActions={(item) => swipeableView(item)}
           shouldBounceOnMount={true}
         />
-        <View style={styles.listItem__footer}>
-          <Text style={styles.listItem__footer__text}>Total:</Text>
-          <Text style={styles.listItem__footer__text__price}>
-            €{bill.totalPrice.toFixed(2)}
-          </Text>
+        <View style={styles.footer}>
+          {bill.payed && (
+            <Image
+              style={styles.footerCheck}
+              source={require("../../assets/check.png")}
+            />
+          )}
+          {!bill.payed && (
+            <BarTapButton
+              style={styles.footerButton}
+              text={"Confirm payment"}
+              onPress={payBill}
+            />
+          )}
+          <View style={styles.footerText}>
+            <Text style={styles.footerTotal}>Total:</Text>
+            <Text style={styles.footerPrice}>
+              €{bill.totalPrice.toFixed(2)}
+            </Text>
+          </View>
         </View>
       </View>
     </SafeAreaView>
@@ -217,32 +231,44 @@ const styles = StyleSheet.create({
     maxHeight: 60,
     flex: 1,
   },
-  listItem__footer: {
+  footer: {
     zIndex: 5,
     height: "auto",
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     color: colors.BARTAP_WHITE,
     marginBottom: 10,
     marginHorizontal: 10,
+    padding: 10,
     backgroundColor: colors.BARTAP_DARK_GREY,
     borderRadius: 5,
   },
-  listItem__footer__text__price: {
+  footerText: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  footerPrice: {
     marginLeft: "auto",
     color: colors.BARTAP_WHITE,
     fontSize: 30,
     alignSelf: "center",
     height: "auto",
-    margin: 10,
     fontWeight: "bold",
   },
-  listItem__footer__text: {
-    margin: 10,
+  footerTotal: {
     color: colors.BARTAP_WHITE,
     fontSize: 30,
     alignSelf: "center",
     height: "auto",
     fontWeight: "bold",
+  },
+  footerCheck: {
+    marginTop: 20,
+    height: 70,
+    width: 70,
+  },
+  footerButton: {
+    marginBottom: 10,
   },
 });

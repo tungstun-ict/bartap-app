@@ -39,7 +39,7 @@ export default function EditCategoryScreen({ route, navigation }) {
     if (name !== "") {
       api
         .updateCategory(categoryId, name, category.type)
-        .finally(() => {
+        .then(() => {
           navigation.navigate("Stock Overview");
         })
         .catch((error) => {

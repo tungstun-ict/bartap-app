@@ -1,5 +1,6 @@
 import React from "react";
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
 import { colors } from "../../theme/variables.js"
 
 export default function BarTapButton({ onPress, text, colour, textColour, style }) {

@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { Picker } from "@react-native-picker/picker";
+import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, SafeAreaView, ScrollView } from "react-native";
-import { StyleSheet, Text, View, Image } from "react-native";
-import variables, { colors, mock } from "../../theme/variables.js";
-import BarTapHeader from "../../component/BarTapHeader";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { TextInput } from "react-native";
-import * as api from "../../service/BarApiService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
-import { Picker } from "@react-native-picker/picker";
+
 import BarTapButton from "../../component/BarTapButton/index.js";
+import BarTapHeader from "../../component/BarTapHeader";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
+import * as api from "../../service/BarApiService.js";
+import variables, { colors, mock } from "../../theme/variables.js";
 
 export default function EditProductScreen({ route, navigation }) {
   const productId = route.params;
@@ -77,10 +78,10 @@ export default function EditProductScreen({ route, navigation }) {
           sellingPrice,
           size,
         )
-        .finally(() => navigation.navigate("Stock Overview"))
+        .then(() => navigation.navigate("Stock Overview"))
         .catch((error) => alert(error));
     } else {
-      alert("HOT DAMN, no goeie invoer");
+      alert("SHEEESSH, no goeie invoer");
     }
   };
 

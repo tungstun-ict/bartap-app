@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FlatList, RefreshControl, SafeAreaView } from "react-native";
-import * as api from "../../service/BarApiService.js";
-import { StyleSheet, Text, View, Image, Modal } from "react-native";
-import variables, { colors, mock } from "../../theme/variables.js";
+import { Image, Modal, StyleSheet, Text, View } from "react-native";
 import { Button, TouchableOpacity } from "react-native";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
 import QRCode from "react-native-qrcode-svg";
+import BottomSheet from "reanimated-bottom-sheet";
+
+import BarTapBottomSheet from "../../component/BarTapBottomSheet";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
-import { encryptXor } from "../../service/XorEncryptionService.js";
+import * as api from "../../service/BarApiService.js";
 import NfcProxy from "../../service/NfcService.js";
-import BottomSheet from "reanimated-bottom-sheet";
-import BarTapBottomSheet from "../../component/BarTapBottomSheet";
+import { encryptXor } from "../../service/XorEncryptionService.js";
+import variables, { colors, mock } from "../../theme/variables.js";
 
 export default function CustomerOverviewScreen({ route, navigation }) {
   const [customer, setCustomer] = useState({});
@@ -62,6 +63,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
           navigation.navigate("Customer Bill", { billId, sessionId })
         }
         name={bill.session.name}
+        payed={bill.payed}
         price={bill.totalPrice.toFixed(2)}
       />
     );
@@ -91,9 +93,6 @@ export default function CustomerOverviewScreen({ route, navigation }) {
     api
       .deleteCustomer(customer.id)
       .then(() => {
-        console.log("deleting customer " + customer.name);
-      })
-      .finally(() => {
         navigation.navigate("Customers");
       })
       .catch((error) => console.error(error));

@@ -23,7 +23,7 @@ export default function AddCategoryScreen({ navigation }) {
     if (name !== "") {
       api
         .createCategory(name, type)
-        .finally(() => {
+        .then(() => {
           navigation.navigate("Stock Overview");
         })
         .catch((error) => {

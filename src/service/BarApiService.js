@@ -1,5 +1,7 @@
-import * as storage from "../service/BarStorageService.js";
 import axios from "axios";
+
+import * as storage from "../service/BarStorageService.js";
+
 const api_url = "https://tungstun-bar-api.herokuapp.com/api";
 
 const api = axios.create({
@@ -102,6 +104,10 @@ export async function createSession(name) {
   await api.post(`/bars/${await storage.getActiveBar()}/sessions`, {
     name: name,
   });
+}
+
+export async function payBill(sessionId, billId) {
+  await api.patch(`/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}?isPayed=true`)
 }
 
 export async function deleteCustomer(customerId) {
