@@ -1,11 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { colors } from "../../theme/variables.js"
+import { darkTheme } from "../../theme/variables.js"
 
 export default function BarTapButton({ onPress, text, colour, textColour, style }) {
-  const buttonColor = colour ? { backgroundColor: colour, } : { backgroundColor: colors.BARTAP_WHITE }
-  const textColor = textColour ? { color: textColour, } : { color: colors.BARTAP_BLACK }
+  const buttonColor = colour ? { backgroundColor: colour, } : { backgroundColor: darkTheme.BARTAP_WHITE }
+  const textColor = textColour ? { color: textColour, } : { color: darkTheme.BARTAP_BLACK }
   
   return (
     <TouchableOpacity
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         minWidth: "100%",
         borderRadius: 5,
         height: 50,
-        backgroundColor: colors.BARTAP_WHITE,
+        backgroundColor: darkTheme.BARTAP_WHITE,
         alignItems: "center",
         justifyContent: "center",
       },
@@ -39,6 +39,6 @@ const styles = StyleSheet.create({
       text: {
         fontSize: 15,
         fontWeight: "bold",
-        color: colors.BARTAP_BLACK,
+        color: darkTheme.BARTAP_BLACK,
       },
 })

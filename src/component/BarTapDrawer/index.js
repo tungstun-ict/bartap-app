@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native";
 import { DrawerItem } from "@react-navigation/drawer";
 import { SafeAreaView } from "react-native";
 import { StatusBar } from "react-native";
-import { colors } from "../../theme/variables";
+import { darkTheme } from "../../theme/variables";
 
 export default function BarTapDrawer({ navigation }) {
   return (
@@ -29,6 +29,6 @@ export default function BarTapDrawer({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     marginTop: StatusBar.currentHeight + 50,
-    backgroundColor: colors.BARTAP_DARK_GREY,
+    backgroundColor: darkTheme.BARTAP_DARK_GREY,
   },
 });

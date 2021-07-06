@@ -13,7 +13,7 @@ import BarTapHeader from "../../component/BarTapHeader";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
-import variables, { colors, mock } from "../../theme/variables.js";
+import variables, { darkTheme, mock } from "../../theme/variables.js";
 
 export default function NewSessionScreen({ navigation }) {
   const [name, setName] = useState("");
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
+    backgroundColor: darkTheme.BARTAP_BLACK,
     alignItems: "center",
     justifyContent: "flex-start",
   },
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     borderColor: "white",
     borderWidth: 1,
     borderRadius: 5,

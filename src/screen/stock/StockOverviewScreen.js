@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FlatList, RefreshControl, SafeAreaView } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import { StyleSheet, Text, View, Image, Modal } from "react-native";
-import variables, { colors, mock } from "../../theme/variables.js";
+import variables, { darkTheme, mock } from "../../theme/variables.js";
 import { Button, TouchableOpacity } from "react-native";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import QRCode from "react-native-qrcode-svg";
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
+    backgroundColor: darkTheme.BARTAP_BLACK,
     alignItems: "center",
     justifyContent: "center",
   },

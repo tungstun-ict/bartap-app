@@ -1,4 +1,4 @@
-export const colors = {
+export const darkTheme = {
   BARTAP_BLACK: "#000",
   BARTAP_DARK_GREY: "#212121",
   BARTAP_SELECTED: "#323232",

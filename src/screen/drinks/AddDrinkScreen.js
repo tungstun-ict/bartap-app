@@ -5,7 +5,7 @@ import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
-import { colors } from "../../theme/variables.js";
+import { darkTheme } from "../../theme/variables.js";
 
 export default function AddDrinksScreen({ route, navigation }) {
   const [drinks, setDrinks] = useState([]);
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
+    backgroundColor: darkTheme.BARTAP_BLACK,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
@@ -156,19 +156,19 @@ const styles = StyleSheet.create({
     height: 70,
     marginTop: 30,
     borderRadius: 5,
-    backgroundColor: colors.BARTAP_WHITE,
+    backgroundColor: darkTheme.BARTAP_WHITE,
     alignItems: "center",
     justifyContent: "center",
   },
   confirmButton__text: {
     fontSize: 30,
     fontWeight: "bold",
-    color: colors.BARTAP_BLACK,
+    color: darkTheme.BARTAP_BLACK,
   },
   dialog: {
     maxHeight: 200,
     minWidth: 200,
-    backgroundColor: colors.BARTAP_DARK_GREY,
+    backgroundColor: darkTheme.BARTAP_DARK_GREY,
     borderRadius: 5,
     flex: 1,
     flexDirection: "column",
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     textAlign: "center",
     fontWeight: "bold",
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
 
   },
   dialogButtons: {
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   },
   dialogButton: {
     flex: 0.48,
-    backgroundColor: colors.BARTAP_GREY,
+    backgroundColor: darkTheme.BARTAP_GREY,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -202,6 +202,6 @@ const styles = StyleSheet.create({
     fontSize: 50,
     textAlign: "center",
     fontWeight: "bold",
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
   }
 });

@@ -6,7 +6,7 @@ import { TouchableOpacity } from "react-native";
 
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import * as api from "../../service/BarApiService.js";
-import { colors, mock } from "../../theme/variables.js";
+import { darkTheme, mock } from "../../theme/variables.js";
 
 export default function DrinkCategoriesScreen({ route, navigation }) {
   const [categories, setCategories] = useState([]);
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
+    backgroundColor: darkTheme.BARTAP_BLACK,
     alignItems: "center",
     justifyContent: "flex-start",
   },
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   category: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_WHITE,
+    backgroundColor: darkTheme.BARTAP_WHITE,
     justifyContent: "center",
     alignItems: "center",
     marginVertical: 10,
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
-    color: colors.BARTAP_BLACK,
+    color: darkTheme.BARTAP_BLACK,
   },
   categories: {
     marginVertical: 10,

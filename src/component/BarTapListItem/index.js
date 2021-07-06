@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 
-import { colors } from "../../theme/variables.js";
+import { darkTheme } from "../../theme/variables.js";
 
 export default function BarTapListItem({
   onPress,
@@ -59,32 +59,32 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
-    backgroundColor: colors.BARTAP_BLACK,
-    borderBottomColor: colors.BARTAP_DARK_GREY,
+    backgroundColor: darkTheme.BARTAP_BLACK,
+    borderBottomColor: darkTheme.BARTAP_DARK_GREY,
     borderBottomWidth: 2,
     width: "100%",
     height: 50,
   },
   timestamp: {
     fontSize: 20,
-    color: colors.BARTAP_LIGHT_GREY,
+    color: darkTheme.BARTAP_LIGHT_GREY,
     marginRight: 10,
   },
   name: {
     fontSize: 20,
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     marginRight: 5,
     flex: 1,
     width: "auto",
   },
   multiplier: {
     fontSize: 15,
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     marginLeft: "auto",
   },
   price: {
     fontSize: 20,
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     fontWeight: "bold",
     marginLeft: 20,
   },

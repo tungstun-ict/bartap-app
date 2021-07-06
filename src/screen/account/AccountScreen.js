@@ -13,7 +13,7 @@ import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import * as storage from "../../service/BarStorageService.js";
 import { AuthContext } from "../../service/Context.js";
-import variables, { colors, mock, sizes } from "../../theme/variables.js";
+import variables, { darkTheme, mock, sizes } from "../../theme/variables.js";
 
 export default function AccountScreen({ navigation }) {
   const [selectedBar, setSelectedBar] = useState(
@@ -110,8 +110,8 @@ export default function AccountScreen({ navigation }) {
         </View>
         <BarTapButton
           onPress={() => _logout()}
-          colour={colors.BARTAP_RED}
-          textColour={colors.BARTAP_WHITE}
+          colour={darkTheme.BARTAP_RED}
+          textColour={darkTheme.BARTAP_WHITE}
           style={styles.logoutButton}
           text={"Log out"}
         />
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
+    backgroundColor: darkTheme.BARTAP_BLACK,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
@@ -135,16 +135,16 @@ const styles = StyleSheet.create({
   },
   picker: {
     height: 60,
-    borderColor: colors.BARTAP_WHITE,
+    borderColor: darkTheme.BARTAP_WHITE,
     borderWidth: 1,
-    backgroundColor: colors.BARTAP_DARK_GREY,
-    color: colors.BARTAP_WHITE,
+    backgroundColor: darkTheme.BARTAP_DARK_GREY,
+    color: darkTheme.BARTAP_WHITE,
     marginBottom: 10,
     borderRadius: 5,
     justifyContent: "center",
   },
   optionTitle: {
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     fontWeight: "bold",
     fontSize: 20,
   },
@@ -153,14 +153,14 @@ const styles = StyleSheet.create({
     color: "white",
   },
   text: {
-    color: colors.BARTAP_GREY,
+    color: darkTheme.BARTAP_GREY,
     fontSize: 50,
     fontWeight: "bold",
   },
   input: {
     width: "100%",
     marginVertical: 10,
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     borderColor: "white",
     borderWidth: 1,
     borderRadius: 5,
@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   input__label: {
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     alignSelf: "flex-start",
     fontWeight: "bold",
     fontSize: 20,
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   information: {
-    backgroundColor: colors.BARTAP_DARK_GREY,
+    backgroundColor: darkTheme.BARTAP_DARK_GREY,
     padding: 20,
     borderRadius: 5,
     width: "100%",
@@ -195,13 +195,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   name: {
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     textAlign: "left",
     fontSize: 15,
     fontWeight: "normal",
   },
   attribute: {
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     textAlign: "right",
     fontSize: 15,
     fontWeight: "normal",

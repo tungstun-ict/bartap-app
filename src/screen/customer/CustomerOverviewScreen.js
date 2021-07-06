@@ -13,7 +13,7 @@ import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import NfcProxy from "../../service/NfcService.js";
 import { encryptXor } from "../../service/XorEncryptionService.js";
-import variables, { colors, mock } from "../../theme/variables.js";
+import variables, { darkTheme, mock } from "../../theme/variables.js";
 
 export default function CustomerOverviewScreen({ route, navigation }) {
   const [customer, setCustomer] = useState({});
@@ -174,8 +174,8 @@ export default function CustomerOverviewScreen({ route, navigation }) {
         <BarTapButton
           onPress={() => handleDeleteCustomer()}
           text={"Delete customer"}
-          colour={colors.BARTAP_RED}
-          textColour={colors.BARTAP_WHITE}
+          colour={darkTheme.BARTAP_RED}
+          textColour={darkTheme.BARTAP_WHITE}
         />
       </View>
       <Modal
@@ -191,7 +191,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
             value={`${customer.id}`}
             color="white"
             size={200}
-            backgroundColor={colors.BARTAP_DARK_GREY}
+            backgroundColor={darkTheme.BARTAP_DARK_GREY}
           />
           <Text style={styles.modal__text}>{customer.name}</Text>
         </View>
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
+    backgroundColor: darkTheme.BARTAP_BLACK,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -226,18 +226,18 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     padding: 10,
-    backgroundColor: colors.BARTAP_DARK_GREY,
+    backgroundColor: darkTheme.BARTAP_DARK_GREY,
     height: "100%",
     width: "100%",
   },
   modal__text: {
     fontSize: 30,
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     fontWeight: "bold",
     marginTop: 20,
   },
   information: {
-    backgroundColor: colors.BARTAP_DARK_GREY,
+    backgroundColor: darkTheme.BARTAP_DARK_GREY,
     padding: 20,
     borderRadius: 5,
     width: "100%",
@@ -260,30 +260,30 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: 50,
-    backgroundColor: colors.BARTAP_BLACK,
-    borderBottomColor: colors.BARTAP_DARK_GREY,
+    backgroundColor: darkTheme.BARTAP_BLACK,
+    borderBottomColor: darkTheme.BARTAP_DARK_GREY,
     borderBottomWidth: 2,
     width: "100%",
   },
   listItem__name: {
     fontSize: 20,
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
   },
   listItem__price: {
     fontSize: 20,
     marginLeft: "auto",
     fontWeight: "bold",
     textAlign: "right",
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
   },
   name: {
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     textAlign: "left",
     fontSize: 15,
     fontWeight: "normal",
   },
   attribute: {
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     textAlign: "right",
     fontSize: 15,
     fontWeight: "normal",
@@ -295,14 +295,14 @@ const styles = StyleSheet.create({
   sheetLogo: {
     height: 100,
     width: 100,
-    tintColor: colors.BARTAP_WHITE,
+    tintColor: darkTheme.BARTAP_WHITE,
     alignSelf: "center",
     marginTop: 20,
   },
   sheetText: {
     alignSelf: "center",
     fontSize: 20,
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     fontWeight: "bold",
     marginTop: 20,
     textAlign: "center",

@@ -2,7 +2,7 @@ import React from "react";
 import { StatusBar } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { colors, mock } from "../../theme/variables.js";
+import { darkTheme, mock } from "../../theme/variables.js";
 import Constants from 'expo-constants';
 
 export default function BarTapHeader({ navigation }) {
@@ -39,11 +39,11 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     alignItems: "center",
     width: "100%",
-    backgroundColor: colors.BARTAP_DARK_GREY,
+    backgroundColor: darkTheme.BARTAP_DARK_GREY,
   },
 
   header__title: {
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     fontWeight: "bold",
     fontSize: 20,
   },

@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { colors } from "../../theme/variables";
+import { darkTheme } from "../../theme/variables";
 
 export default function BarTapBottomSheet({ height, style, children }) {
   return (
@@ -16,7 +16,7 @@ export default function BarTapBottomSheet({ height, style, children }) {
 const styles = StyleSheet.create({
   sheet: {
     width: "100%",
-    backgroundColor: colors.BARTAP_GREY,
+    backgroundColor: darkTheme.BARTAP_GREY,
     alignItems: "center",
     flexDirection: "column",
     paddingHorizontal: 20,
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     height: 2,
     width: 50,
     borderRadius: 100,
-    backgroundColor: colors.BARTAP_WHITE,
+    backgroundColor: darkTheme.BARTAP_WHITE,
   },
   content: {
     flex: 1,

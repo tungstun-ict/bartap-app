@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { KeyboardAvoidingView, SafeAreaView } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
-import { colors } from "../../theme/variables.js";
+import { darkTheme } from "../../theme/variables.js";
 import { TextInput } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
+    backgroundColor: darkTheme.BARTAP_BLACK,
   },
   content: {
     flex: 1,
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     borderColor: "white",
     borderWidth: 1,
     borderRadius: 5,

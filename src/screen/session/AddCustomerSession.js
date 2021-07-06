@@ -9,7 +9,7 @@ import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import * as storage from "../../service/BarStorageService.js";
-import variables, { colors, mock, sizes } from "../../theme/variables.js";
+import variables, { darkTheme, mock, sizes } from "../../theme/variables.js";
 
 export default function AddCustomerSession({ route, navigation }) {
   const [customers, setCustomers] = useState([]);
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
+    backgroundColor: darkTheme.BARTAP_BLACK,
   },
   content: {
     flex: 1,

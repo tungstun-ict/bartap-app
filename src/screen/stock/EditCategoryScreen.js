@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
-import variables, { colors, mock } from "../../theme/variables.js";
+import variables, { darkTheme, mock } from "../../theme/variables.js";
 import { Button } from "react-native";
 import BarTapHeader from "../../component/BarTapHeader";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
+    backgroundColor: darkTheme.BARTAP_BLACK,
     alignItems: "center",
     justifyContent: "flex-start",
   },
@@ -85,10 +85,10 @@ const styles = StyleSheet.create({
   },
   picker: {
     height: 60,
-    borderColor: colors.BARTAP_WHITE,
+    borderColor: darkTheme.BARTAP_WHITE,
     borderWidth: 1,
-    backgroundColor: colors.BARTAP_DARK_GREY,
-    color: colors.BARTAP_WHITE,
+    backgroundColor: darkTheme.BARTAP_DARK_GREY,
+    color: darkTheme.BARTAP_WHITE,
     borderRadius: 5,
     justifyContent: "center",
     marginVertical: 10,
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: "100%",
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     borderColor: "white",
     borderWidth: 1,
     borderRadius: 5,

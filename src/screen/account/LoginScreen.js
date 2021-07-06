@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, Image } from "react-native";
-import variables, { colors, mock, sizes } from "../../theme/variables.js";
+import variables, { darkTheme, mock, sizes } from "../../theme/variables.js";
 import { Button, TextInput, TouchableOpacity } from "react-native";
 import BarTapHeader from "../../component/BarTapHeader";
 import * as api from "../../service/BarApiService.js";
@@ -27,7 +27,7 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.form}>
           <TextInput
             placeholder={"Email adress / username"}
-            placeholderTextColor={colors.BARTAP_LIGHT_GREY}
+            placeholderTextColor={darkTheme.BARTAP_LIGHT_GREY}
             autoCompleteType={"email"}
             value={email}
             onChangeText={setEmail}
@@ -37,7 +37,7 @@ export default function LoginScreen({ navigation }) {
           />
           <TextInput
             placeholder={"Password"}
-            placeholderTextColor={colors.BARTAP_LIGHT_GREY}
+            placeholderTextColor={darkTheme.BARTAP_LIGHT_GREY}
             autoCompleteType={"password"}
             value={password}
             onChangeText={setPassword}
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
+    backgroundColor: darkTheme.BARTAP_BLACK,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   title: {
     height: 40,
     margin: 10,
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     fontSize: sizes.TITLE,
     fontWeight: "bold",
   },
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     height: 120,
   },
   logoText: {
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     fontSize: 40,
     fontWeight: "bold",
     marginBottom: 20,
@@ -100,19 +100,19 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   text: {
-    color: colors.BARTAP_GREY,
+    color: darkTheme.BARTAP_GREY,
     fontSize: 50,
     fontWeight: "bold",
   },
   link: {
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     textAlign: "center",
     textDecorationLine: "underline",
   },
   input: {
     width: "100%",
     marginVertical: 10,
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     borderColor: "white",
     borderWidth: 1,
     borderRadius: 5,
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   input__label: {
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     alignSelf: "flex-start",
     fontWeight: "bold",
     fontSize: 20,

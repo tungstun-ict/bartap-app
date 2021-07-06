@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, StyleSheet, View } from "react-native";
-import { colors } from "../../theme/variables";
+import { darkTheme } from "../../theme/variables";
 
 
 export default function BarTapTitle({ level, text }) {
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   title: {
     marginVertical: 10,
     alignItems: 'center',
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     fontWeight: "bold",
   },
 });

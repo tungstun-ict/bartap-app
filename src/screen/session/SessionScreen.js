@@ -12,7 +12,7 @@ import BarTapHeader from "../../component/BarTapHeader";
 import * as api from "../../service/BarApiService.js";
 import NfcProxy from "../../service/NfcService.js";
 import { decryptXor, encryptXor } from "../../service/XorEncryptionService.js";
-import variables, { colors, mock } from "../../theme/variables.js";
+import variables, { darkTheme, mock } from "../../theme/variables.js";
 
 export default function SessionScreen({ navigation }) {
   const [isLoading, setLoading] = useState(true);
@@ -272,7 +272,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
+    backgroundColor: darkTheme.BARTAP_BLACK,
     alignItems: "center",
     justifyContent: "flex-start",
   },
@@ -286,7 +286,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: 100,
     marginTop: 20,
-    backgroundColor: colors.BARTAP_DARK_GREY,
+    backgroundColor: darkTheme.BARTAP_DARK_GREY,
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.BARTAP_WHITE,
+    backgroundColor: darkTheme.BARTAP_WHITE,
   },
   buttonDisabled: {
     marginHorizontal: 20,
@@ -310,19 +310,19 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: colors.BARTAP_SELECTED,
+    backgroundColor: darkTheme.BARTAP_SELECTED,
   },
   addSessionButton: {
     fontSize: 50,
     fontWeight: "bold",
-    color: colors.BARTAP_BLACK,
+    color: darkTheme.BARTAP_BLACK,
   },
   button__image: {
     height: 40,
     width: 40,
   },
   button__text: {
-    color: colors.BARTAP_LIGHT_GREY,
+    color: darkTheme.BARTAP_LIGHT_GREY,
   },
   bottomBar: {
     height: "auto",
@@ -355,7 +355,7 @@ const styles = StyleSheet.create({
   },
   addButton__text: {
     textAlign: "center",
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     fontWeight: "bold",
     width: "100%",
     height: "100%",
@@ -373,7 +373,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   session__title: {
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     fontSize: 25,
     flex: 1,
     fontWeight: "bold",
@@ -385,7 +385,7 @@ const styles = StyleSheet.create({
   customer: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_WHITE,
+    backgroundColor: darkTheme.BARTAP_WHITE,
     marginVertical: 10,
     height: Dimensions.get("window").height / 7,
     maxWidth: Dimensions.get("window").width / 2 - 30,
@@ -396,7 +396,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     margin: 5,
-    color: colors.BARTAP_BLACK,
+    color: darkTheme.BARTAP_BLACK,
   },
   customer__total: {
     width: "100%",
@@ -404,13 +404,13 @@ const styles = StyleSheet.create({
     fontSize: 35,
     marginTop: "auto",
     textAlign: "right",
-    color: colors.BARTAP_BLACK,
+    color: darkTheme.BARTAP_BLACK,
     paddingRight: 10,
   },
   addCustomer: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_SELECTED,
+    backgroundColor: darkTheme.BARTAP_SELECTED,
     alignItems: "center",
     justifyContent: "center",
     marginVertical: 10,
@@ -423,14 +423,14 @@ const styles = StyleSheet.create({
   sheetLogo: {
     height: 100,
     width: 100,
-    tintColor: colors.BARTAP_WHITE,
+    tintColor: darkTheme.BARTAP_WHITE,
     alignSelf: "center",
     marginTop: 20,
   },
   sheetText: {
     alignSelf: "center",
     fontSize: 20,
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     fontWeight: "bold",
     marginVertical: 20,
     textAlign: "center",

@@ -9,7 +9,7 @@ import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
-import variables, { colors, mock, sizes } from "../../theme/variables.js";
+import variables, { darkTheme, mock, sizes } from "../../theme/variables.js";
 
 export default function SessionBillScreen({ route, navigation }) {
   const { billId, sessionId } = route.params;
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
+    backgroundColor: darkTheme.BARTAP_BLACK,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
@@ -234,11 +234,11 @@ const styles = StyleSheet.create({
     height: "auto",
     flexDirection: "column",
     alignItems: "center",
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     marginBottom: 10,
     marginHorizontal: 10,
     padding: 10,
-    backgroundColor: colors.BARTAP_DARK_GREY,
+    backgroundColor: darkTheme.BARTAP_DARK_GREY,
     borderRadius: 5,
   },
   footerText: {
@@ -248,14 +248,14 @@ const styles = StyleSheet.create({
   },
   footerPrice: {
     marginLeft: "auto",
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     fontSize: 30,
     alignSelf: "center",
     height: "auto",
     fontWeight: "bold",
   },
   footerTotal: {
-    color: colors.BARTAP_WHITE,
+    color: darkTheme.BARTAP_WHITE,
     fontSize: 30,
     alignSelf: "center",
     height: "auto",

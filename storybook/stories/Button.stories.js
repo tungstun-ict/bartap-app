@@ -12,8 +12,8 @@ storiesOf("BarTap Button", module)
   .add("with custom colors", () => (
     <BarTapButton
       text={"Example text"}
-      colour={colors.BARTAP_RED}
-      textColour={colors.BARTAP_WHITE}
+      colour={darkTheme.BARTAP_RED}
+      textColour={darkTheme.BARTAP_WHITE}
       onPress={() => alert("done")}
     />
   ));

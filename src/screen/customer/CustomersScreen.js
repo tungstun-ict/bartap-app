@@ -9,7 +9,7 @@ import {
   FlatList,
   RefreshControl,
 } from "react-native";
-import variables, { colors, mock, sizes } from "../../theme/variables.js";
+import variables, { darkTheme, mock, sizes } from "../../theme/variables.js";
 import BarTapHeader from "../../component/BarTapHeader";
 import * as api from "../../service/BarApiService.js";
 import * as storage from "../../service/BarStorageService.js";
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
+    backgroundColor: darkTheme.BARTAP_BLACK,
     alignItems: "flex-start",
     justifyContent: "flex-start",
   },
