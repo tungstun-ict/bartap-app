@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, RefreshControl } from "react-native";
-import { Dimensions, FlatList, TouchableOpacity } from "react-native";
+import { Dimensions, FlatList, TouchableOpacity, Image, TextInput, TouchableOpacity } from "react-native";
 import BarTapContent from "../../component/BarTapContent";
 import * as api from "../../service/BarApiService.js";
 import { ThemeContext } from "../../theme/ThemeManager";
@@ -11,20 +11,21 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    if(isLoading) {
+    if (isLoading) {
       api
-      .getCategories()
-      .then((json) => {
-        setCategories(json.sort(function (a, b) {
-          return b.id < a.id;
-        }),
-      );
-        setLoading(false);
-      })
-      .catch((error) => {
-        alert(error)
-        setLoading(false);
-      });
+        .getCategories()
+        .then((json) => {
+          setCategories(
+            json.sort(function (a, b) {
+              return b.id < a.id;
+            }),
+          );
+          setLoading(false);
+        })
+        .catch((error) => {
+          alert(error);
+          setLoading(false);
+        });
     }
   }, [isLoading]);
 
@@ -89,6 +90,39 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       marginVertical: 10,
       width: "100%",
     },
+    searchBar__container: {
+      height: 50,
+      width: "100%",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 10,
+      marginTop: 10,
+    },
+    searchBar: {
+      backgroundColor: colors.BARTAP_WHITE,
+      width: "100%",
+      height: 50,
+      borderRadius: 5,
+      flexDirection: "row",
+    },
+    searchBar__input: {
+      flex: 1,
+      color: colors.BARTAP_BLACK,
+      fontSize: 20,
+      fontWeight: "bold",
+      marginLeft: 10,
+    },
+    searchBar__button: {
+      width: 50,
+      height: "100%",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    searchBar__buttonImage: {
+      tintColor: colors.BARTAP_BLACK,
+      height: 40,
+      width: 40,
+    },
   });
 
   const categoryListItem = (navigation, category, billId, sessionId) => {
@@ -106,6 +140,18 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
   return (
     <BarTapContent navigation={navigation} title={"Add product"}>
       <View style={styles.categories}>
+          <View style={styles.searchBar__container}>
+            <View style={styles.searchBar}>
+              <TextInput style={styles.searchBar__input} />
+              <TouchableOpacity
+                  style={styles.searchBar__button}>
+                <Image
+                    style={styles.searchBar__buttonImage}
+                    source={require("../../assets/search.png")}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
           <FlatList
             refreshControl={
               <RefreshControl onRefresh={() => setLoading(true)} refreshing={isLoading} tintColor="white" />
