@@ -7,13 +7,17 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { ceil } from "react-native-reanimated";
 
 import BarTapButton from "../../component/BarTapButton/index.js";
+import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapHeader from "../../component/BarTapHeader";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
-import variables, { darkTheme, mock } from "../../theme/variables.js";
+import { ThemeContext } from "../../theme/ThemeManager.js";
+import variables, { theme, mock } from "../../theme/variables.js";
 
 export default function EditProductScreen({ route, navigation }) {
+  const { theme } = React.useContext(ThemeContext);
+
   const productId = route.params;
   const [isLoading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
@@ -84,6 +88,35 @@ export default function EditProductScreen({ route, navigation }) {
     }
   };
 
+  const styles = StyleSheet.create({
+    picker: {
+      height: 60,
+      borderColor: theme.BARTAP_WHITE,
+      borderWidth: 1,
+      backgroundColor: theme.BARTAP_DARK_GREY,
+      color: theme.BARTAP_WHITE,
+      borderRadius: 5,
+      justifyContent: "center",
+      width: "100%",
+    },
+    picker__item: {
+      height: 50,
+      color: "white",
+    },
+    input: {
+      width: "100%",
+      color: theme.BARTAP_WHITE,
+      borderColor: theme.BARTAP_WHITE,
+      borderWidth: 1,
+      borderRadius: 5,
+      paddingLeft: 10,
+      height: 50,
+    },
+    button: {
+      marginTop: 10,
+    },
+  });
+
   let pickerItems = categories
     .sort(function (a, b) {
       return b.id < a.id;
@@ -99,8 +132,7 @@ export default function EditProductScreen({ route, navigation }) {
     });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <BarTapStackHeader navigation={navigation} title="Edit product" />
+    <BarTapContent navigation={navigation} title={"Edit " + brand + " " + name}>
       <ScrollView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.content}
@@ -155,47 +187,6 @@ export default function EditProductScreen({ route, navigation }) {
           text={"Submit"}
         />
       </ScrollView>
-    </SafeAreaView>
+    </BarTapContent>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: darkTheme.BARTAP_BLACK,
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
-  content: {
-    flex: 1,
-    width: "100%",
-    paddingHorizontal: 10,
-  },
-  picker: {
-    height: 60,
-    borderColor: darkTheme.BARTAP_WHITE,
-    borderWidth: 1,
-    backgroundColor: darkTheme.BARTAP_DARK_GREY,
-    color: darkTheme.BARTAP_WHITE,
-    borderRadius: 5,
-    justifyContent: "center",
-    width: "100%",
-  },
-  picker__item: {
-    height: 50,
-    color: "white",
-  },
-  input: {
-    width: "100%",
-    color: darkTheme.BARTAP_WHITE,
-    borderColor: "white",
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingLeft: 10,
-    height: 50,
-  },
-  button: {
-    marginTop: 10,
-  },
-});
