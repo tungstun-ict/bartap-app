@@ -5,13 +5,17 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import SwipeableFlatList from "react-native-swipeable-list";
 
 import BarTapButton from "../../component/BarTapButton/index.js";
+import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
-import variables, { darkTheme, mock, sizes } from "../../theme/variables.js";
+import { ThemeContext } from "../../theme/ThemeManager.js";
+import variables, { theme, mock, sizes } from "../../theme/variables.js";
 
 export default function SessionBillScreen({ route, navigation }) {
+  const { theme } = React.useContext(ThemeContext);
+
   const { billId, sessionId } = route.params;
   const [bill, setBill] = useState({ customer: { name: "" }, totalPrice: 0 });
   const [isLoading, setLoading] = useState(true);
@@ -78,6 +82,111 @@ export default function SessionBillScreen({ route, navigation }) {
     );
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      flexDirection: "column",
+      backgroundColor: theme.BARTAP_BLACK,
+      alignItems: "flex-start",
+      justifyContent: "flex-start",
+    },
+    content: {
+      flex: 1,
+      width: "100%",
+      height: "100%",
+      paddingHorizontal: 10,
+    },
+    qaContainer: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "flex-end",
+    },
+    qaButton: {
+      width: 80,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    qaButton__text: {
+      fontWeight: "bold",
+      color: "red",
+    },
+    list: {
+      flex: 4,
+      flexDirection: "column",
+      alignSelf: "center",
+      width: "100%",
+      height: "100%",
+    },
+    deleteButton: {
+      marginLeft: "auto",
+    },
+    deleteButton__image: {
+      height: 30,
+      width: 25,
+      tintColor: "white",
+    },
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      width: "100%",
+      maxHeight: 60,
+      flex: 1,
+    },
+    footer: {
+      zIndex: 5,
+      height: "auto",
+      flexDirection: "column",
+      alignItems: "center",
+      color: theme.BARTAP_WHITE,
+      marginBottom: 10,
+      marginHorizontal: 10,
+      padding: 10,
+      backgroundColor: theme.BARTAP_DARK_GREY,
+      borderRadius: 5,
+    },
+    footerText: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      width: "100%",
+    },
+    footerPrice: {
+      marginLeft: "auto",
+      color: theme.BARTAP_WHITE,
+      fontSize: 30,
+      alignSelf: "center",
+      height: "auto",
+      fontWeight: "bold",
+    },
+    footerTotal: {
+      color: theme.BARTAP_WHITE,
+      fontSize: 30,
+      alignSelf: "center",
+      height: "auto",
+      fontWeight: "bold",
+    },
+    footerCheck: {
+      marginTop: 20,
+      height: 70,
+      width: 70,
+    },
+    footerButton: {
+      marginBottom: 10,
+    },
+  });
+
+  const listItem = (order) => {
+    const timestamp = new Date(order.creationDate);
+    return (
+      <BarTapListItem
+        timestamp={timestamp}
+        name={order.product.name}
+        multiplier={order.amount}
+        price={(order.product.price * order.amount).toFixed(2)}
+      />
+    );
+  }
+
   const swipeableView = (item) => {
     return (
       <View style={styles.qaContainer}>
@@ -106,10 +215,8 @@ export default function SessionBillScreen({ route, navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <BarTapStackHeader navigation={navigation} title="Bill" />
-      <View style={styles.content}>
-        <View style={styles.header}>
+    <BarTapContent navigation={navigation} title={"Bill"}>
+      <View style={styles.header}>
           <BarTapTitle text={bill.customer.name} level={1} />
           <TouchableOpacity
             style={styles.deleteButton}
@@ -161,112 +268,6 @@ export default function SessionBillScreen({ route, navigation }) {
             </Text>
           </View>
         </View>
-      </View>
-    </SafeAreaView>
+    </BarTapContent>
   );
 }
-
-function listItem(order) {
-  const timestamp = new Date(order.creationDate);
-  return (
-    <BarTapListItem
-      timestamp={timestamp}
-      name={order.product.name}
-      multiplier={order.amount}
-      price={(order.product.price * order.amount).toFixed(2)}
-    />
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: darkTheme.BARTAP_BLACK,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-  },
-  content: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    paddingHorizontal: 10,
-  },
-  qaContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "flex-end",
-  },
-  qaButton: {
-    width: 80,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  qaButton__text: {
-    fontWeight: "bold",
-    color: "red",
-  },
-  list: {
-    flex: 4,
-    flexDirection: "column",
-    alignSelf: "center",
-    width: "100%",
-    height: "100%",
-  },
-  deleteButton: {
-    marginLeft: "auto",
-  },
-  deleteButton__image: {
-    height: 30,
-    width: 25,
-    tintColor: "white",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    width: "100%",
-    maxHeight: 60,
-    flex: 1,
-  },
-  footer: {
-    zIndex: 5,
-    height: "auto",
-    flexDirection: "column",
-    alignItems: "center",
-    color: darkTheme.BARTAP_WHITE,
-    marginBottom: 10,
-    marginHorizontal: 10,
-    padding: 10,
-    backgroundColor: darkTheme.BARTAP_DARK_GREY,
-    borderRadius: 5,
-  },
-  footerText: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "100%",
-  },
-  footerPrice: {
-    marginLeft: "auto",
-    color: darkTheme.BARTAP_WHITE,
-    fontSize: 30,
-    alignSelf: "center",
-    height: "auto",
-    fontWeight: "bold",
-  },
-  footerTotal: {
-    color: darkTheme.BARTAP_WHITE,
-    fontSize: 30,
-    alignSelf: "center",
-    height: "auto",
-    fontWeight: "bold",
-  },
-  footerCheck: {
-    marginTop: 20,
-    height: 70,
-    width: 70,
-  },
-  footerButton: {
-    marginBottom: 10,
-  },
-});

@@ -60,6 +60,7 @@ export default function BarTapListItem({
       height: 20,
       width: 20,
       marginLeft: 10,
+      tintColor: theme.BARTAP_WHITE,
     },
   });
 

@@ -18,9 +18,12 @@ import BarTapHeader from "../../component/BarTapHeader";
 import * as api from "../../service/BarApiService.js";
 import NfcProxy from "../../service/NfcService.js";
 import { decryptXor, encryptXor } from "../../service/XorEncryptionService.js";
-import variables, { darkTheme, mock } from "../../theme/variables.js";
+import { ThemeContext } from "../../theme/ThemeManager.js";
+import variables, { theme, mock } from "../../theme/variables.js";
 
 export default function SessionScreen({ navigation }) {
+const { theme } = React.useContext(ThemeContext);
+
   const [isLoading, setLoading] = useState(true);
   const [session, setSession] = useState({
     bills: [],
@@ -79,28 +82,7 @@ export default function SessionScreen({ navigation }) {
     setTimeout(closeBottomSheet, 3000);
   };
 
-  const renderContent = () => {
-    return (
-      <BarTapBottomSheet height={290}>
-        <Image
-          style={styles.sheetLogo}
-          source={require("../../assets/nfc.png")}
-        />
-        <Text style={styles.sheetText}>{nfcStatus}</Text>
-        {typeof nfcStatus === "number" && (
-          <BarTapButton
-            text={"Customer info"}
-            onPress={() =>
-              navigation.navigate("Customers", {
-                screen: "Customer overview",
-                params: { id: nfcStatus },
-              })
-            }
-          />
-        )}
-      </BarTapBottomSheet>
-    );
-  };
+  
 
   const closeBottomSheet = () => {
     if (mounted.current) {
@@ -168,6 +150,224 @@ export default function SessionScreen({ navigation }) {
   };
 
   const numColumns = 2;
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      flexDirection: "column",
+      backgroundColor: theme.BARTAP_BLACK,
+      alignItems: "center",
+      justifyContent: "flex-start",
+    },
+    content: {
+      flex: 1,
+      width: "100%",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    bottomBar__bar: {
+      flexDirection: "row",
+      height: 100,
+      marginTop: 20,
+      backgroundColor: theme.BARTAP_DARK_GREY,
+      justifyContent: "center",
+      alignItems: "center",
+      width: "100%",
+    },
+  
+    button: {
+      marginHorizontal: 20,
+      flex: 1,
+      height: 70,
+      width: 70,
+      borderRadius: 5,
+      alignItems: "center",
+      justifyContent: "center",
+      tintColor: theme.BARTAP_BLACK,
+      backgroundColor: theme.BARTAP_WHITE,
+    },
+    buttonDisabled: {
+      marginHorizontal: 20,
+      flex: 1,
+      height: 70,
+      width: 70,
+      borderRadius: 5,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: theme.BARTAP_SELECTED,
+    },
+    addSessionButton: {
+      fontSize: 50,
+      fontWeight: "bold",
+      color: theme.BARTAP_BLACK,
+    },
+    button__image: {
+      height: 40,
+      width: 40,
+      tintColor: theme.BARTAP_BLACK,
+    },
+    button__text: {
+      color: theme.BARTAP_LIGHT_GREY,
+    },
+    bottomBar: {
+      height: "auto",
+    },
+    session: {
+      flex: 1,
+      width: "100%",
+      height: "100%",
+      flexDirection: "column",
+      justifyContent: "flex-start",
+      alignItems: "flex-start",
+      padding: 10,
+    },
+    itemInvisible: {
+      backgroundColor: "transparent",
+    },
+    header: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "center",
+      flex: 1,
+      minHeight: 40,
+      maxHeight: 40,
+    },
+    addButton: {
+      flexDirection: "column",
+      marginLeft: "auto",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    addButton__text: {
+      textAlign: "center",
+      color: theme.BARTAP_WHITE,
+      fontWeight: "bold",
+      width: "100%",
+      height: "100%",
+      marginBottom: 15,
+      margin: 10,
+      marginRight: 10,
+      fontSize: 40,
+    },
+    session__customers: {
+      marginVertical: 10,
+      width: "100%",
+    },
+    customers__row: {
+      flex: 1,
+      justifyContent: "space-around",
+    },
+    session__title: {
+      color: theme.BARTAP_WHITE,
+      fontSize: 25,
+      flex: 1,
+      fontWeight: "bold",
+    },
+    list: {
+      height: "100%",
+      width: "100%",
+    },
+    customer: {
+      flex: 1,
+      flexDirection: "column",
+      backgroundColor: theme.BARTAP_WHITE,
+      marginVertical: 10,
+      height: Dimensions.get("window").height / 7,
+      maxWidth: Dimensions.get("window").width / 2 - 30,
+      minWidth: Dimensions.get("window").width / 2 - 30,
+      borderRadius: 5,
+    },
+    customer__name: {
+      fontSize: 20,
+      fontWeight: "bold",
+      margin: 5,
+      color: theme.BARTAP_BLACK,
+    },
+    customer__total: {
+      width: "100%",
+      fontWeight: "bold",
+      fontSize: 35,
+      marginTop: "auto",
+      textAlign: "right",
+      color: theme.BARTAP_BLACK,
+      paddingRight: 10,
+    },
+    addCustomer: {
+      flex: 1,
+      flexDirection: "column",
+      backgroundColor: theme.BARTAP_SELECTED,
+      alignItems: "center",
+      justifyContent: "center",
+      marginVertical: 10,
+      height: 50,
+      borderRadius: 5,
+    },
+    addCustomer__text: {
+      fontSize: 30,
+    },
+    sheetLogo: {
+      tintColor: theme.BARTAP_WHITE,
+      height: 100,
+      width: 100,
+      alignSelf: "center",
+      marginTop: 20,
+    },
+    sheetText: {
+      alignSelf: "center",
+      fontSize: 20,
+      color: theme.BARTAP_WHITE,
+      fontWeight: "bold",
+      marginVertical: 20,
+      textAlign: "center",
+    },
+  });
+
+  const renderContent = () => {
+    return (
+      <BarTapBottomSheet height={290}>
+        <Image
+          style={styles.sheetLogo}
+          source={require("../../assets/nfc.png")}
+        />
+        <Text style={styles.sheetText}>{nfcStatus}</Text>
+        {typeof nfcStatus === "number" && (
+          <BarTapButton
+            text={"Customer info"}
+            onPress={() =>
+              navigation.navigate("Customers", {
+                screen: "Customer overview",
+                params: { id: nfcStatus },
+              })
+            }
+          />
+        )}
+      </BarTapBottomSheet>
+    );
+  };
+
+ const customerListItem = (navigation, bill, sessionId) => {
+  let billId = bill.id;
+  return (
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Drink Categories", { billId, sessionId })
+      }
+      onLongPress={() =>
+        navigation.navigate("Session Bill", { billId, sessionId })
+      }
+    >
+      <View style={styles.customer}>
+        <Text style={styles.customer__name} numberOfLines={2}>
+          {bill.customer.name}
+        </Text>
+        <Text style={styles.customer__total}>
+          €{bill.totalPrice.toFixed(2)}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+}
+
   return (
     <BarTapContent navigation={navigation} padding={0}>
       <View style={styles.session}>
@@ -249,195 +449,3 @@ export default function SessionScreen({ navigation }) {
     </BarTapContent>
   );
 }
-
-function customerListItem(navigation, bill, sessionId) {
-  let billId = bill.id;
-  return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("Drink Categories", { billId, sessionId })
-      }
-      onLongPress={() =>
-        navigation.navigate("Session Bill", { billId, sessionId })
-      }
-    >
-      <View style={styles.customer}>
-        <Text style={styles.customer__name} numberOfLines={2}>
-          {bill.customer.name}
-        </Text>
-        <Text style={styles.customer__total}>
-          €{bill.totalPrice.toFixed(2)}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: darkTheme.BARTAP_BLACK,
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
-  content: {
-    flex: 1,
-    width: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  bottomBar__bar: {
-    flexDirection: "row",
-    height: 100,
-    marginTop: 20,
-    backgroundColor: darkTheme.BARTAP_DARK_GREY,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-  },
-
-  button: {
-    marginHorizontal: 20,
-    flex: 1,
-    height: 70,
-    width: 70,
-    borderRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: darkTheme.BARTAP_WHITE,
-  },
-  buttonDisabled: {
-    marginHorizontal: 20,
-    flex: 1,
-    height: 70,
-    width: 70,
-    borderRadius: 5,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: darkTheme.BARTAP_SELECTED,
-  },
-  addSessionButton: {
-    fontSize: 50,
-    fontWeight: "bold",
-    color: darkTheme.BARTAP_BLACK,
-  },
-  button__image: {
-    height: 40,
-    width: 40,
-  },
-  button__text: {
-    color: darkTheme.BARTAP_LIGHT_GREY,
-  },
-  bottomBar: {
-    height: "auto",
-  },
-  session: {
-    flex: 1,
-    width: "100%",
-    height: "100%",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    padding: 10,
-  },
-  itemInvisible: {
-    backgroundColor: "transparent",
-  },
-  header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    flex: 1,
-    minHeight: 40,
-    maxHeight: 40,
-  },
-  addButton: {
-    flexDirection: "column",
-    marginLeft: "auto",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  addButton__text: {
-    textAlign: "center",
-    color: darkTheme.BARTAP_WHITE,
-    fontWeight: "bold",
-    width: "100%",
-    height: "100%",
-    marginBottom: 15,
-    margin: 10,
-    marginRight: 10,
-    fontSize: 40,
-  },
-  session__customers: {
-    marginVertical: 10,
-    width: "100%",
-  },
-  customers__row: {
-    flex: 1,
-    justifyContent: "space-around",
-  },
-  session__title: {
-    color: darkTheme.BARTAP_WHITE,
-    fontSize: 25,
-    flex: 1,
-    fontWeight: "bold",
-  },
-  list: {
-    height: "100%",
-    width: "100%",
-  },
-  customer: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: darkTheme.BARTAP_WHITE,
-    marginVertical: 10,
-    height: Dimensions.get("window").height / 7,
-    maxWidth: Dimensions.get("window").width / 2 - 30,
-    minWidth: Dimensions.get("window").width / 2 - 30,
-    borderRadius: 5,
-  },
-  customer__name: {
-    fontSize: 20,
-    fontWeight: "bold",
-    margin: 5,
-    color: darkTheme.BARTAP_BLACK,
-  },
-  customer__total: {
-    width: "100%",
-    fontWeight: "bold",
-    fontSize: 35,
-    marginTop: "auto",
-    textAlign: "right",
-    color: darkTheme.BARTAP_BLACK,
-    paddingRight: 10,
-  },
-  addCustomer: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: darkTheme.BARTAP_SELECTED,
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: 10,
-    height: 50,
-    borderRadius: 5,
-  },
-  addCustomer__text: {
-    fontSize: 30,
-  },
-  sheetLogo: {
-    height: 100,
-    width: 100,
-    tintColor: darkTheme.BARTAP_WHITE,
-    alignSelf: "center",
-    marginTop: 20,
-  },
-  sheetText: {
-    alignSelf: "center",
-    fontSize: 20,
-    color: darkTheme.BARTAP_WHITE,
-    fontWeight: "bold",
-    marginVertical: 20,
-    textAlign: "center",
-  },
-});
