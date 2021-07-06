@@ -12,12 +12,12 @@ export const darkTheme = {
 export const lightTheme = {
   mode: 'light',
   BARTAP_BLACK: "#fff",
-  BARTAP_DARK_GREY: "#212121",
-  BARTAP_SELECTED: "#323232",
+  BARTAP_DARK_GREY: "#ababab",
+  BARTAP_SELECTED: "#ababab",
   BARTAP_RED: "#ad0909",
   BARTAP_WHITE: "#000",
-  BARTAP_LIGHT_GREY: "#484848",
-  BARTAP_GREY: "#383838",
+  BARTAP_LIGHT_GREY: "#dedede",
+  BARTAP_GREY: "#c9c9c9",
 };
 
 export const sizes = {

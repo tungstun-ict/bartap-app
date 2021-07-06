@@ -31,10 +31,7 @@ import * as storage from "./src/service/BarStorageService.js";
 import { AuthContext } from "./src/service/Context.js";
 import { darkTheme } from "./src/theme/variables";
 
-import { Provider } from "react-redux";
-import { createStore, applyMiddleware, combineReducers } from "redux";
-import { thunk } from "redux-thunk";
-import themeReducer from "./src/redux/themeReducer";
+import { ThemeProvider } from "./src/theme/ThemeManager";
 
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
@@ -181,8 +178,6 @@ export function SignInStack() {
   );
 }
 
-const store = createStore(combineReducers({ themeReducer }), applyMiddleware(thunk));
-
 export default function App() {
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
@@ -267,7 +262,7 @@ export default function App() {
 
   return (
     <>
-      <Provider store={store}>
+      <ThemeProvider>
         <AuthContext.Provider value={authContext}>
           <NavigationContainer>
             <DrawerNavigator.Navigator
@@ -315,7 +310,7 @@ export default function App() {
           </NavigationContainer>
         </AuthContext.Provider>
         <StatusBar style="light" />
-      </Provider>
+      </ThemeProvider>
     </>
   );
 }

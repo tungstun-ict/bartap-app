@@ -1,13 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { SafeAreaView } from "react-native";
 import { Alert, Image, StyleSheet, Text, View } from "react-native";
-import { ActivityIndicator, Button, Dimensions, RefreshControl } from "react-native";
+import {
+  ActivityIndicator,
+  Button,
+  Dimensions,
+  RefreshControl,
+} from "react-native";
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
 
 import BarTapBottomSheet from "../../component/BarTapBottomSheet/index.js";
 import BarTapButton from "../../component/BarTapButton/index.js";
+import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapHeader from "../../component/BarTapHeader";
 import * as api from "../../service/BarApiService.js";
 import NfcProxy from "../../service/NfcService.js";
@@ -87,7 +93,7 @@ export default function SessionScreen({ navigation }) {
             onPress={() =>
               navigation.navigate("Customers", {
                 screen: "Customer overview",
-                params: {id: nfcStatus}
+                params: { id: nfcStatus },
               })
             }
           />
@@ -163,8 +169,7 @@ export default function SessionScreen({ navigation }) {
 
   const numColumns = 2;
   return (
-    <SafeAreaView style={styles.container}>
-      <BarTapHeader navigation={navigation} />
+    <BarTapContent navigation={navigation} padding={0}>
       <View style={styles.session}>
         <View style={styles.header}>
           <Text style={styles.session__title}>{session.name}</Text>
@@ -241,7 +246,7 @@ export default function SessionScreen({ navigation }) {
         borderRadius={10}
         renderContent={renderContent}
       />
-    </SafeAreaView>
+    </BarTapContent>
   );
 }
 
