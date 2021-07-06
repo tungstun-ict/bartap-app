@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { RefreshControl, SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, RefreshControl } from "react-native";
 import { Dimensions, FlatList, TouchableOpacity, Image, TextInput, TouchableOpacity } from "react-native";
+
+import BarTapListItem from "../../component/BarTapListItem";
+import BarTapSearchBar from "../../component/BarTapSearchBar";
 import BarTapContent from "../../component/BarTapContent";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
 import * as api from "../../service/BarApiService.js";
 import { ThemeContext } from "../../theme/ThemeManager";
 
 export default function DrinkCategoriesScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
+
+  const [searchString, setSearchString] = useState("");
   const [categories, setCategories] = useState([]);
-  const [isLoading, setLoading] = useState(true);
+  const [searchResults, setSearchResults] = useState([]);
+  const [isCategoriesLoading, setCategoriesLoading] = useState(true);
+  const [isSearchLoading, setSearchLoading] = useState(false);
 
   useEffect(() => {
-    if (isLoading) {
+    if (isCategoriesLoading) {
       api
         .getCategories()
         .then((json) => {
@@ -20,14 +29,29 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
               return b.id < a.id;
             }),
           );
-          setLoading(false);
+          setCategoriesLoading(false);
         })
         .catch((error) => {
           alert(error);
-          setLoading(false);
+          setCategoriesLoading(false);
         });
     }
-  }, [isLoading]);
+  }, [isCategoriesLoading]);
+
+  useEffect(() => {
+    if (isSearchLoading) {
+      api
+        .getSearchResults()
+        .then((json) => {
+          setSearchResults(json);
+          setSearchLoading(false);
+        })
+        .catch((error) => {
+          alert(error);
+          setSearchLoading(false);
+        });
+    }
+  }, [isSearchLoading]);
 
   const { billId, sessionId } = route.params;
 
@@ -49,6 +73,71 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
     }
 
     return data;
+  };
+
+  const search = (string) => {
+    if(string.length === 0) {
+      setSearchLoading(false);
+      setSearchString("")
+      return;
+    }
+    setSearchString(string);
+    setSearchLoading(true);
+  }
+
+  const listItem = (drink) => {
+    return (
+        <BarTapListItem
+            onPress={() => selectAmount(drink.id)}
+            name={`${drink.brand} ${drink.name}`}
+            price={drink.price.toFixed(2)}
+        />
+    );
+  };
+
+  const CategoriesContent = () => {
+    return (
+        <View style={styles.categories}>
+          <FlatList
+              refreshControl={
+                <RefreshControl
+                    onRefresh={() => setCategoriesLoading(true)}
+                    refreshing={isCategoriesLoading}
+                    tintColor="white"
+                />
+              }
+              data={formatData(categories, 2)}
+              renderItem={({ item }) => {
+                if (item.empty === true) {
+                  return <View style={[styles.category, styles.itemInvisible]} />;
+                } else {
+                  return categoryListItem(navigation, item, billId, sessionId);
+                }
+              }}
+              keyExtractor={(item) => item.id.toString()}
+              numColumns={2}
+              columnWrapperStyle={styles.categories__row}
+          />
+        </View>
+    );
+  };
+
+  const SearchResultsContent = () => {
+    return (
+        <FlatList
+            refreshControl={
+              <RefreshControl
+                  onRefresh={() => setSearchLoading(true)}
+                  refreshing={isCategoriesLoading}
+                  tintColor="white"
+              />
+            }
+            keyExtractor={(item) => item.id.toString()}
+            style={styles.list}
+            data={searchResults}
+            renderItem={({ item }) => listItem(item)}
+        />
+    );
   };
 
   const handleOnPress = (navigation, category, billId, sessionId) => {
@@ -97,6 +186,12 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       justifyContent: "center",
       padding: 10,
       marginTop: 10,
+    },
+    list: {
+      flex: 1,
+      flexDirection: "column",
+      alignSelf: "center",
+      width: "100%",
     },
     searchBar: {
       backgroundColor: colors.BARTAP_WHITE,
