@@ -6,6 +6,7 @@ import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
+import * as Utils from "../../service/Utils.js";
 
 export default function CategoryOverviewScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -19,11 +20,8 @@ export default function CategoryOverviewScreen({ route, navigation }) {
       api
         .getDrinksByCategory(category.id)
         .then((json) => {
-          setDrinks(
-            json.sort(function (a, b) {
-              return a.id - b.id;
-            }),
-          );
+          json.sort((a, b) => Utils.sortListItemString(a.brand, b.brand))
+          setDrinks(json);
           setLoading(false);
         })
         .catch((error) => {
