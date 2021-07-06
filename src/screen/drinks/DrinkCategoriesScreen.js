@@ -3,6 +3,7 @@ import { RefreshControl, SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, RefreshControl } from "react-native";
 import { Dimensions, FlatList, TouchableOpacity, Image, TextInput, TouchableOpacity } from "react-native";
 
+import BarTapCountDialog from "../../component/BarTapCountDialog";
 import BarTapListItem from "../../component/BarTapListItem";
 import BarTapSearchBar from "../../component/BarTapSearchBar";
 import BarTapContent from "../../component/BarTapContent";
@@ -18,6 +19,10 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
   const [searchResults, setSearchResults] = useState([]);
   const [isCategoriesLoading, setCategoriesLoading] = useState(true);
   const [isSearchLoading, setSearchLoading] = useState(false);
+
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [amount, setAmount] = useState(1);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     if (isCategoriesLoading) {
@@ -75,15 +80,33 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
     return data;
   };
 
+  const selectAmount = (drink) => {
+    setSelectedItem(drink)
+    setDialogOpen(true);
+  }
+
+  const addItem = (navigation, billId, sessionId) => {
+    if(selectedItem === null) {
+      return;
+    }
+
+    api
+      .addDrink(billId, selectedItem, sessionId, amount)
+      .catch((error) => alert(error))
+      .then(() => {
+        navigation.navigate("Session");
+      });
+  }
+
   const search = (string) => {
-    if(string.length === 0) {
+    if (string.length === 0) {
       setSearchLoading(false);
-      setSearchString("")
+      setSearchString("");
       return;
     }
     setSearchString(string);
     setSearchLoading(true);
-  }
+  };
 
   const listItem = (drink) => {
     return (
@@ -94,59 +117,6 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
         />
     );
   };
-
-  const CategoriesContent = () => {
-    return (
-        <View style={styles.categories}>
-          <FlatList
-              refreshControl={
-                <RefreshControl
-                    onRefresh={() => setCategoriesLoading(true)}
-                    refreshing={isCategoriesLoading}
-                    tintColor="white"
-                />
-              }
-              data={formatData(categories, 2)}
-              renderItem={({ item }) => {
-                if (item.empty === true) {
-                  return <View style={[styles.category, styles.itemInvisible]} />;
-                } else {
-                  return categoryListItem(navigation, item, billId, sessionId);
-                }
-              }}
-              keyExtractor={(item) => item.id.toString()}
-              numColumns={2}
-              columnWrapperStyle={styles.categories__row}
-          />
-        </View>
-    );
-  };
-
-  const SearchResultsContent = () => {
-    return (
-        <FlatList
-            refreshControl={
-              <RefreshControl
-                  onRefresh={() => setSearchLoading(true)}
-                  refreshing={isCategoriesLoading}
-                  tintColor="white"
-              />
-            }
-            keyExtractor={(item) => item.id.toString()}
-            style={styles.list}
-            data={searchResults}
-            renderItem={({ item }) => listItem(item)}
-        />
-    );
-  };
-
-  const handleOnPress = (navigation, category, billId, sessionId) => {
-    navigation.navigate("Add Drink", {
-      category,
-      billId,
-      sessionId,
-    });
-  }
 
   const styles = StyleSheet.create({
     itemInvisible: {
@@ -219,6 +189,111 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       width: 40,
     },
   });
+
+  const CategoriesContent = () => {
+    return (
+        <View style={styles.categories}>
+          <FlatList
+              refreshControl={
+                <RefreshControl
+                    onRefresh={() => setCategoriesLoading(true)}
+                    refreshing={isCategoriesLoading}
+                    tintColor="white"
+                />
+              }
+              data={formatData(categories, 2)}
+              renderItem={({ item }) => {
+                if (item.empty === true) {
+                  return <View style={[styles.category, styles.itemInvisible]} />;
+                } else {
+                  return categoryListItem(navigation, item, billId, sessionId);
+                }
+              }}
+              keyExtractor={(item) => item.id.toString()}
+              numColumns={2}
+              columnWrapperStyle={styles.categories__row}
+          />
+        </View>
+    );
+  };
+
+  const SearchResultsContent = () => {
+    return (
+      <>
+        <FlatList
+            refreshControl={
+              <RefreshControl
+                  onRefresh={() => setSearchLoading(true)}
+                  refreshing={isCategoriesLoading}
+                  tintColor="white"
+              />
+            }
+            keyExtractor={(item) => item.id.toString()}
+            style={styles.list}
+            data={searchResults}
+            renderItem={({ item }) => listItem(item)}
+        />
+        <Modal
+          animationType="fade"
+          visible={dialogOpen}
+          transparent={true}
+          onRequestClose={() => {
+            setDialogOpen(!dialogOpen);
+          }}
+        >
+          <TouchableOpacity
+            style={styles.modal}
+            activeOpacity={0.2}
+            onPressOut={() => setDialogOpen(false)}
+          >
+            <View style={styles.dialog}>
+              <View style={styles.dialogContent}>
+                <TextInput
+                  underline="transparent"
+                  keyboardType={"number-pad"}
+                  defaultValue={JSON.stringify(amount)}
+                  onChangeText={(value) => {
+                    value && setAmount(parseInt(value));
+                  }}
+                  style={styles.dialogContent__text}
+                />
+              </View>
+              <View style={styles.dialogButtons}>
+                <TouchableOpacity
+                  onPress={() =>
+                    amount <= 1 ? setAmount(1) : setAmount(amount - 1)
+                  }
+                  style={styles.dialogButton}
+                >
+                  <Text style={styles.dialogButton__text}>-</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => setAmount(amount + 1)}
+                  style={styles.dialogButton}
+                >
+                  <Text style={styles.dialogButton__text}>+</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <TouchableOpacity
+              onPress={() => addItem(navigation, billId, sessionId)}
+              style={styles.confirmButton}
+            >
+              <Text style={styles.confirmButton__text}>Confirm</Text>
+            </TouchableOpacity>
+          </TouchableOpacity>
+        </Modal>
+      </>
+    );
+  };
+
+  const handleOnPress = (navigation, category, billId, sessionId) => {
+    navigation.navigate("Add Drink", {
+      category,
+      billId,
+      sessionId,
+    });
+  }
 
   const categoryListItem = (navigation, category, billId, sessionId) => {
     return (

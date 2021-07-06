@@ -3,13 +3,15 @@ import { Image, StyleSheet, TextInput, TouchableOpacity, View } from "react-nati
 
 import { colors } from "../../theme/variables.js";
 
-export default function BarTapSearchBar({ onSubmitEditing, onPress, isEmpty, onChangeText }) {
+export default function BarTapSearchBar({ onSubmitEditing, onPress, isEmpty, onChangeText, placeholder }) {
   const [searchString, setSearchString] = useState("")
 
 
   return (
     <View style={styles.searchBar}>
       <TextInput 
+        placeholder={placeholder}
+        placeholderTextColor={colors.BARTAP_LIGHT_GREY}
         onSubmitEditing={onSubmitEditing}
         onChangeText={(string) => {
             setSearchString(string); 

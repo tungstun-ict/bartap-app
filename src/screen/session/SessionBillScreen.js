@@ -31,6 +31,9 @@ export default function SessionBillScreen({ route, navigation }) {
       api
         .getBillByBillIdAndSessionId(billId, sessionId)
         .then((json) => {
+          json.orders.sort(function(a,b) {
+            return new Date(a.timestamp) - new Date(b.timestamp);
+          })
           setBill(json);
           setLoading(false);
         })
