@@ -12,7 +12,7 @@ export default function BarTapSearchBar({ onSubmitEditing, onPress, isEmpty, onC
       <TextInput 
         placeholder={placeholder}
         placeholderTextColor={colors.BARTAP_LIGHT_GREY}
-        onSubmitEditing={onSubmitEditing}
+        // onSubmitEditing={() => onSubmitEditing(searchString)}
         onChangeText={(string) => {
             setSearchString(string); 
             if(onChangeText) {
@@ -22,6 +22,7 @@ export default function BarTapSearchBar({ onSubmitEditing, onPress, isEmpty, onC
                 isEmpty();
             }
         }}
+        onSubmitEditing={() => onPress(searchString)}
         underline="transparent" 
         onEndEditing={onSubmitEditing}
         style={styles.searchBar__input} />

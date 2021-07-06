@@ -20,10 +20,10 @@ export default function AddDrinksScreen({ route, navigation }) {
 
   useEffect(() => {
     if (isLoading) {
-      api
-        .getDrinksByCategory(category.id)
+      if(category.productType === "SEARCH") {
+        api
+        .getSearchResults(category.name)
         .then((json) => {
-
           json.sort((a, b) => Utils.sortListItemString(a.brand, b.brand))
           setDrinks(json);
           setLoading(false);
@@ -32,6 +32,21 @@ export default function AddDrinksScreen({ route, navigation }) {
           alert(error);
           setLoading(false);
         });
+      }
+      else {
+        api
+        .getDrinksByCategory(category.id)
+        .then((json) => {
+          json.sort((a, b) => Utils.sortListItemString(a.brand, b.brand))
+          setDrinks(json);
+          setLoading(false);
+        })
+        .catch((error) => {
+          alert(error);
+          setLoading(false);
+        });
+      }
+      return;
     }
   }, [isLoading]);
 

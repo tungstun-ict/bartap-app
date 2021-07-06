@@ -3,8 +3,6 @@ import { RefreshControl, SafeAreaView } from "react-native";
 import { StyleSheet, Text, View, RefreshControl } from "react-native";
 import { Dimensions, FlatList, TouchableOpacity, Image, TextInput, TouchableOpacity } from "react-native";
 
-import BarTapCountDialog from "../../component/BarTapCountDialog";
-import BarTapListItem from "../../component/BarTapListItem";
 import BarTapSearchBar from "../../component/BarTapSearchBar";
 import BarTapContent from "../../component/BarTapContent";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
@@ -16,13 +14,8 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
 
   const [searchString, setSearchString] = useState("");
   const [categories, setCategories] = useState([]);
-  const [searchResults, setSearchResults] = useState([]);
   const [isCategoriesLoading, setCategoriesLoading] = useState(true);
-  const [isSearchLoading, setSearchLoading] = useState(false);
 
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [amount, setAmount] = useState(1);
-  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     if (isCategoriesLoading) {
@@ -42,21 +35,6 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
         });
     }
   }, [isCategoriesLoading]);
-
-  useEffect(() => {
-    if (isSearchLoading) {
-      api
-        .getSearchResults()
-        .then((json) => {
-          setSearchResults(json);
-          setSearchLoading(false);
-        })
-        .catch((error) => {
-          alert(error);
-          setSearchLoading(false);
-        });
-    }
-  }, [isSearchLoading]);
 
   const { billId, sessionId } = route.params;
 
@@ -100,22 +78,15 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
 
   const search = (string) => {
     if (string.length === 0) {
-      setSearchLoading(false);
-      setSearchString("");
       return;
     }
-    setSearchString(string);
-    setSearchLoading(true);
-  };
-
-  const listItem = (drink) => {
-    return (
-        <BarTapListItem
-            onPress={() => selectAmount(drink.id)}
-            name={`${drink.brand} ${drink.name}`}
-            price={drink.price.toFixed(2)}
-        />
-    );
+    let category = { id: 1, "name": string, "productType": "SEARCH" }
+    console.log(category);
+    navigation.navigate("Add Drink", {
+      category,
+      billId,
+      sessionId,
+    });
   };
 
   const styles = StyleSheet.create({
@@ -217,84 +188,6 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
     );
   };
 
-  const SearchResultsContent = () => {
-    return (
-      <>
-        <FlatList
-            refreshControl={
-              <RefreshControl
-                  onRefresh={() => setSearchLoading(true)}
-                  refreshing={isCategoriesLoading}
-                  tintColor="white"
-              />
-            }
-            keyExtractor={(item) => item.id.toString()}
-            style={styles.list}
-            data={searchResults}
-            renderItem={({ item }) => listItem(item)}
-        />
-        <Modal
-          animationType="fade"
-          visible={dialogOpen}
-          transparent={true}
-          onRequestClose={() => {
-            setDialogOpen(!dialogOpen);
-          }}
-        >
-          <TouchableOpacity
-            style={styles.modal}
-            activeOpacity={0.2}
-            onPressOut={() => setDialogOpen(false)}
-          >
-            <View style={styles.dialog}>
-              <View style={styles.dialogContent}>
-                <TextInput
-                  underline="transparent"
-                  keyboardType={"number-pad"}
-                  defaultValue={JSON.stringify(amount)}
-                  onChangeText={(value) => {
-                    value && setAmount(parseInt(value));
-                  }}
-                  style={styles.dialogContent__text}
-                />
-              </View>
-              <View style={styles.dialogButtons}>
-                <TouchableOpacity
-                  onPress={() =>
-                    amount <= 1 ? setAmount(1) : setAmount(amount - 1)
-                  }
-                  style={styles.dialogButton}
-                >
-                  <Text style={styles.dialogButton__text}>-</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => setAmount(amount + 1)}
-                  style={styles.dialogButton}
-                >
-                  <Text style={styles.dialogButton__text}>+</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-            <TouchableOpacity
-              onPress={() => addItem(navigation, billId, sessionId)}
-              style={styles.confirmButton}
-            >
-              <Text style={styles.confirmButton__text}>Confirm</Text>
-            </TouchableOpacity>
-          </TouchableOpacity>
-        </Modal>
-      </>
-    );
-  };
-
-  const handleOnPress = (navigation, category, billId, sessionId) => {
-    navigation.navigate("Add Drink", {
-      category,
-      billId,
-      sessionId,
-    });
-  }
-
   const categoryListItem = (navigation, category, billId, sessionId) => {
     return (
       <TouchableOpacity
@@ -309,36 +202,14 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
 
   return (
     <BarTapContent navigation={navigation} title={"Add product"}>
-      <View style={styles.categories}>
-          <View style={styles.searchBar__container}>
-            <View style={styles.searchBar}>
-              <TextInput style={styles.searchBar__input} />
-              <TouchableOpacity
-                  style={styles.searchBar__button}>
-                <Image
-                    style={styles.searchBar__buttonImage}
-                    source={require("../../assets/search.png")}
-                />
-              </TouchableOpacity>
-            </View>
-          </View>
-          <FlatList
-            refreshControl={
-              <RefreshControl onRefresh={() => setLoading(true)} refreshing={isLoading} tintColor="white" />
-            }
-            data={formatData(categories, 2)}
-            renderItem={({ item }) => {
-              if (item.empty === true) {
-                return <View style={[styles.category, styles.itemInvisible]} />;
-              } else {
-                return categoryListItem(navigation, item, billId, sessionId)
-              }
-            }}
-            keyExtractor={(item) => item.id.toString()}
-            numColumns={2}
-            columnWrapperStyle={styles.categories__row}
-          />
-        </View>
+      <View style={styles.searchBar__container}>
+        <BarTapSearchBar
+            placeholder={"Search all products..."}
+            onPress={(string) =>search(string)}
+            isEmpty={() => search("")}
+        />
+      </View>
+      <CategoriesContent />
     </BarTapContent>
   );
 }
