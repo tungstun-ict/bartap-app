@@ -4,7 +4,6 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
 import { StyleSheet, Appearance } from "react-native";
-import { ThemeProvider } from "react-native-elements";
 
 import AccountScreen from "./src/screen/account/AccountScreen";
 import CreateBarScreen from "./src/screen/account/CreateBarScreen";
@@ -32,6 +31,11 @@ import * as storage from "./src/service/BarStorageService.js";
 import { AuthContext } from "./src/service/Context.js";
 import { darkTheme } from "./src/theme/variables";
 
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import { thunk } from "redux-thunk";
+import themeReducer from "./src/redux/themeReducer";
+
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
 const PastNavigator = createStackNavigator();
@@ -46,7 +50,10 @@ export function CustomersStack() {
       headerMode={"none"}
       initialRouteName={"AllCustomers"}
     >
-      <CustomersNavigator.Screen name="All Customers" component={CustomersScreen} />
+      <CustomersNavigator.Screen
+        name="All Customers"
+        component={CustomersScreen}
+      />
       <CustomersNavigator.Screen
         name="Add new customer"
         component={AddCustomerScreen}
@@ -174,10 +181,9 @@ export function SignInStack() {
   );
 }
 
+const store = createStore(combineReducers({ themeReducer }), applyMiddleware(thunk));
+
 export default function App() {
-  const colorScheme = Appearance.getColorScheme();
-
-
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       switch (action.type) {
@@ -207,11 +213,6 @@ export default function App() {
       userToken: null,
     },
   );
-  const theme = {
-    colors: {
-      primary: "white",
-    },
-  };
 
   useEffect(() => {
     const bootstrapAsync = async () => {
@@ -234,7 +235,7 @@ export default function App() {
         try {
           accessToken = await api.login(data.email, data.password);
           const bars = await api.getBars();
-          if(bars[0] !== undefined) {
+          if (bars[0] !== undefined) {
             await storage.storeActiveBar(bars[0].id.toString());
           }
 
@@ -265,52 +266,57 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <AuthContext.Provider value={authContext}>
-        <NavigationContainer>
-          <DrawerNavigator.Navigator
-            sceneContainerStyle={{ backgroundColor: "black" }}
-            initialRouteName="Session"
-            drawerStyle={styles.drawer}
-            drawerContentOptions={{
-              activeTintColor: darkTheme.BARTAP_WHITE,
-              activeBackgroundColor: darkTheme.BARTAP_DARK_GREY_SELECTED,
-              inactiveTintColor: darkTheme.BARTAP_WHITE,
-              labelStyle: {
-                fontSize: 30,
-                fontWeight: "bold",
-              },
-            }}
-          >
-            {state.userToken !== null ? (
-              <React.Fragment>
-                <DrawerNavigator.Screen
-                  name="Session"
-                  component={SessionStack}
-                />
-                <DrawerNavigator.Screen name="Past" component={PastStack} />
-                <DrawerNavigator.Screen
-                  name="Customers"
-                  component={CustomersStack}
-                />
-                {/* <DrawerNavigator.Screen
+    <>
+      <Provider store={store}>
+        <AuthContext.Provider value={authContext}>
+          <NavigationContainer>
+            <DrawerNavigator.Navigator
+              sceneContainerStyle={{ backgroundColor: "black" }}
+              initialRouteName="Session"
+              drawerStyle={styles.drawer}
+              drawerContentOptions={{
+                activeTintColor: darkTheme.BARTAP_WHITE,
+                activeBackgroundColor: darkTheme.BARTAP_DARK_GREY_SELECTED,
+                inactiveTintColor: darkTheme.BARTAP_WHITE,
+                labelStyle: {
+                  fontSize: 30,
+                  fontWeight: "bold",
+                },
+              }}
+            >
+              {state.userToken !== null ? (
+                <React.Fragment>
+                  <DrawerNavigator.Screen
+                    name="Session"
+                    component={SessionStack}
+                  />
+                  <DrawerNavigator.Screen name="Past" component={PastStack} />
+                  <DrawerNavigator.Screen
+                    name="Customers"
+                    component={CustomersStack}
+                  />
+                  {/* <DrawerNavigator.Screen
                 name="Payments"
                 component={PaymentStack}
               /> */}
-                <DrawerNavigator.Screen name="Stock" component={StockStack} />
+                  <DrawerNavigator.Screen name="Stock" component={StockStack} />
+                  <DrawerNavigator.Screen
+                    name="Account"
+                    component={AccountStack}
+                  />
+                </React.Fragment>
+              ) : (
                 <DrawerNavigator.Screen
-                  name="Account"
-                  component={AccountStack}
+                  name="Sign In"
+                  component={SignInStack}
                 />
-              </React.Fragment>
-            ) : (
-              <DrawerNavigator.Screen name="Sign In" component={SignInStack} />
-            )}
-          </DrawerNavigator.Navigator>
-        </NavigationContainer>
-      </AuthContext.Provider>
-      <StatusBar style="light" />
-    </ThemeProvider>
+              )}
+            </DrawerNavigator.Navigator>
+          </NavigationContainer>
+        </AuthContext.Provider>
+        <StatusBar style="light" />
+      </Provider>
+    </>
   );
 }
 

@@ -1,11 +1,21 @@
 export const darkTheme = {
+  mode: 'dark',
   BARTAP_BLACK: "#000",
   BARTAP_DARK_GREY: "#212121",
   BARTAP_SELECTED: "#323232",
-
   BARTAP_RED: "#ad0909",
-
   BARTAP_WHITE: "#fff",
+  BARTAP_LIGHT_GREY: "#484848",
+  BARTAP_GREY: "#383838",
+};
+
+export const lightTheme = {
+  mode: 'light',
+  BARTAP_BLACK: "#fff",
+  BARTAP_DARK_GREY: "#212121",
+  BARTAP_SELECTED: "#323232",
+  BARTAP_RED: "#ad0909",
+  BARTAP_WHITE: "#000",
   BARTAP_LIGHT_GREY: "#484848",
   BARTAP_GREY: "#383838",
 };
