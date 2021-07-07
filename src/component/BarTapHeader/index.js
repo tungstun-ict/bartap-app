@@ -1,10 +1,10 @@
-import React from "react";
-import { StatusBar } from "react-native";
-import { StyleSheet, Text, View, Image } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { ThemeContext } from "../../theme/ThemeManager.js";
 import { mock } from "../../theme/variables.js";
 import Constants from 'expo-constants';
-import { ThemeContext } from "../../theme/ThemeManager.js";
+import React from "react";
+import { StatusBar } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default function BarTapHeader({ navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -23,11 +23,11 @@ export default function BarTapHeader({ navigation }) {
       alignSelf: "flex-start",
       alignItems: "center",
       width: "100%",
-      backgroundColor: theme.BARTAP_DARK_GREY,
+      backgroundColor: theme.BACKGROUND_SECONDARY,
     },
   
     header__title: {
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_SECONDARY,
       fontWeight: "bold",
       fontSize: 20,
     },
@@ -36,6 +36,7 @@ export default function BarTapHeader({ navigation }) {
       marginLeft: 20,
       width: 25,
       height: 20,
+      tintColor: theme.BACKGROUND_IMAGE_LIGHT,
     },
   
     header__left: {

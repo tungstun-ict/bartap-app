@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { ThemeContext } from "../../theme/ThemeManager.js";
 
-import { theme } from "../../theme/variables.js"
+import { ThemeContext } from "../../theme/ThemeManager.js";
 
 export default function BarTapButton({ onPress, text, colour, textColour, style }) {
   const { theme } = React.useContext(ThemeContext);
@@ -15,7 +14,7 @@ export default function BarTapButton({ onPress, text, colour, textColour, style 
         minWidth: "100%",
         borderRadius: 5,
         height: 50,
-        backgroundColor: theme.BARTAP_WHITE,
+        backgroundColor: theme.BACKGROUND_BUTTON_PRIMARY,
         alignItems: "center",
         justifyContent: "center",
       },
@@ -30,7 +29,7 @@ export default function BarTapButton({ onPress, text, colour, textColour, style 
       text: {
         fontSize: 15,
         fontWeight: "bold",
-        color: theme.BARTAP_BLACK,
+        color: theme.TEXT_BUTTON_PRIMARY,
       },
 })
 

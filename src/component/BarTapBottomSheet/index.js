@@ -1,5 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
+
 import { ThemeContext } from "../../theme/ThemeManager";
 import { theme } from "../../theme/variables";
 
@@ -9,7 +10,7 @@ export default function BarTapBottomSheet({ height, style, children }) {
   const styles = StyleSheet.create({
     sheet: {
       width: "100%",
-      backgroundColor: theme.BARTAP_GREY,
+      backgroundColor: theme.BACKGROUND_SLIDE_SHEET,
       alignItems: "center",
       flexDirection: "column",
       paddingHorizontal: 20,
@@ -19,7 +20,7 @@ export default function BarTapBottomSheet({ height, style, children }) {
       height: 2,
       width: 50,
       borderRadius: 100,
-      backgroundColor: theme.BARTAP_WHITE,
+      backgroundColor: theme.LINE_PRIMARY,
     },
     content: {
       flex: 1,

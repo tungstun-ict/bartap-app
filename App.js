@@ -3,7 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
-import { Appearance, StyleSheet } from "react-native";
 
 import BarTapDrawer from "./src/component/BarTapDrawer";
 import AccountScreen from "./src/screen/account/AccountScreen";
@@ -31,7 +30,6 @@ import * as api from "./src/service/BarApiService.js";
 import * as storage from "./src/service/BarStorageService.js";
 import { AuthContext } from "./src/service/Context.js";
 import { ThemeProvider } from "./src/theme/ThemeManager";
-import { darkTheme } from "./src/theme/variables";
 
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
@@ -305,11 +303,3 @@ export default function App() {
     </>
   );
 }
-
-const styles = StyleSheet.create({
-  drawer: {
-    backgroundColor: darkTheme.BARTAP_DARK_GREY,
-    width: 240,
-  },
-  drawerItem: {},
-});

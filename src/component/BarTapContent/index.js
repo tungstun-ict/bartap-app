@@ -1,5 +1,6 @@
 import React from "react";
-import { SafeAreaView, View, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
+
 import { ThemeContext } from "../../theme/ThemeManager";
 import BarTapHeader from "../BarTapHeader";
 import BarTapStackHeader from "../BarTapStackHeader";
@@ -11,7 +12,7 @@ export default function BarTapContent({ children, navigation, title, noHeader, p
     container: {
       flex: 1,
       flexDirection: "column",
-      backgroundColor: theme.BARTAP_BLACK,
+      backgroundColor: theme.BACKGROUND_PRIMARY,
       alignItems: "center",
       justifyContent: "flex-start",
     },

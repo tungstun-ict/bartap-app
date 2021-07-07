@@ -11,7 +11,7 @@ export default function BarTapTitle({ level, text }) {
     title: {
       marginBottom: 10,
       alignItems: 'center',
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_PRIMARY,
       fontWeight: "bold",
     },
   });
