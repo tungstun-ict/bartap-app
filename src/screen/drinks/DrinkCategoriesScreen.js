@@ -1,14 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { RefreshControl, SafeAreaView } from "react-native";
-import { StyleSheet, Text, View } from "react-native";
-import { Dimensions, FlatList } from "react-native";
-import { TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, RefreshControl } from "react-native";
+import { Dimensions, FlatList, TouchableOpacity } from "react-native";
 import BarTapContent from "../../component/BarTapContent";
-
-import BarTapStackHeader from "../../component/BarTapStackHeader";
 import * as api from "../../service/BarApiService.js";
 import { ThemeContext } from "../../theme/ThemeManager";
-import { theme, mock } from "../../theme/variables.js";
 
 export default function DrinkCategoriesScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -64,28 +59,13 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
   }
 
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: "column",
-      backgroundColor: theme.BARTAP_BLACK,
-      alignItems: "center",
-      justifyContent: "flex-start",
-    },
-    content: {
-      flex: 1,
-      width: "100%",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      padding: 10,
-    },
     itemInvisible: {
       backgroundColor: "transparent",
     },
     category: {
       flex: 1,
       flexDirection: "column",
-      backgroundColor: theme.BARTAP_WHITE,
+      backgroundColor: theme.BACKGROUND_BUTTON_BIG,
       justifyContent: "center",
       alignItems: "center",
       marginVertical: 10,
@@ -103,7 +83,7 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       textAlign: "center",
       fontSize: 20,
       fontWeight: "bold",
-      color: theme.BARTAP_BLACK,
+      color: theme.TEXT_CONTRAST,
     },
     categories: {
       marginVertical: 10,

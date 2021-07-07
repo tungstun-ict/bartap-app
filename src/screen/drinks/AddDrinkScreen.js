@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Modal, RefreshControl, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { FlatList, Modal, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import BarTapContent from "../../component/BarTapContent/index.js";
-
 import BarTapListItem from "../../component/BarTapListItem/index.js";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
-import { theme } from "../../theme/variables.js";
 
 export default function AddDrinksScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -53,13 +50,6 @@ export default function AddDrinksScreen({ route, navigation }) {
   }
 
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: "column",
-      backgroundColor: theme.BARTAP_BLACK,
-      alignItems: "flex-start",
-      justifyContent: "flex-start",
-    },
     content: {
       flex: 1,
       width: "100%",
@@ -68,7 +58,7 @@ export default function AddDrinksScreen({ route, navigation }) {
       flex: 1,
       flexDirection: "column",
       alignSelf: "center",
-      width: "100%",
+      width: "105%",
     },
     modal: {
       justifyContent: "center",
@@ -84,19 +74,19 @@ export default function AddDrinksScreen({ route, navigation }) {
       height: 70,
       marginTop: 30,
       borderRadius: 5,
-      backgroundColor: theme.BARTAP_WHITE,
+      backgroundColor: theme.BACKGROUND_BUTTON_PRIMARY,
       alignItems: "center",
       justifyContent: "center",
     },
     confirmButton__text: {
       fontSize: 30,
       fontWeight: "bold",
-      color: theme.BARTAP_BLACK,
+      color: theme.TEXT_BUTTON_PRIMARY,
     },
     dialog: {
       maxHeight: 200,
       minWidth: 200,
-      backgroundColor: theme.BARTAP_DARK_GREY,
+      backgroundColor: theme.BACKGROUND_SECONDARY,
       borderRadius: 5,
       flex: 1,
       flexDirection: "column",
@@ -112,7 +102,7 @@ export default function AddDrinksScreen({ route, navigation }) {
       fontSize: 50,
       textAlign: "center",
       fontWeight: "bold",
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_SECONDARY,
   
     },
     dialogButtons: {
@@ -122,7 +112,7 @@ export default function AddDrinksScreen({ route, navigation }) {
     },
     dialogButton: {
       flex: 0.48,
-      backgroundColor: theme.BARTAP_GREY,
+      backgroundColor: theme.BACKGROUND_SECONDARY,
       justifyContent: "center",
       alignItems: "center"
     },
@@ -130,7 +120,7 @@ export default function AddDrinksScreen({ route, navigation }) {
       fontSize: 50,
       textAlign: "center",
       fontWeight: "bold",
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_SECONDARY,
     }
   });
 
