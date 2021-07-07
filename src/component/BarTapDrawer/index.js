@@ -1,36 +1,40 @@
+import { DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import React from "react";
-import { StyleSheet } from "react-native";
-import { DrawerItem } from "@react-navigation/drawer";
-import { SafeAreaView } from "react-native";
-import { StatusBar } from "react-native";
+import { StatusBar, StyleSheet, Text, View } from "react-native";
+
 import { ThemeContext } from "../../theme/ThemeManager";
 
-export default function BarTapDrawer({ navigation }) {
-  const { theme } = React.useContext(ThemeContext);
+export default function BarTapDrawer(props) {
+  const { theme, toggleTheme } = React.useContext(ThemeContext);
 
   const styles = StyleSheet.create({
     container: {
-      marginTop: StatusBar.currentHeight + 50,
-      backgroundColor: theme.BARTAP_DARK_GREY,
+      // marginTop: StatusBar.currentHeight + 50,
+      backgroundColor: theme.BACKROUND_DRAWER,
+      flex: 1,
     },
+    drawerItem: {
+      color: theme.TEXT_PRIMARY,
+    },
+    drawerItemLabel: {
+      color: theme.TEXT_PRIMARY, 
+      fontWeight: "bold"
+    }
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <DrawerItem
-        style={styles.drawerItem}
-        label="Current session"
-        onPress={() => {
-          navigation.navigate("Session");
-        }}
-      />
-      <DrawerItem
-        style={styles.drawerItem}
-        label="Customers"
-        onPress={() => {
-          navigation.navigate("Customers");
-        }}
-      />
-    </SafeAreaView>
+    <View style={styles.container}>
+      <DrawerContentScrollView>
+        <DrawerItemList {...props} activeTintColor={theme.BRAND} labelStyle={styles.drawerItemLabel}>
+
+        </DrawerItemList>
+      </DrawerContentScrollView>
+      <DrawerItem 
+        labelStyle={styles.drawerItemLabel}
+        style={styles.drawerItem} onPress={() => toggleTheme()} label={`Switch to ${theme.mode === "light" ? "dark" : "light"}`} />
+      <DrawerItem  
+        labelStyle={styles.drawerItemLabel}
+        style={styles.drawerItem} label="Sign out"/>
+    </View>
   );
 }

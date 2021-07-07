@@ -3,8 +3,9 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
-import { StyleSheet, Appearance } from "react-native";
+import { Appearance, StyleSheet } from "react-native";
 
+import BarTapDrawer from "./src/component/BarTapDrawer";
 import AccountScreen from "./src/screen/account/AccountScreen";
 import CreateBarScreen from "./src/screen/account/CreateBarScreen";
 import LoginScreen from "./src/screen/account/LoginScreen";
@@ -29,9 +30,8 @@ import StockOverviewScreen from "./src/screen/stock/StockOverviewScreen";
 import * as api from "./src/service/BarApiService.js";
 import * as storage from "./src/service/BarStorageService.js";
 import { AuthContext } from "./src/service/Context.js";
-import { darkTheme } from "./src/theme/variables";
-
 import { ThemeProvider } from "./src/theme/ThemeManager";
+import { darkTheme } from "./src/theme/variables";
 
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
@@ -179,6 +179,8 @@ export function SignInStack() {
 }
 
 export default function App() {
+
+  
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       switch (action.type) {
@@ -266,18 +268,7 @@ export default function App() {
         <AuthContext.Provider value={authContext}>
           <NavigationContainer>
             <DrawerNavigator.Navigator
-              sceneContainerStyle={{ backgroundColor: "black" }}
-              initialRouteName="Session"
-              drawerStyle={styles.drawer}
-              drawerContentOptions={{
-                activeTintColor: darkTheme.BARTAP_WHITE,
-                activeBackgroundColor: darkTheme.BARTAP_DARK_GREY_SELECTED,
-                inactiveTintColor: darkTheme.BARTAP_WHITE,
-                labelStyle: {
-                  fontSize: 30,
-                  fontWeight: "bold",
-                },
-              }}
+              drawerContent={props => <BarTapDrawer {...props}/>}
             >
               {state.userToken !== null ? (
                 <React.Fragment>
