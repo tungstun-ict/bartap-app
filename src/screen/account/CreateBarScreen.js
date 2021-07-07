@@ -36,12 +36,14 @@ export default function CreateBarScreen({ navigation }) {
   const styles = StyleSheet.create({
     input: {
       width: "100%",
-      color: theme.BARTAP_WHITE,
-      borderColor: theme.BARTAP_WHITE,
+      color: theme.TEXT_PRIMARY,
+      borderColor: theme.LINE_DARKMODE,
+      backgroundColor: theme.BACKGROUND_INPUT,
       borderWidth: 1,
       borderRadius: 5,
       paddingLeft: 10,
       height: 50,
+      marginBottom: 10,
     },
     button: {
       marginTop: 10,

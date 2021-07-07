@@ -24,19 +24,12 @@ export default function LoginScreen({ navigation }) {
       justifyContent: "center",
       alignItems: "center"
     },
-    title: {
-      height: 40,
-      margin: 10,
-      color: theme.BARTAP_WHITE,
-      fontSize: sizes.TITLE,
-      fontWeight: "bold",
-    },
     logo: {
       height: 120,
-      tintColor: theme.BARTAP_WHITE,
+      tintColor: theme.BACKGROUND_IMAGE,
     },
     logoText: {
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_PRIMARY,
       fontSize: 40,
       fontWeight: "bold",
       marginBottom: 20,
@@ -44,32 +37,21 @@ export default function LoginScreen({ navigation }) {
     form: {
       width: "100%",
     },
-    text: {
-      color: theme.BARTAP_GREY,
-      fontSize: 50,
-      fontWeight: "bold",
-    },
     link: {
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_LOW_CONTRAST,
       textAlign: "center",
       textDecorationLine: "underline",
     },
     input: {
       width: "100%",
       marginVertical: 10,
-      color: theme.BARTAP_WHITE,
-      borderColor: theme.BARTAP_WHITE,
+      color: theme.TEXT_PRIMARY,
+      borderColor: theme.LINE_DARKMODE,
       borderWidth: 1,
+      backgroundColor: theme.BACKGROUND_INPUT,
       borderRadius: 5,
       paddingLeft: 10,
       height: 50,
-    },
-    input__label: {
-      color: theme.BARTAP_WHITE,
-      alignSelf: "flex-start",
-      fontWeight: "bold",
-      fontSize: 20,
-      marginTop: 10,
     },
     button: {
       marginBottom: 20,
@@ -89,7 +71,7 @@ export default function LoginScreen({ navigation }) {
       <View style={styles.form}>
         <TextInput
           placeholder={"Email adress / username"}
-          placeholderTextColor={theme.BARTAP_LIGHT_GREY}
+          placeholderTextColor={theme.TEXT_HINT}
           autoCompleteType={"email"}
           value={email}
           onChangeText={setEmail}
@@ -99,7 +81,7 @@ export default function LoginScreen({ navigation }) {
         />
         <TextInput
           placeholder={"Password"}
-          placeholderTextColor={theme.BARTAP_LIGHT_GREY}
+          placeholderTextColor={theme.TEXT_HINT}
           autoCompleteType={"password"}
           value={password}
           onChangeText={setPassword}

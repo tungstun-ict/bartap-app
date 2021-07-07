@@ -6,8 +6,8 @@ import { ThemeContext } from "../../theme/ThemeManager.js";
 export default function BarTapButton({ onPress, text, colour, textColour, style }) {
   const { theme } = React.useContext(ThemeContext);
   
-  const buttonColor = colour ? { backgroundColor: colour, } : { backgroundColor: theme.BARTAP_WHITE }
-  const textColor = textColour ? { color: textColour, } : { color: theme.BARTAP_BLACK }
+  const buttonColor = colour ? { backgroundColor: colour, } : { backgroundColor: theme.BACKGROUND_BUTTON_PRIMARY }
+  const textColor = textColour ? { color: textColour, } : { color: theme.TEXT_BUTTON_PRIMARY }
   
   const styles = StyleSheet.create({
     wrapper: {

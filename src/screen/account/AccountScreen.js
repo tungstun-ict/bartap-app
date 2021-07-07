@@ -56,44 +56,18 @@ export default function AccountScreen({ navigation }) {
   const styles = StyleSheet.create({
     picker: {
       height: 60,
-      borderColor: theme.BARTAP_WHITE,
-      borderWidth: 1,
-      backgroundColor: theme.BARTAP_DARK_GREY,
-      color: theme.BARTAP_WHITE,
+      backgroundColor: theme.BACKGROUND_INPUT,
+      color: theme.TEXT_PRIMARY,
       marginBottom: 10,
       borderRadius: 5,
       justifyContent: "center",
     },
-    optionTitle: {
-      color: theme.BARTAP_WHITE,
-      fontWeight: "bold",
-      fontSize: 20,
-    },
     picker__item: {
       height: 50,
-      color: "white",
-    },
-    text: {
-      color: theme.BARTAP_GREY,
-      fontSize: 50,
-      fontWeight: "bold",
-    },
-    input: {
-      width: "100%",
-      marginVertical: 10,
-      color: theme.BARTAP_WHITE,
-      borderColor: "white",
-      borderWidth: 1,
       borderRadius: 5,
-      paddingLeft: 10,
-      height: 50,
-    },
-    input__label: {
-      color: theme.BARTAP_WHITE,
-      alignSelf: "flex-start",
-      fontWeight: "bold",
-      fontSize: 20,
-      marginTop: 10,
+      width: "100%",
+      backgroundColor: theme.BACKGROUND_PICKER,
+      color: theme.TEXT_PRIMARY,
     },
     barsView: {
       width: "100%",
@@ -104,9 +78,10 @@ export default function AccountScreen({ navigation }) {
       marginBottom: 10,
     },
     information: {
-      backgroundColor: theme.BARTAP_DARK_GREY,
+      backgroundColor: theme.BACKGROUND_INPUT,
       padding: 20,
       borderRadius: 5,
+      marginBottom: 10,
       width: "100%",
     },
     table: {
@@ -116,17 +91,20 @@ export default function AccountScreen({ navigation }) {
       flex: 1,
     },
     name: {
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_PRIMARY,
       textAlign: "left",
       fontSize: 15,
       fontWeight: "normal",
     },
     attribute: {
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_PRIMARY,
       textAlign: "right",
       fontSize: 15,
       fontWeight: "normal",
     },
+    button: {
+      marginVertical: 10,
+    }
   });
 
   let pickerItems = bars.map((bar) => {
@@ -181,12 +159,12 @@ export default function AccountScreen({ navigation }) {
           onPress={() => navigation.navigate("Create Bar")}
           text={"Create a new bar"}
         />
-        <BarTapButton onPress={() => toggleTheme()} text={theme.mode} />
+        <BarTapButton style={styles.button} onPress={() => toggleTheme()} text={theme.mode} />
       </View>
       <BarTapButton
         onPress={() => _logout()}
-        colour={theme.BARTAP_RED}
-        textColour={theme.BARTAP_WHITE}
+        colour={theme.BACKGROUND_WARNING}
+        textColour={theme.TEXT_SECONDARY}
         style={styles.logoutButton}
         text={"Log out"}
       />
