@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { SafeAreaView } from "react-native";
-import { StyleSheet, Text, View, Image } from "react-native";
-import variables, { theme, mock } from "../../theme/variables.js";
-import { Button } from "react-native";
-import BarTapHeader from "../../component/BarTapHeader";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
+import { StyleSheet } from "react-native";
 import { TextInput } from "react-native";
-import { Dimensions } from "react-native";
 import * as api from "../../service/BarApiService.js";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { ceil } from "react-native-reanimated";
-import { apisAreAvailable } from "expo";
-import { Picker } from "@react-native-picker/picker";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
@@ -53,32 +43,19 @@ export default function EditCategoryScreen({ route, navigation }) {
   };
 
   const styles = StyleSheet.create({
-    picker: {
-      height: 60,
-      borderColor: theme.BARTAP_WHITE,
-      borderWidth: 1,
-      backgroundColor: theme.BARTAP_DARK_GREY,
-      color: theme.BARTAP_WHITE,
-      borderRadius: 5,
-      justifyContent: "center",
-      marginVertical: 10,
-      width: "100%",
-    },
-    picker__item: {
-      height: 50,
-      color: "white",
-    },
     input: {
       width: "100%",
-      color: theme.BARTAP_WHITE,
-      borderColor: theme.BARTAP_WHITE,
+      color: theme.TEXT_PRIMARY,
+      borderColor: theme.LINE_DARKMODE,
+      backgroundColor: theme.BACKGROUND_INPUT,
       borderWidth: 1,
       borderRadius: 5,
       paddingLeft: 10,
       height: 50,
     },
     button: {
-      marginTop: 10,
+      marginTop: "auto",
+      width: "100%",
     },
   });
 

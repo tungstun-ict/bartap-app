@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { StatusBar } from "expo-status-bar";
 import React, { useEffect } from "react";
+import { Appearance } from "react-native";
 
 import BarTapDrawer from "./src/component/BarTapDrawer";
 import AccountScreen from "./src/screen/account/AccountScreen";
@@ -177,8 +178,6 @@ export function SignInStack() {
 }
 
 export default function App() {
-
-  
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       switch (action.type) {
@@ -263,43 +262,46 @@ export default function App() {
   return (
     <>
       <ThemeProvider>
-        <AuthContext.Provider value={authContext}>
-          <NavigationContainer>
-            <DrawerNavigator.Navigator
-              drawerContent={props => <BarTapDrawer {...props}/>}
-            >
-              {state.userToken !== null ? (
-                <React.Fragment>
-                  <DrawerNavigator.Screen
-                    name="Session"
-                    component={SessionStack}
-                  />
-                  <DrawerNavigator.Screen name="Past" component={PastStack} />
-                  <DrawerNavigator.Screen
-                    name="Customers"
-                    component={CustomersStack}
-                  />
-                  {/* <DrawerNavigator.Screen
+          <AuthContext.Provider value={authContext}>
+            <NavigationContainer>
+              <DrawerNavigator.Navigator
+                drawerContent={(props) => <BarTapDrawer {...props} />}
+              >
+                {state.userToken !== null ? (
+                  <React.Fragment>
+                    <DrawerNavigator.Screen
+                      name="Session"
+                      component={SessionStack}
+                    />
+                    <DrawerNavigator.Screen name="Past" component={PastStack} />
+                    <DrawerNavigator.Screen
+                      name="Customers"
+                      component={CustomersStack}
+                    />
+                    {/* <DrawerNavigator.Screen
                 name="Payments"
                 component={PaymentStack}
               /> */}
-                  <DrawerNavigator.Screen name="Stock" component={StockStack} />
+                    <DrawerNavigator.Screen
+                      name="Stock"
+                      component={StockStack}
+                    />
+                    <DrawerNavigator.Screen
+                      name="Account"
+                      component={AccountStack}
+                    />
+                  </React.Fragment>
+                ) : (
                   <DrawerNavigator.Screen
-                    name="Account"
-                    component={AccountStack}
+                    name="Sign In"
+                    component={SignInStack}
                   />
-                </React.Fragment>
-              ) : (
-                <DrawerNavigator.Screen
-                  name="Sign In"
-                  component={SignInStack}
-                />
-              )}
-            </DrawerNavigator.Navigator>
-          </NavigationContainer>
-        </AuthContext.Provider>
-        <StatusBar style="light" />
-      </ThemeProvider>
+                )}
+              </DrawerNavigator.Navigator>
+            </NavigationContainer>
+          </AuthContext.Provider>
+          <StatusBar style="light" />
+        </ThemeProvider>
     </>
   );
 }

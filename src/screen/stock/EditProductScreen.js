@@ -1,19 +1,12 @@
 import { Picker } from "@react-native-picker/picker";
 import React, { useEffect, useState } from "react";
-import { KeyboardAvoidingView, SafeAreaView, ScrollView } from "react-native";
-import { Image, StyleSheet, Text, View } from "react-native";
-import { TextInput } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { ceil } from "react-native-reanimated";
+import { ScrollView, StyleSheet, TextInput } from "react-native";
 
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
-import BarTapHeader from "../../component/BarTapHeader";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
-import variables, { theme, mock } from "../../theme/variables.js";
 
 export default function EditProductScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -89,31 +82,36 @@ export default function EditProductScreen({ route, navigation }) {
   };
 
   const styles = StyleSheet.create({
+    content: {
+      width: "100%",
+      height: "100%",
+    },
     picker: {
       height: 60,
-      borderColor: theme.BARTAP_WHITE,
       borderWidth: 1,
-      backgroundColor: theme.BARTAP_DARK_GREY,
-      color: theme.BARTAP_WHITE,
       borderRadius: 5,
       justifyContent: "center",
       width: "100%",
     },
     picker__item: {
       height: 50,
-      color: "white",
+      color: theme.TEXT_PRIMARY,
+      backgroundColor: theme.BACKGROUND_PICKER,
     },
     input: {
+      marginBottom: 10,
       width: "100%",
-      color: theme.BARTAP_WHITE,
-      borderColor: theme.BARTAP_WHITE,
+      color: theme.TEXT_PRIMARY,
+      borderColor: theme.LINE_DARKMODE,
+      backgroundColor: theme.BACKGROUND_INPUT,
       borderWidth: 1,
       borderRadius: 5,
       paddingLeft: 10,
       height: 50,
     },
     button: {
-      marginTop: 10,
+      marginTop: "auto",
+      width: "100%",
     },
   });
 
@@ -124,6 +122,7 @@ export default function EditProductScreen({ route, navigation }) {
     .map((category) => {
       return (
         <Picker.Item
+          style={styles.picker__item}
           label={category.name}
           value={category.id}
           key={category.id}
@@ -181,12 +180,12 @@ export default function EditProductScreen({ route, navigation }) {
           keyboardType={"numeric"}
           style={styles.input}
         />
-        <BarTapButton
+      </ScrollView>
+      <BarTapButton
           style={styles.button}
           onPress={() => updateProduct()}
           text={"Submit"}
         />
-      </ScrollView>
     </BarTapContent>
   );
 }

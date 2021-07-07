@@ -14,10 +14,9 @@ import BarTapTitle from "../../component/BarTapTitle/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
 
-export default function StockOverviewScreen({ route, navigation }) {
+export default function StockOverviewScreen({ navigation }) {
   const { theme } = React.useContext(ThemeContext);
   const [categories, setCategories] = useState([]);
-  const [searchInput, setSearchInput] = useState("");
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -48,11 +47,13 @@ export default function StockOverviewScreen({ route, navigation }) {
 
   const styles = StyleSheet.create({
     bottomButtons: {
-      flexDirection: "column",
+      flexDirection: "row",
       marginTop: 10,
+      justifyContent: "space-between",
+      width: "100%",
     },
     button: {
-      width: "50%",
+      flex: 0.485,
       alignSelf: "center",
       marginVertical: 5,
     },
