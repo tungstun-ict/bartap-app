@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from "react";
 import * as api from "../../service/BarApiService.js";
 import {
-  SafeAreaView,
   StyleSheet,
-  View,
   FlatList,
   RefreshControl,
 } from "react-native";
-import BarTapHeader from "../../component/BarTapHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
 
-export default function PastSessionsScreen({ route, navigation }) {
+export default function PastSessionsScreen({ navigation }) {
   const { theme } = React.useContext(ThemeContext);
 
   const [isLoading, setLoading] = useState(true);
@@ -59,7 +56,7 @@ export default function PastSessionsScreen({ route, navigation }) {
       flex: 1,
       flexDirection: "column",
       alignSelf: "center",
-      width: "100%",
+      width: "105%",
     },
   });
 

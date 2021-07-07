@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList, RefreshControl, StyleSheet} from "react-native";
 
-import BarTapHeader from "../../component/BarTapHeader";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapContent from "../../component/BarTapContent";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
-import variables, { theme, mock, sizes } from "../../theme/variables.js";
 import { ThemeContext } from "../../theme/ThemeManager";
 
 export default function PastSessionBillsScreen({ route, navigation }) {
@@ -41,23 +38,11 @@ export default function PastSessionBillsScreen({ route, navigation }) {
   }, [isLoading]);
 
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: "column",
-      backgroundColor: theme.BARTAP_BLACK,
-      alignItems: "flex-start",
-      justifyContent: "flex-start",
-    },
-    content: {
-      flex: 1,
-      width: "100%",
-      paddingHorizontal: 10,
-    },
     list: {
       flex: 1,
       flexDirection: "column",
       alignSelf: "center",
-      width: "100%",
+      width: "105%",
     },
   });
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Image, RefreshControl, StyleSheet, Text, View } from "react-native";
 import { Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import SwipeableFlatList from "react-native-swipeable-list";
@@ -7,11 +7,9 @@ import SwipeableFlatList from "react-native-swipeable-list";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
-import variables, { theme, mock, sizes } from "../../theme/variables.js";
 
 export default function SessionBillScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -83,19 +81,6 @@ export default function SessionBillScreen({ route, navigation }) {
   };
 
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: "column",
-      backgroundColor: theme.BARTAP_BLACK,
-      alignItems: "flex-start",
-      justifyContent: "flex-start",
-    },
-    content: {
-      flex: 1,
-      width: "100%",
-      height: "100%",
-      paddingHorizontal: 10,
-    },
     qaContainer: {
       flex: 1,
       flexDirection: "row",
@@ -108,7 +93,7 @@ export default function SessionBillScreen({ route, navigation }) {
     },
     qaButton__text: {
       fontWeight: "bold",
-      color: "red",
+      color: theme.BACKGROUND_WARNING,
     },
     list: {
       flex: 4,
@@ -123,7 +108,7 @@ export default function SessionBillScreen({ route, navigation }) {
     deleteButton__image: {
       height: 30,
       width: 25,
-      tintColor: "white",
+      tintColor: theme.BACKGROUND_IMAGE,
     },
     header: {
       flexDirection: "row",
@@ -138,11 +123,11 @@ export default function SessionBillScreen({ route, navigation }) {
       height: "auto",
       flexDirection: "column",
       alignItems: "center",
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_PRIMARY,
       marginBottom: 10,
       marginHorizontal: 10,
       padding: 10,
-      backgroundColor: theme.BARTAP_DARK_GREY,
+      backgroundColor: theme.BACKGROUND_SECONDARY,
       borderRadius: 5,
     },
     footerText: {
@@ -152,14 +137,14 @@ export default function SessionBillScreen({ route, navigation }) {
     },
     footerPrice: {
       marginLeft: "auto",
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_SECONDARY,
       fontSize: 30,
       alignSelf: "center",
       height: "auto",
       fontWeight: "bold",
     },
     footerTotal: {
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_SECONDARY,
       fontSize: 30,
       alignSelf: "center",
       height: "auto",
@@ -169,9 +154,11 @@ export default function SessionBillScreen({ route, navigation }) {
       marginTop: 20,
       height: 70,
       width: 70,
+      tintColor: theme.BACKGROUND_IMAGE_LIGHT,
     },
     footerButton: {
       marginBottom: 10,
+      minWidth: "100%",
     },
   });
 

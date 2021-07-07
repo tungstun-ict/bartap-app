@@ -83,7 +83,7 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       textAlign: "center",
       fontSize: 20,
       fontWeight: "bold",
-      color: theme.TEXT_CONTRAST,
+      color: theme.TEXT_DARK,
     },
     categories: {
       marginVertical: 10,

@@ -1,17 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Button, FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { ceil } from "react-native-reanimated";
+import { FlatList, RefreshControl, StyleSheet } from "react-native";
 import BarTapContent from "../../component/BarTapContent";
-
-import BarTapHeader from "../../component/BarTapHeader";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
-import * as storage from "../../service/BarStorageService.js";
 import { ThemeContext } from "../../theme/ThemeManager";
-import variables, { theme, mock, sizes } from "../../theme/variables.js";
 
 export default function AddCustomerSession({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -41,20 +34,10 @@ export default function AddCustomerSession({ route, navigation }) {
   };
 
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: "column",
-      backgroundColor: theme.BARTAP_BLACK,
-    },
-    content: {
-      flex: 1,
-      paddingHorizontal: 10,
-      flexDirection: "column",
-    },
     list: {
       flexDirection: "column",
       alignSelf: "center",
-      width: "100%",
+      width: "105%",
     },
   });
 

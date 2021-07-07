@@ -1,12 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { SafeAreaView } from "react-native";
 import { Alert, Image, StyleSheet, Text, View } from "react-native";
-import {
-  ActivityIndicator,
-  Button,
-  Dimensions,
-  RefreshControl,
-} from "react-native";
+import { Dimensions, RefreshControl } from "react-native";
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
@@ -14,15 +8,13 @@ import BottomSheet from "reanimated-bottom-sheet";
 import BarTapBottomSheet from "../../component/BarTapBottomSheet/index.js";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
-import BarTapHeader from "../../component/BarTapHeader";
 import * as api from "../../service/BarApiService.js";
 import NfcProxy from "../../service/NfcService.js";
-import { decryptXor, encryptXor } from "../../service/XorEncryptionService.js";
+import { decryptXor } from "../../service/XorEncryptionService.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
-import variables, { theme, mock } from "../../theme/variables.js";
 
 export default function SessionScreen({ navigation }) {
-const { theme } = React.useContext(ThemeContext);
+  const { theme } = React.useContext(ThemeContext);
 
   const [isLoading, setLoading] = useState(true);
   const [session, setSession] = useState({
@@ -81,8 +73,6 @@ const { theme } = React.useContext(ThemeContext);
     }
     setTimeout(closeBottomSheet, 3000);
   };
-
-  
 
   const closeBottomSheet = () => {
     if (mounted.current) {
@@ -152,29 +142,15 @@ const { theme } = React.useContext(ThemeContext);
   const numColumns = 2;
 
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: "column",
-      backgroundColor: theme.BARTAP_BLACK,
-      alignItems: "center",
-      justifyContent: "flex-start",
-    },
-    content: {
-      flex: 1,
-      width: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-    },
     bottomBar__bar: {
       flexDirection: "row",
       height: 100,
       marginTop: 20,
-      backgroundColor: theme.BARTAP_DARK_GREY,
+      backgroundColor: theme.BACKGROUND_SECONDARY,
       justifyContent: "center",
       alignItems: "center",
       width: "100%",
     },
-  
     button: {
       marginHorizontal: 20,
       flex: 1,
@@ -183,8 +159,8 @@ const { theme } = React.useContext(ThemeContext);
       borderRadius: 5,
       alignItems: "center",
       justifyContent: "center",
-      tintColor: theme.BARTAP_BLACK,
-      backgroundColor: theme.BARTAP_WHITE,
+      tintColor: theme.BACKGROUND_IMAGE_DARK,
+      backgroundColor: theme.BACKGROUND_LIGHT,
     },
     buttonDisabled: {
       marginHorizontal: 20,
@@ -194,20 +170,17 @@ const { theme } = React.useContext(ThemeContext);
       borderRadius: 5,
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: theme.BARTAP_SELECTED,
+      backgroundColor: theme.BACKGROUND_SECONDARY,
     },
     addSessionButton: {
       fontSize: 50,
       fontWeight: "bold",
-      color: theme.BARTAP_BLACK,
+      color: theme.BACKGROUND_BUTTON_PRIMARY,
     },
     button__image: {
       height: 40,
       width: 40,
-      tintColor: theme.BARTAP_BLACK,
-    },
-    button__text: {
-      color: theme.BARTAP_LIGHT_GREY,
+      tintColor: theme.BACKGROUND_IMAGE_DARK,
     },
     bottomBar: {
       height: "auto",
@@ -240,7 +213,7 @@ const { theme } = React.useContext(ThemeContext);
     },
     addButton__text: {
       textAlign: "center",
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_PRIMARY,
       fontWeight: "bold",
       width: "100%",
       height: "100%",
@@ -258,7 +231,7 @@ const { theme } = React.useContext(ThemeContext);
       justifyContent: "space-around",
     },
     session__title: {
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_PRIMARY,
       fontSize: 25,
       flex: 1,
       fontWeight: "bold",
@@ -270,7 +243,8 @@ const { theme } = React.useContext(ThemeContext);
     customer: {
       flex: 1,
       flexDirection: "column",
-      backgroundColor: theme.BARTAP_WHITE,
+      backgroundColor: theme.BACKGROUND_BUTTON_BIG,
+  
       marginVertical: 10,
       height: Dimensions.get("window").height / 7,
       maxWidth: Dimensions.get("window").width / 2 - 30,
@@ -281,7 +255,7 @@ const { theme } = React.useContext(ThemeContext);
       fontSize: 20,
       fontWeight: "bold",
       margin: 5,
-      color: theme.BARTAP_BLACK,
+      color: theme.TEXT_DARK,
     },
     customer__total: {
       width: "100%",
@@ -289,24 +263,11 @@ const { theme } = React.useContext(ThemeContext);
       fontSize: 35,
       marginTop: "auto",
       textAlign: "right",
-      color: theme.BARTAP_BLACK,
+      color: theme.TEXT_DARK,
       paddingRight: 10,
     },
-    addCustomer: {
-      flex: 1,
-      flexDirection: "column",
-      backgroundColor: theme.BARTAP_SELECTED,
-      alignItems: "center",
-      justifyContent: "center",
-      marginVertical: 10,
-      height: 50,
-      borderRadius: 5,
-    },
-    addCustomer__text: {
-      fontSize: 30,
-    },
     sheetLogo: {
-      tintColor: theme.BARTAP_WHITE,
+      tintColor: theme.BACKGROUND_IMAGE_LIGHT,
       height: 100,
       width: 100,
       alignSelf: "center",
@@ -315,7 +276,7 @@ const { theme } = React.useContext(ThemeContext);
     sheetText: {
       alignSelf: "center",
       fontSize: 20,
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_SECONDARY,
       fontWeight: "bold",
       marginVertical: 20,
       textAlign: "center",
@@ -345,28 +306,28 @@ const { theme } = React.useContext(ThemeContext);
     );
   };
 
- const customerListItem = (navigation, bill, sessionId) => {
-  let billId = bill.id;
-  return (
-    <TouchableOpacity
-      onPress={() =>
-        navigation.navigate("Drink Categories", { billId, sessionId })
-      }
-      onLongPress={() =>
-        navigation.navigate("Session Bill", { billId, sessionId })
-      }
-    >
-      <View style={styles.customer}>
-        <Text style={styles.customer__name} numberOfLines={2}>
-          {bill.customer.name}
-        </Text>
-        <Text style={styles.customer__total}>
-          €{bill.totalPrice.toFixed(2)}
-        </Text>
-      </View>
-    </TouchableOpacity>
-  );
-}
+  const customerListItem = (navigation, bill, sessionId) => {
+    let billId = bill.id;
+    return (
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("Drink Categories", { billId, sessionId })
+        }
+        onLongPress={() =>
+          navigation.navigate("Session Bill", { billId, sessionId })
+        }
+      >
+        <View style={styles.customer}>
+          <Text style={styles.customer__name} numberOfLines={2}>
+            {bill.customer.name}
+          </Text>
+          <Text style={styles.customer__total}>
+            €{bill.totalPrice.toFixed(2)}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <BarTapContent navigation={navigation} padding={0}>
