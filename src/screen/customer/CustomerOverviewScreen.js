@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, RefreshControl, SafeAreaView } from "react-native";
+import { FlatList, RefreshControl } from "react-native";
 import { Image, Modal, StyleSheet, Text, View } from "react-native";
-import { Button, TouchableOpacity } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import BottomSheet from "reanimated-bottom-sheet";
 
@@ -9,13 +8,11 @@ import BarTapBottomSheet from "../../component/BarTapBottomSheet";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapContent from "../../component/BarTapContent";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import NfcProxy from "../../service/NfcService.js";
 import { encryptXor } from "../../service/XorEncryptionService.js";
 import { ThemeContext } from "../../theme/ThemeManager";
-import variables, { theme, mock } from "../../theme/variables.js";
 
 export default function CustomerOverviewScreen({ route, navigation }) {
 const { theme } = React.useContext(ThemeContext);
@@ -83,13 +80,6 @@ const { theme } = React.useContext(ThemeContext);
   };
 
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      flexDirection: "column",
-      backgroundColor: theme.BARTAP_BLACK,
-      alignItems: "center",
-      justifyContent: "center",
-    },
     content: {
       flex: 1,
       padding: 10,
@@ -102,18 +92,18 @@ const { theme } = React.useContext(ThemeContext);
       alignItems: "center",
       alignSelf: "center",
       padding: 10,
-      backgroundColor: theme.BARTAP_DARK_GREY,
+      backgroundColor: theme.BACKGROUND_OVERLAY,
       height: "100%",
       width: "100%",
     },
     modal__text: {
       fontSize: 30,
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_PRIMARY,
       fontWeight: "bold",
       marginTop: 20,
     },
     information: {
-      backgroundColor: theme.BARTAP_DARK_GREY,
+      backgroundColor: theme.BACKGROUND_LOW_CONTRAST,
       padding: 20,
       borderRadius: 5,
       width: "100%",
@@ -129,38 +119,16 @@ const { theme } = React.useContext(ThemeContext);
       flex: 1,
       flexDirection: "column",
       alignSelf: "center",
-      width: "100%",
-    },
-    listItem: {
-      alignSelf: "center",
-      flex: 1,
-      flexDirection: "row",
-      alignItems: "center",
-      height: 50,
-      backgroundColor: theme.BARTAP_BLACK,
-      borderBottomColor: theme.BARTAP_DARK_GREY,
-      borderBottomWidth: 2,
-      width: "100%",
-    },
-    listItem__name: {
-      fontSize: 20,
-      color: theme.BARTAP_WHITE,
-    },
-    listItem__price: {
-      fontSize: 20,
-      marginLeft: "auto",
-      fontWeight: "bold",
-      textAlign: "right",
-      color: theme.BARTAP_WHITE,
+      width: "105%",
     },
     name: {
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_PRIMARY,
       textAlign: "left",
       fontSize: 15,
       fontWeight: "normal",
     },
     attribute: {
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_PRIMARY,
       textAlign: "right",
       fontSize: 15,
       fontWeight: "normal",
@@ -168,22 +136,31 @@ const { theme } = React.useContext(ThemeContext);
     bills: {
       width: "100%",
       flex: 1,
+      marginBottom: 10,
     },
     sheetLogo: {
       height: 100,
       width: 100,
-      tintColor: theme.BARTAP_WHITE,
+      tintColor: theme.BACKGROUND_IMAGE_LIGHT,
       alignSelf: "center",
       marginTop: 20,
     },
     sheetText: {
       alignSelf: "center",
       fontSize: 20,
-      color: theme.BARTAP_WHITE,
+      color: theme.TEXT_SECONDARY,
       fontWeight: "bold",
       marginTop: 20,
       textAlign: "center",
     },
+    customerFunctions: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      marginBottom: 10,
+    },
+    button: {
+      flex: 0.485
+    }
   });
 
   const listItem = (bill) => {
@@ -249,12 +226,14 @@ const { theme } = React.useContext(ThemeContext);
           </View>
         </View>
         {!customer.hasOwnProperty("user") && (
-          <View>
+          <View style={styles.customerFunctions}>
             <BarTapButton
+              style={styles.button}
               onPress={() => setShowQr(true)}
               text={"Connect Account"}
             />
             <BarTapButton
+              style={styles.button}
               onPress={() => writeTag(encryptXor(customer.id))}
               text={"Write NFC tag"}
             />
@@ -281,8 +260,8 @@ const { theme } = React.useContext(ThemeContext);
         <BarTapButton
           onPress={() => handleDeleteCustomer()}
           text={"Delete customer"}
-          colour={theme.BARTAP_RED}
-          textColour={theme.BARTAP_WHITE}
+          colour={theme.BACKGROUND_WARNING}
+          textColour={theme.TEXT_BUTTON_WARNING}
         />
       </View>
       <Modal
@@ -296,9 +275,9 @@ const { theme } = React.useContext(ThemeContext);
         <View style={styles.modal}>
           <QRCode
             value={`${customer.id}`}
-            color="white"
+            color={theme.TEXT_PRIMARY}
             size={200}
-            backgroundColor={theme.BARTAP_DARK_GREY}
+            backgroundColor={theme.BACKGROUND_OVERLAY}
           />
           <Text style={styles.modal__text}>{customer.name}</Text>
         </View>
@@ -306,7 +285,7 @@ const { theme } = React.useContext(ThemeContext);
       <BottomSheet
         enabledBottomInitialAnimation
         ref={sheetRef}
-        snapPoints={[0, 450]}
+        snapPoints={[0, 230]}
         onCloseEnd={closeBottomSheet}
         borderRadius={10}
         renderContent={renderContent}

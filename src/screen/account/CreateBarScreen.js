@@ -46,7 +46,8 @@ export default function CreateBarScreen({ navigation }) {
       marginBottom: 10,
     },
     button: {
-      marginTop: 10,
+      marginTop: "auto",
+      width: "100%",
     }
   });
 

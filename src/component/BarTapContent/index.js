@@ -19,6 +19,7 @@ export default function BarTapContent({ children, navigation, title, noHeader, p
     content: {
       flex: 1,
       width: "100%",
+      flexDirection: "column",
       justifyContent: "flex-start",
       alignItems: "flex-start",
       padding: padding,

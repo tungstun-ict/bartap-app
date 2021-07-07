@@ -75,10 +75,11 @@ export default function AccountScreen({ navigation }) {
     },
     logoutButton: {
       marginTop: "auto",
+      width: "100%",
       marginBottom: 10,
     },
     information: {
-      backgroundColor: theme.BACKGROUND_INPUT,
+      backgroundColor: theme.BACKGROUND_LOW_CONTRAST,
       padding: 20,
       borderRadius: 5,
       marginBottom: 10,
@@ -104,6 +105,7 @@ export default function AccountScreen({ navigation }) {
     },
     button: {
       marginVertical: 10,
+      width: "100%",
     }
   });
 
@@ -155,12 +157,13 @@ export default function AccountScreen({ navigation }) {
         >
           {pickerItems}
         </Picker>
-        <BarTapButton
+      </View>
+      <BarTapButton
+          style={styles.button}
           onPress={() => navigation.navigate("Create Bar")}
           text={"Create a new bar"}
         />
         <BarTapButton style={styles.button} onPress={() => toggleTheme()} text={theme.mode} />
-      </View>
       <BarTapButton
         onPress={() => _logout()}
         colour={theme.BACKGROUND_WARNING}

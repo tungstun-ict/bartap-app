@@ -11,9 +11,10 @@ export default function BarTapButton({ onPress, text, colour, textColour, style 
   
   const styles = StyleSheet.create({
     wrapper: {
-        minWidth: "100%",
+        flex: 1,
         borderRadius: 5,
-        height: 50,
+        maxHeight: 50,
+        minHeight: 50,
         backgroundColor: theme.BACKGROUND_BUTTON_PRIMARY,
         alignItems: "center",
         justifyContent: "center",
