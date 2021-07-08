@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { TextInput } from "react-native";
-import * as api from "../../service/BarApiService.js";
+
 import BarTapButton from "../../component/BarTapButton/index.js";
-import BarTapTitle from "../../component/BarTapTitle/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
+import BarTapInput from "../../component/BarTapInput/index.js";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
+import * as api from "../../service/BarApiService.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
 
 export default function EditCategoryScreen({ route, navigation }) {
@@ -43,16 +45,6 @@ export default function EditCategoryScreen({ route, navigation }) {
   };
 
   const styles = StyleSheet.create({
-    input: {
-      width: "100%",
-      color: theme.TEXT_PRIMARY,
-      borderColor: theme.LINE_DARKMODE,
-      backgroundColor: theme.BACKGROUND_INPUT,
-      borderWidth: 1,
-      borderRadius: 5,
-      paddingLeft: 10,
-      height: 50,
-    },
     button: {
       marginTop: "auto",
       width: "100%",
@@ -62,12 +54,10 @@ export default function EditCategoryScreen({ route, navigation }) {
   return (
     <BarTapContent navigation={navigation} title={"Edit " + category.name}>
       <BarTapTitle text={"Name"} level={2} />
-        <TextInput
+        <BarTapInput
           autoCompleteType={"name"}
           onChangeText={setName}
           value={name}
-          multiline={false}
-          style={styles.input}
         />
         <BarTapButton
           style={styles.button}

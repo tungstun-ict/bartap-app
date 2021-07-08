@@ -1,14 +1,16 @@
 import React, { useContext } from "react";
 import { SafeAreaView } from "react-native";
-import { StyleSheet, Text, View, Image } from "react-native";
-import variables, { theme, mock, sizes } from "../../theme/variables.js";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { Button, TextInput, TouchableOpacity } from "react-native";
+
+import BarTapButton from "../../component/BarTapButton/index.js";
+import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapHeader from "../../component/BarTapHeader";
+import BarTapInput from "../../component/BarTapInput/index.js";
 import * as api from "../../service/BarApiService.js";
 import { AuthContext } from "../../service/Context.js";
-import BarTapButton from "../../component/BarTapButton/index.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
-import BarTapContent from "../../component/BarTapContent/index.js";
+import variables, { mock, sizes, theme } from "../../theme/variables.js";
 
 export default function LoginScreen({ navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -42,17 +44,6 @@ export default function LoginScreen({ navigation }) {
       textAlign: "center",
       textDecorationLine: "underline",
     },
-    input: {
-      width: "100%",
-      marginVertical: 10,
-      color: theme.TEXT_PRIMARY,
-      borderColor: theme.LINE_DARKMODE,
-      borderWidth: 1,
-      backgroundColor: theme.BACKGROUND_INPUT,
-      borderRadius: 5,
-      paddingLeft: 10,
-      height: 50,
-    },
     button: {
       marginBottom: 20,
     },
@@ -69,25 +60,21 @@ export default function LoginScreen({ navigation }) {
       />
       <Text style={styles.logoText}>{mock.ORGANISATION_NAME}</Text>
       <View style={styles.form}>
-        <TextInput
+        <BarTapInput
           placeholder={"Email adress / username"}
           placeholderTextColor={theme.TEXT_HINT}
           autoCompleteType={"email"}
           value={email}
           onChangeText={setEmail}
           keyboardType={"email-address"}
-          multiline={false}
-          style={styles.input}
         />
-        <TextInput
+        <BarTapInput
           placeholder={"Password"}
           placeholderTextColor={theme.TEXT_HINT}
           autoCompleteType={"password"}
           value={password}
           onChangeText={setPassword}
           keyboardType={"default"}
-          multiline={false}
-          style={styles.input}
           secureTextEntry={true}
         />
         <BarTapButton

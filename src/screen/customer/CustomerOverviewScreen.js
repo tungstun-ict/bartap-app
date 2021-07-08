@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FlatList, RefreshControl } from "react-native";
-import { Image, Modal, StyleSheet, Text, View } from "react-native";
+import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import BottomSheet from "reanimated-bottom-sheet";
 
 import BarTapBottomSheet from "../../component/BarTapBottomSheet";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapContent from "../../component/BarTapContent";
+import { DrawerIcon } from "../../component/BarTapDrawer";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
@@ -27,6 +28,14 @@ const { theme } = React.useContext(ThemeContext);
   const mounted = useRef(false);
 
   useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setLoading(true);
+      setCustomer({});
+    });
+    return unsubscribe;
+  });
+
+  useEffect(() => {
     NfcProxy.init().catch();
     mounted.current = true;
 
@@ -45,6 +54,9 @@ const { theme } = React.useContext(ThemeContext);
       api
         .getBillsByCustomerId(route.params.id)
         .then((json) => {
+          json.sort(function (a, b){
+            return new Date(b.session.creationDate) - new Date(a.session.creationDate)
+          })
           setBills(json);
           setLoading(false);
         })
@@ -59,6 +71,10 @@ const { theme } = React.useContext(ThemeContext);
       setNfcStatus("searching");
     }
   };
+
+  const editCustomer = () => {
+    navigation.navigate("Edit customer", customer);
+  }
 
   const handleDeleteCustomer = () => {
     api
@@ -194,7 +210,11 @@ const { theme } = React.useContext(ThemeContext);
   return (
     <BarTapContent navigation={navigation} title={customer.name} padding={0}>
       <View style={styles.content}>
-        <BarTapTitle text={"Information"} level={1} />
+        <BarTapTitle text={"Information"} level={1}>
+          <TouchableOpacity onPress={editCustomer}>
+            <DrawerIcon source={require("../../assets/edit-icon.png")} />
+          </TouchableOpacity>
+        </BarTapTitle>
         <View style={styles.information}>
           <View style={styles.table}>
             <View style={styles.column}>

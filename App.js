@@ -13,6 +13,7 @@ import LoginScreen from "./src/screen/account/LoginScreen";
 import AddCustomerScreen from "./src/screen/customer/AddCustomerScreen";
 import CustomerOverviewScreen from "./src/screen/customer/CustomerOverviewScreen";
 import CustomersScreen from "./src/screen/customer/CustomersScreen";
+import EditCustomerScreen from "./src/screen/customer/EditCustomerScreen";
 import AddDrinksScreen from "./src/screen/drinks/AddDrinkScreen";
 import DrinkCategoriesScreen from "./src/screen/drinks/DrinkCategoriesScreen";
 import AddCustomerSession from "./src/screen/session/AddCustomerSession";
@@ -50,6 +51,10 @@ export function CustomersStack() {
       <CustomersNavigator.Screen
         name="All Customers"
         component={CustomersScreen}
+      />
+      <CustomersNavigator.Screen
+        name="Edit customer"
+        component={EditCustomerScreen}
       />
       <CustomersNavigator.Screen
         name="Add new customer"

@@ -8,17 +8,18 @@ import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
 
-export default function AddCustomerScreen({ navigation }) {
+export default function EditCustomerScreen({ navigation, route }) {
   const { theme } = React.useContext(ThemeContext);
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const customer = route.params;
+  const [name, setName] = useState(customer.name);
+  const [phone, setPhone] = useState((customer.phoneNumber).toString());
 
-  const createCustomer = (name, phone) => {
-    if (name !== "" && phone !== "") {
+  const updateCustomer = (name, phone) => {
+    if (name !== "" && phone !== "" && phone.length === 10) {
       api
-        .createCustomer(name, phone)
+        .updateCustomer(customer.id, name, phone)
         .then(() => {
-          navigation.navigate("Customers");
+          navigation.navigate("Customer overview", { id: customer.id });
         })
         .catch((error) => alert(error));
     }
@@ -32,20 +33,24 @@ export default function AddCustomerScreen({ navigation }) {
   });
 
   return (
-    <BarTapContent navigation={navigation} title="Add Customer">
+    <BarTapContent navigation={navigation} title={"Edit " + name}>
       <BarTapTitle text={"Name"} level={2} />
       <BarTapInput
+        value={name}
         autoCompleteType={"name"}
         onChangeText={setName}
       />
       <BarTapTitle text={"Phone number"} level={2} />
       <BarTapInput
+        value={phone}
         autoCompleteType={"tel"}
         onChangeText={setPhone}
         keyboardType={"phone-pad"}
       />
       <BarTapButton
-        onPress={() => createCustomer(name, phone)}
+        onPress={() => {
+          updateCustomer(name, phone);
+        }}
         text={"Submit"}
         style={styles.button}
       />
