@@ -1,11 +1,29 @@
 import { DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import React from "react";
-import { StatusBar, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 
+import * as api from "../../service/BarApiService.js";
+import * as storage from "../../service/BarStorageService.js";
+import { AuthContext } from "../../service/Context.js";
 import { ThemeContext } from "../../theme/ThemeManager";
 
 export default function BarTapDrawer(props) {
   const { theme, toggleTheme } = React.useContext(ThemeContext);
+  const { signOut } = React.useContext(AuthContext);
+
+  const [bar, setBar] = React.useState({ name: "Bartap" });
+
+  React.useEffect(() => {
+    storage.getActiveBar().then((id) =>
+      api
+        .getBarById(id)
+        .then((bar) => setBar(bar))
+        .catch(() => {
+          setBar({ name: "Bartap" });
+        })
+        .catch((error) => setBar({ name: "Bartap" })),
+    );
+  });
 
   const styles = StyleSheet.create({
     container: {
@@ -16,25 +34,98 @@ export default function BarTapDrawer(props) {
     drawerItem: {
       color: theme.TEXT_PRIMARY,
     },
+    bottomDrawerItem: {},
     drawerItemLabel: {
-      color: theme.TEXT_PRIMARY, 
-      fontWeight: "bold"
-    }
+      color: theme.TEXT_PRIMARY,
+      fontWeight: "bold",
+      fontSize: 20,
+    },
+    bottomDrawerItemLabel: {
+      color: theme.TEXT_PRIMARY,
+      fontWeight: "bold",
+      fontSize: 5,
+    },
+    drawerHeader: {
+      width: "100%",
+      borderBottomWidth: 2,
+      borderBottomColor: theme.LINE_LOW_CONTRAST,
+      marginBottom: 10,
+      padding: 10,
+    },
+    drawerHeader__title: {
+      fontSize: 25,
+      fontWeight: "bold",
+      color: theme.TEXT_PRIMARY,
+    },
+    icon: {
+      height: 40,
+      width: 40,
+      margin: 0,
+      padding: 0,
+      tintColor: theme.BACKGROUND_IMAGE,
+    },
+    bottomBar: {
+      flexDirection: "row",
+    },
   });
 
   return (
     <View style={styles.container}>
       <DrawerContentScrollView>
-        <DrawerItemList {...props} activeTintColor={theme.BRAND} labelStyle={styles.drawerItemLabel}>
-
-        </DrawerItemList>
+        <View style={styles.drawerHeader}>
+          <Text style={styles.drawerHeader__title}>{bar.name}</Text>
+        </View>
+        <DrawerItemList
+          {...props}
+          activeTintColor={theme.BRAND}
+          labelStyle={styles.drawerItemLabel}
+        ></DrawerItemList>
       </DrawerContentScrollView>
-      <DrawerItem 
-        labelStyle={styles.drawerItemLabel}
-        style={styles.drawerItem} onPress={() => toggleTheme()} label={`Switch to ${theme.mode === "light" ? "dark" : "light"}`} />
-      <DrawerItem  
-        labelStyle={styles.drawerItemLabel}
-        style={styles.drawerItem} label="Sign out"/>
+      <View style={styles.bottomBar}>
+        <DrawerItem
+          labelStyle={styles.bottomDrawerItemLabel}
+          style={styles.bottomDrawerItem}
+          icon={() =>
+            theme.mode === "light" ? (
+              <Image
+                style={styles.icon}
+                source={require("../../assets/drawer/dark-mode-icon.png")}
+              />
+            ) : (
+              <Image
+                style={styles.icon}
+                source={require("../../assets/drawer/light-mode-icon.png")}
+              />
+            )
+          }
+          onPress={() => toggleTheme()}
+          label={`${theme.mode === "light" ? "Dark" : "Light"}`}
+        />
+        <DrawerItem
+          labelStyle={styles.bottomDrawerItemLabel}
+          onPress={() => {
+            signOut();
+          }}
+          style={styles.bottomDrawerItem}
+          label="Sign out"
+          icon={() => (
+            <Image
+              style={styles.icon}
+              source={require("../../assets/drawer/sign-out-icon.png")}
+            />
+          )}
+        />
+      </View>
     </View>
+  );
+}
+
+export function DrawerIcon({source}) {
+  const { theme } = React.useContext(ThemeContext);
+  return (
+    <Image
+      source={source}
+      style={{ tintColor: theme.BACKGROUND_IMAGE, height: 40 , width: 40 }}
+    />
   );
 }

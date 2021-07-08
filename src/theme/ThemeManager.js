@@ -1,6 +1,7 @@
 import React from "react";
 import { Appearance } from 'react-native';
-import { lightTheme, darkTheme } from "./variables";
+
+import { darkTheme, lightTheme } from "./variables";
 
 export const ThemeContext = React.createContext();
 
