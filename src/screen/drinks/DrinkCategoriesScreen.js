@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { RefreshControl, SafeAreaView } from "react-native";
-import { StyleSheet, Text, View, RefreshControl } from "react-native";
-import { Dimensions, FlatList, TouchableOpacity, Image, TextInput, TouchableOpacity } from "react-native";
+import { RefreshControl, StyleSheet, Text, View } from "react-native";
+import { Dimensions, FlatList, Image, TextInput, TouchableOpacity } from "react-native";
 
-import BarTapSearchBar from "../../component/BarTapSearchBar";
 import BarTapContent from "../../component/BarTapContent";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
+import BarTapSearchBar from "../../component/BarTapSearchBar";
 import * as api from "../../service/BarApiService.js";
 import { ThemeContext } from "../../theme/ThemeManager";
 
@@ -58,24 +56,6 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
     return data;
   };
 
-  const selectAmount = (drink) => {
-    setSelectedItem(drink)
-    setDialogOpen(true);
-  }
-
-  const addItem = (navigation, billId, sessionId) => {
-    if(selectedItem === null) {
-      return;
-    }
-
-    api
-      .addDrink(billId, selectedItem, sessionId, amount)
-      .catch((error) => alert(error))
-      .then(() => {
-        navigation.navigate("Session");
-      });
-  }
-
   const search = (string) => {
     if (string.length === 0) {
       return;
@@ -88,6 +68,14 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       sessionId,
     });
   };
+
+  const handleOnPress = (navigation, category, billId, sessionId) => {
+    navigation.navigate("Add Drink", {
+      category,
+      billId,
+      sessionId,
+    });
+  }
 
   const styles = StyleSheet.create({
     itemInvisible: {
@@ -133,31 +121,6 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       flexDirection: "column",
       alignSelf: "center",
       width: "100%",
-    },
-    searchBar: {
-      backgroundColor: colors.BARTAP_WHITE,
-      width: "100%",
-      height: 50,
-      borderRadius: 5,
-      flexDirection: "row",
-    },
-    searchBar__input: {
-      flex: 1,
-      color: colors.BARTAP_BLACK,
-      fontSize: 20,
-      fontWeight: "bold",
-      marginLeft: 10,
-    },
-    searchBar__button: {
-      width: 50,
-      height: "100%",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    searchBar__buttonImage: {
-      tintColor: colors.BARTAP_BLACK,
-      height: 40,
-      width: 40,
     },
   });
 

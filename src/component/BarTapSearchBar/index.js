@@ -1,17 +1,45 @@
 import React, { useState } from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 
-import { colors } from "../../theme/variables.js";
+import { ThemeContext } from "../../theme/ThemeManager";
 
 export default function BarTapSearchBar({ onSubmitEditing, onPress, isEmpty, onChangeText, placeholder }) {
+  const { theme } = React.useContext(ThemeContext);
   const [searchString, setSearchString] = useState("")
-
+  
+  const styles = StyleSheet.create({
+    searchBar: {
+      backgroundColor: theme.BACKGROUND_LOW_CONTRAST,
+      width: "100%",
+      height: 50,
+      borderRadius: 5,
+      flexDirection: "row",
+    },
+    searchBar__input: {
+      flex: 1,
+      color: theme.TEXT_PRIMARY,
+      fontSize: 20,
+      fontWeight: "bold",
+      marginLeft: 10,
+    },
+    searchBar__button: {
+      width: 50,
+      height: "100%",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    searchBar__buttonImage: {
+      tintColor: theme.BACKGROUND_IMAGE,
+      height: 40,
+      width: 40,
+    },
+  });
 
   return (
     <View style={styles.searchBar}>
       <TextInput 
         placeholder={placeholder}
-        placeholderTextColor={colors.BARTAP_LIGHT_GREY}
+        placeholderTextColor={theme.TEXT_HINT}
         // onSubmitEditing={() => onSubmitEditing(searchString)}
         onChangeText={(string) => {
             setSearchString(string); 
@@ -37,31 +65,3 @@ export default function BarTapSearchBar({ onSubmitEditing, onPress, isEmpty, onC
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  searchBar: {
-    backgroundColor: colors.BARTAP_WHITE,
-    width: "100%",
-    height: 50,
-    borderRadius: 5,
-    flexDirection: "row",
-  },
-  searchBar__input: {
-    flex: 1,
-    color: colors.BARTAP_BLACK,
-    fontSize: 20,
-    fontWeight: "bold",
-    marginLeft: 10,
-  },
-  searchBar__button: {
-    width: 50,
-    height: "100%",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  searchBar__buttonImage: {
-    tintColor: colors.BARTAP_BLACK,
-    height: 40,
-    width: 40,
-  },
-});

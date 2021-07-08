@@ -1,24 +1,19 @@
 import { Picker } from "@react-native-picker/picker";
 import React, { useContext, useEffect, useState } from "react";
-import { SafeAreaView } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
 
 import BarTapButton from "../../component/BarTapButton";
 import BarTapContent from "../../component/BarTapContent";
-import BarTapHeader from "../../component/BarTapHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import * as storage from "../../service/BarStorageService.js";
 import { AuthContext } from "../../service/Context.js";
 import { ThemeContext } from "../../theme/ThemeManager";
-import { lightTheme } from "../../theme/variables";
 
 export default function AccountScreen({ navigation }) {
   const { theme, toggleTheme } = React.useContext(ThemeContext);
 
-  const [selectedBar, setSelectedBar] = useState(
-    storage.getActiveBar().catch((error) => alert(error)),
-  );
+  const [selectedBar, setSelectedBar] = useState(1);
   const [bars, setBars] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -37,6 +32,8 @@ export default function AccountScreen({ navigation }) {
 
   useEffect(() => {
     if (isLoading) {
+      storage.getActiveBar().then(bar => {setSelectedBar(bar)}).catch((error) => alert(error))
+
       api
         .getBars()
         .then((json) => {
