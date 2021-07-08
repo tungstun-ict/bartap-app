@@ -31,9 +31,9 @@ export default function SessionBillScreen({ route, navigation }) {
       api
         .getBillByBillIdAndSessionId(billId, sessionId)
         .then((json) => {
-          json.orders.sort(function(a,b) {
+          json.orders.sort(function (a, b) {
             return new Date(a.timestamp) - new Date(b.timestamp);
-          })
+          });
           setBill(json);
           setLoading(false);
         })
@@ -66,7 +66,7 @@ export default function SessionBillScreen({ route, navigation }) {
               })
               .catch((error) => {
                 if (error.response.status === 409) {
-                  console.error("Something went wrong")
+                  console.error("Something went wrong");
                 } else {
                   alert(error);
                 }
@@ -175,7 +175,7 @@ export default function SessionBillScreen({ route, navigation }) {
         price={(order.product.price * order.amount).toFixed(2)}
       />
     );
-  }
+  };
 
   const swipeableView = (item) => {
     return (
@@ -207,7 +207,7 @@ export default function SessionBillScreen({ route, navigation }) {
   return (
     <BarTapContent navigation={navigation} title={"Bill"}>
       <View style={styles.header}>
-          <BarTapTitle text={bill.customer.name} level={1} />
+        <BarTapTitle text={bill.customer.name} level={1}>
           <TouchableOpacity
             style={styles.deleteButton}
             onPress={() => handleDeleteBill()}
@@ -218,46 +218,45 @@ export default function SessionBillScreen({ route, navigation }) {
               resizeMode={"contain"}
             />
           </TouchableOpacity>
+        </BarTapTitle>
+      </View>
+      <SwipeableFlatList
+        keyExtractor={(item) => item.id.toString()}
+        style={styles.list}
+        data={bill.orders}
+        renderItem={({ item }) => listItem(item)}
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => setLoading(true)}
+            refreshing={isLoading}
+            tintColor="white"
+          />
+        }
+        refreshing={isLoading}
+        onRefresh={() => setLoading(true)}
+        maxSwipeDistance={88}
+        renderQuickActions={(item) => swipeableView(item)}
+        shouldBounceOnMount={true}
+      />
+      <View style={styles.footer}>
+        {bill.payed && (
+          <Image
+            style={styles.footerCheck}
+            source={require("../../assets/check.png")}
+          />
+        )}
+        {!bill.payed && (
+          <BarTapButton
+            style={styles.footerButton}
+            text={"Confirm payment"}
+            onPress={payBill}
+          />
+        )}
+        <View style={styles.footerText}>
+          <Text style={styles.footerTotal}>Total:</Text>
+          <Text style={styles.footerPrice}>€{bill.totalPrice.toFixed(2)}</Text>
         </View>
-        <SwipeableFlatList
-          keyExtractor={(item) => item.id.toString()}
-          style={styles.list}
-          data={bill.orders}
-          renderItem={({ item }) => listItem(item)}
-          refreshControl={
-            <RefreshControl
-              onRefresh={() => setLoading(true)}
-              refreshing={isLoading}
-              tintColor="white"
-            />
-          }
-          refreshing={isLoading}
-          onRefresh={() => setLoading(true)}
-          maxSwipeDistance={88}
-          renderQuickActions={(item) => swipeableView(item)}
-          shouldBounceOnMount={true}
-        />
-        <View style={styles.footer}>
-          {bill.payed && (
-            <Image
-              style={styles.footerCheck}
-              source={require("../../assets/check.png")}
-            />
-          )}
-          {!bill.payed && (
-            <BarTapButton
-              style={styles.footerButton}
-              text={"Confirm payment"}
-              onPress={payBill}
-            />
-          )}
-          <View style={styles.footerText}>
-            <Text style={styles.footerTotal}>Total:</Text>
-            <Text style={styles.footerPrice}>
-              €{bill.totalPrice.toFixed(2)}
-            </Text>
-          </View>
-        </View>
+      </View>
     </BarTapContent>
   );
 }
