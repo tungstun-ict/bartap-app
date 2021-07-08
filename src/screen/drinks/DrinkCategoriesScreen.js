@@ -1,32 +1,38 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, RefreshControl } from "react-native";
-import { Dimensions, FlatList, TouchableOpacity } from "react-native";
+import { RefreshControl, StyleSheet, Text, View } from "react-native";
+import { Dimensions, FlatList, Image, TextInput, TouchableOpacity } from "react-native";
+
 import BarTapContent from "../../component/BarTapContent";
+import BarTapSearchBar from "../../component/BarTapSearchBar";
 import * as api from "../../service/BarApiService.js";
 import { ThemeContext } from "../../theme/ThemeManager";
 
 export default function DrinkCategoriesScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
+
+  const [searchString, setSearchString] = useState("");
   const [categories, setCategories] = useState([]);
-  const [isLoading, setLoading] = useState(true);
+  const [isCategoriesLoading, setCategoriesLoading] = useState(true);
+
 
   useEffect(() => {
-    if(isLoading) {
+    if (isCategoriesLoading) {
       api
-      .getCategories()
-      .then((json) => {
-        setCategories(json.sort(function (a, b) {
-          return b.id < a.id;
-        }),
-      );
-        setLoading(false);
-      })
-      .catch((error) => {
-        alert(error)
-        setLoading(false);
-      });
+        .getCategories()
+        .then((json) => {
+          setCategories(
+            json.sort(function (a, b) {
+              return b.id < a.id;
+            }),
+          );
+          setCategoriesLoading(false);
+        })
+        .catch((error) => {
+          alert(error);
+          setCategoriesLoading(false);
+        });
     }
-  }, [isLoading]);
+  }, [isCategoriesLoading]);
 
   const { billId, sessionId } = route.params;
 
@@ -48,6 +54,19 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
     }
 
     return data;
+  };
+
+  const search = (string) => {
+    if (string.length === 0) {
+      return;
+    }
+    let category = { id: 1, "name": string, "productType": "SEARCH" }
+    console.log(category);
+    navigation.navigate("Add Drink", {
+      category,
+      billId,
+      sessionId,
+    });
   };
 
   const handleOnPress = (navigation, category, billId, sessionId) => {
@@ -89,7 +108,48 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       marginVertical: 10,
       width: "100%",
     },
+    searchBar__container: {
+      height: 50,
+      width: "100%",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: 10,
+      marginTop: 10,
+    },
+    list: {
+      flex: 1,
+      flexDirection: "column",
+      alignSelf: "center",
+      width: "100%",
+    },
   });
+
+  const CategoriesContent = () => {
+    return (
+        <View style={styles.categories}>
+          <FlatList
+              refreshControl={
+                <RefreshControl
+                    onRefresh={() => setCategoriesLoading(true)}
+                    refreshing={isCategoriesLoading}
+                    tintColor="white"
+                />
+              }
+              data={formatData(categories, 2)}
+              renderItem={({ item }) => {
+                if (item.empty === true) {
+                  return <View style={[styles.category, styles.itemInvisible]} />;
+                } else {
+                  return categoryListItem(navigation, item, billId, sessionId);
+                }
+              }}
+              keyExtractor={(item) => item.id.toString()}
+              numColumns={2}
+              columnWrapperStyle={styles.categories__row}
+          />
+        </View>
+    );
+  };
 
   const categoryListItem = (navigation, category, billId, sessionId) => {
     return (
@@ -105,24 +165,14 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
 
   return (
     <BarTapContent navigation={navigation} title={"Add product"}>
-      <View style={styles.categories}>
-          <FlatList
-            refreshControl={
-              <RefreshControl onRefresh={() => setLoading(true)} refreshing={isLoading} tintColor="white" />
-            }
-            data={formatData(categories, 2)}
-            renderItem={({ item }) => {
-              if (item.empty === true) {
-                return <View style={[styles.category, styles.itemInvisible]} />;
-              } else {
-                return categoryListItem(navigation, item, billId, sessionId)
-              }
-            }}
-            keyExtractor={(item) => item.id.toString()}
-            numColumns={2}
-            columnWrapperStyle={styles.categories__row}
-          />
-        </View>
+      <View style={styles.searchBar__container}>
+        <BarTapSearchBar
+            placeholder={"Search all products..."}
+            onPress={(string) =>search(string)}
+            isEmpty={() => search("")}
+        />
+      </View>
+      <CategoriesContent />
     </BarTapContent>
   );
 }

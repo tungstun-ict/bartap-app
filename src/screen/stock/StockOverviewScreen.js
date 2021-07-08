@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { FlatList, RefreshControl, SafeAreaView } from "react-native";
+
+import * as Utils from "../../service/Utils.js"
 import * as api from "../../service/BarApiService.js";
 import { StyleSheet, Text, View, Image, Modal } from "react-native";
-import variables, { theme, mock } from "../../theme/variables.js";
+import variables, { theme, mock, colors } from "../../theme/variables.js";
 import { Button, TouchableOpacity } from "react-native";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import QRCode from "react-native-qrcode-svg";
 import BarTapHeader from "../../component/BarTapHeader";
-import SearchBar from "react-native-elements/dist/searchbar/SearchBar-ios";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
@@ -17,6 +18,7 @@ import { ThemeContext } from "../../theme/ThemeManager.js";
 export default function StockOverviewScreen({ navigation }) {
   const { theme } = React.useContext(ThemeContext);
   const [categories, setCategories] = useState([]);
+  const [searchInput, setSearchInput] = useState("");
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -31,10 +33,9 @@ export default function StockOverviewScreen({ navigation }) {
       api
         .getCategories()
         .then((json) => {
+          json.sort((a, b) => Utils.sortListItemString(a.name, b.name))
           setCategories(
-            json.sort(function (a, b) {
-              return a.id - b.id;
-            }),
+            json
           );
           setLoading(false);
         })

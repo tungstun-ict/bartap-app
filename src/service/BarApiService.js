@@ -107,6 +107,12 @@ export async function deleteCustomer(customerId) {
   );
 }
 
+export async function getSearchResults(searchString) {
+  return await getRequest(
+    `/bars/${await storage.getActiveBar()}/products`,
+  );
+}
+
 export async function addDrink(billId, drinkId, sessionId, amount) {
 
   await api.put(

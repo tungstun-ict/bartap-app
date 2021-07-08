@@ -4,11 +4,13 @@ import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
+import * as Utils from "../../service/Utils.js";
+import { colors } from "../../theme/variables.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
 
 export default function AddDrinksScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
-  
+
   const [drinks, setDrinks] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -18,9 +20,11 @@ export default function AddDrinksScreen({ route, navigation }) {
 
   useEffect(() => {
     if (isLoading) {
-      api
-        .getDrinksByCategory(category.id)
+      if(category.productType === "SEARCH") {
+        api
+        .getSearchResults(category.name)
         .then((json) => {
+          json.sort((a, b) => Utils.sortListItemString(a.brand, b.brand))
           setDrinks(json);
           setLoading(false);
         })
@@ -28,6 +32,21 @@ export default function AddDrinksScreen({ route, navigation }) {
           alert(error);
           setLoading(false);
         });
+      }
+      else {
+        api
+        .getDrinksByCategory(category.id)
+        .then((json) => {
+          json.sort((a, b) => Utils.sortListItemString(a.brand, b.brand))
+          setDrinks(json);
+          setLoading(false);
+        })
+        .catch((error) => {
+          alert(error);
+          setLoading(false);
+        });
+      }
+      return;
     }
   }, [isLoading]);
 
@@ -103,7 +122,7 @@ export default function AddDrinksScreen({ route, navigation }) {
       textAlign: "center",
       fontWeight: "bold",
       color: theme.TEXT_SECONDARY,
-  
+
     },
     dialogButtons: {
       flex: 1,

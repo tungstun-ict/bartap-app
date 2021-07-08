@@ -39,7 +39,7 @@ export default function SessionScreen({ navigation }) {
   });
 
   useEffect(() => {
-    if (isLoading == true) {
+    if (isLoading === true) {
       api
         .getCurrentSession()
         .then((json) => {
@@ -244,7 +244,7 @@ export default function SessionScreen({ navigation }) {
       flex: 1,
       flexDirection: "column",
       backgroundColor: theme.BACKGROUND_BUTTON_BIG,
-  
+
       marginVertical: 10,
       height: Dimensions.get("window").height / 7,
       maxWidth: Dimensions.get("window").width / 2 - 30,
