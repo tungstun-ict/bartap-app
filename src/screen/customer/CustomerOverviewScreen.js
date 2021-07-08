@@ -28,6 +28,14 @@ const { theme } = React.useContext(ThemeContext);
   const mounted = useRef(false);
 
   useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      setLoading(true);
+      setCustomer({});
+    });
+    return unsubscribe;
+  });
+
+  useEffect(() => {
     NfcProxy.init().catch();
     mounted.current = true;
 
@@ -63,6 +71,10 @@ const { theme } = React.useContext(ThemeContext);
       setNfcStatus("searching");
     }
   };
+
+  const editCustomer = () => {
+    navigation.navigate("Edit customer", customer);
+  }
 
   const handleDeleteCustomer = () => {
     api
@@ -199,7 +211,7 @@ const { theme } = React.useContext(ThemeContext);
     <BarTapContent navigation={navigation} title={customer.name} padding={0}>
       <View style={styles.content}>
         <BarTapTitle text={"Information"} level={1}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={editCustomer}>
             <DrawerIcon source={require("../../assets/edit-icon.png")} />
           </TouchableOpacity>
         </BarTapTitle>

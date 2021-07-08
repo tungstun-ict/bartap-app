@@ -12,6 +12,7 @@ export default function ({
   placeholderTextColor,
   secureTextEntry,
   value,
+  defaultValue
 }) {
   const { theme } = React.useContext(ThemeContext);
 
@@ -32,6 +33,7 @@ export default function ({
   return (
     <TextInput
       value={value}
+      defaultValue={defaultValue}
       secureTextEntry={secureTextEntry}
       autoCompleteType={autoCompleteType}
       onSubmitEditing={onSubmitEditing}

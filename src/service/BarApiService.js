@@ -1,5 +1,6 @@
-import * as storage from "../service/BarStorageService.js";
 import axios from "axios";
+
+import * as storage from "../service/BarStorageService.js";
 
 const api_url = "https://tungstun-bar-api.herokuapp.com/api";
 
@@ -213,6 +214,18 @@ export async function createCustomer(name, phone) {
       return response.data;
     });
 }
+
+export async function updateCustomer(id, name, phone) {
+  return await api
+    .put(`/bars/${await storage.getActiveBar()}/people/${id}`, {
+      name: name,
+      phoneNumber: phone,
+    })
+    .then((response) => {
+      return response.data;
+    });
+}
+
 export async function getBillsByCustomerId(id) {
   return await getRequest(
     `/bars/${await storage.getActiveBar()}/people/${id}/bills`,
