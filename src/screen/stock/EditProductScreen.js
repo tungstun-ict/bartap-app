@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet, TextInput } from "react-native";
 
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
+import BarTapInput from "../../component/BarTapInput/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
@@ -98,17 +99,6 @@ export default function EditProductScreen({ route, navigation }) {
       color: theme.TEXT_PRIMARY,
       backgroundColor: theme.BACKGROUND_PICKER,
     },
-    input: {
-      marginBottom: 10,
-      width: "100%",
-      color: theme.TEXT_PRIMARY,
-      borderColor: theme.LINE_DARKMODE,
-      backgroundColor: theme.BACKGROUND_INPUT,
-      borderWidth: 1,
-      borderRadius: 5,
-      paddingLeft: 10,
-      height: 50,
-    },
     button: {
       marginTop: "auto",
       width: "100%",
@@ -137,20 +127,16 @@ export default function EditProductScreen({ route, navigation }) {
         style={styles.content}
       >
         <BarTapTitle text={"Name"} level={2} />
-        <TextInput
+        <BarTapInput
           autoCompleteType={"name"}
           onChangeText={setName}
-          multiline={false}
           value={name}
-          style={styles.input}
         />
         <BarTapTitle text={"Brand"} level={2} />
-        <TextInput
+        <BarTapInput
           autoCompleteType={"name"}
           onChangeText={setBrand}
-          multiline={false}
           value={brand}
-          style={styles.input}
         />
         <BarTapTitle text={"Category"} level={2} />
         <Picker
@@ -165,20 +151,16 @@ export default function EditProductScreen({ route, navigation }) {
           {pickerItems}
         </Picker>
         <BarTapTitle text={"Selling price"} level={2} />
-        <TextInput
+        <BarTapInput
           onChangeText={setSellingPrice}
-          multiline={false}
           value={sellingPrice.toString()}
           keyboardType={"numeric"}
-          style={styles.input}
         />
         <BarTapTitle text={"Size (ml)"} level={2} />
-        <TextInput
+        <BarTapInput
           onChangeText={setSize}
-          multiline={false}
           value={size.toString()}
           keyboardType={"numeric"}
-          style={styles.input}
         />
       </ScrollView>
       <BarTapButton

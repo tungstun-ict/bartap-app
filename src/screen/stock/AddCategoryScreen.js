@@ -1,11 +1,13 @@
+import { Picker } from "@react-native-picker/picker";
 import React, { useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
-import * as api from "../../service/BarApiService.js";
-import { Picker } from "@react-native-picker/picker";
+
 import BarTapButton from "../../component/BarTapButton/index.js";
-import BarTapTitle from "../../component/BarTapTitle/index.js";
-import { ThemeContext } from "../../theme/ThemeManager.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
+import BarTapInput from "../../component/BarTapInput/index.js";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
+import * as api from "../../service/BarApiService.js";
+import { ThemeContext } from "../../theme/ThemeManager.js";
 
 export default function AddCategoryScreen({ navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -40,16 +42,6 @@ export default function AddCategoryScreen({ navigation }) {
       backgroundColor: theme.BACKGROUND_PICKER,
       color: theme.TEXT_PRIMARY,
     },
-    input: {
-      width: "100%",
-      color: theme.TEXT_PRIMARY,
-      backgroundColor: theme.BACKGROUND_INPUT,
-      borderColor: theme.LINE_DARKMODE,
-      borderWidth: 1,
-      borderRadius: 5,
-      paddingLeft: 10,
-      height: 50,
-    },
     button: {
       width: "100%",
       marginTop: "auto",
@@ -59,11 +51,9 @@ export default function AddCategoryScreen({ navigation }) {
   return (
     <BarTapContent navigation={navigation} title={"New Category"}>
       <BarTapTitle text={"Name"} level={2} />
-        <TextInput
+        <BarTapInput
           autoCompleteType={"name"}
           onChangeText={setName}
-          multiline={false}
-          style={styles.input}
         />
         <BarTapTitle text={"Type"} level={2} />
         <Picker
