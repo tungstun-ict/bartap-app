@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { KeyboardAvoidingView, SafeAreaView } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
-import { colors } from "../../theme/variables.js";
+import { theme } from "../../theme/variables.js";
 import { TextInput } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -9,8 +9,12 @@ import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import { color } from "react-native-reanimated";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
+import BarTapContent from "../../component/BarTapContent/index.js";
+import { ThemeContext } from "../../theme/ThemeManager.js";
 
 export default function CreateBarScreen({ navigation }) {
+  const { theme } = React.useContext(ThemeContext);
+
   const [name, setName] = useState("");
   const [adress, setAdress] = useState("");
   const [mail, setMail] = useState("");
@@ -29,11 +33,27 @@ export default function CreateBarScreen({ navigation }) {
     }
   };
 
+  const styles = StyleSheet.create({
+    input: {
+      width: "100%",
+      color: theme.TEXT_PRIMARY,
+      borderColor: theme.LINE_DARKMODE,
+      backgroundColor: theme.BACKGROUND_INPUT,
+      borderWidth: 1,
+      borderRadius: 5,
+      paddingLeft: 10,
+      height: 50,
+      marginBottom: 10,
+    },
+    button: {
+      marginTop: "auto",
+      width: "100%",
+    }
+  });
+
   return (
-    <SafeAreaView style={styles.container}>
-      <BarTapStackHeader navigation={navigation} title="New Bar" />
-      <KeyboardAvoidingView style={styles.content}>
-        <BarTapTitle text={"Name"} level={2} />
+    <BarTapContent navigation={navigation} title="New Bar">
+      <BarTapTitle text={"Name"} level={2} />
         <TextInput
           autoCompleteType={"name"}
           onChangeText={setName}
@@ -64,34 +84,6 @@ export default function CreateBarScreen({ navigation }) {
           style={styles.input}
         />
         <BarTapButton onPress={() => createBar()} text={"Create"} style={styles.button} />
-      </KeyboardAvoidingView>
-    </SafeAreaView>
+    </BarTapContent>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
-  },
-  content: {
-    flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    width: "100%",
-    paddingHorizontal: 10,
-  },
-  input: {
-    width: "100%",
-    color: colors.BARTAP_WHITE,
-    borderColor: "white",
-    borderWidth: 1,
-    borderRadius: 5,
-    paddingLeft: 10,
-    height: 50,
-  },
-  button: {
-    marginTop: 10,
-  }
-});

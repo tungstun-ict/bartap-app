@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Button, FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { ceil } from "react-native-reanimated";
-
-import BarTapHeader from "../../component/BarTapHeader";
+import { FlatList, RefreshControl, StyleSheet } from "react-native";
+import BarTapContent from "../../component/BarTapContent";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
-import * as storage from "../../service/BarStorageService.js";
-import variables, { colors, mock, sizes } from "../../theme/variables.js";
+import { ThemeContext } from "../../theme/ThemeManager";
 
 export default function AddCustomerSession({ route, navigation }) {
+  const { theme } = React.useContext(ThemeContext);
+
   const [customers, setCustomers] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const { sessionId } = route.params;
@@ -36,6 +33,14 @@ export default function AddCustomerSession({ route, navigation }) {
     navigation.popToTop();
   };
 
+  const styles = StyleSheet.create({
+    list: {
+      flexDirection: "column",
+      alignSelf: "center",
+      width: "105%",
+    },
+  });
+
   const listItem = (customer) => {
     return (
       <BarTapListItem
@@ -48,10 +53,8 @@ export default function AddCustomerSession({ route, navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <BarTapStackHeader navigation={navigation} />
-      <View style={styles.content}>
-        <BarTapTitle text={"Customers"} level={1} />
+    <BarTapContent navigation={navigation} title={"Add customer"}>
+      <BarTapTitle text={"Customers"} level={1} />
         <FlatList
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
@@ -67,25 +70,6 @@ export default function AddCustomerSession({ route, navigation }) {
           refreshing={isLoading}
           onRefresh={() => setLoading(true)}
         />
-      </View>
-    </SafeAreaView>
+    </BarTapContent>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
-  },
-  content: {
-    flex: 1,
-    paddingHorizontal: 10,
-    flexDirection: "column",
-  },
-  list: {
-    flexDirection: "column",
-    alignSelf: "center",
-    width: "100%",
-  },
-});

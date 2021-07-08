@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from "react";
 import * as api from "../../service/BarApiService.js";
 import {
-  SafeAreaView,
   StyleSheet,
-  Text,
-  View,
-  Image,
-  Button,
   FlatList,
   RefreshControl,
 } from "react-native";
-import variables, { colors, mock, sizes } from "../../theme/variables.js";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import BarTapHeader from "../../component/BarTapHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
+import { ThemeContext } from "../../theme/ThemeManager.js";
+import BarTapContent from "../../component/BarTapContent/index.js";
 
-export default function PastSessionsScreen({ route, navigation }) {
+export default function PastSessionsScreen({ navigation }) {
+  const { theme } = React.useContext(ThemeContext);
+
   const [isLoading, setLoading] = useState(true);
   const [sessions, setSessions] = useState([]);
 
@@ -56,6 +51,15 @@ export default function PastSessionsScreen({ route, navigation }) {
     });
   };
 
+  const styles = StyleSheet.create({
+    list: {
+      flex: 1,
+      flexDirection: "column",
+      alignSelf: "center",
+      width: "105%",
+    },
+  });
+
   const listItem = (session) => {
     const timestamp = new Date(session.creationDate);
     return (
@@ -68,10 +72,8 @@ export default function PastSessionsScreen({ route, navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <BarTapHeader navigation={navigation} />
-      <View style={styles.content}>
-        <BarTapTitle text={"Past sessions"} level={1} />
+    <BarTapContent navigation={navigation}>
+      <BarTapTitle text={"Past sessions"} level={1} />
         <FlatList
           refreshControl={
             <RefreshControl refreshing={isLoading} tintColor="white" />
@@ -83,28 +85,6 @@ export default function PastSessionsScreen({ route, navigation }) {
           data={sessions}
           renderItem={({ item }) => listItem(item)}
         />
-      </View>
-    </SafeAreaView>
+    </BarTapContent>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-  },
-  content: {
-    flex: 1,
-    width: "100%",
-    paddingHorizontal: 10,
-  },
-  list: {
-    flex: 1,
-    flexDirection: "column",
-    alignSelf: "center",
-    width: "100%",
-  },
-});

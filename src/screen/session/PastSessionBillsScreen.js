@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Button, FlatList, Image, RefreshControl, SafeAreaView, StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { FlatList, RefreshControl, StyleSheet} from "react-native";
 
-import BarTapHeader from "../../component/BarTapHeader";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
+import BarTapContent from "../../component/BarTapContent";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
-import variables, { colors, mock, sizes } from "../../theme/variables.js";
+import { ThemeContext } from "../../theme/ThemeManager";
 
 export default function PastSessionBillsScreen({ route, navigation }) {
+  const { theme } = React.useContext(ThemeContext);
+
   const [isLoading, setLoading] = useState(true);
   const [bills, setBills] = useState([]);
   const { sessionId, sessionName } = route.params;
@@ -37,6 +37,15 @@ export default function PastSessionBillsScreen({ route, navigation }) {
     }
   }, [isLoading]);
 
+  const styles = StyleSheet.create({
+    list: {
+      flex: 1,
+      flexDirection: "column",
+      alignSelf: "center",
+      width: "105%",
+    },
+  });
+
   const listItem = (bill) => {
     return (
       <BarTapListItem
@@ -54,10 +63,8 @@ export default function PastSessionBillsScreen({ route, navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <BarTapStackHeader navigation={navigation} />
-      <View style={styles.content}>
-        <BarTapTitle text={sessionName} level={1} />
+    <BarTapContent navigation={navigation} title={sessionName}>
+      <BarTapTitle text={sessionName} level={1} />
         <FlatList
           refreshControl={
             <RefreshControl refreshing={isLoading} tintColor="white" />
@@ -69,28 +76,6 @@ export default function PastSessionBillsScreen({ route, navigation }) {
           data={bills}
           renderItem={({ item }) => listItem(item)}
         />
-      </View>
-    </SafeAreaView>
+    </BarTapContent>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-  },
-  content: {
-    flex: 1,
-    width: "100%",
-    paddingHorizontal: 10,
-  },
-  list: {
-    flex: 1,
-    flexDirection: "column",
-    alignSelf: "center",
-    width: "100%",
-  },
-});

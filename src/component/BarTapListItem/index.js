@@ -1,7 +1,8 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import { ThemeContext } from "../../theme/ThemeManager.js";
 
-import { colors } from "../../theme/variables.js";
+import { theme } from "../../theme/variables.js";
 
 export default function BarTapListItem({
   onPress,
@@ -12,6 +13,58 @@ export default function BarTapListItem({
   payed,
   date,
 }) {
+  const { theme } = React.useContext(ThemeContext);
+  
+  const styles = StyleSheet.create({
+    wrapper: {
+      alignSelf: "center",
+      flex: 1,
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "flex-start",
+      backgroundColor: theme.BACKGROUND_PRIMARY,
+      borderBottomColor: theme.LINE_CONTRAST,
+      borderBottomWidth: 2,
+      width: "100%",
+      paddingHorizontal: 10,
+      height: 50,
+    },
+    timestamp: {
+      fontSize: 20,
+      color: theme.TEXT_LOW_CONTRAST,
+      marginRight: 10,
+    },
+    name: {
+      fontSize: 20,
+      color: theme.TEXT_PRIMARY,
+      marginRight: 5,
+      flex: 1,
+      width: "auto",
+    },
+    multiplier: {
+      fontSize: 15,
+      color: theme.TEXT_LOW_CONTRAST,
+      marginLeft: "auto",
+    },
+    price: {
+      fontSize: 20,
+      color: theme.TEXT_PRIMARY,
+      fontWeight: "bold",
+      marginLeft: 20,
+    },
+    right: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginLeft: "auto",
+    },
+    payed: {
+      height: 20,
+      width: 20,
+      marginLeft: 10,
+      tintColor: theme.BACKGROUND_IMAGE,
+    },
+  });
+
   return (
     <TouchableHighlight onPress={onPress}>
       <View style={styles.wrapper}>
@@ -51,51 +104,3 @@ export default function BarTapListItem({
     </TouchableHighlight>
   );
 }
-
-export const styles = StyleSheet.create({
-  wrapper: {
-    alignSelf: "center",
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    backgroundColor: colors.BARTAP_BLACK,
-    borderBottomColor: colors.BARTAP_DARK_GREY,
-    borderBottomWidth: 2,
-    width: "100%",
-    height: 50,
-  },
-  timestamp: {
-    fontSize: 20,
-    color: colors.BARTAP_LIGHT_GREY,
-    marginRight: 10,
-  },
-  name: {
-    fontSize: 20,
-    color: colors.BARTAP_WHITE,
-    marginRight: 5,
-    flex: 1,
-    width: "auto",
-  },
-  multiplier: {
-    fontSize: 15,
-    color: colors.BARTAP_WHITE,
-    marginLeft: "auto",
-  },
-  price: {
-    fontSize: 20,
-    color: colors.BARTAP_WHITE,
-    fontWeight: "bold",
-    marginLeft: 20,
-  },
-  right: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginLeft: "auto",
-  },
-  payed: {
-    height: 20,
-    width: 20,
-    marginLeft: 10,
-  },
-});

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Modal, RefreshControl, SafeAreaView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-
+import { FlatList, Modal, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
-import { colors } from "../../theme/variables.js";
+import { ThemeContext } from "../../theme/ThemeManager.js";
 
 export default function AddDrinksScreen({ route, navigation }) {
+  const { theme } = React.useContext(ThemeContext);
+  
   const [drinks, setDrinks] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -48,6 +49,81 @@ export default function AddDrinksScreen({ route, navigation }) {
       });
   }
 
+  const styles = StyleSheet.create({
+    content: {
+      flex: 1,
+      width: "100%",
+    },
+    list: {
+      flex: 1,
+      flexDirection: "column",
+      alignSelf: "center",
+      width: "105%",
+    },
+    modal: {
+      justifyContent: "center",
+      alignItems: "center",
+      alignSelf: "center",
+      padding: 10,
+      height: "100%",
+      backgroundColor: "rgba(0,0,0,0.8)",
+      width: "100%",
+    },
+    confirmButton: {
+      width: 200,
+      height: 70,
+      marginTop: 30,
+      borderRadius: 5,
+      backgroundColor: theme.BACKGROUND_BUTTON_PRIMARY,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    confirmButton__text: {
+      fontSize: 30,
+      fontWeight: "bold",
+      color: theme.TEXT_BUTTON_PRIMARY,
+    },
+    dialog: {
+      maxHeight: 200,
+      minWidth: 200,
+      backgroundColor: theme.BACKGROUND_SECONDARY,
+      borderRadius: 5,
+      flex: 1,
+      flexDirection: "column",
+      overflow: "hidden",
+    },
+    dialogContent: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    dialogContent__text: {
+      fontSize: 50,
+      textAlign: "center",
+      fontWeight: "bold",
+      color: theme.TEXT_SECONDARY,
+  
+    },
+    dialogButtons: {
+      flex: 1,
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
+    dialogButton: {
+      flex: 0.48,
+      backgroundColor: theme.BACKGROUND_SECONDARY,
+      justifyContent: "center",
+      alignItems: "center"
+    },
+    dialogButton__text: {
+      fontSize: 50,
+      textAlign: "center",
+      fontWeight: "bold",
+      color: theme.TEXT_SECONDARY,
+    }
+  });
+
   const listItem = (drink) => {
     return (
       <BarTapListItem
@@ -59,8 +135,7 @@ export default function AddDrinksScreen({ route, navigation }) {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <BarTapStackHeader navigation={navigation} title="Add product" />
+    <BarTapContent navigation={navigation} title={"Add product"}>
       <View style={styles.content}>
         <BarTapTitle text={category.name} level={1} />
         <FlatList
@@ -119,89 +194,6 @@ export default function AddDrinksScreen({ route, navigation }) {
           </TouchableOpacity>
         </TouchableOpacity>
       </Modal>
-    </SafeAreaView>
+    </BarTapContent>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
-    alignItems: "flex-start",
-    justifyContent: "flex-start",
-  },
-  content: {
-    flex: 1,
-    width: "100%",
-    paddingHorizontal: 10,
-  },
-  list: {
-    flex: 1,
-    flexDirection: "column",
-    alignSelf: "center",
-    width: "100%",
-  },
-  modal: {
-    justifyContent: "center",
-    alignItems: "center",
-    alignSelf: "center",
-    padding: 10,
-    height: "100%",
-    backgroundColor: "rgba(0,0,0,0.8)",
-    width: "100%",
-  },
-  confirmButton: {
-    width: 200,
-    height: 70,
-    marginTop: 30,
-    borderRadius: 5,
-    backgroundColor: colors.BARTAP_WHITE,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  confirmButton__text: {
-    fontSize: 30,
-    fontWeight: "bold",
-    color: colors.BARTAP_BLACK,
-  },
-  dialog: {
-    maxHeight: 200,
-    minWidth: 200,
-    backgroundColor: colors.BARTAP_DARK_GREY,
-    borderRadius: 5,
-    flex: 1,
-    flexDirection: "column",
-    overflow: "hidden",
-  },
-  dialogContent: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  dialogContent__text: {
-    fontSize: 50,
-    textAlign: "center",
-    fontWeight: "bold",
-    color: colors.BARTAP_WHITE,
-
-  },
-  dialogButtons: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  dialogButton: {
-    flex: 0.48,
-    backgroundColor: colors.BARTAP_GREY,
-    justifyContent: "center",
-    alignItems: "center"
-  },
-  dialogButton__text: {
-    fontSize: 50,
-    textAlign: "center",
-    fontWeight: "bold",
-    color: colors.BARTAP_WHITE,
-  }
-});

@@ -1,40 +1,42 @@
-import { NavigationContainer, StackActions } from "@react-navigation/native";
-import { ThemeProvider } from "react-native-elements";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import React, { useEffect, useState, createContext } from "react";
-import SessionScreen from "./src/screen/session/SessionScreen";
-import CustomersScreen from "./src/screen/customer/CustomersScreen";
-import AddCustomerScreen from "./src/screen/customer/AddCustomerScreen";
-import { colors, mock } from "./src/theme/variables";
-import { StyleSheet } from "react-native";
-import CustomerOverviewScreen from "./src/screen/customer/CustomerOverviewScreen";
-import DrinkCategoriesScreen from "./src/screen/drinks/DrinkCategoriesScreen";
-import AddDrinksScreen from "./src/screen/drinks/AddDrinkScreen";
-import SessionBillScreen from "./src/screen/session/SessionBillScreen";
-import PastSessionsScreen from "./src/screen/session/PastSessionsScreen";
-import LoginScreen from "./src/screen/account/LoginScreen";
-import NewSessionScreen from "./src/screen/session/NewSessionScreen";
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect } from "react";
+import { Image } from "react-native";
+import { Appearance } from "react-native";
+
+import BarTapDrawer, { DrawerIcon } from "./src/component/BarTapDrawer";
 import AccountScreen from "./src/screen/account/AccountScreen";
-import * as storage from "./src/service/BarStorageService.js";
-import * as api from "./src/service/BarApiService.js";
-import SplashScreen from "./src/screen/SplashScreen";
-import { AuthContext } from "./src/service/Context.js";
+import CreateBarScreen from "./src/screen/account/CreateBarScreen";
+import LoginScreen from "./src/screen/account/LoginScreen";
+import AddCustomerScreen from "./src/screen/customer/AddCustomerScreen";
+import CustomerOverviewScreen from "./src/screen/customer/CustomerOverviewScreen";
+import CustomersScreen from "./src/screen/customer/CustomersScreen";
+import AddDrinksScreen from "./src/screen/drinks/AddDrinkScreen";
+import DrinkCategoriesScreen from "./src/screen/drinks/DrinkCategoriesScreen";
 import AddCustomerSession from "./src/screen/session/AddCustomerSession";
-import StockOverviewScreen from "./src/screen/stock/StockOverviewScreen";
+import NewSessionScreen from "./src/screen/session/NewSessionScreen";
+import PastSessionBillsScreen from "./src/screen/session/PastSessionBillsScreen";
+import PastSessionsScreen from "./src/screen/session/PastSessionsScreen";
+import SessionBillScreen from "./src/screen/session/SessionBillScreen";
+import SessionScreen from "./src/screen/session/SessionScreen";
+import SplashScreen from "./src/screen/SplashScreen";
 import AddCategoryScreen from "./src/screen/stock/AddCategoryScreen";
 import AddProductStockScreen from "./src/screen/stock/AddProductStockScreen";
 import CategoryOverviewScreen from "./src/screen/stock/CategoryOverviewScreen";
-import { StatusBar } from "expo-status-bar";
-import PastSessionBillsScreen from "./src/screen/session/PastSessionBillsScreen";
-import CreateBarScreen from "./src/screen/account/CreateBarScreen";
 import EditCategoryScreen from "./src/screen/stock/EditCategoryScreen";
 import EditProductScreen from "./src/screen/stock/EditProductScreen";
+import StockOverviewScreen from "./src/screen/stock/StockOverviewScreen";
+import * as api from "./src/service/BarApiService.js";
+import * as storage from "./src/service/BarStorageService.js";
+import { AuthContext } from "./src/service/Context.js";
+import { ThemeProvider } from "./src/theme/ThemeManager";
+
 const DrawerNavigator = createDrawerNavigator();
 const CustomersNavigator = createStackNavigator();
 const PastNavigator = createStackNavigator();
 const SessionNavigator = createStackNavigator();
-const PaymentNavigator = createStackNavigator();
 const StockNavigator = createStackNavigator();
 const AccountNavigator = createStackNavigator();
 const SignInNavigator = createStackNavigator();
@@ -45,7 +47,10 @@ export function CustomersStack() {
       headerMode={"none"}
       initialRouteName={"AllCustomers"}
     >
-      <CustomersNavigator.Screen name="All Customers" component={CustomersScreen} />
+      <CustomersNavigator.Screen
+        name="All Customers"
+        component={CustomersScreen}
+      />
       <CustomersNavigator.Screen
         name="Add new customer"
         component={AddCustomerScreen}
@@ -112,12 +117,6 @@ export function SessionStack() {
     </SessionNavigator.Navigator>
   );
 }
-
-// export function PaymentStack() {
-//   return (
-//     <PaymentNavigator.Navigator headerMode="none"></PaymentNavigator.Navigator>
-//   );
-// }
 
 export function StockStack() {
   return (
@@ -209,11 +208,6 @@ export default function App() {
       userToken: null,
     },
   );
-  const theme = {
-    colors: {
-      primary: "white",
-    },
-  };
 
   useEffect(() => {
     const bootstrapAsync = async () => {
@@ -236,7 +230,7 @@ export default function App() {
         try {
           accessToken = await api.login(data.email, data.password);
           const bars = await api.getBars();
-          if(bars[0] !== undefined) {
+          if (bars[0] !== undefined) {
             await storage.storeActiveBar(bars[0].id.toString());
           }
 
@@ -267,59 +261,79 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <AuthContext.Provider value={authContext}>
-        <NavigationContainer>
-          <DrawerNavigator.Navigator
-            sceneContainerStyle={{ backgroundColor: "black" }}
-            initialRouteName="Session"
-            drawerStyle={styles.drawer}
-            drawerContentOptions={{
-              activeTintColor: colors.BARTAP_WHITE,
-              activeBackgroundColor: colors.BARTAP_DARK_GREY_SELECTED,
-              inactiveTintColor: colors.BARTAP_WHITE,
-              labelStyle: {
-                fontSize: 30,
-                fontWeight: "bold",
-              },
-            }}
-          >
-            {state.userToken !== null ? (
-              <React.Fragment>
-                <DrawerNavigator.Screen
-                  name="Session"
-                  component={SessionStack}
-                />
-                <DrawerNavigator.Screen name="Past" component={PastStack} />
-                <DrawerNavigator.Screen
-                  name="Customers"
-                  component={CustomersStack}
-                />
-                {/* <DrawerNavigator.Screen
+    <>
+      <ThemeProvider>
+        <AuthContext.Provider value={authContext}>
+          <NavigationContainer>
+            <DrawerNavigator.Navigator
+              drawerContent={(props) => <BarTapDrawer {...props} />}
+            >
+              {state.userToken !== null ? (
+                <React.Fragment>
+                  <DrawerNavigator.Screen
+                    name="Session"
+                    component={SessionStack}
+                    options={{
+                      drawerIcon: () => (
+                        <DrawerIcon 
+                          source={require("./src/assets/drawer/session-icon.png")} />
+                      ),
+                    }}
+                  />
+                  <DrawerNavigator.Screen 
+                  name="History" 
+                  component={PastStack}
+                  options={{
+                    drawerIcon: () => (
+                      <DrawerIcon 
+                          source={require("./src/assets/drawer/history-icon.png")} />
+                    )
+                  }} />
+                  <DrawerNavigator.Screen
+                    name="Customers"
+                    component={CustomersStack}
+                    options={{
+                      drawerIcon: () => (
+                        <DrawerIcon 
+                          source={require("./src/assets/drawer/customers-icon.png")} />
+                      )
+                    }}
+                  />
+                  {/* <DrawerNavigator.Screen
                 name="Payments"
                 component={PaymentStack}
               /> */}
-                <DrawerNavigator.Screen name="Stock" component={StockStack} />
+                  <DrawerNavigator.Screen 
+                    name="Stock"
+                    component={StockStack}
+                    options={{
+                      drawerIcon: () => (
+                        <DrawerIcon 
+                          source={require("./src/assets/drawer/stock-icon.png")} />
+                      )
+                    }} />
+                  <DrawerNavigator.Screen
+                    name="Account"
+                    component={AccountStack}
+                    options={{
+                      drawerIcon: () => (
+                        <DrawerIcon 
+                          source={require("./src/assets/drawer/settings-icon.png")} />
+                      )
+                    }}
+                  />
+                </React.Fragment>
+              ) : (
                 <DrawerNavigator.Screen
-                  name="Account"
-                  component={AccountStack}
+                  name="Sign In"
+                  component={SignInStack}
                 />
-              </React.Fragment>
-            ) : (
-              <DrawerNavigator.Screen name="Sign In" component={SignInStack} />
-            )}
-          </DrawerNavigator.Navigator>
-        </NavigationContainer>
-      </AuthContext.Provider>
-      <StatusBar style="light" />
-    </ThemeProvider>
+              )}
+            </DrawerNavigator.Navigator>
+          </NavigationContainer>
+        </AuthContext.Provider>
+        <StatusBar style="light" />
+      </ThemeProvider>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  drawer: {
-    backgroundColor: colors.BARTAP_DARK_GREY,
-    width: 240,
-  },
-  drawerItem: {},
-});

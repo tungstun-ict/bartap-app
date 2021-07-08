@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FlatList, RefreshControl, SafeAreaView } from "react-native";
 import * as api from "../../service/BarApiService.js";
 import { StyleSheet, Text, View, Image, Modal } from "react-native";
-import variables, { colors, mock } from "../../theme/variables.js";
+import variables, { theme, mock } from "../../theme/variables.js";
 import { Button, TouchableOpacity } from "react-native";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import QRCode from "react-native-qrcode-svg";
@@ -11,10 +11,12 @@ import SearchBar from "react-native-elements/dist/searchbar/SearchBar-ios";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
+import BarTapContent from "../../component/BarTapContent/index.js";
+import { ThemeContext } from "../../theme/ThemeManager.js";
 
-export default function StockOverviewScreen({ route, navigation }) {
+export default function StockOverviewScreen({ navigation }) {
+  const { theme } = React.useContext(ThemeContext);
   const [categories, setCategories] = useState([]);
-  const [searchInput, setSearchInput] = useState("");
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -43,6 +45,25 @@ export default function StockOverviewScreen({ route, navigation }) {
     }
   }, [isLoading]);
 
+  const styles = StyleSheet.create({
+    bottomButtons: {
+      flexDirection: "row",
+      marginTop: 10,
+      justifyContent: "space-between",
+      width: "100%",
+    },
+    button: {
+      flex: 0.485,
+      alignSelf: "center",
+      marginVertical: 5,
+    },
+    list: {
+      flexDirection: "column",
+      alignSelf: "center",
+      width: "100%",
+    },
+  });
+
   const listItem = (category) => {
     return (
       <BarTapListItem
@@ -55,9 +76,7 @@ export default function StockOverviewScreen({ route, navigation }) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <BarTapHeader navigation={navigation} title="Stock" />
-      <View style={styles.content}>
+    <BarTapContent navigation={navigation}>
       <BarTapTitle text={"Categories"} level={1} />
         <FlatList
           refreshControl={
@@ -86,37 +105,6 @@ export default function StockOverviewScreen({ route, navigation }) {
             style={styles.button}
           />
         </View>
-      </View>
-    </SafeAreaView>
+    </BarTapContent>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  content: {
-    flex: 1,
-    flexDirection: "column",
-    paddingHorizontal: 10,
-    width: "100%",
-  },
-  bottomButtons: {
-    flexDirection: "column",
-    marginTop: 10,
-  },
-  button: {
-    width: "50%",
-    alignSelf: "center",
-    marginVertical: 5,
-  },
-  list: {
-    flexDirection: "column",
-    alignSelf: "center",
-    width: "100%",
-  },
-});

@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { KeyboardAvoidingView, SafeAreaView, ScrollView } from "react-native";
-import { StyleSheet, Text, View, Image } from "react-native";
-import variables, { colors, mock } from "../../theme/variables.js";
-import BarTapHeader from "../../component/BarTapHeader";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
-import { TextInput } from "react-native";
+import { StyleSheet, ScrollView, TextInput } from "react-native";
 import * as api from "../../service/BarApiService.js";
-import { TouchableOpacity } from "react-native-gesture-handler";
-import { ceil } from "react-native-reanimated";
 import { Picker } from "@react-native-picker/picker";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
+import BarTapContent from "../../component/BarTapContent/index.js";
+import { ThemeContext } from "../../theme/ThemeManager.js";
 
 export default function AddProductStockScreen({ navigation }) {
+  const { theme } = React.useContext(ThemeContext);
+
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
@@ -59,15 +56,49 @@ export default function AddProductStockScreen({ navigation }) {
     }
   };
 
+  const styles = StyleSheet.create({
+    content: {
+      minWidth: "100%",
+      maxHeight: "100%",
+      flex: 1,
+    },
+    picker: {
+      height: 60,
+      borderRadius: 5,
+      justifyContent: "center",
+      width: "100%",
+      
+    },
+    picker__item: {
+      width: "100%",
+      height: 50,
+      backgroundColor: theme.BACKGROUND_PICKER,
+      color: theme.TEXT_PRIMARY,
+    },
+    input: {
+      width: "100%",
+      color: theme.TEXT_PRIMARY,
+      backgroundColor: theme.BACKGROUND_INPUT,
+      borderColor: theme.LINE_DARKMODE,
+      borderWidth: 1,
+      borderRadius: 5,
+      height: 50,
+      marginBottom: 10,
+    },
+    button: {
+      marginTop: "auto",
+      width: "100%",
+    }
+  });
+
   let pickerItems = categories.map((category) => {
     return (
-      <Picker.Item label={category.name} value={category} key={category.id} />
+      <Picker.Item label={category.name} value={category} key={category.id} style={styles.picker__item} />
     );
   });
 
   return (
-    <SafeAreaView style={styles.container}>
-      <BarTapStackHeader navigation={navigation} title="New product" />
+    <BarTapContent navigation={navigation} title={"New Product"}>
       <ScrollView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.content}
@@ -111,48 +142,8 @@ export default function AddProductStockScreen({ navigation }) {
           keyboardType={"numeric"}
           style={styles.input}
         />
-        <BarTapButton style={styles.button} onPress={() => createProduct()} text={"Submit"} />
       </ScrollView>
-    </SafeAreaView>
+      <BarTapButton style={styles.button} onPress={() => createProduct()} text={"Submit"} />
+    </BarTapContent>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: colors.BARTAP_BLACK,
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
-  content: {
-    flex: 1,
-    width: "100%",
-    paddingHorizontal: 10,
-  },
-  picker: {
-    height: 60,
-    borderColor: colors.BARTAP_WHITE,
-    borderWidth: 1,
-    backgroundColor: colors.BARTAP_DARK_GREY,
-    color: colors.BARTAP_WHITE,
-    borderRadius: 5,
-    justifyContent: "center",
-    width: "100%",
-  },
-  picker__item: {
-    height: 50,
-    color: "white",
-  },
-  input: {
-    width: "100%",
-    color: colors.BARTAP_WHITE,
-    borderColor: "white",
-    borderWidth: 1,
-    borderRadius: 5,
-    height: 50,
-  },
-  button: {
-    marginTop: 10,
-  }
-});
