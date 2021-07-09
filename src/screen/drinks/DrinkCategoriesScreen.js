@@ -107,6 +107,7 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
     categories: {
       marginVertical: 10,
       width: "100%",
+      flex: 1,
     },
     searchBar__container: {
       height: 50,
@@ -117,10 +118,10 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       marginTop: 10,
     },
     list: {
-      flex: 1,
       flexDirection: "column",
       alignSelf: "center",
       width: "100%",
+      maxHeight: "100%",
     },
   });
 
