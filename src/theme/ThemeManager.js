@@ -1,6 +1,6 @@
 import React from "react";
 import { Appearance } from 'react-native';
-
+import { StatusBar } from "expo-status-bar";
 import { darkTheme, lightTheme } from "./variables";
 
 export const ThemeContext = React.createContext();
@@ -25,6 +25,7 @@ export const ThemeProvider = ({ children }) => {
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
+      <StatusBar style="light" backgroundColor={theme.STATUSBAR_BACKGROUND}/>
     </ThemeContext.Provider>
   );
 };

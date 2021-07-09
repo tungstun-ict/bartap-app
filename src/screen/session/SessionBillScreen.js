@@ -213,7 +213,7 @@ export default function SessionBillScreen({ route, navigation }) {
             onPress={() => handleDeleteBill()}
           >
             <Image
-              source={require("../../assets/trashbin.png")}
+              source={require("../../assets/trash-icon.png")}
               style={styles.deleteButton__image}
               resizeMode={"contain"}
             />

@@ -178,8 +178,8 @@ export default function SessionScreen({ navigation }) {
       color: theme.BACKGROUND_BUTTON_PRIMARY,
     },
     button__image: {
-      height: 40,
-      width: 40,
+      height: 50,
+      width: 50,
       tintColor: theme.BACKGROUND_IMAGE_DARK,
     },
     bottomBar: {
@@ -288,7 +288,7 @@ export default function SessionScreen({ navigation }) {
       <BarTapBottomSheet height={290}>
         <Image
           style={styles.sheetLogo}
-          source={require("../../assets/nfc.png")}
+          source={require("../../assets/nfc-icon.png")}
         />
         <Text style={styles.sheetText}>{nfcStatus}</Text>
         {typeof nfcStatus === "number" && (
@@ -367,16 +367,16 @@ export default function SessionScreen({ navigation }) {
       </View>
       <View style={styles.bottomBar}>
         <View style={styles.bottomBar__bar}>
-          <TouchableOpacity style={styles.buttonDisabled}>
+          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Order History", session)}>
             <Image
               style={styles.button__image}
-              source={require("../../assets/clock.png")}
+              source={require("../../assets/drawer/history-icon.png")}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={readTag}>
             <Image
               style={styles.button__image}
-              source={require("../../assets/nfc.png")}
+              source={require("../../assets/nfc-icon.png")}
             />
           </TouchableOpacity>
           {!session.locked ? (
@@ -386,7 +386,7 @@ export default function SessionScreen({ navigation }) {
             >
               <Image
                 style={styles.button__image}
-                source={require("../../assets/close.png")}
+                source={require("../../assets/lock-icon.png")}
               />
             </TouchableOpacity>
           ) : (

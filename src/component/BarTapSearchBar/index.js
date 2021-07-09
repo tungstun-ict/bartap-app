@@ -60,7 +60,7 @@ export default function BarTapSearchBar({ onSubmitEditing, onPress, isEmpty, onC
         style={styles.searchBar__button}>
         <Image
           style={styles.searchBar__buttonImage}
-          source={require("../../assets/search.png")}
+          source={require("../../assets/search-icon.png")}
         />
       </TouchableOpacity>
     </View>
