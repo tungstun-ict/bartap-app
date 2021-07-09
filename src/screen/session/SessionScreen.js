@@ -147,8 +147,10 @@ export default function SessionScreen({ navigation }) {
       flexDirection: "row",
       height: 100,
       marginTop: 20,
-      backgroundColor: theme.BACKGROUND_SECONDARY,
+      backgroundColor: theme.BACKGROUND_BOTTOM_BAR,
       justifyContent: "center",
+      borderTopWidth: 2,
+      borderTopColor: theme.LINE_LIGHTMODE,
       alignItems: "center",
       width: "100%",
     },
@@ -185,6 +187,7 @@ export default function SessionScreen({ navigation }) {
     },
     bottomBar: {
       height: "auto",
+      marginTop: 10,
     },
     session: {
       flex: 1,

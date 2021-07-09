@@ -31,7 +31,7 @@ export default function BarTapListItem({
       backgroundColor: theme.BACKGROUND_PRIMARY,
       width: "100%",
       paddingHorizontal: 10,
-      height: 30,
+      maxHeight: 50,
     },
     timestamp: {
       fontSize: 20,
@@ -72,12 +72,18 @@ export default function BarTapListItem({
       flexDirection: "column",
       borderBottomColor: theme.LINE_CONTRAST,
       borderBottomWidth: 2,
+      minHeight: 50,
     },
     line2: {
       color: theme.TEXT_PRIMARY,
       fontSize: 20,
       paddingHorizontal: 10,
-      height: 30,
+      height: 30, 
+    },
+    right: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginLeft: "auto",
     },
   });
 

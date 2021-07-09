@@ -61,7 +61,7 @@ export default function StockOverviewScreen({ navigation }) {
     list: {
       flexDirection: "column",
       alignSelf: "center",
-      width: "100%",
+      width: "105%",
     },
   });
 

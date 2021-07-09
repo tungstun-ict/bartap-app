@@ -275,6 +275,8 @@ export default function App() {
         <AuthContext.Provider value={authContext}>
           <NavigationContainer>
             <DrawerNavigator.Navigator
+              overlayColor="transparent"
+              drawerType="slide"
               drawerContent={(props) => <BarTapDrawer {...props} />}
             >
               {state.userToken !== null ? (

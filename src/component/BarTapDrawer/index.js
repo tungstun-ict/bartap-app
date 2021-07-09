@@ -1,4 +1,8 @@
-import { DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
+import {
+  DrawerContentScrollView,
+  DrawerItem,
+  DrawerItemList,
+} from "@react-navigation/drawer";
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 
@@ -14,7 +18,7 @@ export default function BarTapDrawer(props) {
   const [bar, setBar] = React.useState({ name: "Bartap" });
 
   React.useEffect(() => {
-    console.log("doing something")
+    console.log("doing something");
     storage.getActiveBar().then((id) =>
       api
         .getBarById(id)
@@ -49,12 +53,14 @@ export default function BarTapDrawer(props) {
     drawerHeader: {
       width: "100%",
       borderBottomWidth: 2,
-      borderBottomColor: theme.LINE_LOW_CONTRAST,
+      borderBottomColor: theme.LINE_LIGHTMODE,
       marginBottom: 10,
+      justifyContent: "center",
       padding: 10,
+      height: 46,
     },
     drawerHeader__title: {
-      fontSize: 25,
+      fontSize: 20,
       fontFamily: theme.FONT_MEDIUM,
       color: theme.TEXT_PRIMARY,
     },
@@ -121,12 +127,12 @@ export default function BarTapDrawer(props) {
   );
 }
 
-export function DrawerIcon({source}) {
+export function DrawerIcon({ source }) {
   const { theme } = React.useContext(ThemeContext);
   return (
     <Image
       source={source}
-      style={{ tintColor: theme.BACKGROUND_IMAGE, height: 40 , width: 40 }}
+      style={{ tintColor: theme.BACKGROUND_IMAGE, height: 40, width: 40 }}
     />
   );
 }
