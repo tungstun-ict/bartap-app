@@ -85,6 +85,20 @@ export default function BarTapDrawer(props) {
       <View style={styles.bottomBar}>
         <DrawerItem
           labelStyle={styles.bottomDrawerItemLabel}
+          onPress={() => {
+            signOut();
+          }}
+          style={styles.bottomDrawerItem}
+          label="Sign out"
+          icon={() => (
+            <Image
+              style={styles.icon}
+              source={require("../../assets/drawer/sign-out-icon.png")}
+            />
+          )}
+        />
+        <DrawerItem
+          labelStyle={styles.bottomDrawerItemLabel}
           style={styles.bottomDrawerItem}
           icon={() =>
             theme.mode === "light" ? (
@@ -101,20 +115,6 @@ export default function BarTapDrawer(props) {
           }
           onPress={() => toggleTheme()}
           label={`${theme.mode === "light" ? "Dark" : "Light"}`}
-        />
-        <DrawerItem
-          labelStyle={styles.bottomDrawerItemLabel}
-          onPress={() => {
-            signOut();
-          }}
-          style={styles.bottomDrawerItem}
-          label="Sign out"
-          icon={() => (
-            <Image
-              style={styles.icon}
-              source={require("../../assets/drawer/sign-out-icon.png")}
-            />
-          )}
         />
       </View>
     </View>

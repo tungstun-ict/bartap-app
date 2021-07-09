@@ -18,6 +18,7 @@ export default function BarTapTitle({ level, text, children }) {
       alignItems: "center",
       color: theme.TEXT_PRIMARY,
       fontWeight: "bold",
+      fontFamily: "Gotham",
     },
     right: {
       flex: 1,

@@ -1,7 +1,6 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import { StatusBar } from "expo-status-bar";
+import { createStackNavigator } from "@react-navigation/stack"
 import React, { useEffect } from "react";
 import { Image } from "react-native";
 import { Appearance } from "react-native";
@@ -18,6 +17,7 @@ import AddDrinksScreen from "./src/screen/drinks/AddDrinkScreen";
 import DrinkCategoriesScreen from "./src/screen/drinks/DrinkCategoriesScreen";
 import AddCustomerSession from "./src/screen/session/AddCustomerSession";
 import NewSessionScreen from "./src/screen/session/NewSessionScreen";
+import OrderHistorySessionScreen from "./src/screen/session/OrderHistorySession";
 import PastSessionBillsScreen from "./src/screen/session/PastSessionBillsScreen";
 import PastSessionsScreen from "./src/screen/session/PastSessionsScreen";
 import SessionBillScreen from "./src/screen/session/SessionBillScreen";
@@ -118,6 +118,10 @@ export function SessionStack() {
       <SessionNavigator.Screen
         name="New Session"
         component={NewSessionScreen}
+      />
+      <SessionNavigator.Screen
+        name="Order History"
+        component={OrderHistorySessionScreen}
       />
     </SessionNavigator.Navigator>
   );
@@ -337,7 +341,6 @@ export default function App() {
             </DrawerNavigator.Navigator>
           </NavigationContainer>
         </AuthContext.Provider>
-        <StatusBar style="light" />
       </ThemeProvider>
     </>
   );

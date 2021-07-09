@@ -33,6 +33,8 @@ export const darkTheme = {
   TEXT_BUTTON_PRIMARY: "#000",
   TEXT_BUTTON_SECONDARY: "#fff",
   TEXT_BUTTON_WARNING: "#fff",
+  STATUSBAR_TEXT: "#fff",
+  STATUSBAR_BACKGROUND: "#212121",
 };
 
 export const lightTheme = {
@@ -70,6 +72,8 @@ export const lightTheme = {
   TEXT_BUTTON_PRIMARY: "#fff",
   TEXT_BUTTON_SECONDARY: "#000",
   TEXT_BUTTON_WARNING: "#fff",
+  STATUSBAR_TEXT: "#fff",
+  STATUSBAR_BACKGROUND: "#212121",
 };
 
 export const sizes = {

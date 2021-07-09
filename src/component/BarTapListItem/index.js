@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableHighlight, View } from "react-native";
-import { ThemeContext } from "../../theme/ThemeManager.js";
 
+import { ThemeContext } from "../../theme/ThemeManager.js";
 import { theme } from "../../theme/variables.js";
 
 export default function BarTapListItem({
@@ -12,6 +12,7 @@ export default function BarTapListItem({
   price,
   payed,
   date,
+  right,
 }) {
   const { theme } = React.useContext(ThemeContext);
   
@@ -98,6 +99,11 @@ export default function BarTapListItem({
               style={styles.payed}
               source={require("../../assets/check.png")}
             />
+          )}
+          {right && (
+            <Text style={styles.price}>
+            {right}
+          </Text>
           )}
         </View>
       </View>

@@ -270,6 +270,12 @@ export async function lockSession(sessionId) {
   );
 }
 
+export async function getOrdersBySessionId(id) {
+  return await getRequest(
+    `/bars/${await storage.getActiveBar()}/sessions/${id}/orders`,
+  );
+}
+
 export async function getAllSessions() {
   return await getRequest(`/bars/${await storage.getActiveBar()}/sessions`);
 }

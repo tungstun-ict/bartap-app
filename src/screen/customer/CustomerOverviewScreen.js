@@ -200,7 +200,7 @@ const { theme } = React.useContext(ThemeContext);
       <BarTapBottomSheet height={450}>
         <Image
           style={styles.sheetLogo}
-          source={require("../../assets/nfc.png")}
+          source={require("../../assets/nfc-icon.png")}
         />
         <Text style={styles.sheetText}>{nfcStatus}</Text>
       </BarTapBottomSheet>
