@@ -322,7 +322,7 @@ export default function App() {
                       )
                     }} />
                   <DrawerNavigator.Screen
-                    name="Account"
+                    name="Preferences"
                     component={AccountStack}
                     options={{
                       drawerIcon: () => (

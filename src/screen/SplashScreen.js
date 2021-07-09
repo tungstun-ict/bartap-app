@@ -26,6 +26,6 @@ const styles = StyleSheet.create({
   text: {
     color: darkTheme.BARTAP_GREY,
     fontSize: 50,
-    fontWeight: "bold",
+    fontFamily: theme.FONT_MEDIUM,
   },
 });

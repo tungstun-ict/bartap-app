@@ -39,6 +39,7 @@ export default function BarTapListItem({
       fontSize: 20,
       color: theme.TEXT_PRIMARY,
       marginRight: 5,
+      fontFamily: theme.FONT_MEDIUM,
       flex: 1,
       width: "auto",
     },
@@ -50,7 +51,7 @@ export default function BarTapListItem({
     price: {
       fontSize: 20,
       color: theme.TEXT_PRIMARY,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       marginLeft: 20,
     },
     right: {

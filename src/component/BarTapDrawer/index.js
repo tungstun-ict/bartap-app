@@ -38,12 +38,12 @@ export default function BarTapDrawer(props) {
     bottomDrawerItem: {},
     drawerItemLabel: {
       color: theme.TEXT_PRIMARY,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       fontSize: 20,
     },
     bottomDrawerItemLabel: {
       color: theme.TEXT_PRIMARY,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       fontSize: 5,
     },
     drawerHeader: {
@@ -55,7 +55,7 @@ export default function BarTapDrawer(props) {
     },
     drawerHeader__title: {
       fontSize: 25,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       color: theme.TEXT_PRIMARY,
     },
     icon: {

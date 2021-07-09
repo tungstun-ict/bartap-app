@@ -29,9 +29,8 @@ export default function BarTapHeader({ navigation }) {
   
     header__title: {
       color: theme.TEXT_SECONDARY,
-      fontWeight: "bold",
       fontSize: 20,
-      fontFamily: "Gotham"
+      fontFamily: theme.FONT_MEDIUM,
     },
   
     header__menuIcon: {

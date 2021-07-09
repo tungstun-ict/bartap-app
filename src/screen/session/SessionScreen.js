@@ -175,7 +175,7 @@ export default function SessionScreen({ navigation }) {
     },
     addSessionButton: {
       fontSize: 50,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       color: theme.BACKGROUND_BUTTON_PRIMARY,
     },
     button__image: {
@@ -229,7 +229,7 @@ export default function SessionScreen({ navigation }) {
       color: theme.TEXT_PRIMARY,
       fontSize: 25,
       flex: 1,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
     },
     list: {
       height: "100%",
@@ -248,13 +248,13 @@ export default function SessionScreen({ navigation }) {
     },
     customer__name: {
       fontSize: 20,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       margin: 5,
       color: theme.TEXT_DARK,
     },
     customer__total: {
       width: "100%",
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       fontSize: 35,
       marginTop: "auto",
       textAlign: "right",
@@ -272,7 +272,7 @@ export default function SessionScreen({ navigation }) {
       alignSelf: "center",
       fontSize: 20,
       color: theme.TEXT_SECONDARY,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       marginVertical: 20,
       textAlign: "center",
     },

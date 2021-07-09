@@ -115,7 +115,7 @@ const { theme } = React.useContext(ThemeContext);
     modal__text: {
       fontSize: 30,
       color: theme.TEXT_PRIMARY,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       marginTop: 20,
     },
     information: {
@@ -165,7 +165,7 @@ const { theme } = React.useContext(ThemeContext);
       alignSelf: "center",
       fontSize: 20,
       color: theme.TEXT_SECONDARY,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       marginTop: 20,
       textAlign: "center",
     },

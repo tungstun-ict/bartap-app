@@ -101,7 +101,7 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
     category__name: {
       textAlign: "center",
       fontSize: 20,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       color: theme.TEXT_DARK,
     },
     categories: {

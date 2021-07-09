@@ -1,12 +1,12 @@
 export const darkTheme = {
-  mode: 'dark',
+  mode: "dark",
   BRAND: "#FF9900",
   BACKGROUND_PRIMARY: "#000",
   BACKGROUND_SECONDARY: "#212121",
   BACKGROUND_LIGHT: "#fff",
   BACKGROUND_TERTIARY: "#fff",
   BACKGROUND_QUADRARY: "#474747",
-  BACKGROUND_WARNING: "#ad0909", 
+  BACKGROUND_WARNING: "#ad0909",
   BACKGROUND_BUTTON_PRIMARY: "#fff",
   BACKGROUND_BUTTON_SECONDARY: "#000",
   BACKGROUND_BUTTON_BIG: "#FFF",
@@ -35,10 +35,13 @@ export const darkTheme = {
   TEXT_BUTTON_WARNING: "#fff",
   STATUSBAR_TEXT: "#fff",
   STATUSBAR_BACKGROUND: "#212121",
+
+  FONT_MEDIUM: "Gotham",
+  FONT_THIN: "GothamThin",
 };
 
 export const lightTheme = {
-  mode: 'light',
+  mode: "light",
   BRAND: "#FF9900",
   BACKGROUND_PRIMARY: "#fff",
   BACKGROUND_SECONDARY: "#212121",
@@ -47,7 +50,7 @@ export const lightTheme = {
   BACKGROUND_LIGHT: "#fff",
   BACKGROUND_PICKER: "#CECECE",
   BACKGROUND_INPUT: "#CECECE",
-  BACKGROUND_WARNING: "#ad0909", 
+  BACKGROUND_WARNING: "#ad0909",
   BACKGROUND_BUTTON_PRIMARY: "#FF9900",
   BACKGROUND_BUTTON_SECONDARY: "#fff",
   BACKGROUND_BUTTON_BIG: "#CECECE",
@@ -67,13 +70,16 @@ export const lightTheme = {
   LINE_DARKMODE: "rgba(0,0,0,0)",
   TEXT_HINT: "#484848",
   TEXT_DARK: "#000",
-  TEXT_CONTRAST: "#fff" ,
+  TEXT_CONTRAST: "#fff",
   TEXT_LOW_CONTRAST: "#CECECE",
   TEXT_BUTTON_PRIMARY: "#fff",
   TEXT_BUTTON_SECONDARY: "#000",
   TEXT_BUTTON_WARNING: "#fff",
   STATUSBAR_TEXT: "#fff",
   STATUSBAR_BACKGROUND: "#212121",
+  
+  FONT_MEDIUM: "Gotham",
+  FONT_THIN: "GothamThin",
 };
 
 export const sizes = {
@@ -90,49 +96,49 @@ export const mock = {
       id: 1,
       name: "Jort",
       currentBill: {
-        total: 21.50,
-      }
+        total: 21.5,
+      },
     },
     {
       id: 3,
       name: "Jona",
       currentBill: {
-        total: 26.50,
-      }
+        total: 26.5,
+      },
     },
     {
       id: 5,
       name: "Fee",
       currentBill: {
         total: 7.49,
-      }
+      },
     },
     {
       id: 6,
       name: "Dante",
       currentBill: {
-        total: 2.10,
-      }
+        total: 2.1,
+      },
     },
   ],
 
   DRINKS_CATEGORIES: [
-    { id: 1, name: "Soft drinks"},
-    { id: 2, name: "Beer"},
-    { id: 3, name: "Wines"},
-    { id: 4, name: "Mixes"},
+    { id: 1, name: "Soft drinks" },
+    { id: 2, name: "Beer" },
+    { id: 3, name: "Wines" },
+    { id: 4, name: "Mixes" },
   ],
 
   DRINKS_BEER: {
     title: "Beers",
     drinks: [
-      { id: 1, name: "Heiniken vaasje", price: 1.25},
-      { id: 2, name: "Heiniken fluitje", price: 1.00},
-      { id: 3, name: "la Chouffe", price: 2.50},
-      { id: 4, name: "Hertog Jan flesje", price: 1.20},
-    ]
+      { id: 1, name: "Heiniken vaasje", price: 1.25 },
+      { id: 2, name: "Heiniken fluitje", price: 1.0 },
+      { id: 3, name: "la Chouffe", price: 2.5 },
+      { id: 4, name: "Hertog Jan flesje", price: 1.2 },
+    ],
   },
-  
+
   //TODO: Convert ID to key for every customer
   CUSTOMERS: [
     {

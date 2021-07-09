@@ -20,7 +20,7 @@ export default function BarTapSearchBar({ onSubmitEditing, onPress, isEmpty, onC
       flex: 1,
       color: theme.TEXT_PRIMARY,
       fontSize: 20,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       marginLeft: 10,
     },
     searchBar__button: {

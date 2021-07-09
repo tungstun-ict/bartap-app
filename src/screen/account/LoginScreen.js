@@ -33,7 +33,7 @@ export default function LoginScreen({ navigation }) {
     logoText: {
       color: theme.TEXT_PRIMARY,
       fontSize: 40,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       marginBottom: 20,
     },
     form: {

@@ -12,13 +12,13 @@ export default function BarTapTitle({ level, text, children }) {
     height: "auto",
     width: "100%",
     flexDirection: "row",
+    alignItems: "center",
     },
     title: {
       marginBottom: 10,
       alignItems: "center",
       color: theme.TEXT_PRIMARY,
-      fontWeight: "bold",
-      fontFamily: "Gotham",
+      fontFamily: theme.FONT_MEDIUM,
     },
     right: {
       flex: 1,
@@ -33,7 +33,7 @@ export default function BarTapTitle({ level, text, children }) {
         style={[
           styles.title,
           level === 1 && { fontSize: 30 },
-          level === 2 && { fontSize: 20 },
+          level === 2 && { fontSize: 23 },
         ]}
       >
         {text}

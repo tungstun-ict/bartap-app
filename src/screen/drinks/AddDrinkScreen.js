@@ -100,7 +100,7 @@ export default function AddDrinksScreen({ route, navigation }) {
     },
     confirmButton__text: {
       fontSize: 30,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       color: theme.TEXT_BUTTON_PRIMARY,
     },
     dialog: {
@@ -122,7 +122,7 @@ export default function AddDrinksScreen({ route, navigation }) {
       fontSize: 50,
       marginTop: 25,
       textAlign: "center",
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       color: theme.TEXT_SECONDARY,
 
     },
@@ -140,7 +140,7 @@ export default function AddDrinksScreen({ route, navigation }) {
     dialogButton__text: {
       fontSize: 50,
       textAlign: "center",
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       color: theme.TEXT_SECONDARY,
     }
   });

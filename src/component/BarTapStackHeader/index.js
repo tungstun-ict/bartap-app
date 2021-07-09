@@ -28,7 +28,7 @@ export default function BarTapStackHeader({ navigation, title }) {
   
     header__title: {
       color: theme.TEXT_SECONDARY,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       fontSize: 20,
     },
   
