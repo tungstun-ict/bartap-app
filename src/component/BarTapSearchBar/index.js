@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 
 import { ThemeContext } from "../../theme/ThemeManager";
-import BarTapInput from "../BarTapInput";
 
 export default function BarTapSearchBar({ onSubmitEditing, onPress, isEmpty, onChangeText, placeholder }) {
   const { theme } = React.useContext(ThemeContext);

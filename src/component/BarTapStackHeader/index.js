@@ -4,7 +4,6 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 import { ThemeContext } from "../../theme/ThemeManager.js";
-import { theme } from "../../theme/variables.js";
 
 export default function BarTapStackHeader({ navigation, title }) {
   const { theme } = React.useContext(ThemeContext);

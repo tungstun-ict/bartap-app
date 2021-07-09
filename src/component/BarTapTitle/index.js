@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { ThemeContext } from "../../theme/ThemeManager";
-import { darkTheme } from "../../theme/variables";
+
 
 export default function BarTapTitle({ level, text, children }) {
   const { theme } = React.useContext(ThemeContext);

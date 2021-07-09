@@ -7,7 +7,6 @@ import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import * as Utils from "../../service/Utils.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
-import { colors } from "../../theme/variables.js";
 
 export default function AddDrinksScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);

@@ -2,7 +2,6 @@ import React from "react";
 import { Image, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 
 import { ThemeContext } from "../../theme/ThemeManager.js";
-import { theme } from "../../theme/variables.js";
 
 export default function BarTapListItem({
   onPress,

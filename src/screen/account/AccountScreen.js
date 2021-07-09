@@ -73,7 +73,6 @@ export default function AccountScreen({ navigation }) {
     logoutButton: {
       marginTop: "auto",
       width: "100%",
-      marginBottom: 10,
     },
     information: {
       backgroundColor: theme.BACKGROUND_LOW_CONTRAST,

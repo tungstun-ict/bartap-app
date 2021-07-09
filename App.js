@@ -266,7 +266,7 @@ export default function App() {
 
   if (state.isLoading) {
     // We haven't finished checking for the token yet
-    return <SplashScreen />;
+    return <ThemeProvider><SplashScreen /></ThemeProvider>;
   }
 
   return (
