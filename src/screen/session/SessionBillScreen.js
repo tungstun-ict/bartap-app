@@ -102,7 +102,7 @@ export default function SessionBillScreen({ route, navigation }) {
       flex: 4,
       flexDirection: "column",
       alignSelf: "center",
-      width: "100%",
+      width: "105%",
       height: "100%",
     },
     deleteButton: {

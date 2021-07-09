@@ -8,6 +8,7 @@ import BottomSheet from "reanimated-bottom-sheet";
 import BarTapBottomSheet from "../../component/BarTapBottomSheet/index.js";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import NfcProxy from "../../service/NfcService.js";
 import { decryptXor } from "../../service/XorEncryptionService.js";
@@ -206,21 +207,15 @@ export default function SessionScreen({ navigation }) {
       maxHeight: 40,
     },
     addButton: {
-      flexDirection: "column",
-      marginLeft: "auto",
       alignItems: "center",
       justifyContent: "center",
+      height: 40,
+      width: 40,
     },
-    addButton__text: {
-      textAlign: "center",
-      color: theme.TEXT_PRIMARY,
-      fontWeight: "bold",
-      width: "100%",
-      height: "100%",
-      marginBottom: 15,
-      margin: 10,
-      marginRight: 10,
-      fontSize: 40,
+    header__image: {
+      height: 40,
+      width: 40,
+      tintColor: theme.BACKGROUND_IMAGE,
     },
     session__customers: {
       marginVertical: 10,
@@ -332,12 +327,14 @@ export default function SessionScreen({ navigation }) {
   return (
     <BarTapContent navigation={navigation} padding={0}>
       <View style={styles.session}>
-        <View style={styles.header}>
-          <Text style={styles.session__title}>{session.name}</Text>
+        <BarTapTitle text={session.name} level={2}>
           <TouchableOpacity style={styles.addButton} onPress={addCustomer}>
-            <Text style={styles.addButton__text}>+</Text>
+            <Image
+              source={require("../../assets/drawer/customers-icon.png")}
+              style={styles.header__image}
+            />
           </TouchableOpacity>
-        </View>
+        </BarTapTitle>
         <View style={styles.session__customers}>
           <FlatList
             refreshControl={
@@ -367,7 +364,10 @@ export default function SessionScreen({ navigation }) {
       </View>
       <View style={styles.bottomBar}>
         <View style={styles.bottomBar__bar}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Order History", session)}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate("Order History", session)}
+          >
             <Image
               style={styles.button__image}
               source={require("../../assets/drawer/history-icon.png")}

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, Modal, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+
 import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import * as Utils from "../../service/Utils.js";
-import { colors } from "../../theme/variables.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
+import { colors } from "../../theme/variables.js";
 
 export default function AddDrinksScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -119,6 +120,7 @@ export default function AddDrinksScreen({ route, navigation }) {
     },
     dialogContent__text: {
       fontSize: 50,
+      marginTop: 25,
       textAlign: "center",
       fontWeight: "bold",
       color: theme.TEXT_SECONDARY,
