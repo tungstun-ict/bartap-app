@@ -260,6 +260,7 @@ export default function SessionScreen({ navigation }) {
       textAlign: "right",
       color: theme.TEXT_DARK,
       paddingRight: 10,
+      marginBottom: 5,
     },
     sheetLogo: {
       tintColor: theme.BACKGROUND_IMAGE_LIGHT,

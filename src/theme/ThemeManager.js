@@ -25,7 +25,7 @@ export const ThemeProvider = ({ children }) => {
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
-      <StatusBar style="light" backgroundColor={theme.STATUSBAR_BACKGROUND}/>
+      <StatusBar style={'light'} backgroundColor={theme.STATUSBAR_BACKGROUND}/>
     </ThemeContext.Provider>
   );
 };
