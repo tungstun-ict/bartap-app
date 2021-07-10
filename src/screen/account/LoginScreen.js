@@ -4,6 +4,7 @@ import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "rea
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapInput from "../../component/BarTapInput/index.js";
+import BarTapLoadingIndicator from "../../component/BarTapLoadingIndicator/index.js";
 import { AuthContext } from "../../service/Context.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
 
@@ -13,6 +14,7 @@ export default function LoginScreen({ navigation }) {
   const [password, setPassword] = React.useState("");
   const [privacyOn, setPrivacyOn] = React.useState(false);
   const [termsOn, setTermsOn] = React.useState(false);
+  const [isLoading, setLoading] = React.useState(true);
   const { signIn } = useContext(AuthContext);
 
   const styles = StyleSheet.create({
@@ -23,11 +25,11 @@ export default function LoginScreen({ navigation }) {
       alignItems: "center",
     },
     logoContainer: {
-      top: 120,
-      position: "absolute",
+      position: "relative",
       flexDirection: "column",
       alignItems: "center",
       width: "100%",
+      marginBottom: 50,
     },
     logo: {
       height: 120,
@@ -41,13 +43,15 @@ export default function LoginScreen({ navigation }) {
     privacyPolicy: {
       flex: 1,
       padding: 20,
+      color: theme.TEXT_LOW_CONTRAST,
     },
     button__privacy: {
       width: "100%",
     },
     form: {
-      marginTop: 400,
       width: "100%",
+      justifyContent: "center",
+      alignItems: "center",
     },
     link: {
       color: theme.TEXT_LOW_CONTRAST,
@@ -56,9 +60,11 @@ export default function LoginScreen({ navigation }) {
     },
     button: {
       marginBottom: 20,
+      width: "100%",
     },
     links: {
-      marginTop: "auto",
+      position: "absolute",
+      bottom: 0,
       width: "100%",
       height: 50,
       flexDirection: "row",

@@ -22,11 +22,11 @@ export default function BarTapStackHeader({ navigation, title }) {
       alignSelf: "flex-start",
       alignItems: "center",
       width: "100%",
-      backgroundColor: theme.BACKGROUND_SECONDARY,
+      backgroundColor: theme.BACKGROUND_STACK_HEADER,
     },
   
     header__title: {
-      color: theme.TEXT_SECONDARY,
+      color: theme.TEXT_PRIMARY,
       fontFamily: theme.FONT_MEDIUM,
       fontSize: 20,
     },
@@ -35,7 +35,7 @@ export default function BarTapStackHeader({ navigation, title }) {
       marginLeft: 20,
       width: 25,
       height: 20,
-      tintColor: theme.BACKGROUND_IMAGE_LIGHT,
+      tintColor: theme.BACKGROUND_IMAGE,
     },
     header__button: {
       width: 75,
