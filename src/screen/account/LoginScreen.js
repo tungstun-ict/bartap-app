@@ -1,13 +1,6 @@
 import React, { useContext } from "react";
-import {
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  TouchableHighlight,
-} from "react-native";
-import WebView from "react-native-webview";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapInput from "../../component/BarTapInput/index.js";
@@ -377,7 +370,7 @@ export default function LoginScreen({ navigation }) {
             </Text>
           </View>
           <View style={styles.links}>
-            <TouchableHighlight
+            <TouchableOpacity
               onPress={() => {
                 setPrivacyOn(true);
                 setTermsOn(false);
@@ -385,8 +378,8 @@ export default function LoginScreen({ navigation }) {
               style={styles.link}
             >
               <Text style={styles.link__text}>Privacy policy</Text>
-            </TouchableHighlight>
-            <TouchableHighlight
+            </TouchableOpacity>
+            <TouchableOpacity
               style={styles.link}
               onPress={() => {
                 setPrivacyOn(false);
@@ -394,7 +387,7 @@ export default function LoginScreen({ navigation }) {
               }}
             >
               <Text style={styles.link__text}>Terms of service</Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
       )}

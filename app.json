@@ -28,7 +28,7 @@
         "backgroundColor": "#212121"
       },
       "package": "com.tungstun.bar_application",
-      "versionCode": 8
+      "versionCode": 11
     },
     "web": {
       "favicon": "./src/assets/favicon.png"
