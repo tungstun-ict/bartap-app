@@ -105,7 +105,8 @@ export default function SessionScreen({ navigation }) {
   };
 
   const addCustomer = () => {
-    navigation.navigate("Add customer to session", { sessionId: session.id });
+    const addedCustomers = session.bills.map(bill => bill.customer.id);
+    navigation.navigate("Add customer to session", { sessionId: session.id, addedCustomers: addedCustomers });
   };
 
   const handleLockSession = () => {

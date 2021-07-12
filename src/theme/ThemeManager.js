@@ -1,21 +1,27 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Appearance } from "react-native";
+import { Appearance, useColorScheme } from "react-native-appearance";
 
 import { darkTheme, lightTheme } from "./variables";
 
 export const ThemeContext = React.createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const osColorScheme = Appearance.getColorScheme();
+  const osColorScheme = useColorScheme();
   const [theme, setTheme] = React.useState(
     osColorScheme === "dark" ? darkTheme : lightTheme,
   );
 
-  Appearance.addChangeListener(({ newTheme }) => {
-    console.log(newTheme);
-    setTheme(newTheme === "dark" ? darkTheme : lightTheme);
+  let subscription = Appearance.addChangeListener(({ colorScheme }) => {
+    if (colorScheme === "dark") {
+      setTheme(darkTheme);
+    } else {
+      setTheme(lightTheme);
+    }
   });
+
+  subscription.remove();
+
 
   const toggleTheme = () => {
     if (theme.mode === "light") {

@@ -4,6 +4,7 @@ import BarTapContent from "../../component/BarTapContent";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
+import * as Utils from "../../service/Utils.js"
 import { ThemeContext } from "../../theme/ThemeManager";
 
 export default function AddCustomerSession({ route, navigation }) {
@@ -11,12 +12,15 @@ export default function AddCustomerSession({ route, navigation }) {
 
   const [customers, setCustomers] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const { sessionId } = route.params;
+  const { sessionId, addedCustomers } = route.params;
 
   useEffect(() => {
     api
       .getAllCustomersByBarId()
       .then((json) => {
+        console.log(addedCustomers);
+        json = json.filter(customer => !addedCustomers.includes(customer.id));
+        json.sort((a, b) => Utils.sortListItemString(a.name, b.name))
         setCustomers(json);
         setLoading(false);
       })

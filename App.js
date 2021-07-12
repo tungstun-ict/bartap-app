@@ -1,9 +1,9 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack"
+import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect } from "react";
 import { Image } from "react-native";
-import { Appearance } from "react-native";
+import { AppearanceProvider, useColorScheme } from "react-native-appearance";
 
 import BarTapDrawer, { DrawerIcon } from "./src/component/BarTapDrawer";
 import AccountScreen from "./src/screen/account/AccountScreen";
@@ -266,11 +266,15 @@ export default function App() {
 
   if (state.isLoading) {
     // We haven't finished checking for the token yet
-    return <ThemeProvider><SplashScreen /></ThemeProvider>;
+    return (
+      <ThemeProvider>
+        <SplashScreen />
+      </ThemeProvider>
+    );
   }
 
   return (
-    <>
+    <AppearanceProvider>
       <ThemeProvider>
         <AuthContext.Provider value={authContext}>
           <NavigationContainer>
@@ -286,51 +290,58 @@ export default function App() {
                     component={SessionStack}
                     options={{
                       drawerIcon: () => (
-                        <DrawerIcon 
-                          source={require("./src/assets/drawer/session-icon.png")} />
+                        <DrawerIcon
+                          source={require("./src/assets/drawer/session-icon.png")}
+                        />
                       ),
                     }}
                   />
-                  <DrawerNavigator.Screen 
-                  name="History" 
-                  component={PastStack}
-                  options={{
-                    drawerIcon: () => (
-                      <DrawerIcon 
-                          source={require("./src/assets/drawer/history-icon.png")} />
-                    )
-                  }} />
+                  <DrawerNavigator.Screen
+                    name="History"
+                    component={PastStack}
+                    options={{
+                      drawerIcon: () => (
+                        <DrawerIcon
+                          source={require("./src/assets/drawer/history-icon.png")}
+                        />
+                      ),
+                    }}
+                  />
                   <DrawerNavigator.Screen
                     name="Customers"
                     component={CustomersStack}
                     options={{
                       drawerIcon: () => (
-                        <DrawerIcon 
-                          source={require("./src/assets/drawer/customers-icon.png")} />
-                      )
+                        <DrawerIcon
+                          source={require("./src/assets/drawer/customers-icon.png")}
+                        />
+                      ),
                     }}
                   />
                   {/* <DrawerNavigator.Screen
                 name="Payments"
                 component={PaymentStack}
               /> */}
-                  <DrawerNavigator.Screen 
+                  <DrawerNavigator.Screen
                     name="Stock"
                     component={StockStack}
                     options={{
                       drawerIcon: () => (
-                        <DrawerIcon 
-                          source={require("./src/assets/drawer/stock-icon.png")} />
-                      )
-                    }} />
+                        <DrawerIcon
+                          source={require("./src/assets/drawer/stock-icon.png")}
+                        />
+                      ),
+                    }}
+                  />
                   <DrawerNavigator.Screen
                     name="Preferences"
                     component={AccountStack}
                     options={{
                       drawerIcon: () => (
-                        <DrawerIcon 
-                          source={require("./src/assets/drawer/settings-icon.png")} />
-                      )
+                        <DrawerIcon
+                          source={require("./src/assets/drawer/settings-icon.png")}
+                        />
+                      ),
                     }}
                   />
                 </React.Fragment>
@@ -344,6 +355,6 @@ export default function App() {
           </NavigationContainer>
         </AuthContext.Provider>
       </ThemeProvider>
-    </>
+    </AppearanceProvider>
   );
 }
