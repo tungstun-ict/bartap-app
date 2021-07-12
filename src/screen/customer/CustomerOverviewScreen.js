@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, RefreshControl } from "react-native";
+import { Alert, FlatList, RefreshControl } from "react-native";
 import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import BottomSheet from "reanimated-bottom-sheet";
@@ -16,7 +16,7 @@ import { encryptXor } from "../../service/XorEncryptionService.js";
 import { ThemeContext } from "../../theme/ThemeManager";
 
 export default function CustomerOverviewScreen({ route, navigation }) {
-const { theme } = React.useContext(ThemeContext);
+  const { theme } = React.useContext(ThemeContext);
 
   const [customer, setCustomer] = useState({});
   const [showQr, setShowQr] = useState(false);
@@ -54,9 +54,12 @@ const { theme } = React.useContext(ThemeContext);
       api
         .getBillsByCustomerId(route.params.id)
         .then((json) => {
-          json.sort(function (a, b){
-            return new Date(b.session.creationDate) - new Date(a.session.creationDate)
-          })
+          json.sort(function (a, b) {
+            return (
+              new Date(b.session.creationDate) -
+              new Date(a.session.creationDate)
+            );
+          });
           setBills(json);
           setLoading(false);
         })
@@ -74,7 +77,7 @@ const { theme } = React.useContext(ThemeContext);
 
   const editCustomer = () => {
     navigation.navigate("Edit customer", customer);
-  }
+  };
 
   const handleDeleteCustomer = () => {
     api
@@ -94,6 +97,45 @@ const { theme } = React.useContext(ThemeContext);
     }
     setTimeout(closeBottomSheet, 3000);
   };
+
+  const calculatetotalOwed = () => {
+    let owed = 0;
+    bills.forEach(bill => {
+      if(!bill.payed){
+        owed += bill.totalPrice; 
+      }
+    })
+
+    return owed;
+  }
+
+  const totalOwed = calculatetotalOwed();
+
+  const payEveryBill = () => {
+    Alert.alert(
+      "Are you sure?",
+      `You are about to pay every bill for ${customer.name}`,
+      [
+        {
+          text: "Yes",
+          onPress: async () => {
+            await bills.forEach( bill => {
+              if(!bill.payed) {
+                api.payBill(bill.session.id, bill.id);
+              }
+            });
+            setLoading(true); 
+          },
+        },
+        {
+          text: "No",
+          onPress: () => {},
+          style: "cancel",
+        },
+      ],
+      { cancelable: false },
+    );
+  }
 
   const styles = StyleSheet.create({
     content: {
@@ -175,7 +217,12 @@ const { theme } = React.useContext(ThemeContext);
       marginBottom: 10,
     },
     button: {
-      flex: 0.485
+      flex: 0.485,
+    },
+    totalOwed: {
+      fontSize: 25,
+      color: theme.TEXT_PRIMARY,
+      fontFamily: theme.FONT_MEDIUM,
     }
   });
 
@@ -260,7 +307,11 @@ const { theme } = React.useContext(ThemeContext);
           </View>
         )}
         <View style={styles.bills}>
-          <BarTapTitle text={"Bills"} level={1} />
+          <BarTapTitle text={"Bills"} level={1}>
+            <TouchableOpacity onPress={payEveryBill}>
+              <Text style={styles.totalOwed}>€{totalOwed.toFixed(2)}</Text>
+            </TouchableOpacity>
+          </BarTapTitle>
           <FlatList
             keyExtractor={(item) => item.id.toString()}
             style={styles.list}
