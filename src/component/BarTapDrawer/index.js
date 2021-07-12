@@ -1,10 +1,6 @@
-import {
-  DrawerContentScrollView,
-  DrawerItem,
-  DrawerItemList,
-} from "@react-navigation/drawer";
+import { DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import * as api from "../../service/BarApiService.js";
 import * as storage from "../../service/BarStorageService.js";
@@ -72,7 +68,22 @@ export default function BarTapDrawer(props) {
       tintColor: theme.BACKGROUND_IMAGE,
     },
     bottomBar: {
+      // borderColor: theme.LINE_LIGHTMODE,
+      // borderTopWidth: 2,
+      height: 100,
       flexDirection: "row",
+      justifyContent: "center",
+    },
+    bottomBarButton: {
+      height: 100,
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    bottomBarButtonImage: {
+      width: 50,
+      height: 50,
+      tintColor: theme.BACKGROUND_IMAGE,
     },
   });
 
@@ -89,39 +100,33 @@ export default function BarTapDrawer(props) {
         ></DrawerItemList>
       </DrawerContentScrollView>
       <View style={styles.bottomBar}>
-        <DrawerItem
-          labelStyle={styles.bottomDrawerItemLabel}
+        <TouchableOpacity
           onPress={() => {
             signOut();
           }}
-          style={styles.bottomDrawerItem}
-          label="Sign out"
-          icon={() => (
+          style={styles.bottomBarButton}
+        >
+          <Image
+            source={require("../../assets/drawer/sign-out-icon.png")}
+            style={styles.bottomBarButtonImage}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.bottomBarButton}
+          onPress={() => toggleTheme()}
+        >
+          {theme.mode === "light" ? (
             <Image
-              style={styles.icon}
-              source={require("../../assets/drawer/sign-out-icon.png")}
+              source={require("../../assets/drawer/dark-mode-icon.png")}
+              style={styles.bottomBarButtonImage}
+            />
+          ) : (
+            <Image
+              source={require("../../assets/drawer/light-mode-icon.png")}
+              style={styles.bottomBarButtonImage}
             />
           )}
-        />
-        <DrawerItem
-          labelStyle={styles.bottomDrawerItemLabel}
-          style={styles.bottomDrawerItem}
-          icon={() =>
-            theme.mode === "light" ? (
-              <Image
-                style={styles.icon}
-                source={require("../../assets/drawer/dark-mode-icon.png")}
-              />
-            ) : (
-              <Image
-                style={styles.icon}
-                source={require("../../assets/drawer/light-mode-icon.png")}
-              />
-            )
-          }
-          onPress={() => toggleTheme()}
-          label={`${theme.mode === "light" ? "Dark" : "Light"}`}
-        />
+        </TouchableOpacity>
       </View>
     </View>
   );

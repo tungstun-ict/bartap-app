@@ -163,7 +163,7 @@ export default function SessionScreen({ navigation }) {
       alignItems: "center",
       justifyContent: "center",
       tintColor: theme.BACKGROUND_IMAGE_DARK,
-      backgroundColor: theme.BACKGROUND_LIGHT,
+      
     },
     buttonDisabled: {
       marginHorizontal: 20,
@@ -183,7 +183,7 @@ export default function SessionScreen({ navigation }) {
     button__image: {
       height: 50,
       width: 50,
-      tintColor: theme.BACKGROUND_IMAGE_DARK,
+      tintColor: theme.BACKGROUND_IMAGE,
     },
     bottomBar: {
       height: "auto",
