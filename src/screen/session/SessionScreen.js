@@ -307,6 +307,7 @@ export default function SessionScreen({ navigation }) {
 
   const customerListItem = (navigation, bill, sessionId) => {
     let billId = bill.id;
+    console.log(bill.customer)
     return (
       <TouchableOpacity
         onPress={() =>
