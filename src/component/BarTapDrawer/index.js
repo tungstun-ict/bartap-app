@@ -107,7 +107,7 @@ export default function BarTapDrawer(props) {
           style={styles.bottomBarButton}
         >
           <Image
-            source={require("../../assets/drawer/sign-out-icon.png")}
+            source={require("../../assets/sign-out-icon.png")}
             style={styles.bottomBarButtonImage}
           />
         </TouchableOpacity>
@@ -117,12 +117,12 @@ export default function BarTapDrawer(props) {
         >
           {theme.mode === "light" ? (
             <Image
-              source={require("../../assets/drawer/dark-mode-icon.png")}
+              source={require("../../assets/dark-mode-icon.png")}
               style={styles.bottomBarButtonImage}
             />
           ) : (
             <Image
-              source={require("../../assets/drawer/light-mode-icon.png")}
+              source={require("../../assets/light-mode-icon.png")}
               style={styles.bottomBarButtonImage}
             />
           )}

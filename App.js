@@ -291,7 +291,7 @@ export default function App() {
                     options={{
                       drawerIcon: () => (
                         <DrawerIcon
-                          source={require("./src/assets/drawer/session-icon.png")}
+                          source={require("./src/assets/session-icon.png")}
                         />
                       ),
                     }}
@@ -302,7 +302,7 @@ export default function App() {
                     options={{
                       drawerIcon: () => (
                         <DrawerIcon
-                          source={require("./src/assets/drawer/history-icon.png")}
+                          source={require("./src/assets/history-icon.png")}
                         />
                       ),
                     }}
@@ -313,7 +313,7 @@ export default function App() {
                     options={{
                       drawerIcon: () => (
                         <DrawerIcon
-                          source={require("./src/assets/drawer/customers-icon.png")}
+                          source={require("./src/assets/customers-icon.png")}
                         />
                       ),
                     }}
@@ -328,7 +328,7 @@ export default function App() {
                     options={{
                       drawerIcon: () => (
                         <DrawerIcon
-                          source={require("./src/assets/drawer/stock-icon.png")}
+                          source={require("./src/assets/stock-icon.png")}
                         />
                       ),
                     }}
@@ -339,7 +339,7 @@ export default function App() {
                     options={{
                       drawerIcon: () => (
                         <DrawerIcon
-                          source={require("./src/assets/drawer/settings-icon.png")}
+                          source={require("./src/assets/settings-icon.png")}
                         />
                       ),
                     }}

@@ -335,7 +335,7 @@ export default function SessionScreen({ navigation }) {
         <BarTapTitle text={session.name} level={2}>
           <TouchableOpacity style={styles.addButton} onPress={addCustomer}>
             <Image
-              source={require("../../assets/drawer/customers-icon.png")}
+              source={require("../../assets/customers-icon.png")}
               style={styles.header__image}
             />
           </TouchableOpacity>
@@ -375,7 +375,7 @@ export default function SessionScreen({ navigation }) {
           >
             <Image
               style={styles.button__image}
-              source={require("../../assets/drawer/history-icon.png")}
+              source={require("../../assets/history-icon.png")}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={readTag}>
