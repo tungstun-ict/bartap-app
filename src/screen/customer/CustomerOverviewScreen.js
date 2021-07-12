@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, FlatList, RefreshControl } from "react-native";
-import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import BottomSheet from "reanimated-bottom-sheet";
 
@@ -100,14 +107,14 @@ export default function CustomerOverviewScreen({ route, navigation }) {
 
   const calculatetotalOwed = () => {
     let owed = 0;
-    bills.forEach(bill => {
-      if(!bill.payed){
-        owed += bill.totalPrice; 
+    bills.forEach((bill) => {
+      if (!bill.payed) {
+        owed += bill.totalPrice;
       }
-    })
+    });
 
     return owed;
-  }
+  };
 
   const totalOwed = calculatetotalOwed();
 
@@ -119,12 +126,12 @@ export default function CustomerOverviewScreen({ route, navigation }) {
         {
           text: "Yes",
           onPress: async () => {
-            await bills.forEach( bill => {
-              if(!bill.payed) {
+            await bills.forEach((bill) => {
+              if (!bill.payed) {
                 api.payBill(bill.session.id, bill.id);
               }
             });
-            setLoading(true); 
+            setLoading(true);
           },
         },
         {
@@ -135,7 +142,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
       ],
       { cancelable: false },
     );
-  }
+  };
 
   const styles = StyleSheet.create({
     content: {
@@ -215,15 +222,18 @@ export default function CustomerOverviewScreen({ route, navigation }) {
       flexDirection: "row",
       justifyContent: "space-between",
       marginBottom: 10,
+      width: "102.5%",
+      alignSelf: "center",
     },
     button: {
-      flex: 0.485,
+      marginHorizontal: 5,
+      flex: 1,
     },
     totalOwed: {
       fontSize: 25,
       color: theme.TEXT_PRIMARY,
       fontFamily: theme.FONT_MEDIUM,
-    }
+    },
   });
 
   const listItem = (bill) => {
@@ -292,20 +302,21 @@ export default function CustomerOverviewScreen({ route, navigation }) {
             </View>
           </View>
         </View>
-        {!customer.hasOwnProperty("user") && (
-          <View style={styles.customerFunctions}>
+        <View style={styles.customerFunctions}>
+          {!customer.hasOwnProperty("user") && (
             <BarTapButton
               style={styles.button}
               onPress={() => setShowQr(true)}
               text={"Connect Account"}
             />
-            <BarTapButton
-              style={styles.button}
-              onPress={() => writeTag(encryptXor(customer.id))}
-              text={"Write NFC tag"}
-            />
-          </View>
-        )}
+          )}
+          <BarTapButton
+            style={styles.button}
+            onPress={() => writeTag(encryptXor(customer.id))}
+            text={"Write NFC tag"}
+          />
+        </View>
+
         <View style={styles.bills}>
           <BarTapTitle text={"Bills"} level={1}>
             <TouchableOpacity onPress={payEveryBill}>
