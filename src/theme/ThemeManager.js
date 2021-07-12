@@ -12,15 +12,18 @@ export const ThemeProvider = ({ children }) => {
     osColorScheme === "dark" ? darkTheme : lightTheme,
   );
 
-  let subscription = Appearance.addChangeListener(({ colorScheme }) => {
-    if (colorScheme === "dark") {
-      setTheme(darkTheme);
-    } else {
-      setTheme(lightTheme);
-    }
-  });
+  React.useEffect(() => {
+    let subscription = Appearance.addChangeListener(({ colorScheme }) => {
+      console.log(colorScheme)
+      if (colorScheme === "dark") {
+        setTheme(darkTheme);
+      } else {
+        setTheme(lightTheme);
+      }
+    });
 
-  subscription.remove();
+    return () => subscription.remove();
+  }, []);
 
 
   const toggleTheme = () => {

@@ -337,7 +337,7 @@ export default function LoginScreen({ navigation }) {
               style={styles.logo}
               resizeMethod={"resize"}
               resizeMode={"contain"}
-              source={require("../../assets/logo.png")}
+              source={require("../../assets/icon.png")}
             />
             <Text style={styles.logoText}>Bartap</Text>
           </View>
