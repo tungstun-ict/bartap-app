@@ -60,6 +60,7 @@ export default function SessionScreen({ navigation }) {
   }, [isLoading]);
 
   const readTag = async () => {
+    setNfcStatus("Searching...");
     sheetRef.current.snapTo(1);
     const tag = await NfcProxy.readTag();
     if (tag) {
@@ -72,15 +73,13 @@ export default function SessionScreen({ navigation }) {
     } else {
       setNfcStatus("error");
     }
-    setTimeout(closeBottomSheet, 3000);
   };
 
   const closeBottomSheet = () => {
+    setNfcStatus("searching");
     if (mounted.current) {
-      setNfcStatus("searching");
       sheetRef.current.snapTo(0);
       NfcProxy.closeNfcDiscovery();
-      NfcProxy.stopReading();
     }
   };
 

@@ -96,13 +96,13 @@ export default function CustomerOverviewScreen({ route, navigation }) {
   };
 
   const writeTag = async (value) => {
+    setNfcStatus("Searching...");
     sheetRef.current.snapTo(1);
     if (await NfcProxy.writeNdef({ type: "TEXT", value })) {
       setNfcStatus("succes");
     } else {
       setNfcStatus("error");
     }
-    setTimeout(closeBottomSheet, 3000);
   };
 
   const calculatetotalOwed = () => {

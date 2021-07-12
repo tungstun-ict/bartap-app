@@ -64,14 +64,12 @@ class NfcProxy {
     }
   }
 
-  async stopReading() {
-    NfcManager.unregisterTagEvent().catch(() => 0);
-    NfcManager.cancelTechnologyRequest();
-  }
-
   async closeNfcDiscovery() {
+    NfcManager.unregisterTagEvent().catch(() => 0);
+    NfcManager.cancelTechnologyRequest().catch(() => 0);
     NfcManager.setEventListener(NfcEvents.DiscoverTag, null);
     NfcManager.setEventListener(NfcEvents.SessionClosed, null);
+    
   }
 
   decodePayload(payload) {
@@ -133,7 +131,7 @@ class NfcProxy {
       // for tag reading, we don't actually need to show any error
       console.warn(ex);
     } finally {
-      NfcManager.cancelTechnologyRequest();
+      NfcManager.cancelTechnologyRequest().catch(() => 0);
     }
 
     return tag;
