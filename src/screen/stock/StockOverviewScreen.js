@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FlatList, RefreshControl, SafeAreaView } from "react-native";
-
-import * as Utils from "../../service/Utils.js"
-import * as api from "../../service/BarApiService.js";
-import { StyleSheet, Text, View, Image, Modal } from "react-native";
-import variables, { theme, mock, colors } from "../../theme/variables.js";
+import { Image, Modal, StyleSheet, Text, View } from "react-native";
 import { Button, TouchableOpacity } from "react-native";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
 import QRCode from "react-native-qrcode-svg";
-import BarTapHeader from "../../component/BarTapHeader";
+
 import BarTapButton from "../../component/BarTapButton/index.js";
-import BarTapListItem from "../../component/BarTapListItem/index.js";
-import BarTapTitle from "../../component/BarTapTitle/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
+import BarTapHeader from "../../component/BarTapHeader";
+import BarTapListItem from "../../component/BarTapListItem/index.js";
+import BarTapStackHeader from "../../component/BarTapStackHeader";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
+import * as api from "../../service/BarApiService.js";
+import * as Utils from "../../service/Utils.js"
 import { ThemeContext } from "../../theme/ThemeManager.js";
+import variables, { colors, mock, theme } from "../../theme/variables.js";
 
 export default function StockOverviewScreen({ navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -61,7 +61,7 @@ export default function StockOverviewScreen({ navigation }) {
     list: {
       flexDirection: "column",
       alignSelf: "center",
-      width: "100%",
+      width: "105%",
     },
   });
 

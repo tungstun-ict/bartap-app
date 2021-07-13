@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { FlatList, RefreshControl } from "react-native";
+import { Alert, FlatList, RefreshControl } from "react-native";
 import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import BottomSheet from "reanimated-bottom-sheet";
@@ -16,13 +16,14 @@ import { encryptXor } from "../../service/XorEncryptionService.js";
 import { ThemeContext } from "../../theme/ThemeManager";
 
 export default function CustomerOverviewScreen({ route, navigation }) {
-const { theme } = React.useContext(ThemeContext);
+  const { theme } = React.useContext(ThemeContext);
 
   const [customer, setCustomer] = useState({});
   const [showQr, setShowQr] = useState(false);
   const [bills, setBills] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [nfcStatus, setNfcStatus] = useState("searching");
+  const [timeoutId, setTimeoutId] = useState(0);
 
   const sheetRef = useRef(null);
   const mounted = useRef(false);
@@ -54,9 +55,12 @@ const { theme } = React.useContext(ThemeContext);
       api
         .getBillsByCustomerId(route.params.id)
         .then((json) => {
-          json.sort(function (a, b){
-            return new Date(b.session.creationDate) - new Date(a.session.creationDate)
-          })
+          json.sort(function (a, b) {
+            return (
+              new Date(b.session.creationDate) -
+              new Date(a.session.creationDate)
+            );
+          });
           setBills(json);
           setLoading(false);
         })
@@ -70,11 +74,13 @@ const { theme } = React.useContext(ThemeContext);
       NfcProxy.closeNfcDiscovery();
       setNfcStatus("searching");
     }
+
+    clearTimeout(timeoutId);
   };
 
   const editCustomer = () => {
     navigation.navigate("Edit customer", customer);
-  }
+  };
 
   const handleDeleteCustomer = () => {
     api
@@ -86,13 +92,54 @@ const { theme } = React.useContext(ThemeContext);
   };
 
   const writeTag = async (value) => {
+    setNfcStatus("Searching...");
     sheetRef.current.snapTo(1);
     if (await NfcProxy.writeNdef({ type: "TEXT", value })) {
       setNfcStatus("succes");
     } else {
       setNfcStatus("error");
     }
-    setTimeout(closeBottomSheet, 3000);
+
+    setTimeoutId(setTimeout(closeBottomSheet, 3000));
+  };
+
+  const calculatetotalOwed = () => {
+    let owed = 0;
+    bills.forEach((bill) => {
+      if (!bill.payed) {
+        owed += bill.totalPrice;
+      }
+    });
+
+    return owed;
+  };
+
+  const totalOwed = calculatetotalOwed();
+
+  const payEveryBill = () => {
+    Alert.alert(
+      "Are you sure?",
+      `You are about to pay every bill for ${customer.name}`,
+      [
+        {
+          text: "Yes",
+          onPress: async () => {
+            await bills.forEach((bill) => {
+              if (!bill.payed) {
+                api.payBill(bill.session.id, bill.id);
+              }
+            });
+            setLoading(true);
+          },
+        },
+        {
+          text: "No",
+          onPress: () => {},
+          style: "cancel",
+        },
+      ],
+      { cancelable: false },
+    );
   };
 
   const styles = StyleSheet.create({
@@ -115,7 +162,7 @@ const { theme } = React.useContext(ThemeContext);
     modal__text: {
       fontSize: 30,
       color: theme.TEXT_PRIMARY,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       marginTop: 20,
     },
     information: {
@@ -165,7 +212,7 @@ const { theme } = React.useContext(ThemeContext);
       alignSelf: "center",
       fontSize: 20,
       color: theme.TEXT_SECONDARY,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       marginTop: 20,
       textAlign: "center",
     },
@@ -173,10 +220,18 @@ const { theme } = React.useContext(ThemeContext);
       flexDirection: "row",
       justifyContent: "space-between",
       marginBottom: 10,
+      width: "102.5%",
+      alignSelf: "center",
     },
     button: {
-      flex: 0.485
-    }
+      marginHorizontal: 5,
+      flex: 1,
+    },
+    totalOwed: {
+      fontSize: 25,
+      color: theme.TEXT_PRIMARY,
+      fontFamily: theme.FONT_MEDIUM,
+    },
   });
 
   const listItem = (bill) => {
@@ -245,22 +300,27 @@ const { theme } = React.useContext(ThemeContext);
             </View>
           </View>
         </View>
-        {!customer.hasOwnProperty("user") && (
-          <View style={styles.customerFunctions}>
+        <View style={styles.customerFunctions}>
+          {!customer.hasOwnProperty("user") && (
             <BarTapButton
               style={styles.button}
               onPress={() => setShowQr(true)}
               text={"Connect Account"}
             />
-            <BarTapButton
-              style={styles.button}
-              onPress={() => writeTag(encryptXor(customer.id))}
-              text={"Write NFC tag"}
-            />
-          </View>
-        )}
+          )}
+          <BarTapButton
+            style={styles.button}
+            onPress={() => writeTag(encryptXor(customer.id))}
+            text={"Write NFC tag"}
+          />
+        </View>
+
         <View style={styles.bills}>
-          <BarTapTitle text={"Bills"} level={1} />
+          <BarTapTitle text={"Bills"} level={1}>
+            <TouchableOpacity onPress={payEveryBill}>
+              <Text style={styles.totalOwed}>€{totalOwed.toFixed(2)}</Text>
+            </TouchableOpacity>
+          </BarTapTitle>
           <FlatList
             keyExtractor={(item) => item.id.toString()}
             style={styles.list}

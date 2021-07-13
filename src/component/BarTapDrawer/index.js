@@ -1,6 +1,6 @@
 import { DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import * as api from "../../service/BarApiService.js";
 import * as storage from "../../service/BarStorageService.js";
@@ -14,7 +14,6 @@ export default function BarTapDrawer(props) {
   const [bar, setBar] = React.useState({ name: "Bartap" });
 
   React.useEffect(() => {
-    console.log("doing something")
     storage.getActiveBar().then((id) =>
       api
         .getBarById(id)
@@ -38,24 +37,26 @@ export default function BarTapDrawer(props) {
     bottomDrawerItem: {},
     drawerItemLabel: {
       color: theme.TEXT_PRIMARY,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       fontSize: 20,
     },
     bottomDrawerItemLabel: {
       color: theme.TEXT_PRIMARY,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       fontSize: 5,
     },
     drawerHeader: {
       width: "100%",
       borderBottomWidth: 2,
-      borderBottomColor: theme.LINE_LOW_CONTRAST,
+      borderBottomColor: theme.LINE_LIGHTMODE,
       marginBottom: 10,
+      justifyContent: "center",
       padding: 10,
+      height: 46,
     },
     drawerHeader__title: {
-      fontSize: 25,
-      fontWeight: "bold",
+      fontSize: 20,
+      fontFamily: theme.FONT_MEDIUM,
       color: theme.TEXT_PRIMARY,
     },
     icon: {
@@ -66,7 +67,22 @@ export default function BarTapDrawer(props) {
       tintColor: theme.BACKGROUND_IMAGE,
     },
     bottomBar: {
+      // borderColor: theme.LINE_LIGHTMODE,
+      // borderTopWidth: 2,
+      height: 100,
       flexDirection: "row",
+      justifyContent: "center",
+    },
+    bottomBarButton: {
+      height: 100,
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+    },
+    bottomBarButtonImage: {
+      width: 50,
+      height: 50,
+      tintColor: theme.BACKGROUND_IMAGE,
     },
   });
 
@@ -83,50 +99,44 @@ export default function BarTapDrawer(props) {
         ></DrawerItemList>
       </DrawerContentScrollView>
       <View style={styles.bottomBar}>
-        <DrawerItem
-          labelStyle={styles.bottomDrawerItemLabel}
+        <TouchableOpacity
           onPress={() => {
             signOut();
           }}
-          style={styles.bottomDrawerItem}
-          label="Sign out"
-          icon={() => (
+          style={styles.bottomBarButton}
+        >
+          <Image
+            source={require("../../assets/sign-out-icon.png")}
+            style={styles.bottomBarButtonImage}
+          />
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.bottomBarButton}
+          onPress={() => toggleTheme()}
+        >
+          {theme.mode === "light" ? (
             <Image
-              style={styles.icon}
-              source={require("../../assets/drawer/sign-out-icon.png")}
+              source={require("../../assets/dark-mode-icon.png")}
+              style={styles.bottomBarButtonImage}
+            />
+          ) : (
+            <Image
+              source={require("../../assets/light-mode-icon.png")}
+              style={styles.bottomBarButtonImage}
             />
           )}
-        />
-        <DrawerItem
-          labelStyle={styles.bottomDrawerItemLabel}
-          style={styles.bottomDrawerItem}
-          icon={() =>
-            theme.mode === "light" ? (
-              <Image
-                style={styles.icon}
-                source={require("../../assets/drawer/dark-mode-icon.png")}
-              />
-            ) : (
-              <Image
-                style={styles.icon}
-                source={require("../../assets/drawer/light-mode-icon.png")}
-              />
-            )
-          }
-          onPress={() => toggleTheme()}
-          label={`${theme.mode === "light" ? "Dark" : "Light"}`}
-        />
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
-export function DrawerIcon({source}) {
+export function DrawerIcon({ source }) {
   const { theme } = React.useContext(ThemeContext);
   return (
     <Image
       source={source}
-      style={{ tintColor: theme.BACKGROUND_IMAGE, height: 40 , width: 40 }}
+      style={{ tintColor: theme.BACKGROUND_IMAGE, height: 40, width: 40 }}
     />
   );
 }

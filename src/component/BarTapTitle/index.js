@@ -2,29 +2,28 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { ThemeContext } from "../../theme/ThemeManager";
-import { darkTheme } from "../../theme/variables";
 
 export default function BarTapTitle({ level, text, children }) {
   const { theme } = React.useContext(ThemeContext);
 
   const styles = StyleSheet.create({
     container: {
-    height: "auto",
-    width: "100%",
-    flexDirection: "row",
+      height: "auto",
+      width: "100%",
+      flexDirection: "row",
+      alignItems: "center",
+      marginBottom: 10,
     },
     title: {
-      marginBottom: 10,
       alignItems: "center",
       color: theme.TEXT_PRIMARY,
-      fontWeight: "bold",
-      fontFamily: "Gotham",
+      fontFamily: theme.FONT_MEDIUM,
     },
     right: {
       flex: 1,
       justifyContent: "center",
-      alignItems: "flex-end"
-    }
+      alignItems: "flex-end",
+    },
   });
 
   return (
@@ -33,14 +32,12 @@ export default function BarTapTitle({ level, text, children }) {
         style={[
           styles.title,
           level === 1 && { fontSize: 30 },
-          level === 2 && { fontSize: 20 },
+          level === 2 && { fontSize: 23 },
         ]}
       >
         {text}
       </Text>
-      <View style={styles.right}>
-        {children}
-      </View>
+      <View style={styles.right}>{children}</View>
     </View>
   );
 }

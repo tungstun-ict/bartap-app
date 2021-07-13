@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Image, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 
 import { ThemeContext } from "../../theme/ThemeManager";
-import BarTapInput from "../BarTapInput";
 
 export default function BarTapSearchBar({ onSubmitEditing, onPress, isEmpty, onChangeText, placeholder }) {
   const { theme } = React.useContext(ThemeContext);
@@ -20,7 +19,7 @@ export default function BarTapSearchBar({ onSubmitEditing, onPress, isEmpty, onC
       flex: 1,
       color: theme.TEXT_PRIMARY,
       fontSize: 20,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       marginLeft: 10,
     },
     searchBar__button: {

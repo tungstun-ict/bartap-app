@@ -1,8 +1,13 @@
 import React from "react";
-import { Image, StyleSheet, Text, TouchableHighlight, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
+} from "react-native";
 
 import { ThemeContext } from "../../theme/ThemeManager.js";
-import { theme } from "../../theme/variables.js";
 
 export default function BarTapListItem({
   onPress,
@@ -12,10 +17,10 @@ export default function BarTapListItem({
   price,
   payed,
   date,
-  right,
+  line2,
 }) {
   const { theme } = React.useContext(ThemeContext);
-  
+
   const styles = StyleSheet.create({
     wrapper: {
       alignSelf: "center",
@@ -24,11 +29,9 @@ export default function BarTapListItem({
       alignItems: "center",
       justifyContent: "flex-start",
       backgroundColor: theme.BACKGROUND_PRIMARY,
-      borderBottomColor: theme.LINE_CONTRAST,
-      borderBottomWidth: 2,
       width: "100%",
       paddingHorizontal: 10,
-      height: 50,
+      maxHeight: 50,
     },
     timestamp: {
       fontSize: 20,
@@ -39,6 +42,7 @@ export default function BarTapListItem({
       fontSize: 20,
       color: theme.TEXT_PRIMARY,
       marginRight: 5,
+      fontFamily: theme.FONT_MEDIUM,
       flex: 1,
       width: "auto",
     },
@@ -50,10 +54,10 @@ export default function BarTapListItem({
     price: {
       fontSize: 20,
       color: theme.TEXT_PRIMARY,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       marginLeft: 20,
     },
-    right: {
+    line2: {
       flexDirection: "row",
       alignItems: "center",
       marginLeft: "auto",
@@ -64,48 +68,62 @@ export default function BarTapListItem({
       marginLeft: 10,
       tintColor: theme.BACKGROUND_IMAGE,
     },
+    lines: {
+      flexDirection: "column",
+      borderBottomColor: theme.LINE_CONTRAST,
+      borderBottomWidth: 2,
+      minHeight: 50,
+    },
+    line2: {
+      color: theme.TEXT_PRIMARY,
+      fontSize: 20,
+      paddingHorizontal: 10,
+      height: 30, 
+    },
+    right: {
+      flexDirection: "row",
+      alignItems: "center",
+      marginLeft: "auto",
+    },
   });
 
   return (
     <TouchableHighlight onPress={onPress}>
-      <View style={styles.wrapper}>
-        {timestamp && (
-          <Text style={styles.timestamp}>
-            {timestamp.getHours() < 10
-              ? "0" + timestamp.getHours()
-              : timestamp.getHours()}
-            :
-            {timestamp.getMinutes() < 10
-              ? "0" + timestamp.getMinutes()
-              : timestamp.getMinutes()}
-          </Text>
-        )}
-        {name && (
-          <Text numberOfLines={1} style={styles.name}>
-            {name}
-          </Text>
-        )}
-        <View style={styles.right}>
-          
-          {multiplier && <Text style={styles.multiplier}>{multiplier}x</Text>}
-          {price && <Text style={styles.price}>€{price}</Text>}
-          {date && (
-            <Text style={styles.price}>
-              {date.getDate()}-{date.getMonth() + 1}-{date.getFullYear()}
+      <View style={styles.lines}>
+        <View style={styles.wrapper}>
+          {timestamp && (
+            <Text style={styles.timestamp}>
+              {timestamp.getHours() < 10
+                ? "0" + timestamp.getHours()
+                : timestamp.getHours()}
+              :
+              {timestamp.getMinutes() < 10
+                ? "0" + timestamp.getMinutes()
+                : timestamp.getMinutes()}
             </Text>
           )}
-          {payed && (
-            <Image
-              style={styles.payed}
-              source={require("../../assets/check.png")}
-            />
+          {name && (
+            <Text numberOfLines={1} style={styles.name}>
+              {name}
+            </Text>
           )}
-          {right && (
-            <Text style={styles.price}>
-            {right}
-          </Text>
-          )}
+          <View style={styles.right}>
+            {multiplier && <Text style={styles.multiplier}>{multiplier}x</Text>}
+            {price && <Text style={styles.price}>€{price}</Text>}
+            {date && (
+              <Text style={styles.price}>
+                {date.getDate()}-{date.getMonth() + 1}-{date.getFullYear()}
+              </Text>
+            )}
+            {payed && (
+              <Image
+                style={styles.payed}
+                source={require("../../assets/check.png")}
+              />
+            )}
+          </View>
         </View>
+        {line2 && <Text style={styles.line2}>{line2}</Text>}
       </View>
     </TouchableHighlight>
   );

@@ -24,21 +24,22 @@ export default function BarTapHeader({ navigation }) {
       alignSelf: "flex-start",
       alignItems: "center",
       width: "100%",
-      backgroundColor: theme.BACKGROUND_SECONDARY,
+      backgroundColor: theme.BACKGROUND_HEADER,
+      borderBottomWidth: 2,
+      borderColor: theme.LINE_LIGHTMODE,
     },
   
     header__title: {
-      color: theme.TEXT_SECONDARY,
-      fontWeight: "bold",
+      color: theme.TEXT_PRIMARY,
       fontSize: 20,
-      fontFamily: "Gotham"
+      fontFamily: theme.FONT_MEDIUM,
     },
   
     header__menuIcon: {
       marginLeft: 20,
       width: 25,
       height: 20,
-      tintColor: theme.BACKGROUND_IMAGE_LIGHT,
+      tintColor: theme.BACKGROUND_IMAGE,
     },
   
     header__left: {

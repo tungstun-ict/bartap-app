@@ -101,12 +101,13 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
     category__name: {
       textAlign: "center",
       fontSize: 20,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       color: theme.TEXT_DARK,
     },
     categories: {
       marginVertical: 10,
       width: "100%",
+      flex: 1,
     },
     searchBar__container: {
       height: 50,
@@ -117,10 +118,10 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       marginTop: 10,
     },
     list: {
-      flex: 1,
       flexDirection: "column",
       alignSelf: "center",
       width: "100%",
+      maxHeight: "100%",
     },
   });
 

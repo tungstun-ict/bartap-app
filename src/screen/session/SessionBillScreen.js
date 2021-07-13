@@ -95,14 +95,14 @@ export default function SessionBillScreen({ route, navigation }) {
       justifyContent: "center",
     },
     qaButton__text: {
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       color: theme.BACKGROUND_WARNING,
     },
     list: {
       flex: 4,
       flexDirection: "column",
       alignSelf: "center",
-      width: "100%",
+      width: "105%",
       height: "100%",
     },
     deleteButton: {
@@ -144,14 +144,14 @@ export default function SessionBillScreen({ route, navigation }) {
       fontSize: 30,
       alignSelf: "center",
       height: "auto",
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
     },
     footerTotal: {
       color: theme.TEXT_SECONDARY,
       fontSize: 30,
       alignSelf: "center",
       height: "auto",
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
     },
     footerCheck: {
       marginTop: 20,

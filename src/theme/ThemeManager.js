@@ -1,18 +1,30 @@
-import React from "react";
-import { Appearance } from 'react-native';
 import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { Appearance, useColorScheme } from "react-native-appearance";
+
 import { darkTheme, lightTheme } from "./variables";
 
 export const ThemeContext = React.createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const osColorScheme = Appearance.getColorScheme();
-  const [theme, setTheme] = React.useState(osColorScheme === 'dark' ? darkTheme : lightTheme);
+  const osColorScheme = useColorScheme();
+  const [theme, setTheme] = React.useState(
+    osColorScheme === "dark" ? darkTheme : lightTheme,
+  );
 
-  Appearance.addChangeListener(({ newTheme }) => {
-    console.log(newTheme)
-    setTheme(newTheme === 'dark' ? (darkTheme) : (lightTheme))
-  });
+  React.useEffect(() => {
+    let subscription = Appearance.addChangeListener(({ colorScheme }) => {
+      console.log(colorScheme)
+      if (colorScheme === "dark") {
+        setTheme(darkTheme);
+      } else {
+        setTheme(lightTheme);
+      }
+    });
+
+    return () => subscription.remove();
+  }, []);
+
 
   const toggleTheme = () => {
     if (theme.mode === "light") {
@@ -25,7 +37,17 @@ export const ThemeProvider = ({ children }) => {
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
-      <StatusBar style="light" backgroundColor={theme.STATUSBAR_BACKGROUND}/>
+      {theme.mode === "light" ? (
+        <StatusBar
+          style={"dark"}
+          backgroundColor={theme.STATUSBAR_BACKGROUND}
+        />
+      ) : (
+        <StatusBar
+          style={"light"}
+          backgroundColor={theme.STATUSBAR_BACKGROUND}
+        />
+      )}
     </ThemeContext.Provider>
   );
 };

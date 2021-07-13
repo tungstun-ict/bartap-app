@@ -29,7 +29,7 @@ export default function BarTapButton({ onPress, text, colour, textColour, style 
       },
       text: {
         fontSize: 15,
-        fontWeight: "bold",
+        fontFamily: theme.FONT_MEDIUM,
         color: theme.TEXT_BUTTON_PRIMARY,
       },
 })

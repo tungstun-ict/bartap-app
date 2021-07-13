@@ -8,6 +8,7 @@ import BottomSheet from "reanimated-bottom-sheet";
 import BarTapBottomSheet from "../../component/BarTapBottomSheet/index.js";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
+import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import NfcProxy from "../../service/NfcService.js";
 import { decryptXor } from "../../service/XorEncryptionService.js";
@@ -16,6 +17,7 @@ import { ThemeContext } from "../../theme/ThemeManager.js";
 export default function SessionScreen({ navigation }) {
   const { theme } = React.useContext(ThemeContext);
 
+  const [timeoutId, setTimeoutId] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [session, setSession] = useState({
     bills: [],
@@ -59,6 +61,7 @@ export default function SessionScreen({ navigation }) {
   }, [isLoading]);
 
   const readTag = async () => {
+    setNfcStatus("Searching...");
     sheetRef.current.snapTo(1);
     const tag = await NfcProxy.readTag();
     if (tag) {
@@ -71,16 +74,17 @@ export default function SessionScreen({ navigation }) {
     } else {
       setNfcStatus("error");
     }
-    setTimeout(closeBottomSheet, 3000);
+
+    setTimeoutId(setTimeout(closeBottomSheet, 3000));
   };
 
   const closeBottomSheet = () => {
+    setNfcStatus("searching");
     if (mounted.current) {
-      setNfcStatus("searching");
       sheetRef.current.snapTo(0);
       NfcProxy.closeNfcDiscovery();
-      NfcProxy.stopReading();
     }
+    clearTimeout(timeoutId);
   };
 
   const formatData = (data, numColumns) => {
@@ -104,7 +108,11 @@ export default function SessionScreen({ navigation }) {
   };
 
   const addCustomer = () => {
-    navigation.navigate("Add customer to session", { sessionId: session.id });
+    const addedCustomers = session.bills.map((bill) => bill.customer.id);
+    navigation.navigate("Add customer to session", {
+      sessionId: session.id,
+      addedCustomers: addedCustomers,
+    });
   };
 
   const handleLockSession = () => {
@@ -146,8 +154,10 @@ export default function SessionScreen({ navigation }) {
       flexDirection: "row",
       height: 100,
       marginTop: 20,
-      backgroundColor: theme.BACKGROUND_SECONDARY,
+      backgroundColor: theme.BACKGROUND_BOTTOM_BAR,
       justifyContent: "center",
+      borderTopWidth: 2,
+      borderTopColor: theme.LINE_LIGHTMODE,
       alignItems: "center",
       width: "100%",
     },
@@ -160,7 +170,6 @@ export default function SessionScreen({ navigation }) {
       alignItems: "center",
       justifyContent: "center",
       tintColor: theme.BACKGROUND_IMAGE_DARK,
-      backgroundColor: theme.BACKGROUND_LIGHT,
     },
     buttonDisabled: {
       marginHorizontal: 20,
@@ -174,16 +183,17 @@ export default function SessionScreen({ navigation }) {
     },
     addSessionButton: {
       fontSize: 50,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       color: theme.BACKGROUND_BUTTON_PRIMARY,
     },
     button__image: {
       height: 50,
       width: 50,
-      tintColor: theme.BACKGROUND_IMAGE_DARK,
+      tintColor: theme.BACKGROUND_IMAGE,
     },
     bottomBar: {
       height: "auto",
+      marginTop: 10,
     },
     session: {
       flex: 1,
@@ -206,21 +216,15 @@ export default function SessionScreen({ navigation }) {
       maxHeight: 40,
     },
     addButton: {
-      flexDirection: "column",
-      marginLeft: "auto",
       alignItems: "center",
       justifyContent: "center",
+      height: 40,
+      width: 40,
     },
-    addButton__text: {
-      textAlign: "center",
-      color: theme.TEXT_PRIMARY,
-      fontWeight: "bold",
-      width: "100%",
-      height: "100%",
-      marginBottom: 15,
-      margin: 10,
-      marginRight: 10,
-      fontSize: 40,
+    header__image: {
+      height: 40,
+      width: 40,
+      tintColor: theme.BACKGROUND_IMAGE,
     },
     session__customers: {
       marginVertical: 10,
@@ -234,7 +238,7 @@ export default function SessionScreen({ navigation }) {
       color: theme.TEXT_PRIMARY,
       fontSize: 25,
       flex: 1,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
     },
     list: {
       height: "100%",
@@ -253,18 +257,19 @@ export default function SessionScreen({ navigation }) {
     },
     customer__name: {
       fontSize: 20,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       margin: 5,
       color: theme.TEXT_DARK,
     },
     customer__total: {
       width: "100%",
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       fontSize: 35,
       marginTop: "auto",
       textAlign: "right",
       color: theme.TEXT_DARK,
       paddingRight: 10,
+      marginBottom: 5,
     },
     sheetLogo: {
       tintColor: theme.BACKGROUND_IMAGE_LIGHT,
@@ -277,7 +282,7 @@ export default function SessionScreen({ navigation }) {
       alignSelf: "center",
       fontSize: 20,
       color: theme.TEXT_SECONDARY,
-      fontWeight: "bold",
+      fontFamily: theme.FONT_MEDIUM,
       marginVertical: 20,
       textAlign: "center",
     },
@@ -293,13 +298,11 @@ export default function SessionScreen({ navigation }) {
         <Text style={styles.sheetText}>{nfcStatus}</Text>
         {typeof nfcStatus === "number" && (
           <BarTapButton
-            text={"Customer info"}
-            onPress={() =>
-              navigation.navigate("Customers", {
-                screen: "Customer overview",
-                params: { id: nfcStatus },
-              })
-            }
+            text={"Customer Information"}
+            onPress={() => navigation.navigate("Customers", {
+              screen: "Customer overview",
+              params: { id: nfcStatus },
+            })}
           />
         )}
       </BarTapBottomSheet>
@@ -332,12 +335,14 @@ export default function SessionScreen({ navigation }) {
   return (
     <BarTapContent navigation={navigation} padding={0}>
       <View style={styles.session}>
-        <View style={styles.header}>
-          <Text style={styles.session__title}>{session.name}</Text>
+        <BarTapTitle text={session.name} level={2}>
           <TouchableOpacity style={styles.addButton} onPress={addCustomer}>
-            <Text style={styles.addButton__text}>+</Text>
+            <Image
+              source={require("../../assets/customers-icon.png")}
+              style={styles.header__image}
+            />
           </TouchableOpacity>
-        </View>
+        </BarTapTitle>
         <View style={styles.session__customers}>
           <FlatList
             refreshControl={
@@ -367,10 +372,13 @@ export default function SessionScreen({ navigation }) {
       </View>
       <View style={styles.bottomBar}>
         <View style={styles.bottomBar__bar}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("Order History", session)}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate("Order History", session)}
+          >
             <Image
               style={styles.button__image}
-              source={require("../../assets/drawer/history-icon.png")}
+              source={require("../../assets/history-icon.png")}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={readTag}>
@@ -405,6 +413,7 @@ export default function SessionScreen({ navigation }) {
         snapPoints={[0, 220, 290]}
         onCloseEnd={closeBottomSheet}
         borderRadius={10}
+        enabledContentTapInteraction={false}
         renderContent={renderContent}
       />
     </BarTapContent>

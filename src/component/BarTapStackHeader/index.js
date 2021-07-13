@@ -1,9 +1,9 @@
 import React from "react";
 import { StatusBar } from "react-native";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+
 import { ThemeContext } from "../../theme/ThemeManager.js";
-import { theme } from "../../theme/variables.js";
 
 export default function BarTapStackHeader({ navigation, title }) {
   const { theme } = React.useContext(ThemeContext);
@@ -22,12 +22,12 @@ export default function BarTapStackHeader({ navigation, title }) {
       alignSelf: "flex-start",
       alignItems: "center",
       width: "100%",
-      backgroundColor: theme.BACKGROUND_SECONDARY,
+      backgroundColor: theme.BACKGROUND_STACK_HEADER,
     },
   
     header__title: {
-      color: theme.TEXT_SECONDARY,
-      fontWeight: "bold",
+      color: theme.TEXT_PRIMARY,
+      fontFamily: theme.FONT_MEDIUM,
       fontSize: 20,
     },
   
@@ -35,7 +35,7 @@ export default function BarTapStackHeader({ navigation, title }) {
       marginLeft: 20,
       width: 25,
       height: 20,
-      tintColor: theme.BACKGROUND_IMAGE_LIGHT,
+      tintColor: theme.BACKGROUND_IMAGE,
     },
     header__button: {
       width: 75,
@@ -68,7 +68,7 @@ export default function BarTapStackHeader({ navigation, title }) {
         onPress={navigateBack}>
           <Image
             style={styles.header__menuIcon}
-            source={require("../../assets/menu/back-icon.png")}
+            source={require("../../assets/back-icon.png")}
           ></Image>
         </TouchableOpacity>
       </View>

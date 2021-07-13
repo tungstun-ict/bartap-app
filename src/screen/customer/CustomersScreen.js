@@ -1,14 +1,12 @@
-import React, { useState, useEffect } from "react";
-import {
-  StyleSheet,
-  FlatList,
-  RefreshControl,
-} from "react-native";
-import * as api from "../../service/BarApiService.js";
+import React, { useEffect, useState } from "react";
+import { FlatList, RefreshControl, StyleSheet } from "react-native";
+
 import BarTapButton from "../../component/BarTapButton/index.js";
+import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
-import BarTapContent from "../../component/BarTapContent/index.js";
+import * as api from "../../service/BarApiService.js";
+import * as Utils from "../../service/Utils.js"
 import { ThemeContext } from "../../theme/ThemeManager.js";
 
 export default function CustomersScreen({ navigation }) {
@@ -29,6 +27,7 @@ export default function CustomersScreen({ navigation }) {
       api
         .getAllCustomersByBarId()
         .then((json) => {
+          json.sort((a, b) => Utils.sortListItemString(a.name, b.name))
           setCustomers(json);
           setLoading(false);
         })
