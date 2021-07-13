@@ -43,8 +43,8 @@ export const darkTheme = {
   STATUSBAR_BACKGROUND: "#212121",
   LOADING_INDICATOR: "#484848",
 
-  FONT_MEDIUM: "Gotham",
-  FONT_THIN: "GothamThin",
+  FONT_MEDIUM: "Gotham-Medium",
+  FONT_THIN: "Gotham-Book",
 };
 
 export const lightTheme = {
@@ -91,7 +91,7 @@ export const lightTheme = {
   STATUSBAR_TEXT: "#fff",
   STATUSBAR_BACKGROUND: "#fff",
   LOADING_INDICATOR: "#FF9900",
-  
+
   FONT_MEDIUM: "Gotham",
   FONT_THIN: "GothamThin",
 };

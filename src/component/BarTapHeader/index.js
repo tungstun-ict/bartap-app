@@ -1,4 +1,4 @@
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
 import React from "react";
 import { StatusBar } from "react-native";
 import { Image, StyleSheet, Text, View } from "react-native";
@@ -28,26 +28,26 @@ export default function BarTapHeader({ navigation }) {
       borderBottomWidth: 2,
       borderColor: theme.LINE_LIGHTMODE,
     },
-  
+
     header__title: {
       color: theme.TEXT_PRIMARY,
       fontSize: 20,
       fontFamily: theme.FONT_MEDIUM,
     },
-  
+
     header__menuIcon: {
       marginLeft: 20,
       width: 25,
       height: 20,
       tintColor: theme.BACKGROUND_IMAGE,
     },
-  
+
     header__left: {
       flex: 1,
       maxWidth: 75,
       justifyContent: "center",
     },
-  
+
     header__center: {
       flex: 1,
       justifyContent: "center",
@@ -68,8 +68,7 @@ export default function BarTapHeader({ navigation }) {
   return (
     <View style={styles.header}>
       <View style={styles.header__left}>
-        <TouchableOpacity onPress={openDrawer}
-          style={styles.header__button}>
+        <TouchableOpacity onPress={openDrawer} style={styles.header__button}>
           <Image
             style={styles.header__menuIcon}
             source={require("../../assets/menu-icon.png")}
@@ -77,7 +76,9 @@ export default function BarTapHeader({ navigation }) {
         </TouchableOpacity>
       </View>
       <View style={styles.header__center}>
-        <Text style={styles.header__title} numberOfLines={1}>{mock.ORGANISATION_NAME + " v" + Constants.manifest.version}</Text>
+        <Text style={styles.header__title} numberOfLines={1}>
+          Bartap
+        </Text>
       </View>
       <View style={styles.header__right}></View>
     </View>
