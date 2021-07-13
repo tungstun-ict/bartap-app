@@ -17,6 +17,7 @@ import { ThemeContext } from "../../theme/ThemeManager.js";
 export default function SessionScreen({ navigation }) {
   const { theme } = React.useContext(ThemeContext);
 
+  const [timeoutId, setTimeoutId] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [session, setSession] = useState({
     bills: [],
@@ -73,6 +74,8 @@ export default function SessionScreen({ navigation }) {
     } else {
       setNfcStatus("error");
     }
+
+    setTimeoutId(setTimeout(closeBottomSheet, 3000));
   };
 
   const closeBottomSheet = () => {
@@ -81,6 +84,7 @@ export default function SessionScreen({ navigation }) {
       sheetRef.current.snapTo(0);
       NfcProxy.closeNfcDiscovery();
     }
+    clearTimeout(timeoutId);
   };
 
   const formatData = (data, numColumns) => {
@@ -104,8 +108,11 @@ export default function SessionScreen({ navigation }) {
   };
 
   const addCustomer = () => {
-    const addedCustomers = session.bills.map(bill => bill.customer.id);
-    navigation.navigate("Add customer to session", { sessionId: session.id, addedCustomers: addedCustomers });
+    const addedCustomers = session.bills.map((bill) => bill.customer.id);
+    navigation.navigate("Add customer to session", {
+      sessionId: session.id,
+      addedCustomers: addedCustomers,
+    });
   };
 
   const handleLockSession = () => {
@@ -163,7 +170,6 @@ export default function SessionScreen({ navigation }) {
       alignItems: "center",
       justifyContent: "center",
       tintColor: theme.BACKGROUND_IMAGE_DARK,
-      
     },
     buttonDisabled: {
       marginHorizontal: 20,
@@ -292,13 +298,11 @@ export default function SessionScreen({ navigation }) {
         <Text style={styles.sheetText}>{nfcStatus}</Text>
         {typeof nfcStatus === "number" && (
           <BarTapButton
-            text={"Customer info"}
-            onPress={() =>
-              navigation.navigate("Customers", {
-                screen: "Customer overview",
-                params: { id: nfcStatus },
-              })
-            }
+            text={"Customer Information"}
+            onPress={() => navigation.navigate("Customers", {
+              screen: "Customer overview",
+              params: { id: nfcStatus },
+            })}
           />
         )}
       </BarTapBottomSheet>
@@ -307,7 +311,6 @@ export default function SessionScreen({ navigation }) {
 
   const customerListItem = (navigation, bill, sessionId) => {
     let billId = bill.id;
-    console.log(bill.customer)
     return (
       <TouchableOpacity
         onPress={() =>
@@ -410,6 +413,7 @@ export default function SessionScreen({ navigation }) {
         snapPoints={[0, 220, 290]}
         onCloseEnd={closeBottomSheet}
         borderRadius={10}
+        enabledContentTapInteraction={false}
         renderContent={renderContent}
       />
     </BarTapContent>

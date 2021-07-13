@@ -14,7 +14,6 @@ export default function BarTapDrawer(props) {
   const [bar, setBar] = React.useState({ name: "Bartap" });
 
   React.useEffect(() => {
-    console.log("doing something");
     storage.getActiveBar().then((id) =>
       api
         .getBarById(id)

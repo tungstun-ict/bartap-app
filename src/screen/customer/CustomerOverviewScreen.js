@@ -1,13 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, FlatList, RefreshControl } from "react-native";
-import {
-  Image,
-  Modal,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import BottomSheet from "reanimated-bottom-sheet";
 
@@ -30,6 +23,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
   const [bills, setBills] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [nfcStatus, setNfcStatus] = useState("searching");
+  const [timeoutId, setTimeoutId] = useState(0);
 
   const sheetRef = useRef(null);
   const mounted = useRef(false);
@@ -80,6 +74,8 @@ export default function CustomerOverviewScreen({ route, navigation }) {
       NfcProxy.closeNfcDiscovery();
       setNfcStatus("searching");
     }
+
+    clearTimeout(timeoutId);
   };
 
   const editCustomer = () => {
@@ -103,6 +99,8 @@ export default function CustomerOverviewScreen({ route, navigation }) {
     } else {
       setNfcStatus("error");
     }
+
+    setTimeoutId(setTimeout(closeBottomSheet, 3000));
   };
 
   const calculatetotalOwed = () => {
