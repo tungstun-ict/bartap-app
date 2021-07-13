@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 
 import BarTapButton from "../../component/BarTapButton";
 import BarTapContent from "../../component/BarTapContent";
+import BarTapPicker from "../../component/BarTapPicker";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import * as storage from "../../service/BarStorageService.js";
@@ -13,7 +14,7 @@ import { ThemeContext } from "../../theme/ThemeManager";
 export default function AccountScreen({ navigation }) {
   const { theme, toggleTheme } = React.useContext(ThemeContext);
 
-  const [selectedBar, setSelectedBar] = useState(1);
+  const [selectedBar, setSelectedBar] = useState(null);
   const [bars, setBars] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
@@ -32,7 +33,12 @@ export default function AccountScreen({ navigation }) {
 
   useEffect(() => {
     if (isLoading) {
-      storage.getActiveBar().then(bar => {setSelectedBar(bar)}).catch((error) => alert(error))
+      storage
+        .getActiveBar()
+        .then((bar) => {
+          setSelectedBar(bar);
+        })
+        .catch((error) => alert(error));
 
       api
         .getBars()
@@ -51,9 +57,15 @@ export default function AccountScreen({ navigation }) {
   }, [selectedBar]);
 
   const styles = StyleSheet.create({
+    pickerContainer: {
+      backgroundColor: theme.BACKGROUND_PICKER,
+      width: "100%",
+      borderRadius: 5,
+      height: 60,
+    },
     picker: {
       height: 60,
-      backgroundColor: theme.BACKGROUND_INPUT,
+      //backgroundColor: theme.BACKGROUND_INPUT,
       color: theme.TEXT_PRIMARY,
       marginBottom: 10,
       borderRadius: 5,
@@ -102,7 +114,7 @@ export default function AccountScreen({ navigation }) {
     button: {
       marginVertical: 10,
       width: "100%",
-    }
+    },
   });
 
   let pickerItems = bars.map((bar) => {
@@ -143,23 +155,29 @@ export default function AccountScreen({ navigation }) {
       </View>
       <View style={styles.barsView}>
         <BarTapTitle text={"Active bar"} level={2} />
-        <Picker
-          style={styles.picker}
-          selectedValue={selectedBar}
-          itemStyle={styles.picker__item}
-          onValueChange={(itemValue, itemIndex) => {
-            setSelectedBar(itemValue);
-          }}
-        >
-          {pickerItems}
-        </Picker>
+        <View style={styles.pickerContainer}>
+          <BarTapPicker
+            style={styles.pickerContainer}
+            setDefaultvalue={selectedBar}
+            selectedValue={selectedBar}
+            onValueChange={(itemValue, itemIndex) => {
+              setSelectedBar(itemValue);
+            }}
+          >
+            {pickerItems}
+          </BarTapPicker>
+        </View>
       </View>
       <BarTapButton
-          style={styles.button}
-          onPress={() => navigation.navigate("Create Bar")}
-          text={"Create a new bar"}
-        />
-        <BarTapButton style={styles.button} onPress={() => toggleTheme()} text={theme.mode} />
+        style={styles.button}
+        onPress={() => navigation.navigate("Create Bar")}
+        text={"Create a new bar"}
+      />
+      <BarTapButton
+        style={styles.button}
+        onPress={() => toggleTheme()}
+        text={theme.mode}
+      />
       <BarTapButton
         onPress={() => _logout()}
         colour={theme.BACKGROUND_WARNING}

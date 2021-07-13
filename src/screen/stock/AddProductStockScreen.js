@@ -5,6 +5,7 @@ import { ScrollView, StyleSheet, TextInput } from "react-native";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapInput from "../../component/BarTapInput/index.js";
+import BarTapPicker from "../../component/BarTapPicker/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
@@ -106,7 +107,7 @@ export default function AddProductStockScreen({ navigation }) {
           onChangeText={setBrand}
         />
         <BarTapTitle text={"Category"} level={2} />
-        <Picker
+        <BarTapPicker
           style={styles.picker}
           selectedValue={selectedCategory}
           itemStyle={styles.picker__item}
@@ -115,7 +116,7 @@ export default function AddProductStockScreen({ navigation }) {
           }}
         >
           {pickerItems}
-        </Picker>
+        </BarTapPicker>
         <BarTapTitle text={"Selling price"} level={2} />
         <BarTapInput
           onChangeText={setSellingPrice}

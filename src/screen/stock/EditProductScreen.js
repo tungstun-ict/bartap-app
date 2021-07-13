@@ -5,6 +5,7 @@ import { ScrollView, StyleSheet, TextInput } from "react-native";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapInput from "../../component/BarTapInput/index.js";
+import BarTapPicker from "../../component/BarTapPicker/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
@@ -139,7 +140,7 @@ export default function EditProductScreen({ route, navigation }) {
           value={brand}
         />
         <BarTapTitle text={"Category"} level={2} />
-        <Picker
+        <BarTapPicker
           style={styles.picker}
           selectedValue={selectedCategory}
           itemStyle={styles.picker__item}
@@ -149,7 +150,7 @@ export default function EditProductScreen({ route, navigation }) {
           }}
         >
           {pickerItems}
-        </Picker>
+        </BarTapPicker>
         <BarTapTitle text={"Selling price"} level={2} />
         <BarTapInput
           onChangeText={setSellingPrice}
@@ -164,10 +165,10 @@ export default function EditProductScreen({ route, navigation }) {
         />
       </ScrollView>
       <BarTapButton
-          style={styles.button}
-          onPress={() => updateProduct()}
-          text={"Submit"}
-        />
+        style={styles.button}
+        onPress={() => updateProduct()}
+        text={"Submit"}
+      />
     </BarTapContent>
   );
 }

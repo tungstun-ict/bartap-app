@@ -5,6 +5,7 @@ import { StyleSheet, TextInput } from "react-native";
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapInput from "../../component/BarTapInput/index.js";
+import BarTapPicker from "../../component/BarTapPicker/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
@@ -56,7 +57,7 @@ export default function AddCategoryScreen({ navigation }) {
           onChangeText={setName}
         />
         <BarTapTitle text={"Type"} level={2} />
-        <Picker
+        <BarTapPicker
           style={styles.picker}
           selectedValue={type}
           itemStyle={styles.picker__item}
@@ -67,7 +68,7 @@ export default function AddCategoryScreen({ navigation }) {
           <Picker.Item label="Drink" value={"Drink"} key={0} style={styles.picker__item}/>
           <Picker.Item label="Food" value="Food" key={1} style={styles.picker__item}/>
           <Picker.Item label="Other" value="Other" key={2} style={styles.picker__item}/>
-        </Picker>
+        </BarTapPicker>
         <BarTapButton style={styles.button} onPress={() => createCategory(name)} text={"Submit"} />
     </BarTapContent>
   );
