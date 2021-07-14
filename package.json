@@ -39,7 +39,6 @@
     "react-native-svg": "^12.1.0",
     "react-native-swipeable-list": "^0.1.0",
     "react-native-unimodules": "~0.12.0",
-    "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "revent-lib": "0.0.4"

@@ -92,8 +92,8 @@ export const lightTheme = {
   STATUSBAR_BACKGROUND: "#fff",
   LOADING_INDICATOR: "#FF9900",
 
-  FONT_MEDIUM: "Gotham",
-  FONT_THIN: "GothamThin",
+  FONT_MEDIUM: "Gotham-Medium",
+  FONT_THIN: "Gotham-Book",
 };
 
 export const sizes = {

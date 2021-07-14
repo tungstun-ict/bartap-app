@@ -257,7 +257,7 @@ export default function SessionScreen({ navigation }) {
     },
     customer__name: {
       fontSize: 20,
-      fontFamily: theme.FONT_MEDIUM,
+      fontFamily: "Gotham-Medium",
       margin: 5,
       color: theme.TEXT_DARK,
     },
@@ -299,10 +299,12 @@ export default function SessionScreen({ navigation }) {
         {typeof nfcStatus === "number" && (
           <BarTapButton
             text={"Customer Information"}
-            onPress={() => navigation.navigate("Customers", {
-              screen: "Customer overview",
-              params: { id: nfcStatus },
-            })}
+            onPress={() =>
+              navigation.navigate("Customers", {
+                screen: "Customer overview",
+                params: { id: nfcStatus },
+              })
+            }
           />
         )}
       </BarTapBottomSheet>
