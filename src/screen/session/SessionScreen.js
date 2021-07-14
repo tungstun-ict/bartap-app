@@ -257,7 +257,7 @@ export default function SessionScreen({ navigation }) {
     },
     customer__name: {
       fontSize: 20,
-      fontFamily: "Gotham-Medium",
+      fontFamily: theme.FONT_MEDIUM,
       margin: 5,
       color: theme.TEXT_DARK,
     },
@@ -351,7 +351,7 @@ export default function SessionScreen({ navigation }) {
               <RefreshControl
                 refreshing={isLoading}
                 onRefresh={() => setLoading(true)}
-                tintColor="white"
+                tintColor={theme.LOADING_INDICATOR}
               />
             }
             colors={["white"]}

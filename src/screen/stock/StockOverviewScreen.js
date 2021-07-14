@@ -11,7 +11,7 @@ import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapStackHeader from "../../component/BarTapStackHeader";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
-import * as Utils from "../../service/Utils.js"
+import * as Utils from "../../service/Utils.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
 import variables, { colors, mock, theme } from "../../theme/variables.js";
 
@@ -33,10 +33,8 @@ export default function StockOverviewScreen({ navigation }) {
       api
         .getCategories()
         .then((json) => {
-          json.sort((a, b) => Utils.sortListItemString(a.name, b.name))
-          setCategories(
-            json
-          );
+          json.sort((a, b) => Utils.sortListItemString(a.name, b.name));
+          setCategories(json);
           setLoading(false);
         })
         .catch((error) => {
@@ -79,33 +77,33 @@ export default function StockOverviewScreen({ navigation }) {
   return (
     <BarTapContent navigation={navigation}>
       <BarTapTitle text={"Categories"} level={1} />
-        <FlatList
-          refreshControl={
-            <RefreshControl
-              onRefresh={() => setLoading(true)}
-              refreshing={isLoading}
-              tintColor="white"
-            />
-          }
-          keyExtractor={(item) => item.id.toString()}
-          style={styles.list}
-          data={categories}
-          renderItem={(item) => listItem(item.item)}
-          refreshing={isLoading}
-          onRefresh={() => setLoading(true)}
+      <FlatList
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => setLoading(true)}
+            refreshing={isLoading}
+            tintColor={theme.LOADING_INDICATOR}
+          />
+        }
+        keyExtractor={(item) => item.id.toString()}
+        style={styles.list}
+        data={categories}
+        renderItem={(item) => listItem(item.item)}
+        refreshing={isLoading}
+        onRefresh={() => setLoading(true)}
+      />
+      <View style={styles.bottomButtons}>
+        <BarTapButton
+          onPress={() => navigation.navigate("Add Category")}
+          text={"New Category"}
+          style={styles.button}
         />
-        <View style={styles.bottomButtons}>
-          <BarTapButton
-            onPress={() => navigation.navigate("Add Category")}
-            text={"New Category"}
-            style={styles.button}
-          />
-          <BarTapButton
-            onPress={() => navigation.navigate("Add Product")}
-            text={"New Product"}
-            style={styles.button}
-          />
-        </View>
+        <BarTapButton
+          onPress={() => navigation.navigate("Add Product")}
+          text={"New Product"}
+          style={styles.button}
+        />
+      </View>
     </BarTapContent>
   );
 }

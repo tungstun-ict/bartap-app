@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, FlatList, RefreshControl } from "react-native";
-import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  Modal,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import BottomSheet from "reanimated-bottom-sheet";
 
@@ -329,7 +336,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
               <RefreshControl
                 onRefresh={() => setLoading(true)}
                 refreshing={isLoading}
-                tintColor="white"
+                tintColor={theme.LOADING_INDICATOR}
               />
             }
             renderItem={(item) => listItem(item.item)}

@@ -21,7 +21,7 @@ export default function CategoryOverviewScreen({ route, navigation }) {
       api
         .getDrinksByCategory(category.id)
         .then((json) => {
-          json.sort((a, b) => Utils.sortListItemString(a.brand, b.brand))
+          json.sort((a, b) => Utils.sortListItemString(a.brand, b.brand));
           setDrinks(json);
           setLoading(false);
         })
@@ -41,7 +41,7 @@ export default function CategoryOverviewScreen({ route, navigation }) {
     },
     button: {
       width: "100%",
-    }
+    },
   });
 
   const listItem = (drink) => {
@@ -64,7 +64,7 @@ export default function CategoryOverviewScreen({ route, navigation }) {
           <RefreshControl
             onRefresh={() => setLoading(true)}
             refreshing={isLoading}
-            tintColor="white"
+            tintColor={theme.LOADING_INDICATOR}
           />
         }
         keyExtractor={(item) => item.id.toString()}

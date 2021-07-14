@@ -1,3 +1,8 @@
+import { Platform } from "react-native";
+
+const mediumFont = Platform.OS === "android" ? "Gotham-Medium" : "Arial";
+const thinFont = Platform.OS === "android" ? "Gotham-Book" : "Arial";
+
 export const darkTheme = {
   mode: "dark",
   BRAND: "#FF9900",
@@ -41,10 +46,10 @@ export const darkTheme = {
   TEXT_BUTTON_WARNING: "#fff",
   STATUSBAR_TEXT: "#fff",
   STATUSBAR_BACKGROUND: "#212121",
-  LOADING_INDICATOR: "#484848",
+  LOADING_INDICATOR: "#fff",
 
-  FONT_MEDIUM: "Gotham-Medium",
-  FONT_THIN: "Gotham-Book",
+  FONT_MEDIUM: mediumFont,
+  FONT_THIN: thinFont,
 };
 
 export const lightTheme = {
@@ -92,8 +97,8 @@ export const lightTheme = {
   STATUSBAR_BACKGROUND: "#fff",
   LOADING_INDICATOR: "#FF9900",
 
-  FONT_MEDIUM: "Gotham-Medium",
-  FONT_THIN: "Gotham-Book",
+  FONT_MEDIUM: mediumFont,
+  FONT_THIN: thinFont,
 };
 
 export const sizes = {

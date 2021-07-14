@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, RefreshControl, StyleSheet} from "react-native";
+import { FlatList, RefreshControl, StyleSheet } from "react-native";
 
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapContent from "../../component/BarTapContent";
@@ -66,17 +66,20 @@ export default function PastSessionBillsScreen({ route, navigation }) {
   return (
     <BarTapContent navigation={navigation} title={sessionName}>
       <BarTapTitle text={sessionName} level={1} />
-        <FlatList
-          refreshControl={
-            <RefreshControl refreshing={isLoading} tintColor="white" />
-          }
-          refreshing={isLoading}
-          onRefresh={() => setLoading(true)}
-          keyExtractor={(item) => item.id.toString()}
-          style={styles.list}
-          data={bills}
-          renderItem={({ item }) => listItem(item)}
-        />
+      <FlatList
+        refreshControl={
+          <RefreshControl
+            refreshing={isLoading}
+            tintColor={theme.LOADING_INDICATOR}
+          />
+        }
+        refreshing={isLoading}
+        onRefresh={() => setLoading(true)}
+        keyExtractor={(item) => item.id.toString()}
+        style={styles.list}
+        data={bills}
+        renderItem={({ item }) => listItem(item)}
+      />
     </BarTapContent>
   );
 }

@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, Modal, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  FlatList,
+  Modal,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
@@ -20,53 +29,52 @@ export default function AddDrinksScreen({ route, navigation }) {
 
   useEffect(() => {
     if (isLoading) {
-      if(category.productType === "SEARCH") {
+      if (category.productType === "SEARCH") {
         api
-        .getSearchResults(category.name)
-        .then((json) => {
-          json.sort((a, b) => Utils.sortListItemString(a.brand, b.brand))
-          setDrinks(json);
-          setLoading(false);
-        })
-        .catch((error) => {
-          alert(error);
-          setLoading(false);
-        });
-      }
-      else {
+          .getSearchResults(category.name)
+          .then((json) => {
+            json.sort((a, b) => Utils.sortListItemString(a.brand, b.brand));
+            setDrinks(json);
+            setLoading(false);
+          })
+          .catch((error) => {
+            alert(error);
+            setLoading(false);
+          });
+      } else {
         api
-        .getDrinksByCategory(category.id)
-        .then((json) => {
-          json.sort((a, b) => Utils.sortListItemString(a.brand, b.brand))
-          setDrinks(json);
-          setLoading(false);
-        })
-        .catch((error) => {
-          alert(error);
-          setLoading(false);
-        });
+          .getDrinksByCategory(category.id)
+          .then((json) => {
+            json.sort((a, b) => Utils.sortListItemString(a.brand, b.brand));
+            setDrinks(json);
+            setLoading(false);
+          })
+          .catch((error) => {
+            alert(error);
+            setLoading(false);
+          });
       }
       return;
     }
   }, [isLoading]);
 
   const selectAmount = (drink) => {
-    setSelectedItem(drink)
+    setSelectedItem(drink);
     setDialogOpen(true);
-  }
+  };
 
   const addItem = (navigation, billId, sessionId) => {
-    if(selectedItem === null) {
+    if (selectedItem === null) {
       return;
     }
-    
+
     api
       .addDrink(billId, selectedItem, sessionId, amount)
       .catch((error) => alert(error))
       .then(() => {
         navigation.navigate("Session");
       });
-  }
+  };
 
   const styles = StyleSheet.create({
     content: {
@@ -123,7 +131,6 @@ export default function AddDrinksScreen({ route, navigation }) {
       textAlign: "center",
       fontFamily: theme.FONT_MEDIUM,
       color: theme.TEXT_SECONDARY,
-
     },
     dialogButtons: {
       flex: 1,
@@ -134,14 +141,14 @@ export default function AddDrinksScreen({ route, navigation }) {
       flex: 0.48,
       backgroundColor: theme.BACKGROUND_SECONDARY,
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
     },
     dialogButton__text: {
       fontSize: 50,
       textAlign: "center",
       fontFamily: theme.FONT_MEDIUM,
       color: theme.TEXT_SECONDARY,
-    }
+    },
   });
 
   const listItem = (drink) => {
@@ -152,7 +159,7 @@ export default function AddDrinksScreen({ route, navigation }) {
         price={drink.price.toFixed(2)}
       />
     );
-  }
+  };
 
   return (
     <BarTapContent navigation={navigation} title={"Add product"}>
@@ -163,15 +170,13 @@ export default function AddDrinksScreen({ route, navigation }) {
             <RefreshControl
               onRefresh={() => setLoading(true)}
               refreshing={isLoading}
-              tintColor="white"
+              tintColor={theme.LOADING_INDICATOR}
             />
           }
           keyExtractor={(item) => item.id.toString()}
           style={styles.list}
           data={drinks}
-          renderItem={({ item }) =>
-            listItem(item)
-          }
+          renderItem={({ item }) => listItem(item)}
         />
       </View>
       <Modal
@@ -182,35 +187,45 @@ export default function AddDrinksScreen({ route, navigation }) {
           setDialogOpen(!dialogOpen);
         }}
       >
-        <TouchableOpacity style={styles.modal}
+        <TouchableOpacity
+          style={styles.modal}
           activeOpacity={0.2}
-          onPressOut={() => setDialogOpen(false)}>
+          onPressOut={() => setDialogOpen(false)}
+        >
           <View style={styles.dialog}>
             <View style={styles.dialogContent}>
-              <TextInput 
+              <TextInput
                 underline="transparent"
                 keyboardType={"number-pad"}
                 defaultValue={JSON.stringify(amount)}
-                onChangeText={(value) => { value && setAmount(parseInt(value))}}
-                style={styles.dialogContent__text} />
+                onChangeText={(value) => {
+                  value && setAmount(parseInt(value));
+                }}
+                style={styles.dialogContent__text}
+              />
             </View>
             <View style={styles.dialogButtons}>
-              <TouchableOpacity 
-                onPress={() => amount <= 1 ? setAmount(1) : setAmount(amount - 1)}
-                style={styles.dialogButton}>
+              <TouchableOpacity
+                onPress={() =>
+                  amount <= 1 ? setAmount(1) : setAmount(amount - 1)
+                }
+                style={styles.dialogButton}
+              >
                 <Text style={styles.dialogButton__text}>-</Text>
-                </TouchableOpacity>
-              <TouchableOpacity 
+              </TouchableOpacity>
+              <TouchableOpacity
                 onPress={() => setAmount(amount + 1)}
-                style={styles.dialogButton}>
+                style={styles.dialogButton}
+              >
                 <Text style={styles.dialogButton__text}>+</Text>
-                </TouchableOpacity>
+              </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => addItem(navigation, billId, sessionId)}
-            style={styles.confirmButton}>
-              <Text style={styles.confirmButton__text}>Confirm</Text>
+            style={styles.confirmButton}
+          >
+            <Text style={styles.confirmButton__text}>Confirm</Text>
           </TouchableOpacity>
         </TouchableOpacity>
       </Modal>
