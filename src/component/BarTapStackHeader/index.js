@@ -7,7 +7,7 @@ import { ThemeContext } from "../../theme/ThemeManager.js";
 
 export default function BarTapStackHeader({ navigation, title }) {
   const { theme } = React.useContext(ThemeContext);
-  
+
   const navigateBack = () => {
     navigation.goBack();
   };
@@ -24,13 +24,13 @@ export default function BarTapStackHeader({ navigation, title }) {
       width: "100%",
       backgroundColor: theme.BACKGROUND_STACK_HEADER,
     },
-  
+
     header__title: {
       color: theme.TEXT_PRIMARY,
       fontFamily: theme.FONT_MEDIUM,
       fontSize: 20,
     },
-  
+
     header__menuIcon: {
       marginLeft: 20,
       width: 25,
@@ -42,18 +42,18 @@ export default function BarTapStackHeader({ navigation, title }) {
       height: "100%",
       justifyContent: "center",
     },
-  
+
     header__left: {
       flex: 0.5,
       justifyContent: "center",
     },
-  
+
     header__center: {
       flex: 1,
       justifyContent: "center",
       alignItems: "center",
     },
-  
+
     header__right: {
       flex: 0.5,
       justifyContent: "center",
@@ -63,9 +63,7 @@ export default function BarTapStackHeader({ navigation, title }) {
   return (
     <View style={styles.header}>
       <View style={styles.header__left}>
-        <TouchableOpacity 
-        style={styles.header__button}
-        onPress={navigateBack}>
+        <TouchableOpacity style={styles.header__button} onPress={navigateBack}>
           <Image
             style={styles.header__menuIcon}
             source={require("../../assets/back-icon.png")}
@@ -73,7 +71,9 @@ export default function BarTapStackHeader({ navigation, title }) {
         </TouchableOpacity>
       </View>
       <View style={styles.header__center}>
-        <Text style={styles.header__title} numberOfLines={1}>{title}</Text>
+        <Text style={styles.header__title} numberOfLines={1}>
+          {title}
+        </Text>
       </View>
       <View style={styles.header__right}></View>
     </View>

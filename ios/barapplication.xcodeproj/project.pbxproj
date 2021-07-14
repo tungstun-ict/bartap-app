@@ -32,6 +32,7 @@
 		00E356EE1AD99517003FC87E /* barapplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = barapplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* barapplicationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = barapplicationTests.m; sourceTree = "<group>"; };
+		0556CBD2269F95F700E99794 /* barapplication.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = barapplication.entitlements; path = barapplication/barapplication.entitlements; sourceTree = "<group>"; };
 		09D8ABE0B59640B9A68C6B28 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		12733154C22C41689040D6CD /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		1397BD0EA0B7477AB2BAAB72 /* Gotham-Book.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham-Book.ttf"; path = "../src/assets/fonts/Gotham-Book.ttf"; sourceTree = "<group>"; };
@@ -106,6 +107,7 @@
 		13B07FAE1A68108700A75B9A /* barapplication */ = {
 			isa = PBXGroup;
 			children = (
+				0556CBD2269F95F700E99794 /* barapplication.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -531,6 +533,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = barapplication/barapplication.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = barapplication/Info.plist;
@@ -557,6 +560,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = barapplication/barapplication.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = barapplication/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

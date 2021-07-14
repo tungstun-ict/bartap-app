@@ -37,6 +37,8 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
+	<key>NFCReaderUsageDescription</key>
+	<string>NFC is used to write tags that customers can use to log in.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Gotham-Book.ttf</string>
