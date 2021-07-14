@@ -14,6 +14,7 @@ export default function BarTapBottomSheet({ height, style, children }) {
       alignItems: "center",
       flexDirection: "column",
       paddingHorizontal: 20,
+      top: 40,
     },
     line: {
       marginTop: 10,
@@ -30,15 +31,11 @@ export default function BarTapBottomSheet({ height, style, children }) {
       margin: 20,
     },
   });
-  
+
   return (
     <View style={[styles.sheet, { height: height }, style]}>
       <View style={styles.line}></View>
-      <View style={styles.content}>
-        {children}
-      </View>
+      <View style={styles.content}>{children}</View>
     </View>
   );
 }
-
-

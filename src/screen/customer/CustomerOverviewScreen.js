@@ -371,6 +371,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
       </Modal>
       <BottomSheet
         enabledBottomInitialAnimation
+        enabledInnerScrolling={false}
         ref={sheetRef}
         snapPoints={[0, 230]}
         onCloseEnd={closeBottomSheet}
