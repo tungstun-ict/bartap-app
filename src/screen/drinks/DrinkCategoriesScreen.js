@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { RefreshControl, StyleSheet, Text, View } from "react-native";
-import {
-  Dimensions,
-  FlatList,
-  Image,
-  TextInput,
-  TouchableOpacity,
-} from "react-native";
+import { Dimensions, FlatList, Image, TextInput, TouchableOpacity } from "react-native";
 
 import BarTapContent from "../../component/BarTapContent";
 import BarTapSearchBar from "../../component/BarTapSearchBar";
@@ -25,11 +19,12 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       api
         .getCategories()
         .then((json) => {
-          setCategories(
-            json.sort(function (a, b) {
-              return b.id < a.id;
-            }),
-          );
+          json.sort(function (a, b) {
+            return b.id < a.id;
+          });
+          json.unshift({ name: "Favourites", id: -1, productType: "FAVOURITES" });
+
+          setCategories(json);
           setCategoriesLoading(false);
         })
         .catch((error) => {
@@ -128,6 +123,10 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       width: "100%",
       maxHeight: "100%",
     },
+    favouriteIcon: {
+      height: 50,
+      width: 50,
+    },
   });
 
   const CategoriesContent = () => {
@@ -163,7 +162,15 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
         onPress={() => handleOnPress(navigation, category, billId, sessionId)}
       >
         <View style={styles.category}>
-          <Text style={styles.category__name}>{category.name}</Text>
+          {category.name === "Favourites" && (
+            <Image
+              style={styles.favouriteIcon}
+              source={require("../../assets/favourite-icon.png")}
+            />
+          )}
+          {category.name !== "Favourites" && (
+            <Text style={styles.category__name}>{category.name}</Text>
+          )}
         </View>
       </TouchableOpacity>
     );

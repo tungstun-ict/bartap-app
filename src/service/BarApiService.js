@@ -171,6 +171,12 @@ export async function getDrinksByCategory(categoryId) {
   );
 }
 
+export async function getFavouriteProducts() {
+  return await getRequest(
+    `/bars/${await storage.getActiveBar()}/products?onlyFavorites=true`,
+  );
+}
+
 export async function getProductById(productId) {
   return await getRequest(
     `/bars/${await storage.getActiveBar()}/products/${productId}`,

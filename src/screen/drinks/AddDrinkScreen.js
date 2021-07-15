@@ -1,14 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  Modal,
-  RefreshControl,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, Modal, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 import BarTapContent from "../../component/BarTapContent/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
@@ -32,6 +23,18 @@ export default function AddDrinksScreen({ route, navigation }) {
       if (category.productType === "SEARCH") {
         api
           .getSearchResults(category.name)
+          .then((json) => {
+            json.sort((a, b) => Utils.sortListItemString(a.brand, b.brand));
+            setDrinks(json);
+            setLoading(false);
+          })
+          .catch((error) => {
+            alert(error);
+            setLoading(false);
+          });
+      } else if (category.productType === "FAVOURITES") {
+        api
+          .getFavouriteProducts()
           .then((json) => {
             json.sort((a, b) => Utils.sortListItemString(a.brand, b.brand));
             setDrinks(json);
