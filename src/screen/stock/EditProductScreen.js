@@ -1,6 +1,6 @@
 import { Picker } from "@react-native-picker/picker";
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, TextInput } from "react-native";
+import { Image, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 
 import BarTapButton from "../../component/BarTapButton/index.js";
 import BarTapContent from "../../component/BarTapContent/index.js";
@@ -50,6 +50,7 @@ export default function EditProductScreen({ route, navigation }) {
           setSellingPrice(json.price);
           setSize(json.size);
           setSelectedCategory(json.category);
+          setFavourite(json.favorite);
           setLoading(false);
         })
         .catch((error) => {
@@ -79,7 +80,7 @@ export default function EditProductScreen({ route, navigation }) {
         .then(() => navigation.navigate("Stock Overview"))
         .catch((error) => alert(error));
     } else {
-      alert("SHEEESSH, no goeie invoer");
+      alert("Invoer is niet correct.");
     }
   };
 
@@ -94,6 +95,7 @@ export default function EditProductScreen({ route, navigation }) {
       borderRadius: 5,
       justifyContent: "center",
       width: "100%",
+      marginBottom: 10,
     },
     picker__item: {
       height: 50,
@@ -103,6 +105,14 @@ export default function EditProductScreen({ route, navigation }) {
     button: {
       marginTop: "auto",
       width: "100%",
+    },
+    favouriteButton: {
+      marginLeft: "auto",
+    },
+    favouriteButton__image: {
+      height: 30,
+      width: 25,
+      tintColor: isFavourite ? theme.BRAND : theme.BACKGROUND_IMAGE,
     },
   });
 
@@ -127,7 +137,19 @@ export default function EditProductScreen({ route, navigation }) {
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.content}
       >
-        <BarTapTitle text={"Name"} level={2} />
+        <BarTapTitle text={name} level={1}>
+        <TouchableOpacity
+            style={styles.favouriteButton}
+            onPress={() => setFavourite(!isFavourite)}
+          >
+            <Image
+              source={require("../../assets/favourite-icon.png")}
+              style={styles.favouriteButton__image}
+              resizeMode={"contain"}
+            />
+          </TouchableOpacity>
+        </BarTapTitle>
+        <BarTapTitle text={"Name"} level={2}/>
         <BarTapInput
           autoCompleteType={"name"}
           onChangeText={setName}

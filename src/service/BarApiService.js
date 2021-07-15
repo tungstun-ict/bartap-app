@@ -110,7 +110,7 @@ export async function deleteCustomer(customerId) {
 
 export async function getSearchResults(searchString) {
   return await getRequest(
-    `/bars/${await storage.getActiveBar()}/products`,
+    `/bars/${await storage.getActiveBar()}/products/search?name=${searchString}`,
   );
 }
 
@@ -168,6 +168,12 @@ export async function deleteBill(sessionId, billId) {
 export async function getDrinksByCategory(categoryId) {
   return await getRequest(
     `/bars/${await storage.getActiveBar()}/products?categoryId=${categoryId}`,
+  );
+}
+
+export async function getFavouriteProducts() {
+  return await getRequest(
+    `/bars/${await storage.getActiveBar()}/products?onlyFavorites=true`,
   );
 }
 
@@ -298,10 +304,10 @@ export async function updateProduct(
   return await api.put(
     `/bars/${await storage.getActiveBar()}/products/${productId}`,
     {
+      name: name,
       brand: brand,
       categoryId: selectedCategoryId,
       isFavorite: isFavourite,
-      name: name,
       price: sellingPrice,
       size: size,
     },
