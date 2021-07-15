@@ -31,9 +31,14 @@ This project is made for Bart's Bar, a local bar in Harmelen, The Netherlands.
 
 ## Release
 
-The current build can be found on Expo [here]()
-
 We are working on an iOS and Android release soon.
+
+Newest release: 1.1.3
+
+- Payment status can be tracked via the app.
+- NFC tags can be connected to a customer profile.
+- Every list is sorted alphabetical or via ID order.
+- When adding a drink you can now select an amount.
 
 ## Tools
 
