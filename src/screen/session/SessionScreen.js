@@ -412,7 +412,7 @@ export default function SessionScreen({ navigation }) {
       <BottomSheet
         enabledInnerScrolling={false}
         ref={sheetRef}
-        snapPoints={[0, 220, 290]}
+        snapPoints={[0, 260, 320]}
         onCloseEnd={closeBottomSheet}
         borderRadius={10}
         enabledContentTapInteraction={false}

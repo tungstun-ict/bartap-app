@@ -1,13 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Alert, FlatList, RefreshControl } from "react-native";
-import {
-  Image,
-  Modal,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import BottomSheet from "reanimated-bottom-sheet";
 
@@ -373,7 +366,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
         enabledBottomInitialAnimation
         enabledInnerScrolling={false}
         ref={sheetRef}
-        snapPoints={[0, 230]}
+        snapPoints={[0, 260]}
         onCloseEnd={closeBottomSheet}
         borderRadius={10}
         renderContent={renderContent}
