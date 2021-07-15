@@ -329,7 +329,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
               <RefreshControl
                 onRefresh={() => setLoading(true)}
                 refreshing={isLoading}
-                tintColor="white"
+                tintColor={theme.LOADING_INDICATOR}
               />
             }
             renderItem={(item) => listItem(item.item)}
@@ -364,8 +364,9 @@ export default function CustomerOverviewScreen({ route, navigation }) {
       </Modal>
       <BottomSheet
         enabledBottomInitialAnimation
+        enabledInnerScrolling={false}
         ref={sheetRef}
-        snapPoints={[0, 230]}
+        snapPoints={[0, 260]}
         onCloseEnd={closeBottomSheet}
         borderRadius={10}
         renderContent={renderContent}

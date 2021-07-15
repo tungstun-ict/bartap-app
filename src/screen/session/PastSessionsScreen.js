@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import * as api from "../../service/BarApiService.js";
-import {
-  StyleSheet,
-  FlatList,
-  RefreshControl,
-} from "react-native";
+import { StyleSheet, FlatList, RefreshControl } from "react-native";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import { ThemeContext } from "../../theme/ThemeManager.js";
@@ -74,17 +70,20 @@ export default function PastSessionsScreen({ navigation }) {
   return (
     <BarTapContent navigation={navigation}>
       <BarTapTitle text={"Past sessions"} level={1} />
-        <FlatList
-          refreshControl={
-            <RefreshControl refreshing={isLoading} tintColor="white" />
-          }
-          refreshing={isLoading}
-          onRefresh={() => setLoading(true)}
-          keyExtractor={(item) => item.id.toString()}
-          style={styles.list}
-          data={sessions}
-          renderItem={({ item }) => listItem(item)}
-        />
+      <FlatList
+        refreshControl={
+          <RefreshControl
+            refreshing={isLoading}
+            tintColor={theme.LOADING_INDICATOR}
+          />
+        }
+        refreshing={isLoading}
+        onRefresh={() => setLoading(true)}
+        keyExtractor={(item) => item.id.toString()}
+        style={styles.list}
+        data={sessions}
+        renderItem={({ item }) => listItem(item)}
+      />
     </BarTapContent>
   );
 }

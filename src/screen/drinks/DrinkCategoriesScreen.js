@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { RefreshControl, StyleSheet, Text, View } from "react-native";
-import { Dimensions, FlatList, Image, TextInput, TouchableOpacity } from "react-native";
+import {
+  Dimensions,
+  FlatList,
+  Image,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 
 import BarTapContent from "../../component/BarTapContent";
 import BarTapSearchBar from "../../component/BarTapSearchBar";
@@ -13,7 +19,6 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
   const [searchString, setSearchString] = useState("");
   const [categories, setCategories] = useState([]);
   const [isCategoriesLoading, setCategoriesLoading] = useState(true);
-
 
   useEffect(() => {
     if (isCategoriesLoading) {
@@ -60,7 +65,7 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
     if (string.length === 0) {
       return;
     }
-    let category = { id: 1, "name": string, "productType": "SEARCH" }
+    let category = { id: 1, name: string, productType: "SEARCH" };
     console.log(category);
     navigation.navigate("Add Drink", {
       category,
@@ -75,7 +80,7 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       billId,
       sessionId,
     });
-  }
+  };
 
   const styles = StyleSheet.create({
     itemInvisible: {
@@ -127,28 +132,28 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
 
   const CategoriesContent = () => {
     return (
-        <View style={styles.categories}>
-          <FlatList
-              refreshControl={
-                <RefreshControl
-                    onRefresh={() => setCategoriesLoading(true)}
-                    refreshing={isCategoriesLoading}
-                    tintColor="white"
-                />
-              }
-              data={formatData(categories, 2)}
-              renderItem={({ item }) => {
-                if (item.empty === true) {
-                  return <View style={[styles.category, styles.itemInvisible]} />;
-                } else {
-                  return categoryListItem(navigation, item, billId, sessionId);
-                }
-              }}
-              keyExtractor={(item) => item.id.toString()}
-              numColumns={2}
-              columnWrapperStyle={styles.categories__row}
-          />
-        </View>
+      <View style={styles.categories}>
+        <FlatList
+          refreshControl={
+            <RefreshControl
+              onRefresh={() => setCategoriesLoading(true)}
+              refreshing={isCategoriesLoading}
+              tintColor={theme.LOADING_INDICATOR}
+            />
+          }
+          data={formatData(categories, 2)}
+          renderItem={({ item }) => {
+            if (item.empty === true) {
+              return <View style={[styles.category, styles.itemInvisible]} />;
+            } else {
+              return categoryListItem(navigation, item, billId, sessionId);
+            }
+          }}
+          keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
+          columnWrapperStyle={styles.categories__row}
+        />
+      </View>
     );
   };
 
@@ -162,15 +167,15 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
         </View>
       </TouchableOpacity>
     );
-  }
+  };
 
   return (
     <BarTapContent navigation={navigation} title={"Add product"}>
       <View style={styles.searchBar__container}>
         <BarTapSearchBar
-            placeholder={"Search all products..."}
-            onPress={(string) =>search(string)}
-            isEmpty={() => search("")}
+          placeholder={"Search all products..."}
+          onPress={(string) => search(string)}
+          isEmpty={() => search("")}
         />
       </View>
       <CategoriesContent />

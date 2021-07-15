@@ -4,7 +4,7 @@ import BarTapContent from "../../component/BarTapContent";
 import BarTapListItem from "../../component/BarTapListItem/index.js";
 import BarTapTitle from "../../component/BarTapTitle/index.js";
 import * as api from "../../service/BarApiService.js";
-import * as Utils from "../../service/Utils.js"
+import * as Utils from "../../service/Utils.js";
 import { ThemeContext } from "../../theme/ThemeManager";
 
 export default function AddCustomerSession({ route, navigation }) {
@@ -19,8 +19,8 @@ export default function AddCustomerSession({ route, navigation }) {
       .getAllCustomersByBarId()
       .then((json) => {
         console.log(addedCustomers);
-        json = json.filter(customer => !addedCustomers.includes(customer.id));
-        json.sort((a, b) => Utils.sortListItemString(a.name, b.name))
+        json = json.filter((customer) => !addedCustomers.includes(customer.id));
+        json.sort((a, b) => Utils.sortListItemString(a.name, b.name));
         setCustomers(json);
         setLoading(false);
       })
@@ -59,21 +59,21 @@ export default function AddCustomerSession({ route, navigation }) {
   return (
     <BarTapContent navigation={navigation} title={"Add customer"}>
       <BarTapTitle text={"Customers"} level={1} />
-        <FlatList
-          keyExtractor={(item) => item.id.toString()}
-          style={styles.list}
-          refreshControl={
-            <RefreshControl
-              onRefresh={() => setLoading(true)}
-              refreshing={isLoading}
-              tintColor="white"
-            />
-          }
-          data={customers}
-          renderItem={(item) => listItem(item.item)}
-          refreshing={isLoading}
-          onRefresh={() => setLoading(true)}
-        />
+      <FlatList
+        keyExtractor={(item) => item.id.toString()}
+        style={styles.list}
+        refreshControl={
+          <RefreshControl
+            onRefresh={() => setLoading(true)}
+            refreshing={isLoading}
+            tintColor={theme.LOADING_INDICATOR}
+          />
+        }
+        data={customers}
+        renderItem={(item) => listItem(item.item)}
+        refreshing={isLoading}
+        onRefresh={() => setLoading(true)}
+      />
     </BarTapContent>
   );
 }

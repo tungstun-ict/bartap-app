@@ -1,6 +1,6 @@
-import { AppRegistry } from 'react-native';
-import Config from 'react-native-config';
+import { AppRegistry } from "react-native";
+import Config from "react-native-config";
 
-import App from './App';
+import App from "./App";
 
-AppRegistry.registerComponent('main', () => App);
+AppRegistry.registerComponent("barapplication", () => App);

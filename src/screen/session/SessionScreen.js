@@ -299,10 +299,12 @@ export default function SessionScreen({ navigation }) {
         {typeof nfcStatus === "number" && (
           <BarTapButton
             text={"Customer Information"}
-            onPress={() => navigation.navigate("Customers", {
-              screen: "Customer overview",
-              params: { id: nfcStatus },
-            })}
+            onPress={() =>
+              navigation.navigate("Customers", {
+                screen: "Customer overview",
+                params: { id: nfcStatus },
+              })
+            }
           />
         )}
       </BarTapBottomSheet>
@@ -349,7 +351,7 @@ export default function SessionScreen({ navigation }) {
               <RefreshControl
                 refreshing={isLoading}
                 onRefresh={() => setLoading(true)}
-                tintColor="white"
+                tintColor={theme.LOADING_INDICATOR}
               />
             }
             colors={["white"]}
@@ -408,9 +410,9 @@ export default function SessionScreen({ navigation }) {
         </View>
       </View>
       <BottomSheet
-        enabledInnerScrolling={true}
+        enabledInnerScrolling={false}
         ref={sheetRef}
-        snapPoints={[0, 220, 290]}
+        snapPoints={[0, 260, 320]}
         onCloseEnd={closeBottomSheet}
         borderRadius={10}
         enabledContentTapInteraction={false}

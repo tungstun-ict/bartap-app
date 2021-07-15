@@ -229,7 +229,7 @@ export default function SessionBillScreen({ route, navigation }) {
           <RefreshControl
             onRefresh={() => setLoading(true)}
             refreshing={isLoading}
-            tintColor="white"
+            tintColor={theme.LOADING_INDICATOR}
           />
         }
         refreshing={isLoading}
