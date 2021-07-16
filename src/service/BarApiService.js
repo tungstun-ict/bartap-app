@@ -92,6 +92,16 @@ export async function logout() {
   await storage.removeRefreshToken();
 }
 
+export async function signUp(email, userName, password, firstName, lastName) {
+  await api.post(`/register`, {
+    firstName: firstName,
+    lastName: lastName,
+    mail: email,
+    password: password,
+    username: userName,
+  });
+}
+
 export async function createSession(name) {
   await api.post(`/bars/${await storage.getActiveBar()}/sessions`, {
     name: name,
@@ -99,7 +109,9 @@ export async function createSession(name) {
 }
 
 export async function payBill(sessionId, billId) {
-  await api.patch(`/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}?isPayed=true`)
+  await api.patch(
+    `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}?isPayed=true`,
+  );
 }
 
 export async function deleteCustomer(customerId) {
@@ -115,7 +127,6 @@ export async function getSearchResults(searchString) {
 }
 
 export async function addDrink(billId, drinkId, sessionId, amount) {
-
   await api.put(
     `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}`,
     {
