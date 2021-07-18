@@ -1,15 +1,17 @@
-import LoginScreen from "./src/screen/account/LoginScreen";
-import RegisterScreen from "./src/screen/account/RegisterScreen";
-import AdministratorPath from "./src/screen/paths/AdministratorPath";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import React, { useEffect } from "react";
+import { AppearanceProvider } from "react-native-appearance";
+
+import LoginScreen from "./src/screen/employee/account/LoginScreen";
+import RegisterScreen from "./src/screen/employee/account/RegisterScreen";
+import CustomerPath from "./src/screen/paths/CustomerPath";
+import EmployeePath from "./src/screen/paths/EmployeePath";
 import SplashScreen from "./src/screen/SplashScreen";
 import * as api from "./src/service/BarApiService.js";
 import * as storage from "./src/service/BarStorageService";
 import { AuthContext } from "./src/service/Context.js";
 import { ThemeProvider } from "./src/theme/ThemeManager";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import React, { useEffect } from "react";
-import { AppearanceProvider } from "react-native-appearance";
 
 const SignInNavigator = createStackNavigator();
 
@@ -29,7 +31,7 @@ export function SignInStack({ state }) {
         />
         <SignInNavigator.Screen
           name="App"
-          component={AdministratorPath}
+          component={EmployeePath}
           initialParams={{ context: AuthContext }}
         />
       </SignInNavigator.Navigator>
@@ -38,7 +40,7 @@ export function SignInStack({ state }) {
 }
 
 export default function App() {
-  const [bars, setBars] = React.useState(null);
+  const [bars, setBars] = React.useState([]);
   const [state, dispatch] = React.useReducer(
     (prevState, action) => {
       switch (action.type) {
@@ -147,19 +149,19 @@ export default function App() {
       </ThemeProvider>
     );
   }
-  let numOfBars = Object.keys(bars).length;
 
   return (
     <AppearanceProvider>
       <ThemeProvider>
         <AuthContext.Provider value={authContext}>
-          {state.userToken !== null && numOfBars > 0 ? (
-            <AdministratorPath state={state} />
-          ) : state.userToken !== null && numOfBars === 0 ? (
+          {/* {state.userToken !== null && bars.length > 0 ? (
+            <EmployeePath state={state} />
+          ) : state.userToken !== null && bars.length === 0 ? (
             <CustomerPath />
           ) : (
             <SignInStack />
-          )}
+          )} */}
+          <CustomerPath />
         </AuthContext.Provider>
       </ThemeProvider>
     </AppearanceProvider>

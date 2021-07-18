@@ -3,7 +3,7 @@
     "name": "Bartap",
     "slug": "bar-application",
     "owner": "tungstun",
-    "version": "1.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
     "splash": {
@@ -28,7 +28,7 @@
         "backgroundColor": "#212121"
       },
       "package": "com.tungstun.bar_application",
-      "versionCode": 13
+      "versionCode": 14
     },
     "web": {
       "favicon": "./src/assets/favicon.png"

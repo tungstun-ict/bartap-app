@@ -1,10 +1,10 @@
 import React from "react";
 import { SafeAreaView } from "react-native";
 import { StyleSheet, Text } from "react-native";
-import { darkTheme } from "../theme/variables.js";
-
 import { TouchableOpacity } from "react-native";
+
 import { ThemeContext } from "../theme/ThemeManager.js";
+import { darkTheme } from "../theme/variables.js";
 
 export default function SplashScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -27,7 +27,7 @@ export default function SplashScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Loading</Text>
-      {/* <Image source={require("../assets/icon.png")}/> */}
+      {/* <Image source={require("../../assets/icon.png")}/> */}
     </SafeAreaView>
   );
 }
