@@ -1,16 +1,17 @@
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import React, { useEffect } from "react";
+import { AppearanceProvider } from "react-native-appearance";
+
 import LoginScreen from "./src/screen/employee/account/LoginScreen";
 import RegisterScreen from "./src/screen/employee/account/RegisterScreen";
+import CustomerPath from "./src/screen/paths/CustomerPath";
 import EmployeePath from "./src/screen/paths/EmployeePath";
 import SplashScreen from "./src/screen/SplashScreen";
 import * as api from "./src/service/BarApiService.js";
 import * as storage from "./src/service/BarStorageService";
 import { AuthContext } from "./src/service/Context.js";
 import { ThemeProvider } from "./src/theme/ThemeManager";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import React, { useEffect } from "react";
-import { AppearanceProvider } from "react-native-appearance";
-import CustomerPath from "./src/screen/paths/CustomerPath";
 
 const SignInNavigator = createStackNavigator();
 
@@ -153,13 +154,14 @@ export default function App() {
     <AppearanceProvider>
       <ThemeProvider>
         <AuthContext.Provider value={authContext}>
-          {state.userToken !== null && bars.length > 0 ? (
+          {/* {state.userToken !== null && bars.length > 0 ? (
             <EmployeePath state={state} />
           ) : state.userToken !== null && bars.length === 0 ? (
             <CustomerPath />
           ) : (
             <SignInStack />
-          )}
+          )} */}
+          <CustomerPath />
         </AuthContext.Provider>
       </ThemeProvider>
     </AppearanceProvider>
