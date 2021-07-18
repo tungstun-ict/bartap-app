@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { RefreshControl, StyleSheet, Text, View } from "react-native";
 import { Dimensions, FlatList, Image, TextInput, TouchableOpacity } from "react-native";
 
-import BarTapContent from "../../component/BarTapContent";
-import BarTapSearchBar from "../../component/BarTapSearchBar";
-import * as api from "../../service/BarApiService.js";
-import { ThemeContext } from "../../theme/ThemeManager";
+import BarTapContent from "../../../component/BarTapContent";
+import BarTapSearchBar from "../../../component/BarTapSearchBar";
+import * as api from "../../../service/BarApiService.js";
+import { ThemeContext } from "../../../theme/ThemeManager";
 
 export default function DrinkCategoriesScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -165,7 +165,7 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
           {category.name === "Favourites" && (
             <Image
               style={styles.favouriteIcon}
-              source={require("../../assets/favourite-icon.png")}
+              source={require("../../../assets/favourite-icon.png")}
             />
           )}
           {category.name !== "Favourites" && (

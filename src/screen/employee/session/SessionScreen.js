@@ -5,14 +5,14 @@ import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
 import BottomSheet from "reanimated-bottom-sheet";
 
-import BarTapBottomSheet from "../../component/BarTapBottomSheet/index.js";
-import BarTapButton from "../../component/BarTapButton/index.js";
-import BarTapContent from "../../component/BarTapContent/index.js";
-import BarTapTitle from "../../component/BarTapTitle/index.js";
-import * as api from "../../service/BarApiService.js";
-import NfcProxy from "../../service/NfcService.js";
-import { decryptXor } from "../../service/XorEncryptionService.js";
-import { ThemeContext } from "../../theme/ThemeManager.js";
+import BarTapBottomSheet from "../../../component/BarTapBottomSheet/index.js";
+import BarTapButton from "../../../component/BarTapButton/index.js";
+import BarTapContent from "../../../component/BarTapContent/index.js";
+import BarTapTitle from "../../../component/BarTapTitle/index.js";
+import * as api from "../../../service/BarApiService.js";
+import NfcProxy from "../../../service/NfcService.js";
+import { decryptXor } from "../../../service/XorEncryptionService.js";
+import { ThemeContext } from "../../../theme/ThemeManager.js";
 
 export default function SessionScreen({ navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -293,7 +293,7 @@ export default function SessionScreen({ navigation }) {
       <BarTapBottomSheet height={290}>
         <Image
           style={styles.sheetLogo}
-          source={require("../../assets/nfc-icon.png")}
+          source={require("../../../assets/nfc-icon.png")}
         />
         <Text style={styles.sheetText}>{nfcStatus}</Text>
         {typeof nfcStatus === "number" && (
@@ -340,7 +340,7 @@ export default function SessionScreen({ navigation }) {
         <BarTapTitle text={session.name} level={2}>
           <TouchableOpacity style={styles.addButton} onPress={addCustomer}>
             <Image
-              source={require("../../assets/customers-icon.png")}
+              source={require("../../../assets/customers-icon.png")}
               style={styles.header__image}
             />
           </TouchableOpacity>
@@ -380,13 +380,13 @@ export default function SessionScreen({ navigation }) {
           >
             <Image
               style={styles.button__image}
-              source={require("../../assets/history-icon.png")}
+              source={require("../../../assets/history-icon.png")}
             />
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={readTag}>
             <Image
               style={styles.button__image}
-              source={require("../../assets/nfc-icon.png")}
+              source={require("../../../assets/nfc-icon.png")}
             />
           </TouchableOpacity>
           {!session.locked ? (
@@ -396,7 +396,7 @@ export default function SessionScreen({ navigation }) {
             >
               <Image
                 style={styles.button__image}
-                source={require("../../assets/lock-icon.png")}
+                source={require("../../../assets/lock-icon.png")}
               />
             </TouchableOpacity>
           ) : (

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
 
-import BarTapListItem from "../../component/BarTapListItem/index.js";
-import BarTapContent from "../../component/BarTapContent";
-import BarTapTitle from "../../component/BarTapTitle/index.js";
-import * as api from "../../service/BarApiService.js";
-import { ThemeContext } from "../../theme/ThemeManager";
-import * as Utils from "../../service/Utils.js";
+import BarTapListItem from "../../../component/BarTapListItem/index.js";
+import BarTapContent from "../../../component/BarTapContent";
+import BarTapTitle from "../../../component/BarTapTitle/index.js";
+import * as api from "../../../service/BarApiService.js";
+import { ThemeContext } from "../../../theme/ThemeManager";
+import * as Utils from "../../../service/Utils.js";
 
 export default function PastSessionBillsScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);

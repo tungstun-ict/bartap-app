@@ -1,9 +1,9 @@
-import BarTapContent from "../../component/BarTapContent/index.js";
-import BarTapListItem from "../../component/BarTapListItem/index.js";
-import BarTapTitle from "../../component/BarTapTitle/index.js";
-import * as api from "../../service/BarApiService.js";
-import * as Utils from "../../service/Utils.js";
-import { ThemeContext } from "../../theme/ThemeManager.js";
+import BarTapContent from "../../../component/BarTapContent/index.js";
+import BarTapListItem from "../../../component/BarTapListItem/index.js";
+import BarTapTitle from "../../../component/BarTapTitle/index.js";
+import * as api from "../../../service/BarApiService.js";
+import * as Utils from "../../../service/Utils.js";
+import { ThemeContext } from "../../../theme/ThemeManager.js";
 import React, { useEffect, useState } from "react";
 import { FlatList, Modal, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 

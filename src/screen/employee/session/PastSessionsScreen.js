@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import * as api from "../../service/BarApiService.js";
+import * as api from "../../../service/BarApiService.js";
 import { StyleSheet, FlatList, RefreshControl } from "react-native";
-import BarTapTitle from "../../component/BarTapTitle/index.js";
-import BarTapListItem from "../../component/BarTapListItem/index.js";
-import { ThemeContext } from "../../theme/ThemeManager.js";
-import BarTapContent from "../../component/BarTapContent/index.js";
+import BarTapTitle from "../../../component/BarTapTitle/index.js";
+import BarTapListItem from "../../../component/BarTapListItem/index.js";
+import { ThemeContext } from "../../../theme/ThemeManager.js";
+import BarTapContent from "../../../component/BarTapContent/index.js";
 
 export default function PastSessionsScreen({ navigation }) {
   const { theme } = React.useContext(ThemeContext);

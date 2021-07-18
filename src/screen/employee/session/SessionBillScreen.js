@@ -4,14 +4,14 @@ import { Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import SwipeableFlatList from "react-native-swipeable-list";
 
-import BarTapButton from "../../component/BarTapButton/index.js";
-import BarTapContent from "../../component/BarTapContent/index.js";
-import BarTapListItem from "../../component/BarTapListItem/index.js";
-import BarTapTitle from "../../component/BarTapTitle/index.js";
-import * as api from "../../service/BarApiService.js";
-import { ThemeContext } from "../../theme/ThemeManager.js";
+import BarTapButton from "../../../component/BarTapButton/index.js";
+import BarTapContent from "../../../component/BarTapContent/index.js";
+import BarTapListItem from "../../../component/BarTapListItem/index.js";
+import BarTapTitle from "../../../component/BarTapTitle/index.js";
+import * as api from "../../../service/BarApiService.js";
+import { ThemeContext } from "../../../theme/ThemeManager.js";
 
-export default function CurrentBillScreen({ route, navigation }) {
+export default function SessionBillScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
 
   const { billId, sessionId } = route.params;
@@ -43,6 +43,13 @@ export default function CurrentBillScreen({ route, navigation }) {
         });
     }
   }, [isLoading]);
+
+  const payBill = () => {
+    api
+      .payBill(sessionId, billId)
+      .then(() => setLoading(true))
+      .catch(() => alert("Could not pay bill."));
+  };
 
   const handleDeleteBill = () => {
     Alert.alert(
@@ -146,6 +153,16 @@ export default function CurrentBillScreen({ route, navigation }) {
       height: "auto",
       fontFamily: theme.FONT_MEDIUM,
     },
+    footerCheck: {
+      marginTop: 20,
+      height: 70,
+      width: 70,
+      tintColor: theme.BACKGROUND_IMAGE_LIGHT,
+    },
+    footerButton: {
+      marginBottom: 10,
+      minWidth: "100%",
+    },
   });
 
   const listItem = (order) => {
@@ -196,7 +213,7 @@ export default function CurrentBillScreen({ route, navigation }) {
             onPress={() => handleDeleteBill()}
           >
             <Image
-              source={require("../../assets/trash-icon.png")}
+              source={require("../../../assets/trash-icon.png")}
               style={styles.deleteButton__image}
               resizeMode={"contain"}
             />
@@ -222,6 +239,19 @@ export default function CurrentBillScreen({ route, navigation }) {
         shouldBounceOnMount={true}
       />
       <View style={styles.footer}>
+        {bill.payed && (
+          <Image
+            style={styles.footerCheck}
+            source={require("../../../assets/check.png")}
+          />
+        )}
+        {!bill.payed && (
+          <BarTapButton
+            style={styles.footerButton}
+            text={"Confirm payment"}
+            onPress={payBill}
+          />
+        )}
         <View style={styles.footerText}>
           <Text style={styles.footerTotal}>Total:</Text>
           <Text style={styles.footerPrice}>€{bill.totalPrice.toFixed(2)}</Text>

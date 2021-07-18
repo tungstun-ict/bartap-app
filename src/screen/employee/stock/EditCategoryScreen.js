@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { TextInput } from "react-native";
 
-import BarTapButton from "../../component/BarTapButton/index.js";
-import BarTapContent from "../../component/BarTapContent/index.js";
-import BarTapInput from "../../component/BarTapInput/index.js";
-import BarTapTitle from "../../component/BarTapTitle/index.js";
-import * as api from "../../service/BarApiService.js";
-import { ThemeContext } from "../../theme/ThemeManager.js";
+import BarTapButton from "../../../component/BarTapButton/index.js";
+import BarTapContent from "../../../component/BarTapContent/index.js";
+import BarTapInput from "../../../component/BarTapInput/index.js";
+import BarTapTitle from "../../../component/BarTapTitle/index.js";
+import * as api from "../../../service/BarApiService.js";
+import { ThemeContext } from "../../../theme/ThemeManager.js";
 
 export default function EditCategoryScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);

@@ -2,14 +2,14 @@ import { Picker } from "@react-native-picker/picker";
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-import BarTapButton from "../../component/BarTapButton";
-import BarTapContent from "../../component/BarTapContent";
-import BarTapPicker from "../../component/BarTapPicker";
-import BarTapTitle from "../../component/BarTapTitle/index.js";
-import * as api from "../../service/BarApiService.js";
-import * as storage from "../../service/BarStorageService.js";
-import { AuthContext } from "../../service/Context.js";
-import { ThemeContext } from "../../theme/ThemeManager";
+import BarTapButton from "../../../component/BarTapButton";
+import BarTapContent from "../../../component/BarTapContent";
+import BarTapPicker from "../../../component/BarTapPicker";
+import BarTapTitle from "../../../component/BarTapTitle/index.js";
+import * as api from "../../../service/BarApiService.js";
+import * as storage from "../../../service/BarStorageService.js";
+import { AuthContext } from "../../../service/Context.js";
+import { ThemeContext } from "../../../theme/ThemeManager";
 
 export default function AccountScreen({ navigation }) {
   const { theme, toggleTheme } = React.useContext(ThemeContext);

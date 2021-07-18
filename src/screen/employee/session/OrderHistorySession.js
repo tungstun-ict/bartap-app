@@ -1,11 +1,11 @@
 import React from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
 
-import BarTapContent from "../../component/BarTapContent";
-import BarTapListItem from "../../component/BarTapListItem";
-import BarTapTitle from "../../component/BarTapTitle";
-import * as api from "../../service/BarApiService.js";
-import { ThemeContext } from "../../theme/ThemeManager";
+import BarTapContent from "../../../component/BarTapContent";
+import BarTapListItem from "../../../component/BarTapListItem";
+import BarTapTitle from "../../../component/BarTapTitle";
+import * as api from "../../../service/BarApiService.js";
+import { ThemeContext } from "../../../theme/ThemeManager";
 
 export default function OrderHistorySessionScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);

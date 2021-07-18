@@ -27,7 +27,7 @@ export default function SplashScreen({ route, navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.text}>Loading</Text>
-      {/* <Image source={require("../assets/icon.png")}/> */}
+      {/* <Image source={require("../../assets/icon.png")}/> */}
     </SafeAreaView>
   );
 }

@@ -4,28 +4,28 @@ import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
 
 import BarTapDrawer, { DrawerIcon } from "../../component/BarTapDrawer";
-import AccountScreen from "../../screen/account/AccountScreen";
-import CreateBarScreen from "../../screen/account/CreateBarScreen";
-import AddCustomerScreen from "../../screen/customer/AddCustomerScreen";
-import CustomerOverviewScreen from "../../screen/customer/CustomerOverviewScreen";
-import CustomersScreen from "../../screen/customer/CustomersScreen";
-import EditCustomerScreen from "../../screen/customer/EditCustomerScreen";
-import AddDrinksScreen from "../../screen/drinks/AddDrinkScreen";
-import DrinkCategoriesScreen from "../../screen/drinks/DrinkCategoriesScreen";
-import AddCustomerSession from "../../screen/session/AddCustomerSession";
-import CurrentBillScreen from "../../screen/session/CurrentBillScreen";
-import NewSessionScreen from "../../screen/session/NewSessionScreen";
-import OrderHistorySessionScreen from "../../screen/session/OrderHistorySession";
-import PastSessionBillsScreen from "../../screen/session/PastSessionBillsScreen";
-import PastSessionsScreen from "../../screen/session/PastSessionsScreen";
-import SessionBillScreen from "../../screen/session/SessionBillScreen";
-import SessionScreen from "../../screen/session/SessionScreen";
-import AddCategoryScreen from "../../screen/stock/AddCategoryScreen";
-import AddProductStockScreen from "../../screen/stock/AddProductStockScreen";
-import CategoryOverviewScreen from "../../screen/stock/CategoryOverviewScreen";
-import EditCategoryScreen from "../../screen/stock/EditCategoryScreen";
-import EditProductScreen from "../../screen/stock/EditProductScreen";
-import StockOverviewScreen from "../../screen/stock/StockOverviewScreen";
+import AccountScreen from "../../screen/employee/account/AccountScreen";
+import CreateBarScreen from "../../screen/employee/account/CreateBarScreen";
+import AddCustomerScreen from "../../screen/employee/customer/AddCustomerScreen";
+import CustomerOverviewScreen from "../../screen/employee/customer/CustomerOverviewScreen";
+import CustomersScreen from "../../screen/employee/customer/CustomersScreen";
+import EditCustomerScreen from "../../screen/employee/customer/EditCustomerScreen";
+import AddDrinksScreen from "../../screen/employee/drinks/AddDrinkScreen";
+import DrinkCategoriesScreen from "../../screen/employee/drinks/DrinkCategoriesScreen";
+import AddCustomerSession from "../../screen/employee/session/AddCustomerSession";
+import CurrentBillScreen from "../../screen/employee/session/CurrentBillScreen";
+import NewSessionScreen from "../../screen/employee/session/NewSessionScreen";
+import OrderHistorySessionScreen from "../../screen/employee/session/OrderHistorySession";
+import PastSessionBillsScreen from "../../screen/employee/session/PastSessionBillsScreen";
+import PastSessionsScreen from "../../screen/employee/session/PastSessionsScreen";
+import SessionBillScreen from "../../screen/employee/session/SessionBillScreen";
+import SessionScreen from "../../screen/employee/session/SessionScreen";
+import AddCategoryScreen from "../../screen/employee/stock/AddCategoryScreen";
+import AddProductStockScreen from "../../screen/employee/stock/AddProductStockScreen";
+import CategoryOverviewScreen from "../../screen/employee/stock/CategoryOverviewScreen";
+import EditCategoryScreen from "../../screen/employee/stock/EditCategoryScreen";
+import EditProductScreen from "../../screen/employee/stock/EditProductScreen";
+import StockOverviewScreen from "../../screen/employee/stock/StockOverviewScreen";
 import { AuthContext } from "../../service/Context.js";
 
 const DrawerNavigator = createDrawerNavigator();
@@ -168,7 +168,7 @@ export function AccountStack() {
   );
 }
 
-export default function AdministratorPath({ state }) {
+export default function EmployeePath({ state }) {
   return (
     <NavigationContainer>
       <DrawerNavigator.Navigator

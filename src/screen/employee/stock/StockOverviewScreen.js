@@ -4,16 +4,16 @@ import { Image, Modal, StyleSheet, Text, View } from "react-native";
 import { Button, TouchableOpacity } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 
-import BarTapButton from "../../component/BarTapButton/index.js";
-import BarTapContent from "../../component/BarTapContent/index.js";
-import BarTapHeader from "../../component/BarTapHeader";
-import BarTapListItem from "../../component/BarTapListItem/index.js";
-import BarTapStackHeader from "../../component/BarTapStackHeader";
-import BarTapTitle from "../../component/BarTapTitle/index.js";
-import * as api from "../../service/BarApiService.js";
-import * as Utils from "../../service/Utils.js";
-import { ThemeContext } from "../../theme/ThemeManager.js";
-import variables, { colors, mock, theme } from "../../theme/variables.js";
+import BarTapButton from "../../../component/BarTapButton/index.js";
+import BarTapContent from "../../../component/BarTapContent/index.js";
+import BarTapHeader from "../../../component/BarTapHeader";
+import BarTapListItem from "../../../component/BarTapListItem/index.js";
+import BarTapStackHeader from "../../../component/BarTapStackHeader";
+import BarTapTitle from "../../../component/BarTapTitle/index.js";
+import * as api from "../../../service/BarApiService.js";
+import * as Utils from "../../../service/Utils.js";
+import { ThemeContext } from "../../../theme/ThemeManager.js";
+import variables, { colors, mock, theme } from "../../../theme/variables.js";
 
 export default function StockOverviewScreen({ navigation }) {
   const { theme } = React.useContext(ThemeContext);

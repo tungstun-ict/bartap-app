@@ -4,16 +4,16 @@ import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-na
 import QRCode from "react-native-qrcode-svg";
 import BottomSheet from "reanimated-bottom-sheet";
 
-import BarTapBottomSheet from "../../component/BarTapBottomSheet";
-import BarTapButton from "../../component/BarTapButton/index.js";
-import BarTapContent from "../../component/BarTapContent";
-import { DrawerIcon } from "../../component/BarTapDrawer";
-import BarTapListItem from "../../component/BarTapListItem/index.js";
-import BarTapTitle from "../../component/BarTapTitle/index.js";
-import * as api from "../../service/BarApiService.js";
-import NfcProxy from "../../service/NfcService.js";
-import { encryptXor } from "../../service/XorEncryptionService.js";
-import { ThemeContext } from "../../theme/ThemeManager";
+import BarTapBottomSheet from "../../../component/BarTapBottomSheet";
+import BarTapButton from "../../../component/BarTapButton/index.js";
+import BarTapContent from "../../../component/BarTapContent";
+import { DrawerIcon } from "../../../component/BarTapDrawer";
+import BarTapListItem from "../../../component/BarTapListItem/index.js";
+import BarTapTitle from "../../../component/BarTapTitle/index.js";
+import * as api from "../../../service/BarApiService.js";
+import NfcProxy from "../../../service/NfcService.js";
+import { encryptXor } from "../../../service/XorEncryptionService.js";
+import { ThemeContext } from "../../../theme/ThemeManager";
 
 export default function CustomerOverviewScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -255,7 +255,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
       <BarTapBottomSheet height={450}>
         <Image
           style={styles.sheetLogo}
-          source={require("../../assets/nfc-icon.png")}
+          source={require("../../../assets/nfc-icon.png")}
         />
         <Text style={styles.sheetText}>{nfcStatus}</Text>
       </BarTapBottomSheet>
@@ -267,7 +267,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
       <View style={styles.content}>
         <BarTapTitle text={"Information"} level={1}>
           <TouchableOpacity onPress={editCustomer}>
-            <DrawerIcon source={require("../../assets/edit-icon.png")} />
+            <DrawerIcon source={require("../../../assets/edit-icon.png")} />
           </TouchableOpacity>
         </BarTapTitle>
         <View style={styles.information}>

@@ -1,21 +1,23 @@
 import React, { useContext } from "react";
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import BarTapButton from "../../component/BarTapButton/index.js";
-import BarTapContent from "../../component/BarTapContent/index.js";
-import BarTapInput from "../../component/BarTapInput/index.js";
-import BarTapLoadingIndicator from "../../component/BarTapLoadingIndicator/index.js";
-import { AuthContext } from "../../service/Context.js";
-import { ThemeContext } from "../../theme/ThemeManager.js";
+import BarTapButton from "../../../component/BarTapButton/index.js";
+import BarTapContent from "../../../component/BarTapContent/index.js";
+import BarTapInput from "../../../component/BarTapInput/index.js";
+import { AuthContext } from "../../../service/Context.js";
+import { ThemeContext } from "../../../theme/ThemeManager.js";
 
-export default function LoginScreen({ navigation }) {
+export default function RegisterScreen({ navigation }) {
   const { theme } = React.useContext(ThemeContext);
   const [email, setEmail] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [userName, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [privacyOn, setPrivacyOn] = React.useState(false);
   const [termsOn, setTermsOn] = React.useState(false);
   const [isLoading, setLoading] = React.useState(true);
-  const { signIn } = useContext(AuthContext);
+  const { signUp } = useContext(AuthContext);
 
   const styles = StyleSheet.create({
     content: {
@@ -53,6 +55,11 @@ export default function LoginScreen({ navigation }) {
       justifyContent: "center",
       alignItems: "center",
     },
+    link: {
+      color: theme.TEXT_LOW_CONTRAST,
+      textAlign: "center",
+      textDecorationLine: "underline",
+    },
     button: {
       marginBottom: 20,
       width: "100%",
@@ -71,7 +78,6 @@ export default function LoginScreen({ navigation }) {
       alignItems: "center",
       flex: 1,
     },
-
     link__text: {
       fontSize: 12,
       color: theme.TEXT_TERTIARY,
@@ -296,6 +302,21 @@ export default function LoginScreen({ navigation }) {
     </Text>
   );
 
+  const createAccount = () => {
+    if (
+      email.length !== 0 &&
+      password.length !== 0
+    ) {
+      signUp({
+        email: email,
+        username: userName,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+      });
+    }
+  };
+
   return (
     <BarTapContent navigation={navigation} noHeader>
       {privacyOn ? (
@@ -333,17 +354,25 @@ export default function LoginScreen({ navigation }) {
               style={styles.logo}
               resizeMethod={"resize"}
               resizeMode={"contain"}
-              source={require("../../assets/icon.png")}
+              source={require("../../../assets/icon.png")}
             />
-            <Text style={styles.logoText}>Bartap</Text>
+            <Text style={styles.logoText}>Registration</Text>
           </View>
           <View style={styles.form}>
             <BarTapInput
-              placeholder={"Email adress / username"}
+              placeholder={"Email adress"}
               placeholderTextColor={theme.TEXT_HINT}
               autoCompleteType={"email"}
               value={email}
               onChangeText={setEmail}
+              keyboardType={"email-address"}
+            />
+            <BarTapInput
+              placeholder={"Username"}
+              placeholderTextColor={theme.TEXT_HINT}
+              autoCompleteType={"email"}
+              value={userName}
+              onChangeText={setUserName}
               keyboardType={"email-address"}
             />
             <BarTapInput
@@ -355,16 +384,34 @@ export default function LoginScreen({ navigation }) {
               keyboardType={"default"}
               secureTextEntry={true}
             />
+            <BarTapInput
+              placeholder={"First Name"}
+              placeholderTextColor={theme.TEXT_HINT}
+              autoCompleteType={"name"}
+              value={firstName}
+              onChangeText={setFirstName}
+              keyboardType={"default"}
+              secureTextEntry={false}
+            />
+            <BarTapInput
+              placeholder={"Last Name"}
+              placeholderTextColor={theme.TEXT_HINT}
+              autoCompleteType={"name"}
+              value={lastName}
+              onChangeText={setLastName}
+              keyboardType={"default"}
+              secureTextEntry={false}
+            />
             <BarTapButton
-              onPress={() => signIn({ email: email, password: password })}
-              text={"Log in"}
+              onPress={() => createAccount()}
+              text={"Create account"}
               style={styles.button}
             />
             <Text
-              onPress={() => navigation.navigate("Register")}
+              onPress={() => navigation.navigate("Login")}
               style={styles.link__text}
             >
-              I do not have an account
+              I do have an account
             </Text>
           </View>
           <View style={styles.links}>
