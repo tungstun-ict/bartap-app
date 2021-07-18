@@ -3,9 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import React from "react";
 
 import BarTapDrawer, { DrawerIcon } from "../../component/BarTapDrawer";
-import CustomerNoBarsScreen from "../customer/bar/CustomerNoBarsScreen";
+import CustomerNoBarsScreen from "../customer/bar/CustomerNoBarsScreen.js";
 import CustomerCurrentSessionScreen from "../customer/session/CustomerCurrentSessionScreen";
-import CurrentBillScreen from "../employee/session/CurrentBillScreen";
 
 const DrawerNavigator = createDrawerNavigator();
 

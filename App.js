@@ -154,14 +154,14 @@ export default function App() {
     <AppearanceProvider>
       <ThemeProvider>
         <AuthContext.Provider value={authContext}>
-          {/* {state.userToken !== null && bars.length > 0 ? (
+          {state.userToken !== null && bars.length > 0 ? (
             <EmployeePath state={state} />
           ) : state.userToken !== null && bars.length === 0 ? (
             <CustomerPath />
           ) : (
             <SignInStack />
-          )} */}
-          <CustomerPath />
+          )}
+          {/* <CustomerPath /> */}
         </AuthContext.Provider>
       </ThemeProvider>
     </AppearanceProvider>

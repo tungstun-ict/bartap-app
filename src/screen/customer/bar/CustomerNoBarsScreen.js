@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { RNCamera } from "react-native-camera";
 
 import BarTapButton from "../../../component/BarTapButton/index.js";
 import BarTapContent from "../../../component/BarTapContent/index.js";
-import BarTapTitle from "../../../component/BarTapTitle/index.js";
 import { ThemeContext } from "../../../theme/ThemeManager.js";
 
-export default function CustomerCurrentSessionScreen({ route, navigation }) {
+export default function CustomerNoBarsScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
 
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
 
   const styles = StyleSheet.create({
     title: {
@@ -39,13 +39,17 @@ export default function CustomerCurrentSessionScreen({ route, navigation }) {
     },
     cameraContainer: {
       flex: 1,
-      backgroundColor: theme.BACKGROUND_LOW_CONTRAST,
+    },
+    cameraPreview: {
+      height: "100%",
+      width: "100%",
     },
     backButton: {
       height: 50,
       width: 50,
       position: "absolute",
       margin: 10,
+      zIndex: 1,
     },
     backButtonImage: {
       height: 40,
@@ -82,7 +86,28 @@ export default function CustomerCurrentSessionScreen({ route, navigation }) {
     </>
   );
 
-  const CameraContent = () => <View style={styles.cameraContainer}></View>;
+  const CameraContent = () => (
+    <RNCamera
+      type={RNCamera.Constants.Type.back}
+      captureAudio={false}
+      style={styles.cameraPreview}
+    >
+      {({ camera, status, recordAudioPermissionStatus }) => {
+        if (status !== "READY")
+          return (
+            <View
+              style={{
+                flex: 0,
+                flexDirection: "row",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={styles.title}>Need permission for camera.</Text>
+            </View>
+          );
+      }}
+    </RNCamera>
+  );
 
   return (
     <BarTapContent navigation={navigation}>
