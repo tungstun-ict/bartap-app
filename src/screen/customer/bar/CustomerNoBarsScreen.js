@@ -11,6 +11,10 @@ export default function CustomerNoBarsScreen({ route, navigation }) {
 
   const [step, setStep] = useState(1);
 
+  const barcodeRecognized = (barcode) => {
+    setStep(4);
+  };
+
   const styles = StyleSheet.create({
     title: {
       color: theme.TEXT_LOW_CONTRAST,
@@ -28,6 +32,15 @@ export default function CustomerNoBarsScreen({ route, navigation }) {
       textAlign: "center",
       lineHeight: 30,
     },
+    foundText: {
+      color: theme.TEXT_PRIMARY,
+      alignSelf: "center",
+      marginTop: 50,
+      fontSize: 25,
+      fontFamily: theme.FONT_MEDIUM,
+      textAlign: "center",
+      lineHeight: 30,
+    },
     button: {
       width: "100%",
       marginTop: "auto",
@@ -36,6 +49,14 @@ export default function CustomerNoBarsScreen({ route, navigation }) {
       tintColor: theme.BACKGROUND_IMAGE,
       alignSelf: "center",
       marginTop: 100,
+    },
+    checkIcon: {
+      tintColor: theme.BACKGROUND_IMAGE,
+      alignSelf: "center",
+      height: 175,
+      width: 175,
+      tintColor: theme.BRAND,
+      marginTop: 50,
     },
     cameraContainer: {
       flex: 1,
@@ -56,6 +77,33 @@ export default function CustomerNoBarsScreen({ route, navigation }) {
       width: 40,
       tintColor: theme.BACKGROUND_IMAGE,
     },
+    foundBox: {
+      backgroundColor: theme.BACKGROUND_LOW_CONTRAST,
+      padding: 20,
+      width: 250,
+      alignSelf: "center",
+      marginTop: 50,
+      borderRadius: 5,
+    },
+    foundName: {
+      textAlign: "center",
+      fontFamily: theme.FONT_MEDIUM,
+      color: theme.TEXT_PRIMARY,
+    },
+    foundBar: {
+      textAlign: "center",
+      color: theme.TEXT_PRIMARY,
+      fontFamily: theme.FONT_MEDIUM,
+    },
+    foundLine: {
+      height: 2,
+      width: "100%",
+      marginHorizontal: 20,
+      marginVertical: 10,
+      borderRadius: 5,
+      backgroundColor: theme.BACKGROUND_IMAGE,
+      alignSelf: "center",
+    }
   });
 
   const NoBarsContent = () => (
@@ -91,6 +139,7 @@ export default function CustomerNoBarsScreen({ route, navigation }) {
       type={RNCamera.Constants.Type.back}
       captureAudio={false}
       style={styles.cameraPreview}
+      onBarCodeRead={(barcode) => barcodeRecognized(barcode)}
     >
       {({ camera, status, recordAudioPermissionStatus }) => {
         if (status !== "READY")
@@ -107,6 +156,26 @@ export default function CustomerNoBarsScreen({ route, navigation }) {
           );
       }}
     </RNCamera>
+  );
+
+  const BarFoundContent = () => (
+    <>
+      <Text style={styles.foundText}>Profile found</Text>
+      <Image
+        style={styles.checkIcon}
+        source={require("../../../assets/check.png")}
+      />
+      <View style={styles.foundBox}>
+        <Text style={styles.foundName}>Jort Willemsen</Text>
+        <View style={styles.foundLine}></View>
+        <Text style={styles.foundBar}>Bartjes Bar</Text>
+      </View>
+      <BarTapButton
+        onPress={() => setStep(3)}
+        style={styles.button}
+        text={"Connect profile"}
+      />
+    </>
   );
 
   return (
@@ -129,8 +198,10 @@ export default function CustomerNoBarsScreen({ route, navigation }) {
         <NoBarsContent />
       ) : step === 2 ? (
         <ExplanationContent />
-      ) : (
+      ) : step === 3 ? (
         <CameraContent />
+      ) : (
+        <BarFoundContent />
       )}
     </BarTapContent>
   );
