@@ -21,6 +21,7 @@ export default function OrderHistorySessionScreen({ route, navigation }) {
       })
 
       setOrders(orders);
+      console.log(orders)
       setLoading(false);
     }
   }, [isLoading]);

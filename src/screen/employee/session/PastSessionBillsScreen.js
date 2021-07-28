@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
 
-import BarTapListItem from "../../../component/BarTapListItem/index.js";
 import BarTapContent from "../../../component/BarTapContent";
+import BarTapListItem from "../../../component/BarTapListItem/index.js";
 import BarTapTitle from "../../../component/BarTapTitle/index.js";
 import * as api from "../../../service/BarApiService.js";
-import { ThemeContext } from "../../../theme/ThemeManager";
 import * as Utils from "../../../service/Utils.js";
+import { ThemeContext } from "../../../theme/ThemeManager";
 
 export default function PastSessionBillsScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -48,6 +48,7 @@ export default function PastSessionBillsScreen({ route, navigation }) {
   });
 
   const listItem = (bill) => {
+    console.log(bill.customer.name)
     return (
       <BarTapListItem
         onPress={() => {
@@ -56,7 +57,7 @@ export default function PastSessionBillsScreen({ route, navigation }) {
             sessionId: sessionId,
           });
         }}
-        name={bill.customer.name}
+        name={bill.customer.name !== undefined ? bill.customer.name : "Bartender"}
         price={bill.totalPrice.toFixed(2)}
         payed={bill.payed}
       />

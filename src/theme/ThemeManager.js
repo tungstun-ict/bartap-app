@@ -14,7 +14,6 @@ export const ThemeProvider = ({ children }) => {
 
   React.useEffect(() => {
     let subscription = Appearance.addChangeListener(({ colorScheme }) => {
-      console.log(colorScheme)
       if (colorScheme === "dark") {
         setTheme(darkTheme);
       } else {

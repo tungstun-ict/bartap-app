@@ -61,7 +61,6 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
       return;
     }
     let category = { id: 1, name: string, productType: "SEARCH" };
-    console.log(category);
     navigation.navigate("Add Drink", {
       category,
       billId,

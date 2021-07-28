@@ -136,7 +136,6 @@ export default function App() {
       .getBars()
       .then((json) => {
         setBars(json);
-        console.log(bars);
       })
       .catch("No bars found");
   };
@@ -154,14 +153,18 @@ export default function App() {
     <AppearanceProvider>
       <ThemeProvider>
         <AuthContext.Provider value={authContext}>
-          {state.userToken !== null && bars.length > 0 ? (
+          {/* {state.userToken !== null && bars.length > 0 ? (
             <EmployeePath state={state} />
           ) : state.userToken !== null && bars.length === 0 ? (
             <CustomerPath />
           ) : (
             <SignInStack />
+          )} */}
+          {state.userToken !== null ? (
+            <EmployeePath state={state} />
+          ) : (
+            <SignInStack />
           )}
-          {/* <CustomerPath /> */}
         </AuthContext.Provider>
       </ThemeProvider>
     </AppearanceProvider>

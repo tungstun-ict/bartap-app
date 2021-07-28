@@ -16,12 +16,12 @@ export default function SessionBillScreen({ route, navigation }) {
 
   const { billId, sessionId } = route.params;
   const [bill, setBill] = useState({ customer: { name: "" }, totalPrice: 0 });
+  const [orders, setOrders] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = navigation.addListener("focus", () => {
       setLoading(true);
-      setBill({ customer: { name: "" }, totalPrice: 0 });
     });
     return unsubscribe;
   });
@@ -41,8 +41,22 @@ export default function SessionBillScreen({ route, navigation }) {
           console.error(error);
           setLoading(false);
         });
+
+        api.getOrdersByBillId(sessionId, billId)
+        .then((json) => {
+          json.sort(function (a, b) {
+            return new Date(a.timestamp) - new Date(b.timestamp);
+          });
+          setOrders(json);
+          setLoading(false);
+        })
+        .catch((error) => {
+          console.error(error);
+          setOrders(bill.orders)
+          setLoading(false);
+        });
     }
-  }, [isLoading]);
+  }, [isLoading, bill.orders]);
 
   const payBill = () => {
     api
@@ -223,7 +237,7 @@ export default function SessionBillScreen({ route, navigation }) {
       <SwipeableFlatList
         keyExtractor={(item) => item.id.toString()}
         style={styles.list}
-        data={bill.orders}
+        data={orders}
         renderItem={({ item }) => listItem(item)}
         refreshControl={
           <RefreshControl

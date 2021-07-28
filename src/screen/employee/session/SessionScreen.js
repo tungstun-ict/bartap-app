@@ -324,7 +324,7 @@ export default function SessionScreen({ navigation }) {
       >
         <View style={styles.customer}>
           <Text style={styles.customer__name} numberOfLines={2}>
-            {bill.customer.name}
+            {bill.customer.name !== undefined ? bill.customer.name : "Bartender"}
           </Text>
           <Text style={styles.customer__total}>
             €{bill.totalPrice.toFixed(2)}

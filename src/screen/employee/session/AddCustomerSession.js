@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
+
 import BarTapContent from "../../../component/BarTapContent";
 import BarTapListItem from "../../../component/BarTapListItem/index.js";
 import BarTapTitle from "../../../component/BarTapTitle/index.js";
@@ -18,7 +19,6 @@ export default function AddCustomerSession({ route, navigation }) {
     api
       .getAllCustomersByBarId()
       .then((json) => {
-        console.log(addedCustomers);
         json = json.filter((customer) => !addedCustomers.includes(customer.id));
         json.sort((a, b) => Utils.sortListItemString(a.name, b.name));
         setCustomers(json);

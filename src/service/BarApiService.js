@@ -263,6 +263,12 @@ export async function getBillByBillIdAndSessionId(billId, sessionId) {
   );
 }
 
+export async function getOrdersByBillId(sessionId, billId) {
+  return await getRequest(
+    `/bars/${await storage.getActiveBar()}/sessions/${sessionId}/bills/${billId}/orders`
+  )
+}
+
 export async function getCurrentSession() {
   return await getRequest(
     `/bars/${await storage.getActiveBar()}/sessions/active`,
