@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, TextInput } from "react-native";
+import Snackbar from 'react-native-snackbar';
 
 import BarTapButton from "../../../component/BarTapButton/index.js";
 import BarTapContent from "../../../component/BarTapContent/index.js";
@@ -20,7 +21,7 @@ export default function AddCustomerScreen({ navigation }) {
         .then(() => {
           navigation.navigate("Customers");
         })
-        .catch((error) => alert(error));
+        .catch((error) => Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT}));
     }
   };
 

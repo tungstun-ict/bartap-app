@@ -1,11 +1,13 @@
+import React, { useEffect, useState } from "react";
+import { FlatList, Modal, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Snackbar from 'react-native-snackbar';
+
 import BarTapContent from "../../../component/BarTapContent/index.js";
 import BarTapListItem from "../../../component/BarTapListItem/index.js";
 import BarTapTitle from "../../../component/BarTapTitle/index.js";
 import * as api from "../../../service/BarApiService.js";
 import * as Utils from "../../../service/Utils.js";
 import { ThemeContext } from "../../../theme/ThemeManager.js";
-import React, { useEffect, useState } from "react";
-import { FlatList, Modal, RefreshControl, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 
 export default function AddDrinksScreen({ route, navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -28,7 +30,7 @@ export default function AddDrinksScreen({ route, navigation }) {
             setLoading(false);
           })
           .catch((error) => {
-            alert(error);
+            Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
             setLoading(false);
           });
       } else if (category.productType === "FAVOURITES") {
@@ -40,7 +42,7 @@ export default function AddDrinksScreen({ route, navigation }) {
             setLoading(false);
           })
           .catch((error) => {
-            alert(error);
+            Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
             setLoading(false);
           });
       } else {
@@ -52,7 +54,7 @@ export default function AddDrinksScreen({ route, navigation }) {
             setLoading(false);
           })
           .catch((error) => {
-            alert(error);
+            Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
             setLoading(false);
           });
       }
@@ -72,7 +74,7 @@ export default function AddDrinksScreen({ route, navigation }) {
 
     api
       .addDrink(billId, selectedItem, sessionId, amount)
-      .catch((error) => alert(error))
+      .catch((error) => Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT}))
       .then(() => {
         navigation.navigate("Session");
       });

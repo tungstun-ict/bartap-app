@@ -3,6 +3,7 @@ import { FlatList, RefreshControl, SafeAreaView } from "react-native";
 import { Image, Modal, StyleSheet, Text, View } from "react-native";
 import { Button, TouchableOpacity } from "react-native";
 import QRCode from "react-native-qrcode-svg";
+import Snackbar from 'react-native-snackbar';
 
 import BarTapButton from "../../../component/BarTapButton/index.js";
 import BarTapContent from "../../../component/BarTapContent/index.js";
@@ -38,7 +39,7 @@ export default function StockOverviewScreen({ navigation }) {
           setLoading(false);
         })
         .catch((error) => {
-          alert(error);
+          Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
           setLoading(false);
         });
     }

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, FlatList, RefreshControl, View } from "react-native";
+import { FlatList, RefreshControl, StyleSheet, View } from "react-native";
+import Snackbar from 'react-native-snackbar';
+
 import BarTapButton from "../../../component/BarTapButton/index.js";
+import BarTapContent from "../../../component/BarTapContent/index.js";
 import BarTapListItem from "../../../component/BarTapListItem/index.js";
 import BarTapTitle from "../../../component/BarTapTitle/index.js";
-import BarTapContent from "../../../component/BarTapContent/index.js";
-import { ThemeContext } from "../../../theme/ThemeManager.js";
-import * as Utils from "../../../service/Utils.js";
 import * as api from "../../../service/BarApiService.js";
+import * as Utils from "../../../service/Utils.js";
+import { ThemeContext } from "../../../theme/ThemeManager.js";
 import { colors } from "../../../theme/variables.js";
 
 export default function CategoryOverviewScreen({ route, navigation }) {
@@ -26,7 +28,7 @@ export default function CategoryOverviewScreen({ route, navigation }) {
           setLoading(false);
         })
         .catch((error) => {
-          alert(error);
+          Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
           setLoading(false);
         });
     }

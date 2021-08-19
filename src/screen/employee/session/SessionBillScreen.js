@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Image, RefreshControl, StyleSheet, Text, View } from "react-native";
 import { Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Snackbar from 'react-native-snackbar';
 import SwipeableFlatList from "react-native-swipeable-list";
 
 import BarTapButton from "../../../component/BarTapButton/index.js";
@@ -82,7 +83,7 @@ export default function SessionBillScreen({ route, navigation }) {
                 if (error.response.status === 409) {
                   console.error("Something went wrong");
                 } else {
-                  alert(error);
+                  Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
                 }
               });
           },
@@ -206,7 +207,7 @@ export default function SessionBillScreen({ route, navigation }) {
                       "Session is locked. You must unlock first before editing anything.",
                     );
                   } else {
-                    alert(error);
+                    Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
                   }
                 });
             }}

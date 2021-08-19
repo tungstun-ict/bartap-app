@@ -3,6 +3,7 @@ import { Alert, Image, StyleSheet, Text, View } from "react-native";
 import { Dimensions, RefreshControl } from "react-native";
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
+import Snackbar from 'react-native-snackbar';
 import BottomSheet from "reanimated-bottom-sheet";
 
 import BarTapBottomSheet from "../../../component/BarTapBottomSheet/index.js";
@@ -52,7 +53,7 @@ export default function SessionScreen({ navigation }) {
           if (error.response.status === 404) {
             setSession({ bills: [], locked: true, name: "Not found" });
           } else {
-            alert(error);
+            Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
           }
 
           setLoading(false);
@@ -129,7 +130,7 @@ export default function SessionScreen({ navigation }) {
                 setLoading(true);
               })
               .catch((error) => {
-                alert(error);
+                Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
               });
           },
         },

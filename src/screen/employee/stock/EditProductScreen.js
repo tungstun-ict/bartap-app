@@ -1,6 +1,7 @@
 import { Picker } from "@react-native-picker/picker";
 import React, { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import Snackbar from 'react-native-snackbar';
 
 import BarTapButton from "../../../component/BarTapButton/index.js";
 import BarTapContent from "../../../component/BarTapContent/index.js";
@@ -36,7 +37,7 @@ export default function EditProductScreen({ route, navigation }) {
         setLoading(false);
       })
       .catch((error) => {
-        alert(error);
+        Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
       });
   }, []);
 
@@ -54,7 +55,7 @@ export default function EditProductScreen({ route, navigation }) {
           setLoading(false);
         })
         .catch((error) => {
-          alert(error);
+          Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
         });
     }
   }, [isLoading]);
@@ -78,7 +79,7 @@ export default function EditProductScreen({ route, navigation }) {
           size,
         )
         .then(() => navigation.navigate("Stock Overview"))
-        .catch((error) => alert(error));
+        .catch((error) => Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT}));
     } else {
       alert("Invoer is niet correct.");
     }

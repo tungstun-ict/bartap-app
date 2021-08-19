@@ -1,6 +1,7 @@
 import { Picker } from "@react-native-picker/picker";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, TextInput } from "react-native";
+import Snackbar from 'react-native-snackbar';
 
 import BarTapButton from "../../../component/BarTapButton/index.js";
 import BarTapContent from "../../../component/BarTapContent/index.js";
@@ -29,7 +30,7 @@ export default function AddProductStockScreen({ navigation }) {
         setSelectedCategory(json[0]);
       })
       .catch((error) => {
-        alert(error);
+        Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
       });
   }, []);
 
@@ -53,7 +54,7 @@ export default function AddProductStockScreen({ navigation }) {
         .then(() =>
           navigation.navigate("Category Overview", selectedCategory),
         )
-        .catch((error) => alert(error));
+        .catch((error) => Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT}));
     } else {
       alert("HOT DAMN, no goeie invoer");
     }

@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import React, { useEffect } from "react";
 import { AppearanceProvider } from "react-native-appearance";
+import Snackbar from 'react-native-snackbar';
 
 import LoginScreen from "./src/screen/employee/account/LoginScreen";
 import RegisterScreen from "./src/screen/employee/account/RegisterScreen";
@@ -99,8 +100,8 @@ export default function App() {
           }
 
           dispatch({ type: "SIGN_IN", token: accessToken });
-        } catch (e) {
-          alert(e);
+        } catch (error) {
+          Snackbar.show({text: error, duration: Snackbar.LENGTH_SHORT})
         }
       },
       signOut: async () => {
@@ -119,12 +120,12 @@ export default function App() {
           .then(() => {
             let accessToken = api
               .login(data.email, data.password)
-              .catch((error) => alert(error));
+              .catch((error) => Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT}));
 
             dispatch({ type: "SIGN_IN", token: accessToken });
           })
           .catch((error) => {
-            alert(error);
+            Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
           });
       },
     }),
