@@ -227,6 +227,7 @@ export default function SessionScreen({ navigation }) {
       tintColor: theme.BACKGROUND_IMAGE,
     },
     session__customers: {
+      top: -10,
       marginVertical: 10,
       width: "100%",
     },

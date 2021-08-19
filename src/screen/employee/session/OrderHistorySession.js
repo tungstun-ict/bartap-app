@@ -41,7 +41,7 @@ export default function OrderHistorySessionScreen({ route, navigation }) {
         timestamp={new Date(order.creationDate)}
         name={`${order.product.brand} ${order.product.name}`}
         multiplier={order.amount}
-        line2={"Customer name"}
+        line2={order.customer.name}
       />
     );
   };
