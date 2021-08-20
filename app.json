@@ -3,9 +3,9 @@
     "name": "Bartap",
     "slug": "bar-application",
     "owner": "tungstun",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
-    "icon": "./src/assets/icon.png",
+    "icon": "./src/assets/icon-background-light.png",
     "splash": {
       "image": "./src/assets/splash.png",
       "resizeMode": "cover",
@@ -20,15 +20,15 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.tungstun.bar-application",
-      "buildNumber": "1.0"
+      "buildNumber": "1.0.2"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./src/assets/adaptive-icon.png",
+        "foregroundImage": "./src/assets/icon-background-light.png",
         "backgroundColor": "#212121"
       },
       "package": "com.tungstun.bar_application",
-      "versionCode": 14
+      "versionCode": 15
     },
     "web": {
       "favicon": "./src/assets/favicon.png"

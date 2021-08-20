@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Alert, FlatList, RefreshControl } from "react-native";
 import { Image, Modal, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import QRCode from "react-native-qrcode-svg";
+import Snackbar from 'react-native-snackbar';
 import BottomSheet from "reanimated-bottom-sheet";
 
 import BarTapBottomSheet from "../../../component/BarTapBottomSheet";
@@ -50,7 +51,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
         .then((json) => {
           setCustomer(json);
         })
-        .catch((error) => alert(error));
+        .catch((error) => Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT}));
 
       api
         .getBillsByCustomerId(route.params.id)
@@ -64,7 +65,7 @@ export default function CustomerOverviewScreen({ route, navigation }) {
           setBills(json);
           setLoading(false);
         })
-        .catch((error) => alert(error));
+        .catch((error) => Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT}));
     }
   }, [isLoading]);
 

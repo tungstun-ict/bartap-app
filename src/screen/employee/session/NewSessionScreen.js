@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { StyleSheet } from "react-native";
 import { TextInput } from "react-native";
+import Snackbar from 'react-native-snackbar';
 
 import BarTapButton from "../../../component/BarTapButton/index.js";
 import BarTapContent from "../../../component/BarTapContent/index.js";
@@ -18,7 +19,7 @@ export default function NewSessionScreen({ navigation }) {
     if (name !== "") {
       api
         .createSession(name)
-        .catch((error) => alert(error))
+        .catch((error) => Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT}))
         .then(() => {
           navigation.navigate("Session");
         })

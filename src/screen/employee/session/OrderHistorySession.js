@@ -1,5 +1,6 @@
 import React from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
+import Snackbar from 'react-native-snackbar';
 
 import BarTapContent from "../../../component/BarTapContent";
 import BarTapListItem from "../../../component/BarTapListItem";
@@ -41,7 +42,11 @@ export default function OrderHistorySessionScreen({ route, navigation }) {
         timestamp={new Date(order.creationDate)}
         name={`${order.product.brand} ${order.product.name}`}
         multiplier={order.amount}
-        line2={"Customer name"}
+        line2={order.customer.name}
+        onPress={() => {
+          Snackbar.show({text: 'Entry by ' + order.bartender.name, duration: Snackbar.LENGTH_SHORT});
+          console.log()
+        }}
       />
     );
   };

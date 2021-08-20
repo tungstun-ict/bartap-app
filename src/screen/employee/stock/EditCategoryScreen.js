@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 import { TextInput } from "react-native";
+import Snackbar from 'react-native-snackbar';
 
 import BarTapButton from "../../../component/BarTapButton/index.js";
 import BarTapContent from "../../../component/BarTapContent/index.js";
@@ -26,7 +27,7 @@ export default function EditCategoryScreen({ route, navigation }) {
         setLoading(false);
       })
       .catch((error) => {
-        alert(error);
+        Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
         setLoading(false);
       });
   }, []);
@@ -39,7 +40,7 @@ export default function EditCategoryScreen({ route, navigation }) {
           navigation.navigate("Stock Overview");
         })
         .catch((error) => {
-          alert(error);
+          Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
         });
     }
   };

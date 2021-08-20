@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
-import * as api from "../../../service/BarApiService.js";
-import { StyleSheet, FlatList, RefreshControl } from "react-native";
-import BarTapTitle from "../../../component/BarTapTitle/index.js";
-import BarTapListItem from "../../../component/BarTapListItem/index.js";
-import { ThemeContext } from "../../../theme/ThemeManager.js";
+import React, { useEffect, useState } from "react";
+import { FlatList, RefreshControl, StyleSheet } from "react-native";
+import Snackbar from 'react-native-snackbar';
+
 import BarTapContent from "../../../component/BarTapContent/index.js";
+import BarTapListItem from "../../../component/BarTapListItem/index.js";
+import BarTapTitle from "../../../component/BarTapTitle/index.js";
+import * as api from "../../../service/BarApiService.js";
+import { ThemeContext } from "../../../theme/ThemeManager.js";
 
 export default function PastSessionsScreen({ navigation }) {
   const { theme } = React.useContext(ThemeContext);
@@ -34,7 +36,7 @@ export default function PastSessionsScreen({ navigation }) {
           setLoading(false);
         })
         .catch((error) => {
-          alert(error);
+          Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
           setLoading(false);
         });
     }

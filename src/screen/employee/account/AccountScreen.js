@@ -1,6 +1,7 @@
 import { Picker } from "@react-native-picker/picker";
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Snackbar from 'react-native-snackbar';
 
 import BarTapButton from "../../../component/BarTapButton";
 import BarTapContent from "../../../component/BarTapContent";
@@ -38,7 +39,7 @@ export default function AccountScreen({ navigation }) {
         .then((bar) => {
           setSelectedBar(bar);
         })
-        .catch((error) => alert(error));
+        .catch((error) => Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT}));
 
       api
         .getBars()
@@ -46,7 +47,7 @@ export default function AccountScreen({ navigation }) {
           setBars(json);
           setLoading(false);
         })
-        .catch((error) => alert(error));
+        .catch((error) => Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT}));
     }
   }, [isLoading]);
 

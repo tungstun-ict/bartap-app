@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
+import Snackbar from 'react-native-snackbar';
 
 import BarTapContent from "../../../component/BarTapContent";
 import BarTapListItem from "../../../component/BarTapListItem/index.js";
@@ -32,7 +33,7 @@ export default function PastSessionBillsScreen({ route, navigation }) {
           setLoading(false);
         })
         .catch((error) => {
-          alert(error);
+          Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
           setLoading(false);
         });
     }

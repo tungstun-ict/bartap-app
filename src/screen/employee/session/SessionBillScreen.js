@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Image, RefreshControl, StyleSheet, Text, View } from "react-native";
 import { Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Snackbar from 'react-native-snackbar';
 import SwipeableFlatList from "react-native-swipeable-list";
 
 import BarTapButton from "../../../component/BarTapButton/index.js";
@@ -82,7 +83,7 @@ export default function SessionBillScreen({ route, navigation }) {
                 if (error.response.status === 409) {
                   console.error("Something went wrong");
                 } else {
-                  alert(error);
+                  Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
                 }
               });
           },
@@ -104,13 +105,17 @@ export default function SessionBillScreen({ route, navigation }) {
       justifyContent: "flex-end",
     },
     qaButton: {
-      width: 80,
+      width: 70,
       alignItems: "center",
       justifyContent: "center",
     },
-    qaButton__text: {
+    qaButton__text__delete: {
       fontFamily: theme.FONT_MEDIUM,
       color: theme.BACKGROUND_WARNING,
+    },
+    qaButton__text__info: {
+      fontFamily: theme.FONT_MEDIUM,
+      color: theme.TEXT_PRIMARY,
     },
     list: {
       flex: 4,
@@ -197,21 +202,28 @@ export default function SessionBillScreen({ route, navigation }) {
         <View style={styles.qaButton}>
           <TouchableOpacity
             onPress={() => {
+              Snackbar.show({text: 'Entry by ' + item.item.bartender.name, duration: Snackbar.LENGTH_SHORT});
+            }}
+          >
+            <Text style={[styles.qaButton__text__info]}>Info</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.qaButton}>
+          <TouchableOpacity
+            onPress={() => {
               api
                 .deleteOrderFromBill(sessionId, billId, item.item.id)
                 .then(() => setLoading(true))
                 .catch((error) => {
                   if (error.response.status === 409) {
-                    alert(
-                      "Session is locked. You must unlock first before editing anything.",
-                    );
+                    Snackbar.show({text: "Session is locked. Unlock first before editing.", duration: Snackbar.LENGTH_SHORT});
                   } else {
-                    alert(error);
+                    Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
                   }
                 });
             }}
           >
-            <Text style={[styles.qaButton__text]}>Delete</Text>
+            <Text style={[styles.qaButton__text__delete]}>Delete</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -248,7 +260,7 @@ export default function SessionBillScreen({ route, navigation }) {
         }
         refreshing={isLoading}
         onRefresh={() => setLoading(true)}
-        maxSwipeDistance={88}
+        maxSwipeDistance={160}
         renderQuickActions={(item) => swipeableView(item)}
         shouldBounceOnMount={true}
       />

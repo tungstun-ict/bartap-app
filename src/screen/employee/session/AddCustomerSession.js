@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FlatList, RefreshControl, StyleSheet } from "react-native";
+import Snackbar from 'react-native-snackbar';
 
 import BarTapContent from "../../../component/BarTapContent";
 import BarTapListItem from "../../../component/BarTapListItem/index.js";
@@ -27,7 +28,7 @@ export default function AddCustomerSession({ route, navigation }) {
       .catch((error) => {
         if (error.response.status === 409)
           alert("Persoon al toegevoegd aan error");
-        else alert(error);
+        else Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
         setLoading(false);
       });
   }, [isLoading]);
@@ -49,7 +50,7 @@ export default function AddCustomerSession({ route, navigation }) {
     return (
       <BarTapListItem
         onPress={async () =>
-          addCustomer(customer.id).catch((error) => alert(error))
+          addCustomer(customer.id).catch((error) => Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT}))
         }
         name={customer.name}
       />

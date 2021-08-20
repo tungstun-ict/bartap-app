@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RefreshControl, StyleSheet, Text, View } from "react-native";
 import { Dimensions, FlatList, Image, TextInput, TouchableOpacity } from "react-native";
+import Snackbar from 'react-native-snackbar';
 
 import BarTapContent from "../../../component/BarTapContent";
 import BarTapSearchBar from "../../../component/BarTapSearchBar";
@@ -28,7 +29,7 @@ export default function DrinkCategoriesScreen({ route, navigation }) {
           setCategoriesLoading(false);
         })
         .catch((error) => {
-          alert(error);
+          Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
           setCategoriesLoading(false);
         });
     }
