@@ -1,3 +1,8 @@
+import { Picker } from "@react-native-picker/picker";
+import React, { useState } from "react";
+import { StyleSheet, TextInput } from "react-native";
+import Snackbar from "react-native-snackbar";
+
 import BarTapButton from "../../../component/BarTapButton/index.js";
 import BarTapContent from "../../../component/BarTapContent/index.js";
 import BarTapInput from "../../../component/BarTapInput/index.js";
@@ -5,16 +10,12 @@ import BarTapPicker from "../../../component/BarTapPicker/index.js";
 import BarTapTitle from "../../../component/BarTapTitle/index.js";
 import * as api from "../../../service/BarApiService.js";
 import { ThemeContext } from "../../../theme/ThemeManager.js";
-import { Picker } from "@react-native-picker/picker";
-import React, { useState } from "react";
-import { StyleSheet, TextInput } from "react-native";
-import Snackbar from "react-native-snackbar";
 
 export default function AddCategoryScreen({ navigation }) {
   const { theme } = React.useContext(ThemeContext);
 
   const [name, setName] = useState("");
-  const [type, setType] = useState("");
+  const [type, setType] = useState("Drink");
 
   const createCategory = (name) => {
     if (name !== "") {
@@ -59,6 +60,7 @@ export default function AddCategoryScreen({ navigation }) {
         selectedValue={type}
         itemStyle={styles.picker__item}
         onValueChange={(itemValue) => {
+          console.log(itemValue);
           setType(itemValue);
         }}
       >
