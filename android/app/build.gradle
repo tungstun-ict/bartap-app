@@ -139,10 +139,11 @@ android {
 
     defaultConfig {
         applicationId 'com.tungstun.bar_application'
+        missingDimensionStrategy 'react-native-camera', 'general'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
-        versionName "1.0"
+        versionCode 15
+        versionName "1.0.2"
     }
     splits {
         abi {
