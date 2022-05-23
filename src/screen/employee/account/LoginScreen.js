@@ -1,5 +1,12 @@
 import React, { useContext } from "react";
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 
 import BarTapButton from "../../../component/BarTapButton/index.js";
 import BarTapContent from "../../../component/BarTapContent/index.js";
@@ -341,6 +348,7 @@ export default function LoginScreen({ navigation }) {
             <BarTapInput
               placeholder={"Email adress / username"}
               placeholderTextColor={theme.TEXT_HINT}
+              autoCapitalize="none"
               autoCompleteType={"email"}
               value={email}
               onChangeText={setEmail}
@@ -348,6 +356,7 @@ export default function LoginScreen({ navigation }) {
             />
             <BarTapInput
               placeholder={"Password"}
+              autoCapitalize={"none"}
               placeholderTextColor={theme.TEXT_HINT}
               autoCompleteType={"password"}
               value={password}

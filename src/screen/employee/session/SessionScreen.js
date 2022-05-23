@@ -3,7 +3,7 @@ import { Alert, Image, StyleSheet, Text, View } from "react-native";
 import { Dimensions, RefreshControl } from "react-native";
 import { FlatList } from "react-native";
 import { TouchableOpacity } from "react-native";
-import Snackbar from 'react-native-snackbar';
+import Snackbar from "react-native-snackbar";
 import BottomSheet from "reanimated-bottom-sheet";
 
 import BarTapBottomSheet from "../../../component/BarTapBottomSheet/index.js";
@@ -53,7 +53,10 @@ export default function SessionScreen({ navigation }) {
           if (error.response.status === 404) {
             setSession({ bills: [], locked: true, name: "Not found" });
           } else {
-            Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
+            Snackbar.show({
+              text: error.message,
+              duration: Snackbar.LENGTH_SHORT,
+            });
           }
 
           setLoading(false);
@@ -130,7 +133,10 @@ export default function SessionScreen({ navigation }) {
                 setLoading(true);
               })
               .catch((error) => {
-                Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
+                Snackbar.show({
+                  text: error.message,
+                  duration: Snackbar.LENGTH_SHORT,
+                });
               });
           },
         },
@@ -191,6 +197,11 @@ export default function SessionScreen({ navigation }) {
       height: 50,
       width: 50,
       tintColor: theme.BACKGROUND_IMAGE,
+    },
+    button__image_disabled: {
+      height: 50,
+      width: 50,
+      tintColor: theme.BACKGROUND_IMAGE_LOW_CONTRAST,
     },
     bottomBar: {
       height: "auto",
@@ -326,7 +337,9 @@ export default function SessionScreen({ navigation }) {
       >
         <View style={styles.customer}>
           <Text style={styles.customer__name} numberOfLines={2}>
-            {bill.customer.name !== undefined ? bill.customer.name : "Bartender"}
+            {bill.customer.name !== undefined
+              ? bill.customer.name
+              : "Bartender"}
           </Text>
           <Text style={styles.customer__total}>
             €{bill.totalPrice.toFixed(2)}
@@ -376,15 +389,32 @@ export default function SessionScreen({ navigation }) {
       </View>
       <View style={styles.bottomBar}>
         <View style={styles.bottomBar__bar}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate("Order History", session)}
-          >
-            <Image
-              style={styles.button__image}
-              source={require("../../../assets/history-icon.png")}
-            />
-          </TouchableOpacity>
+          {!session.locked ? (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => navigation.navigate("Order History", session)}
+            >
+              <Image
+                style={styles.button__image}
+                source={require("../../../assets/history-icon.png")}
+              />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() =>
+                Snackbar.show({
+                  text: "Order history not available.",
+                  duration: Snackbar.LENGTH_SHORT,
+                })
+              }
+            >
+              <Image
+                style={styles.button__image_disabled}
+                source={require("../../../assets/history-icon.png")}
+              />
+            </TouchableOpacity>
+          )}
           <TouchableOpacity style={styles.button} onPress={readTag}>
             <Image
               style={styles.button__image}

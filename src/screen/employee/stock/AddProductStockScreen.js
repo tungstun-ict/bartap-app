@@ -1,7 +1,7 @@
 import { Picker } from "@react-native-picker/picker";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, TextInput } from "react-native";
-import Snackbar from 'react-native-snackbar';
+import Snackbar from "react-native-snackbar";
 
 import BarTapButton from "../../../component/BarTapButton/index.js";
 import BarTapContent from "../../../component/BarTapContent/index.js";
@@ -18,7 +18,7 @@ export default function AddProductStockScreen({ navigation }) {
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
   const [isFavourite, setFavourite] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState(1);
   const [sellingPrice, setSellingPrice] = useState(null);
   const [size, setSize] = useState(0);
 
@@ -27,10 +27,9 @@ export default function AddProductStockScreen({ navigation }) {
       .getCategories()
       .then((json) => {
         setCategories(json);
-        setSelectedCategory(json[0]);
       })
       .catch((error) => {
-        Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT});
+        Snackbar.show({ text: error.message, duration: Snackbar.LENGTH_SHORT });
       });
   }, []);
 
@@ -51,10 +50,13 @@ export default function AddProductStockScreen({ navigation }) {
           sellingPrice,
           size,
         )
-        .then(() =>
-          navigation.navigate("Category Overview", selectedCategory),
-        )
-        .catch((error) => Snackbar.show({text: error.message, duration: Snackbar.LENGTH_SHORT}));
+        .then(() => navigation.navigate("Category Overview", selectedCategory))
+        .catch((error) =>
+          Snackbar.show({
+            text: error.message,
+            duration: Snackbar.LENGTH_SHORT,
+          }),
+        );
     } else {
       alert("HOT DAMN, no goeie invoer");
     }
@@ -71,7 +73,6 @@ export default function AddProductStockScreen({ navigation }) {
       borderRadius: 5,
       justifyContent: "center",
       width: "100%",
-      
     },
     picker__item: {
       width: "100%",
@@ -82,12 +83,17 @@ export default function AddProductStockScreen({ navigation }) {
     button: {
       marginTop: "auto",
       width: "100%",
-    }
+    },
   });
 
   let pickerItems = categories.map((category) => {
     return (
-      <Picker.Item label={category.name} value={category} key={category.id} style={styles.picker__item} />
+      <Picker.Item
+        label={category.name}
+        value={category}
+        key={category.id}
+        style={styles.picker__item}
+      />
     );
   });
 
@@ -98,38 +104,32 @@ export default function AddProductStockScreen({ navigation }) {
         style={styles.content}
       >
         <BarTapTitle text={"Name"} level={2} />
-        <BarTapInput
-          autoCompleteType={"name"}
-          onChangeText={setName}
-        />
+        <BarTapInput autoCompleteType={"name"} onChangeText={setName} />
         <BarTapTitle text={"Brand"} level={2} />
-        <BarTapInput
-          autoCompleteType={"name"}
-          onChangeText={setBrand}
-        />
+        <BarTapInput autoCompleteType={"name"} onChangeText={setBrand} />
         <BarTapTitle text={"Category"} level={2} />
         <BarTapPicker
           style={styles.picker}
           selectedValue={selectedCategory}
           itemStyle={styles.picker__item}
-          onValueChange={(itemValue) => {
-            setSelectedCategory(itemValue);
+          onValueChange={async (itemValue) => {
+            await setSelectedCategory(itemValue);
+            console.log(selectedCategory);
           }}
+          setDefaultvalue={categories[0]}
         >
           {pickerItems}
         </BarTapPicker>
         <BarTapTitle text={"Selling price"} level={2} />
-        <BarTapInput
-          onChangeText={setSellingPrice}
-          keyboardType={"numeric"}
-        />
+        <BarTapInput onChangeText={setSellingPrice} keyboardType={"numeric"} />
         <BarTapTitle text={"Size (ml)"} level={2} />
-        <BarTapInput
-          onChangeText={setSize}
-          keyboardType={"numeric"}
-        />
+        <BarTapInput onChangeText={setSize} keyboardType={"numeric"} />
       </ScrollView>
-      <BarTapButton style={styles.button} onPress={() => createProduct()} text={"Submit"} />
+      <BarTapButton
+        style={styles.button}
+        onPress={() => createProduct()}
+        text={"Submit"}
+      />
     </BarTapContent>
   );
 }

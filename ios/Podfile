@@ -1,9 +1,9 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '10.0'
+platform :ios, '15.0'
 
-target 'barapplication' do
+target 'bartap' do
   config = use_native_modules!
 
   use_react_native!(
@@ -12,7 +12,7 @@ target 'barapplication' do
     :hermes_enabled => false
   )
 
-  target 'barapplicationTests' do
+  target 'bartapTests' do
     inherit! :complete
     # Pods for testing
   end

@@ -3,19 +3,20 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* barapplicationTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* barapplicationTests.m */; };
+		05A45BDB283918C800A93A26 /* libswiftWebKit.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 05A45BDA283918C800A93A26 /* libswiftWebKit.tbd */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		370AD1711A81486A89ACA18C /* Gotham-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1397BD0EA0B7477AB2BAAB72 /* Gotham-Book.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		9834CC8961AA4E50809A48CE /* Gotham-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1A278F83CA2D4D6D8412575B /* Gotham-Medium.ttf */; };
-		ACA859B3E70172B128484877 /* libPods-barapplication-barapplicationTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DF39D89C00E09B31A04AA83 /* libPods-barapplication-barapplicationTests.a */; };
-		E10B6740C3BB85944A2211CD /* libPods-barapplication.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 663DD3DC43FCE8BDC7C59CB8 /* libPods-barapplication.a */; };
+		A61879EC5307CBB7321F9082 /* libPods-bartap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2411CED848152783CF7A4BFC /* libPods-bartap.a */; };
+		B5AAB465483DBF087920B901 /* libPods-bartap-bartapTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EA7B3B705CBCB5E5E87CB7 /* libPods-bartap-bartapTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,14 +30,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00E356EE1AD99517003FC87E /* barapplicationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = barapplicationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* bartapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bartapTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* barapplicationTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = barapplicationTests.m; sourceTree = "<group>"; };
 		0556CBD2269F95F700E99794 /* barapplication.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = barapplication.entitlements; path = barapplication/barapplication.entitlements; sourceTree = "<group>"; };
+		05A45BDA283918C800A93A26 /* libswiftWebKit.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libswiftWebKit.tbd; path = usr/lib/swift/libswiftWebKit.tbd; sourceTree = SDKROOT; };
 		09D8ABE0B59640B9A68C6B28 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		12733154C22C41689040D6CD /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		1397BD0EA0B7477AB2BAAB72 /* Gotham-Book.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham-Book.ttf"; path = "../src/assets/fonts/Gotham-Book.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* barapplication.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = barapplication.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* bartap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bartap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = barapplication/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = barapplication/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = barapplication/Images.xcassets; sourceTree = "<group>"; };
@@ -44,17 +46,20 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = barapplication/main.m; sourceTree = "<group>"; };
 		1A278F83CA2D4D6D8412575B /* Gotham-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Gotham-Medium.ttf"; path = "../src/assets/fonts/Gotham-Medium.ttf"; sourceTree = "<group>"; };
 		21C95F45B6C949D4A3333AA5 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		2411CED848152783CF7A4BFC /* libPods-bartap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-bartap.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		26F9A6688D654B55B72FEFC8 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		39D04475A84C4025883C2E01 /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		4796A5B640EA4192A30C086C /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		5612C0538A2E47009FA7E509 /* FontAwesome5_Solid.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Solid.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Solid.ttf"; sourceTree = "<group>"; };
-		5DF39D89C00E09B31A04AA83 /* libPods-barapplication-barapplicationTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-barapplication-barapplicationTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		58EA7B3B705CBCB5E5E87CB7 /* libPods-bartap-bartapTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-bartap-bartapTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6499FBB9426E4E0A97B1C538 /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Feather.ttf"; sourceTree = "<group>"; };
-		663DD3DC43FCE8BDC7C59CB8 /* libPods-barapplication.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-barapplication.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6960DB70178F8C3C3649A7AA /* Pods-bartap-bartapTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bartap-bartapTests.debug.xcconfig"; path = "Target Support Files/Pods-bartap-bartapTests/Pods-bartap-bartapTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7C14F7EA3204C93192FFAAC5 /* Pods-barapplication-barapplicationTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barapplication-barapplicationTests.debug.xcconfig"; path = "Target Support Files/Pods-barapplication-barapplicationTests/Pods-barapplication-barapplicationTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = barapplication/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8771B4BFF4B19C62CA760C23 /* Pods-bartap.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bartap.release.xcconfig"; path = "Target Support Files/Pods-bartap/Pods-bartap.release.xcconfig"; sourceTree = "<group>"; };
 		880F58E45BEB0FFC860213BC /* Pods-barapplication-barapplicationTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barapplication-barapplicationTests.release.xcconfig"; path = "Target Support Files/Pods-barapplication-barapplicationTests/Pods-barapplication-barapplicationTests.release.xcconfig"; sourceTree = "<group>"; };
 		8BA5F5E55A794E2485F83F3C /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
+		951F4108CFD2F0CB6B35D35F /* Pods-bartap-bartapTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bartap-bartapTests.release.xcconfig"; path = "Target Support Files/Pods-bartap-bartapTests/Pods-bartap-bartapTests.release.xcconfig"; sourceTree = "<group>"; };
 		96CF74137F0793D291961398 /* Pods-barapplication.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barapplication.debug.xcconfig"; path = "Target Support Files/Pods-barapplication/Pods-barapplication.debug.xcconfig"; sourceTree = "<group>"; };
 		A37AA4D99ADE4B4B97BDE1C3 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		A494396DE11ADF929E07B486 /* Pods-barapplication.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-barapplication.release.xcconfig"; path = "Target Support Files/Pods-barapplication/Pods-barapplication.release.xcconfig"; sourceTree = "<group>"; };
@@ -65,6 +70,7 @@
 		EBA487B0C00C486B9CF1875E /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED6575C12DD14C0F81D8113F /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
+		FEC4A3D54E9F1B481448CB05 /* Pods-bartap.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bartap.debug.xcconfig"; path = "Target Support Files/Pods-bartap/Pods-bartap.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +78,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ACA859B3E70172B128484877 /* libPods-barapplication-barapplicationTests.a in Frameworks */,
+				B5AAB465483DBF087920B901 /* libPods-bartap-bartapTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,7 +86,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E10B6740C3BB85944A2211CD /* libPods-barapplication.a in Frameworks */,
+				05A45BDB283918C800A93A26 /* libswiftWebKit.tbd in Frameworks */,
+				A61879EC5307CBB7321F9082 /* libPods-bartap.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -125,6 +132,10 @@
 				A494396DE11ADF929E07B486 /* Pods-barapplication.release.xcconfig */,
 				7C14F7EA3204C93192FFAAC5 /* Pods-barapplication-barapplicationTests.debug.xcconfig */,
 				880F58E45BEB0FFC860213BC /* Pods-barapplication-barapplicationTests.release.xcconfig */,
+				FEC4A3D54E9F1B481448CB05 /* Pods-bartap.debug.xcconfig */,
+				8771B4BFF4B19C62CA760C23 /* Pods-bartap.release.xcconfig */,
+				6960DB70178F8C3C3649A7AA /* Pods-bartap-bartapTests.debug.xcconfig */,
+				951F4108CFD2F0CB6B35D35F /* Pods-bartap-bartapTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -132,9 +143,10 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				05A45BDA283918C800A93A26 /* libswiftWebKit.tbd */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				663DD3DC43FCE8BDC7C59CB8 /* libPods-barapplication.a */,
-				5DF39D89C00E09B31A04AA83 /* libPods-barapplication-barapplicationTests.a */,
+				2411CED848152783CF7A4BFC /* libPods-bartap.a */,
+				58EA7B3B705CBCB5E5E87CB7 /* libPods-bartap-bartapTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -190,8 +202,8 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* barapplication.app */,
-				00E356EE1AD99517003FC87E /* barapplicationTests.xctest */,
+				13B07F961A680F5B00A75B9A /* bartap.app */,
+				00E356EE1AD99517003FC87E /* bartapTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -199,9 +211,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* barapplicationTests */ = {
+		00E356ED1AD99517003FC87E /* bartapTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "barapplicationTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "bartapTests" */;
 			buildPhases = (
 				E02681B1AC3AA43AB9C97CE3 /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -215,14 +227,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = barapplicationTests;
+			name = bartapTests;
 			productName = barapplicationTests;
-			productReference = 00E356EE1AD99517003FC87E /* barapplicationTests.xctest */;
+			productReference = 00E356EE1AD99517003FC87E /* bartapTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* barapplication */ = {
+		13B07F861A680F5B00A75B9A /* bartap */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "barapplication" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "bartap" */;
 			buildPhases = (
 				824294F92AD6FDFA395507C3 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -237,9 +249,9 @@
 			);
 			dependencies = (
 			);
-			name = barapplication;
+			name = bartap;
 			productName = barapplication;
-			productReference = 13B07F961A680F5B00A75B9A /* barapplication.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* bartap.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -248,7 +260,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1210;
+				LastUpgradeCheck = 1340;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
@@ -259,8 +271,8 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "barapplication" */;
-			compatibilityVersion = "Xcode 12.0";
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "bartap" */;
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -272,8 +284,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* barapplication */,
-				00E356ED1AD99517003FC87E /* barapplicationTests */,
+				13B07F861A680F5B00A75B9A /* bartap */,
+				00E356ED1AD99517003FC87E /* bartapTests */,
 			);
 		};
 /* End PBXProject section */
@@ -320,15 +332,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-barapplication-barapplicationTests/Pods-barapplication-barapplicationTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-bartap-bartapTests/Pods-bartap-bartapTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-barapplication-barapplicationTests/Pods-barapplication-barapplicationTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-bartap-bartapTests/Pods-bartap-bartapTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-barapplication-barapplicationTests/Pods-barapplication-barapplicationTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-bartap-bartapTests/Pods-bartap-bartapTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		1B9F95D7D5EAD3C3419147C7 /* [CP] Copy Pods Resources */ = {
@@ -337,15 +349,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-barapplication-barapplicationTests/Pods-barapplication-barapplicationTests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-bartap-bartapTests/Pods-bartap-bartapTests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-barapplication-barapplicationTests/Pods-barapplication-barapplicationTests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-bartap-bartapTests/Pods-bartap-bartapTests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-barapplication-barapplicationTests/Pods-barapplication-barapplicationTests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-bartap-bartapTests/Pods-bartap-bartapTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		824294F92AD6FDFA395507C3 /* [CP] Check Pods Manifest.lock */ = {
@@ -363,7 +375,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-barapplication-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-bartap-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -376,15 +388,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-barapplication/Pods-barapplication-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-bartap/Pods-bartap-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-barapplication/Pods-barapplication-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-bartap/Pods-bartap-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-barapplication/Pods-barapplication-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-bartap/Pods-bartap-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E02681B1AC3AA43AB9C97CE3 /* [CP] Check Pods Manifest.lock */ = {
@@ -402,7 +414,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-barapplication-barapplicationTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-bartap-bartapTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -415,15 +427,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-barapplication/Pods-barapplication-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-bartap/Pods-bartap-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-barapplication/Pods-barapplication-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-bartap/Pods-bartap-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-barapplication/Pods-barapplication-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-bartap/Pods-bartap-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -470,7 +482,7 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* barapplication */;
+			target = 13B07F861A680F5B00A75B9A /* bartap */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -478,15 +490,16 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7C14F7EA3204C93192FFAAC5 /* Pods-barapplication-barapplicationTests.debug.xcconfig */;
+			baseConfigurationReference = 6960DB70178F8C3C3649A7AA /* Pods-bartap-bartapTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = barapplicationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -499,18 +512,19 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/barapplication.app/barapplication";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bartap.app/bartap";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 880F58E45BEB0FFC860213BC /* Pods-barapplication-barapplicationTests.release.xcconfig */;
+			baseConfigurationReference = 951F4108CFD2F0CB6B35D35F /* Pods-bartap-bartapTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
 				INFOPLIST_FILE = barapplicationTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -523,31 +537,37 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/barapplication.app/barapplication";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bartap.app/bartap";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 96CF74137F0793D291961398 /* Pods-barapplication.debug.xcconfig */;
+			baseConfigurationReference = FEC4A3D54E9F1B481448CB05 /* Pods-bartap.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = barapplication/barapplication.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PTSPM5LA3F;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = barapplication/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/swift",
+				);
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = nl.tungstun.barapplication;
-				PRODUCT_NAME = barapplication;
+				PRODUCT_BUNDLE_IDENTIFIER = nl.tungstun.bartap;
+				PRODUCT_NAME = bartap;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -556,24 +576,30 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A494396DE11ADF929E07B486 /* Pods-barapplication.release.xcconfig */;
+			baseConfigurationReference = 8771B4BFF4B19C62CA760C23 /* Pods-bartap.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = barapplication/barapplication.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PTSPM5LA3F;
 				INFOPLIST_FILE = barapplication/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SDKROOT)/usr/lib/swift",
+				);
+				MARKETING_VERSION = 1.0.2;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = nl.tungstun.barapplication;
-				PRODUCT_NAME = barapplication;
+				PRODUCT_BUNDLE_IDENTIFIER = nl.tungstun.bartap;
+				PRODUCT_NAME = bartap;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -612,7 +638,7 @@
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -628,7 +654,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -677,7 +703,7 @@
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = "arm64 ";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -686,7 +712,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -706,7 +732,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "barapplicationTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "bartapTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -715,7 +741,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "barapplication" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "bartap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -724,7 +750,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "barapplication" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "bartap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

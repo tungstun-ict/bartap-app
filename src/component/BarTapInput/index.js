@@ -11,8 +11,9 @@ export default function ({
   placeholder,
   placeholderTextColor,
   secureTextEntry,
+  autoCapitalize,
   value,
-  defaultValue
+  defaultValue,
 }) {
   const { theme } = React.useContext(ThemeContext);
 
@@ -37,6 +38,7 @@ export default function ({
       secureTextEntry={secureTextEntry}
       autoCompleteType={autoCompleteType}
       onSubmitEditing={onSubmitEditing}
+      autoCapitalize={autoCapitalize}
       onChangeText={onChangeText}
       keyboardType={keyboardType}
       placeholder={placeholder}

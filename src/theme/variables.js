@@ -1,7 +1,7 @@
 import { Platform } from "react-native";
 
-const mediumFont = Platform.OS === "android" ? "Gotham-Medium" : "Arial";
-const thinFont = Platform.OS === "android" ? "Gotham-Book" : "Arial";
+const mediumFont = Platform.OS === "android" ? "Gotham-Medium" : "Arial Bold";
+const thinFont = Platform.OS === "android" ? "Gotham-Book" : "Gotham-Book";
 
 export const darkTheme = {
   mode: "dark",
@@ -22,6 +22,7 @@ export const darkTheme = {
   BACKGROUND_IMAGE_LIGHT: "#fff",
   BACKGROUND_IMAGE_DARK: "#000",
   BACKGROUND_IMAGE_CONTRAST: "#000",
+  BACKGROUND_IMAGE_LOW_CONTRAST: "#484848",
   BACKROUND_DRAWER: "#212121",
   BACKGROUND_SLIDE_SHEET: "#212121",
   BACKGROUND_LOW_CONTRAST: "#212121",
@@ -72,6 +73,7 @@ export const lightTheme = {
   BACKGROUND_IMAGE_LIGHT: "#fff",
   BACKGROUND_IMAGE_DARK: "#000",
   BACKGROUND_IMAGE_CONTRAST: "#fff",
+  BACKGROUND_IMAGE_LOW_CONTRAST: "#CECECE",
   BACKROUND_DRAWER: "#fff",
   BACKGROUND_SLIDE_SHEET: "#FF9900",
   BACKGROUND_LOW_CONTRAST: "#CECECE",
